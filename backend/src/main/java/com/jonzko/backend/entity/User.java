@@ -1,6 +1,7 @@
 package com.jonzko.backend.entity;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -69,14 +70,15 @@ private LocalDateTime createdAt;
 @Column(name = "updated_at")
 private LocalDateTime updatedAt;
 
-    @PrePersist
+@PrePersist
 public void prePersist() {
-    this.createdAt = LocalDateTime.now();
-    this.updatedAt = LocalDateTime.now();
+    LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Lima"));
+    this.createdAt = now;
+    this.updatedAt = now;
 }
 
 @PreUpdate
 public void preUpdate() {
-    this.updatedAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now(ZoneId.of("America/Lima"));
 }
 }
