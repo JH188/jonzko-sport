@@ -28,7 +28,7 @@ export interface AuthUser {
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = 'https://jonzko-sport-production.up.railway.app/api/auth';
   private storageKey = 'jonzko_user';
 
   constructor(private http: HttpClient) {}
