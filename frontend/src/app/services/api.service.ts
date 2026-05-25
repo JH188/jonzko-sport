@@ -170,14 +170,14 @@ export type SiteSettingRequest = Omit<
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly apiUrl = 'http://localhost:8080/api';
+  private readonly apiUrl = 'https://jonzko-sport-production.up.railway.app/api';
 
   constructor(private http: HttpClient) {}
 
   // ==========================
   // PRODUCTOS PARA TIENDA
   // Solo productos activos
-  // GET: http://localhost:8080/api/products
+  // GET: https://jonzko-sport-production.up.railway.app/api/products
   // ==========================
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/products`);
