@@ -1,0 +1,179 @@
+<section class="checkout-page">
+  <div class="checkout-container">
+    <div class="checkout-header">
+      <div>
+        <span class="tag">Compra segura</span>
+        <h1>Finalizar compra</h1>
+        <p>
+          Bienvenido, <strong>{{ user()?.fullName }}</strong
+          >. Completa tus datos para generar tu pedido.
+        </p>
+      </div>
+
+      <a routerLink="/" class="back-logo" title="Volver a la tienda">
+        <img src="assets/logo.jpg" alt="Volver a JONZKO" />
+      </a>
+    </div>
+
+    <div class="checkout-grid">
+      <form class="checkout-card" (ngSubmit)="continuarPago()" *ngIf="paso === 'datos'">
+        <h2>Datos del cliente</h2>
+
+        <label>Nombres y apellidos</label>
+        <input type="text" name="nombres" [(ngModel)]="nombres" />
+
+        <label>Teléfono</label>
+        <input type="text" name="telefono" [(ngModel)]="telefono" maxlength="9" />
+
+        <label>Tipo de comprobante</label>
+        <select name="tipoDocumento" [(ngModel)]="tipoDocumento">
+          <option value="Boleta">Boleta</option>
+          <option value="Factura">Factura</option>
+        </select>
+
+        <label>{{ tipoDocumento === 'Boleta' ? 'DNI' : 'RUC' }}</label>
+        <input
+          type="text"
+          name="numeroDocumento"
+          [(ngModel)]="numeroDocumento"
+          [maxlength]="tipoDocumento === 'Boleta' ? 8 : 11"
+          [placeholder]="tipoDocumento === 'Boleta' ? 'Ingresa tu DNI' : 'Ingresa tu RUC'"
+        />
+
+        <h2>Datos de envío</h2>
+
+        <label>Departamento</label>
+        <input
+          type="text"
+          name="departamento"
+          [(ngModel)]="departamento"
+          placeholder="Ejemplo: Lima"
+        />
+
+        <label>Provincia</label>
+        <input type="text" name="provincia" [(ngModel)]="provincia" placeholder="Ejemplo: Lima" />
+
+        <label>Distrito</label>
+        <input
+          type="text"
+          name="distrito"
+          [(ngModel)]="distrito"
+          placeholder="Ejemplo: Los Olivos"
+        />
+
+        <label>Dirección exacta</label>
+        <input
+          type="text"
+          name="direccion"
+          [(ngModel)]="direccion"
+          placeholder="Av. / Jr. / Calle / Nro."
+        />
+
+        <label>Referencia</label>
+        <textarea
+          name="referencia"
+          [(ngModel)]="referencia"
+          placeholder="Ejemplo: frente a parque, portón negro..."
+        ></textarea>
+
+        <h2>Método de pago</h2>
+        <div class="payment-options">
+          <label class="payment-option">
+            <input type="radio" name="metodoPago" value="Yape" [(ngModel)]="metodoPago" />
+            <img src="assets/yape.png" alt="Yape" />
+            <span>Yape</span>
+          </label>
+
+          <label class="payment-option">
+            <input type="radio" name="metodoPago" value="Plin" [(ngModel)]="metodoPago" />
+            <img src="assets/plin..png" alt="Plin" />
+            <span>Plin</span>
+          </label>
+
+          <label class="payment-option">
+            <input type="radio" name="metodoPago" value="BCP" [(ngModel)]="metodoPago" />
+            <img src="assets/bcp.png" alt="BCP" />
+            <span>BCP</span>
+          </label>
+        </div>
+
+        <div class="error" *ngIf="error">{{ error }}</div>
+
+        <button type="submit" [disabled]="loading">
+          {{ loading ? 'Registrando pedido...' : 'Continuar con el pago' }}
+        </button>
+      </form>
+      <div class="checkout-card payment-card" *ngIf="paso === 'pago'">
+        <span class="tag">Paso final</span>
+        <h2>Realiza tu pago</h2>
+
+        <p>
+          Escanea el QR o realiza el pago con los datos mostrados. Luego presiona
+          <strong>“Ya pagué”</strong> para registrar tu pedido.
+        </p>
+
+        <div class="qr-box" *ngIf="metodoPago === 'Yape'">
+          <img src="assets/qr-ejemplo.jpeg" alt="QR Yape" />
+          <h3>Pago por Yape</h3>
+          <p><strong>Número:</strong> {{ numeroYape }}</p>
+          <p><strong>Titular:</strong> {{ nombreTitular }}</p>
+        </div>
+
+        <div class="qr-box" *ngIf="metodoPago === 'Plin'">
+          <img src="assets/qr-plin.jpeg" alt="QR Plin" />
+          <h3>Pago por Plin</h3>
+          <p><strong>Número:</strong> {{ numeroPlin }}</p>
+          <p><strong>Titular:</strong> {{ nombreTitular }}</p>
+        </div>
+
+        <div class="qr-box" *ngIf="metodoPago === 'BCP'">
+          <img src="assets/bcp.png" alt="BCP" />
+          <h3>Transferencia BCP</h3>
+          <p><strong>Cuenta:</strong> {{ cuentaBcp }}</p>
+          <p><strong>Titular:</strong> {{ nombreTitular }}</p>
+        </div>
+
+        <div class="payment-total">
+          <span>Total a pagar</span>
+          <strong>S/ {{ total().toFixed(2) }}</strong>
+        </div>
+
+        <div class="error" *ngIf="error">{{ error }}</div>
+
+        <button type="button" (click)="confirmarPago()" [disabled]="loading">
+          {{ loading ? 'Registrando pedido...' : 'Ya pagué' }}
+        </button>
+
+        <button type="button" class="back-payment-btn" (click)="paso = 'datos'">
+          Volver a editar datos
+        </button>
+      </div>
+
+      <aside class="summary-card">
+        <h2>Resumen del pedido</h2>
+
+        @for (item of cart(); track item.id) {
+          <div class="summary-item">
+            <img [src]="item.imageUrl" [alt]="item.name" />
+
+            <div>
+              <h3>{{ item.name }}</h3>
+
+              @if (item.selectedSize) {
+                <p>Talla: {{ item.selectedSize }}</p>
+              }
+
+              <p>Cantidad: {{ item.quantity }}</p>
+              <strong>S/ {{ (item.price * item.quantity).toFixed(2) }}</strong>
+            </div>
+          </div>
+        }
+
+        <div class="summary-total">
+          <span>Total</span>
+          <strong>S/ {{ total().toFixed(2) }}</strong>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

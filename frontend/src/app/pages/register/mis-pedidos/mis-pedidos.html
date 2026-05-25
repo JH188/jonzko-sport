@@ -1,0 +1,202 @@
+<section class="orders-page">
+  <div class="orders-container">
+    <div class="orders-header">
+      <div>
+        <span class="tag">Historial de compras</span>
+
+        <h1>Mis pedidos</h1>
+
+        @if (user()) {
+          <p>
+            Bienvenido, <strong>{{ user()?.fullName }}</strong
+            >. Aquí podrás ver tus compras realizadas en JONZKO SPORT.
+          </p>
+        } @else {
+          <p>Debes iniciar sesión para ver tus pedidos.</p>
+        }
+      </div>
+
+      <a routerLink="/" class="back-logo" title="Volver a la tienda">
+        <img src="assets/logo.jpg" alt="Volver a JONZKO" />
+      </a>
+    </div>
+
+    @if (!user()) {
+      <div class="empty-state">
+        <h2>No has iniciado sesión</h2>
+        <p>Inicia sesión o regístrate para ver tu historial de pedidos.</p>
+
+        <div class="empty-actions">
+          <a routerLink="/login">Iniciar sesión</a>
+          <a routerLink="/registro">Registrarme</a>
+        </div>
+      </div>
+    } @else {
+      <div class="filters-card">
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          placeholder="Buscar por código, fecha o estado..."
+        />
+
+        <select [(ngModel)]="selectedFilter">
+          <option value="todos">Todos los pedidos</option>
+          <option value="Pendiente">Pendientes</option>
+          <option value="Confirmado">Confirmados</option>
+          <option value="Enviado">Enviados</option>
+          <option value="Entregado">Entregados</option>
+          <option value="Cancelado">Cancelados</option>
+        </select>
+      </div>
+
+      @if (loading) {
+        <div class="empty-state">
+          <h2>Cargando tus pedidos...</h2>
+          <p>Estamos consultando tus compras registradas.</p>
+        </div>
+      } @else if (error) {
+        <div class="empty-state">
+          <h2>Ocurrió un problema</h2>
+          <p>{{ error }}</p>
+        </div>
+      } @else if (filteredPedidos().length === 0) {
+        <div class="empty-state">
+          <h2>Aún no tienes pedidos</h2>
+          <p>
+            Cuando compres en JONZKO SPORT, tus pedidos aparecerán aquí con fecha, productos, total,
+            comprobante y estado.
+          </p>
+
+          <a routerLink="/" fragment="coleccion" class="shop-btn">Ir a comprar</a>
+        </div>
+      } @else {
+        <div class="orders-list">
+          @for (pedido of filteredPedidos(); track pedido.id) {
+            <article class="order-card">
+              <div class="order-top">
+                <div>
+                  <span class="order-code">Pedido #{{ pedido.id }}</span>
+                  <h3>{{ formatFecha(pedido.createdAt) }}</h3>
+                </div>
+
+                <span class="status" [ngClass]="getStatusClass(pedido.orderStatus)">
+                  {{ pedido.orderStatus }}
+                </span>
+              </div>
+
+              <div class="order-body">
+                <p><strong>Total:</strong> S/ {{ pedido.total }}</p>
+                <p><strong>Método de pago:</strong> {{ pedido.paymentMethod }}</p>
+                <p>
+                  <strong>Comprobante:</strong> {{ pedido.documentType }} -
+                  {{ pedido.documentNumber }}
+                </p>
+                <p>
+                  <strong>Dirección:</strong> {{ pedido.department }}, {{ pedido.province }},
+                  {{ pedido.district }}, {{ pedido.address }}
+                </p>
+              </div>
+
+              <div class="products-mini">
+                <h4>Productos comprados</h4>
+
+                @for (item of pedido.productos; track item.id) {
+                  <div class="product-mini">
+                    <img [src]="item.imageUrl" [alt]="item.name" />
+
+                    <div>
+                      <strong>{{ item.name }}</strong>
+                      <p>Talla: {{ item.selectedSize || 'No especificada' }}</p>
+                      <p>Cantidad: {{ item.quantity }}</p>
+                      <p>Subtotal: S/ {{ (item.price * item.quantity).toFixed(2) }}</p>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <button type="button" (click)="openDetalle(pedido)">Ver detalle</button>
+            </article>
+          }
+        </div>
+      }
+    }
+  </div>
+  @if (selectedPedido) {
+    <div class="order-modal-backdrop" (click)="closeDetalle()">
+      <div class="order-modal" (click)="$event.stopPropagation()">
+        <button class="modal-close" type="button" (click)="closeDetalle()">×</button>
+
+        <div class="modal-header">
+          <div>
+            <span class="tag">Detalle del pedido</span>
+            <h2>Pedido #{{ selectedPedido.id }}</h2>
+            <p>{{ formatFecha(selectedPedido.createdAt) }}</p>
+          </div>
+
+          <span class="status" [ngClass]="getStatusClass(selectedPedido.orderStatus)">
+            {{ selectedPedido.orderStatus }}
+          </span>
+        </div>
+
+        <div class="modal-grid">
+          <section>
+            <h3>Datos del cliente</h3>
+            <p><strong>Nombre:</strong> {{ selectedPedido.customerName }}</p>
+            <p><strong>Correo:</strong> {{ selectedPedido.customerEmail }}</p>
+            <p><strong>Celular:</strong> {{ selectedPedido.customerPhone }}</p>
+          </section>
+
+          <section>
+            <h3>Comprobante</h3>
+            <p><strong>Tipo:</strong> {{ selectedPedido.documentType }}</p>
+            <p><strong>Número:</strong> {{ selectedPedido.documentNumber }}</p>
+          </section>
+
+          <section>
+            <h3>Dirección de envío</h3>
+            <p><strong>Departamento:</strong> {{ selectedPedido.department }}</p>
+            <p><strong>Provincia:</strong> {{ selectedPedido.province }}</p>
+            <p><strong>Distrito:</strong> {{ selectedPedido.district }}</p>
+            <p><strong>Dirección:</strong> {{ selectedPedido.address }}</p>
+            <p>
+              <strong>Referencia:</strong> {{ selectedPedido.referenceText || 'Sin referencia' }}
+            </p>
+          </section>
+
+          <section>
+            <h3>Pago</h3>
+            <p><strong>Método:</strong> {{ selectedPedido.paymentMethod }}</p>
+            <p><strong>Total:</strong> S/ {{ selectedPedido.total }}</p>
+          </section>
+        </div>
+
+        <div class="modal-products">
+          <h3>Productos comprados</h3>
+
+          @for (item of selectedPedido.productos; track item.id) {
+            <div class="modal-product">
+              <img [src]="item.imageUrl" [alt]="item.name" />
+
+              <div>
+                <h4>{{ item.name }}</h4>
+                <p><strong>Talla:</strong> {{ item.selectedSize || 'No especificada' }}</p>
+                <p><strong>Color:</strong> {{ item.color || 'No especificado' }}</p>
+                <p><strong>Cantidad:</strong> {{ item.quantity }}</p>
+                <p><strong>Precio unitario:</strong> S/ {{ item.price }}</p>
+                <p><strong>Subtotal:</strong> S/ {{ (item.price * item.quantity).toFixed(2) }}</p>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="modal-message">
+          <strong>Importante:</strong>
+          Tu pedido fue registrado correctamente. Envía tu comprobante por WhatsApp para validar el
+          pago.
+        </div>
+
+        <button class="modal-ok" type="button" (click)="closeDetalle()">Entendido</button>
+      </div>
+    </div>
+  }
+</section>

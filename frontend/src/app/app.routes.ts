@@ -1,0 +1,39 @@
+import { Routes } from '@angular/router';
+
+import { AdminLoginComponent } from './admin/admin-login.component';
+import { AdminComponent } from './admin/admin.component';
+import { ProductDetail } from './product-detail/product-detail';
+import { RegisterComponent } from './pages/register/register';
+import { LoginComponent } from './pages/register/login/login';
+import { MisPedidosComponent } from './pages/register/mis-pedidos/mis-pedidos';
+import { CheckoutComponent } from './pages/register/checkout/checkout';
+export const routes: Routes = [
+  {
+    path: 'producto/:id',
+    component: ProductDetail
+  },
+  {
+    path: 'registro',
+    component: RegisterComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'mis-pedidos',
+    component: MisPedidosComponent
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent
+  },
+  {
+    path: 'admin-login',
+    component: AdminLoginComponent
+  },
+  {
+    path: 'admin',
+    component: AdminComponent
+  }
+];

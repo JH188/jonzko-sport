@@ -1,0 +1,25 @@
+<section class="auth-page">
+  <div class="auth-card">
+    <h1>Iniciar sesión</h1>
+    <p class="subtitle">Ingresa a tu cuenta de JONZKO SPORT</p>
+
+    <form (ngSubmit)="login()">
+      <label>Correo electrónico</label>
+      <input type="email" name="email" [(ngModel)]="email" placeholder="ejemplo@gmail.com" />
+
+      <label>Contraseña</label>
+      <input type="password" name="password" [(ngModel)]="password" placeholder="Tu contraseña" />
+
+      <div class="error" *ngIf="error">{{ error }}</div>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Ingresando...' : 'Iniciar sesión' }}
+      </button>
+    </form>
+
+    <p class="bottom-text">
+      ¿No tienes cuenta?
+      <a routerLink="/registro">Regístrate aquí</a>
+    </p>
+  </div>
+</section>

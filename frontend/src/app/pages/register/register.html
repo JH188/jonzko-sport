@@ -1,0 +1,42 @@
+<section class="auth-page">
+  <div class="auth-card">
+    <h1>Crear cuenta</h1>
+    <p class="subtitle">Regístrate para comprar en JONZKO SPORT</p>
+
+    <form (ngSubmit)="register()">
+      <label>Nombre completo</label>
+      <input
+        type="text"
+        name="fullName"
+        [(ngModel)]="fullName"
+        placeholder="Ejemplo: Jonathan Huaman"
+      />
+
+      <label>Correo electrónico</label>
+      <input type="email" name="email" [(ngModel)]="email" placeholder="ejemplo@gmail.com" />
+
+      <label>Celular</label>
+      <input type="text" name="phone" [(ngModel)]="phone" placeholder="987654321" maxlength="9" />
+
+      <label>Contraseña</label>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Mínimo 6 caracteres"
+      />
+
+      <div class="error" *ngIf="error">{{ error }}</div>
+      <div class="success" *ngIf="success">{{ success }}</div>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Creando cuenta...' : 'Registrarme' }}
+      </button>
+    </form>
+
+    <p class="bottom-text">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login">Inicia sesión</a>
+    </p>
+  </div>
+</section>

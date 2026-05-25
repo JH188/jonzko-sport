@@ -1,0 +1,1232 @@
+<section class="admin-page">
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <img src="assets/logo.jpg" alt="Logo JONZKO" />
+      <div>
+        <h2>JONZKO</h2>
+        <p>Panel administrador</p>
+      </div>
+    </div>
+
+    <nav class="admin-menu">
+      <p class="menu-group-title">General</p>
+
+      <button
+        type="button"
+        [class.active]="activeSection() === 'dashboard'"
+        (click)="setSection('dashboard')"
+      >
+        📊 Panel
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeSection() === 'products'"
+        (click)="setSection('products')"
+      >
+        👕 Productos / Precios
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeSection() === 'orders'"
+        (click)="setSection('orders')"
+      >
+        📦 Pedidos y pagos
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeSection() === 'users'"
+        (click)="setSection('users')"
+      >
+        👥 Clientes registrados
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeSection() === 'contacts'"
+        (click)="setSection('contacts')"
+      >
+        💬 Contactos / Solicitudes
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeSection() === 'reports'"
+        (click)="setSection('reports')"
+      >
+        📈 Reportes
+      </button>
+
+      <p class="menu-group-title">Otros</p>
+
+      <button
+        type="button"
+        [class.active]="activeSection() === 'files'"
+        (click)="setSection('files')"
+      >
+        📁 Archivos
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeSection() === 'security'"
+        (click)="setSection('security')"
+      >
+        🔐 Seguridad
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeSection() === 'customization'"
+        (click)="setSection('customization')"
+      >
+        🎨 Personalización web
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeSection() === 'more'"
+        (click)="setSection('more')"
+      >
+        ⚙️ Más opciones
+      </button>
+    </nav>
+
+    <div class="admin-sidebar-actions">
+      <button type="button" class="store-btn" (click)="goToStore()">Ver tienda</button>
+
+      <button type="button" class="logout-btn" (click)="logoutAdmin()">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="admin-main">
+    <!-- CABECERA GENERAL -->
+    <header class="admin-header">
+      <div>
+        <span class="eyebrow">Panel </span>
+        <h1>Administración JONZKO</h1>
+        <p>Control de productos, clientes, pedidos, pagos y personalización web.</p>
+      </div>
+
+      <button type="button" class="primary-action" (click)="loadAdminData()">
+        Actualizar datos
+      </button>
+    </header>
+
+    <!-- LOADING -->
+    <div class="loading-box" *ngIf="loading()">Cargando información del sistema...</div>
+
+    <!-- DASHBOARD -->
+    <section class="admin-section" *ngIf="activeSection() === 'dashboard'">
+      <div class="stats-grid">
+        <article class="stat-card">
+          <p>Productos activos</p>
+          <h2>{{ activeProducts() }}</h2>
+          <span>Catálogo disponible en tienda.</span>
+        </article>
+
+        <article class="stat-card">
+          <p>Pedidos registrados</p>
+          <h2>{{ orders().length }}</h2>
+          <span>Pedidos guardados en MySQL.</span>
+        </article>
+
+        <article class="stat-card">
+          <p>Pagos pendientes</p>
+          <h2>{{ pendingOrders() }}</h2>
+          <span>Necesitan validación del administrador.</span>
+        </article>
+
+        <article class="stat-card">
+          <p>Ventas confirmadas</p>
+          <h2>{{ money(totalSales()) }}</h2>
+          <span>Total de pagos confirmados.</span>
+        </article>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="panel-card">
+          <div class="panel-title">
+            <h2>Últimos pedidos</h2>
+            <span>{{ recentOrders().length }} reciente(s)</span>
+          </div>
+
+          <div class="empty-state" *ngIf="recentOrders().length === 0">
+            Todavía no hay pedidos registrados.
+          </div>
+
+          <div class="list-row" *ngFor="let order of recentOrders()">
+            <div>
+              <strong>{{ getOrderCode(order) }}</strong>
+              <p>{{ order.customerName }} · {{ order.customerEmail }}</p>
+            </div>
+
+            <div class="row-right">
+              <strong>{{ money(order.total) }}</strong>
+              <span [class]="statusClass(order.orderStatus)">
+                {{ statusText(order.orderStatus) }}
+              </span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-title">
+            <h2>Clientes recientes</h2>
+            <span>{{ recentUsers().length }} cliente(s)</span>
+          </div>
+
+          <div class="empty-state" *ngIf="recentUsers().length === 0">
+            Todavía no hay clientes registrados.
+          </div>
+
+          <div class="list-row" *ngFor="let user of recentUsers()">
+            <div>
+              <strong>{{ user.fullName }}</strong>
+              <p>{{ user.email }}</p>
+            </div>
+
+            <span class="status confirmed" *ngIf="user.active">Activo</span>
+            <span class="status rejected" *ngIf="!user.active">Inactivo</span>
+          </div>
+        </article>
+      </div>
+
+      <article class="panel-card products-featured">
+        <div class="panel-title">
+          <h2>Productos destacados</h2>
+          <span>{{ recentProducts().length }} producto(s)</span>
+        </div>
+
+        <div class="featured-grid">
+          <div class="featured-product" *ngFor="let product of recentProducts()">
+            <img [src]="product.imageUrl" [alt]="product.name" />
+
+            <div>
+              <h3>{{ product.name }}</h3>
+              <p>{{ product.category }}</p>
+              <strong>{{ money(product.price) }}</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section class="admin-section" *ngIf="activeSection() === 'products'">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Gestión de catálogo</span>
+          <h2>Productos de la tienda</h2>
+          <p>
+            Desde aquí agregas, editas, activas, desactivas o eliminas productos. Los cambios se
+            guardan en MySQL y se reflejan para todos los usuarios.
+          </p>
+        </div>
+      </div>
+
+      <div class="product-admin-grid">
+        <!-- FORMULARIO PRODUCTO -->
+        <article class="panel-card product-form-card">
+          <h3>
+            {{ editingProductId() ? 'Editar producto' : 'Agregar nuevo producto' }}
+          </h3>
+
+          <form class="admin-form" (ngSubmit)="saveProduct()">
+            <label>
+              Nombre del producto
+              <input
+                type="text"
+                name="name"
+                [(ngModel)]="productForm.name"
+                placeholder="Ejemplo: Polo Negro JONZKO"
+              />
+            </label>
+
+            <label>
+              Categoría
+              <input
+                type="text"
+                name="category"
+                [(ngModel)]="productForm.category"
+                placeholder="Ejemplo: Polo urbano"
+              />
+            </label>
+
+            <label>
+              Descripción
+              <textarea
+                name="description"
+                [(ngModel)]="productForm.description"
+                rows="4"
+                placeholder="Describe el producto..."
+              ></textarea>
+            </label>
+
+            <div class="form-two">
+              <label>
+                Precio
+                <input
+                  type="number"
+                  name="price"
+                  [(ngModel)]="productForm.price"
+                  min="0"
+                  step="0.10"
+                />
+              </label>
+
+              <label>
+                Stock
+                <input type="number" name="stock" [(ngModel)]="productForm.stock" min="0" />
+              </label>
+            </div>
+
+            <label>
+              Imagen del producto
+              <input
+                type="text"
+                name="imageUrl"
+                [(ngModel)]="productForm.imageUrl"
+                placeholder="assets/polo blanco.jpg"
+              />
+            </label>
+
+            <label class="check-label">
+              <input type="checkbox" name="active" [(ngModel)]="productForm.active" />
+              Producto activo en la tienda
+            </label>
+
+            <div class="form-actions">
+              <button type="submit" class="primary-action">
+                {{ editingProductId() ? 'Guardar cambios' : 'Crear producto' }}
+              </button>
+
+              <button
+                type="button"
+                class="secondary-action"
+                *ngIf="editingProductId()"
+                (click)="resetProductForm()"
+              >
+                Cancelar edición
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <!-- LISTA PRODUCTOS -->
+        <article class="panel-card">
+          <div class="panel-title">
+            <h3>Productos registrados</h3>
+            <span>{{ products().length }} producto(s)</span>
+          </div>
+
+          <div class="empty-state" *ngIf="products().length === 0">
+            Todavía no hay productos registrados.
+          </div>
+
+          <div class="admin-product-list">
+            <div class="admin-product-item" *ngFor="let product of products()">
+              <img [src]="product.imageUrl" [alt]="product.name" />
+
+              <div class="product-info">
+                <h4>{{ product.name }}</h4>
+                <p>{{ product.category }}</p>
+                <small>{{ product.description }}</small>
+
+                <div class="product-meta">
+                  <strong>{{ money(product.price) }}</strong>
+                  <span>Stock: {{ product.stock }}</span>
+                  <span class="status confirmed" *ngIf="product.active">Activo</span>
+                  <span class="status rejected" *ngIf="!product.active">Inactivo</span>
+                </div>
+              </div>
+
+              <div class="product-actions">
+                <button type="button" class="edit-btn" (click)="editProduct(product)">
+                  Editar
+                </button>
+
+                <button type="button" class="delete-btn" (click)="deleteProduct(product.id)">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PEDIDOS Y PAGOS -->
+    <section class="admin-section" *ngIf="activeSection() === 'orders'">
+      <div class="section-heading order-heading">
+        <div>
+          <span class="eyebrow">Control de ventas</span>
+          <h2>Pedidos y pagos</h2>
+          <p>
+            Administra pedidos, pagos, productos vendidos, clientes, fechas, horas, vouchers y
+            estados de entrega.
+          </p>
+        </div>
+
+        <div class="heading-actions">
+          <button type="button" class="secondary-action" (click)="clearOrderFilters()">
+            Limpiar filtros
+          </button>
+          <button type="button" class="secondary-action" (click)="enableOrderSound()">
+            🔔 Activar sonido
+          </button>
+
+          <button type="button" class="primary-action" (click)="loadAdminData()">
+            Actualizar pedidos
+          </button>
+        </div>
+      </div>
+
+      <!-- TARJETAS RESUMEN -->
+      <div class="stats-grid order-stats-grid">
+        <article class="stat-card stat-pending">
+          <p>Pendientes</p>
+          <h2>{{ pendingAdminOrders() }}</h2>
+          <span>Pedidos esperando atención.</span>
+        </article>
+
+        <article class="stat-card stat-confirmed">
+          <p>Confirmados</p>
+          <h2>{{ confirmedOrders() }}</h2>
+          <span>Pedidos aprobados.</span>
+        </article>
+
+        <article class="stat-card stat-sent">
+          <p>Enviados</p>
+          <h2>{{ sentOrders() }}</h2>
+          <span>Pedidos enviados al cliente.</span>
+        </article>
+
+        <article class="stat-card stat-cancelled">
+          <p>Cancelados</p>
+          <h2>{{ cancelledOrders() }}</h2>
+          <span>Pedidos anulados.</span>
+        </article>
+      </div>
+
+      <!-- FILTROS -->
+      <article class="panel-card order-filters-card">
+        <div class="order-filters">
+          <label>
+            Buscar pedido, cliente, correo, teléfono o producto
+            <input
+              type="text"
+              name="searchOrderText"
+              [(ngModel)]="searchOrderText"
+              placeholder="Ejemplo: Jonathan, polo, Yape, #1..."
+            />
+          </label>
+
+          <label>
+            Estado
+            <select name="statusOrderFilter" [(ngModel)]="statusOrderFilter">
+              <option value="TODOS">Todos</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="Confirmado">Confirmado</option>
+              <option value="Enviado">Enviado</option>
+              <option value="Entregado">Entregado</option>
+              <option value="Cancelado">Cancelado</option>
+            </select>
+          </label>
+
+          <label>
+            Método de pago
+            <select name="paymentOrderFilter" [(ngModel)]="paymentOrderFilter">
+              <option value="TODOS">Todos</option>
+              <option value="Yape">Yape</option>
+              <option value="Plin">Plin</option>
+              <option value="Transferencia">Transferencia</option>
+            </select>
+          </label>
+          <label>
+            Desde
+            <input type="date" name="dateFromFilter" [(ngModel)]="dateFromFilter" />
+          </label>
+
+          <label>
+            Hasta
+            <input type="date" name="dateToFilter" [(ngModel)]="dateToFilter" />
+          </label>
+        </div>
+      </article>
+
+      <!-- CONTENEDOR PRINCIPAL -->
+      <div class="orders-layout">
+        <!-- TABLA DE PEDIDOS -->
+        <article class="panel-card orders-table-card">
+          <div class="panel-title">
+            <div>
+              <h2>Pedidos registrados</h2>
+              <p>Mostrando {{ filteredOrders().length }} de {{ orders().length }} pedidos.</p>
+            </div>
+
+            <span>{{ money(totalRevenue()) }}</span>
+          </div>
+
+          <div class="empty-state" *ngIf="filteredOrders().length === 0">
+            No hay pedidos que coincidan con los filtros seleccionados.
+          </div>
+
+          <div class="table-wrapper" *ngIf="filteredOrders().length > 0">
+            <table class="orders-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Cliente</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th>Método</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Productos</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let order of filteredOrders()">
+                  <td>
+                    <strong>#{{ order.id }}</strong>
+                  </td>
+
+                  <td>
+                    <strong>{{ order.customerName }}</strong>
+                    <p>
+                      {{ order.documentType || 'Documento' }}:
+                      {{ order.documentNumber || 'No registrado' }}
+                    </p>
+                  </td>
+
+                  <td>{{ order.customerEmail }}</td>
+
+                  <td>{{ order.customerPhone }}</td>
+
+                  <td>
+                    <span class="payment-pill">
+                      {{ order.paymentMethod || 'Sin método' }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <strong>{{ money(order.total) }}</strong>
+                  </td>
+
+                  <td>
+                    <span [class]="statusClass(order.orderStatus)">
+                      {{ statusText(order.orderStatus) }}
+                    </span>
+                  </td>
+
+                  <td>{{ formatDate(order.createdAt) }}</td>
+
+                  <td>{{ formatTime(order.createdAt) }}</td>
+
+                  <td>
+                    <span class="voucher-pill"> {{ parseItems(order).length }} producto(s) </span>
+                  </td>
+
+                  <td>
+                    <div class="table-actions">
+                      <button type="button" class="edit-btn" (click)="openOrderDetail(order)">
+                        Ver
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- PANEL LATERAL DETALLE -->
+        <aside class="order-detail-panel" *ngIf="selectedOrder() as order">
+          <button type="button" class="close-detail-btn" (click)="closeOrderDetail()">×</button>
+
+          <span [class]="statusClass(order.orderStatus)">
+            {{ statusText(order.orderStatus) }}
+          </span>
+
+          <h2>Pedido #{{ order.id }}</h2>
+          <p class="detail-subtitle">Detalle completo del pedido</p>
+
+          <div class="detail-section">
+            <h3>Información del cliente</h3>
+
+            <div class="detail-row">
+              <span>Cliente</span>
+              <strong>{{ order.customerName }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Correo</span>
+              <strong>{{ order.customerEmail }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Teléfono</span>
+              <strong>{{ order.customerPhone }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Documento</span>
+              <strong
+                >{{ order.documentType || 'No registrado' }}
+                {{ order.documentNumber || '' }}</strong
+              >
+            </div>
+
+            <div class="detail-row">
+              <span>Usuario</span>
+              <strong>{{ getUserType(order) }}</strong>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3>Fecha y pago</h3>
+
+            <div class="detail-row">
+              <span>Fecha</span>
+              <strong>{{ formatDate(order.createdAt) }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Hora</span>
+              <strong>{{ formatTime(order.createdAt) }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Método de pago</span>
+              <strong>{{ order.paymentMethod }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Subtotal</span>
+              <strong>{{ money(getSubtotal(order)) }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Delivery</span>
+              <strong>{{ money(getDeliveryCost(order)) }}</strong>
+            </div>
+
+            <div class="detail-row total-row">
+              <span>Total</span>
+              <strong>{{ money(order.total) }}</strong>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3>Dirección y referencia</h3>
+
+            <p>
+              <strong>Ubicación:</strong>
+              {{ order.department }} / {{ order.province }} / {{ order.district }}
+            </p>
+
+            <p><strong>Dirección:</strong> {{ order.address }}</p>
+            <p><strong>Referencia:</strong> {{ order.referenceText || 'Sin referencia' }}</p>
+          </div>
+
+          <div class="detail-section">
+            <h3>Productos vendidos</h3>
+
+            <div class="empty-state" *ngIf="parseItems(order).length === 0">
+              Este pedido no tiene productos detallados.
+            </div>
+
+            <div class="sold-product" *ngFor="let item of parseItems(order)">
+              <div>
+                <strong>{{ item.productName || item.name }}</strong>
+                <p>
+                  Cantidad: {{ item.quantity || 1 }}
+                  <span *ngIf="item.selectedSize"> · Talla: {{ item.selectedSize }}</span>
+                  <span *ngIf="item.selectedColor"> · Color: {{ item.selectedColor }}</span>
+                </p>
+              </div>
+
+              <strong>
+                {{ money((item.price || 0) * (item.quantity || 1)) }}
+              </strong>
+            </div>
+          </div>
+
+          <div class="detail-section voucher-box">
+            <h3>Voucher / comprobante</h3>
+
+            <p>
+              Aquí se mostrará el voucher del cliente cuando conectemos subida de imagen o archivo.
+            </p>
+
+            <div class="detail-row">
+              <span>Método</span>
+              <strong>{{ order.paymentMethod }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Monto pagado</span>
+              <strong>{{ money(order.total) }}</strong>
+            </div>
+
+            <div class="detail-actions">
+              <button type="button" class="primary-action" (click)="viewVoucher(order)">
+                Ver voucher
+              </button>
+
+              <button
+                type="button"
+                class="secondary-action"
+                (click)="downloadOrderPdf(order, 'Voucher')"
+              >
+                Descargar PDF
+              </button>
+            </div>
+          </div>
+
+          <div class="detail-section voucher-box">
+            <h3>Comprobante de venta</h3>
+
+            <p>
+              Aquí generaremos boleta o factura con datos del cliente, productos, subtotal, IGV y
+              total.
+            </p>
+
+            <div class="detail-row">
+              <span>Tipo</span>
+              <strong>{{ order.documentType || 'Boleta' }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Número</span>
+              <strong>{{ order.documentNumber || 'No registrado' }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Total</span>
+              <strong>{{ money(order.total) }}</strong>
+            </div>
+
+            <div class="detail-actions">
+              <button
+                type="button"
+                class="primary-action"
+                (click)="viewSaleReceipt(order, 'Boleta')"
+              >
+                Generar boleta
+              </button>
+
+              <button
+                type="button"
+                class="secondary-action"
+                (click)="viewSaleReceipt(order, 'Factura')"
+              >
+                Generar factura
+              </button>
+
+              <button
+                type="button"
+                class="secondary-action"
+                (click)="viewSaleReceipt(order, 'Comprobante')"
+              >
+                Ver comprobante
+              </button>
+
+              <button
+                type="button"
+                class="secondary-action"
+                (click)="downloadOrderPdf(order, 'Comprobante')"
+              >
+                Descargar PDF
+              </button>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3>Cambiar estado</h3>
+
+            <div class="status-actions-grid">
+              <button
+                type="button"
+                class="status-btn pending-btn"
+                (click)="changeOrderStatus(order.id, 'Pendiente')"
+              >
+                Pendiente
+              </button>
+
+              <button
+                type="button"
+                class="status-btn confirmed-btn"
+                (click)="changeOrderStatus(order.id, 'Confirmado')"
+              >
+                Confirmado
+              </button>
+
+              <button
+                type="button"
+                class="status-btn process-btn"
+                (click)="changeOrderStatus(order.id, 'Enviado')"
+              >
+                Enviado
+              </button>
+
+              <button
+                type="button"
+                class="status-btn delivered-btn"
+                (click)="changeOrderStatus(order.id, 'Entregado')"
+              >
+                Entregado
+              </button>
+
+              <button
+                type="button"
+                class="status-btn rejected-btn"
+                (click)="changeOrderStatus(order.id, 'Cancelado')"
+              >
+                Cancelado
+              </button>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3>Historial de cambios</h3>
+            <p>
+              Última actualización: {{ formatDate(order.updatedAt || order.createdAt) }}
+              {{ formatTime(order.updatedAt || order.createdAt) }}
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CLIENTES -->
+    <section class="admin-section" *ngIf="activeSection() === 'users'">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Clientes registrados</span>
+          <h2>Usuarios de JONZKO</h2>
+          <p>Personas registradas en la tienda.</p>
+        </div>
+      </div>
+
+      <article class="panel-card">
+        <div class="empty-state" *ngIf="users().length === 0">
+          Todavía no hay clientes registrados.
+        </div>
+
+        <div class="table-wrapper" *ngIf="users().length > 0">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let user of users()">
+                <td>{{ user.id }}</td>
+                <td>{{ user.fullName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td>
+                  <span class="status confirmed" *ngIf="user.active">Activo</span>
+                  <span class="status rejected" *ngIf="!user.active">Inactivo</span>
+                </td>
+                <td>{{ user.createdAt || 'Sin fecha' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <!-- PERSONALIZACIÓN WEB -->
+    <section class="admin-section" *ngIf="activeSection() === 'customization'">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Control total de la página</span>
+          <h2>Personalización web</h2>
+          <p>
+            Aquí podrás modificar textos, colores, imágenes, enlaces, redes sociales y contenido
+            general de la tienda.
+          </p>
+        </div>
+
+        <div class="heading-actions">
+          <button type="button" class="secondary-action" (click)="resetWebConfig()">
+            Restaurar
+          </button>
+
+          <button type="button" class="primary-action" (click)="saveWebConfig()">
+            Guardar configuración
+          </button>
+        </div>
+      </div>
+
+      <div class="custom-grid">
+        <!-- IDENTIDAD -->
+        <article class="panel-card">
+          <h3>Identidad de marca</h3>
+          <p>Nombre, slogan, logo e imagen principal.</p>
+
+          <form class="admin-form">
+            <label>
+              Nombre de tienda
+              <input type="text" name="storeName" [(ngModel)]="webConfig.storeName" />
+            </label>
+
+            <label>
+              Slogan
+              <input type="text" name="slogan" [(ngModel)]="webConfig.slogan" />
+            </label>
+
+            <label>
+              Logo
+              <input type="text" name="logoUrl" [(ngModel)]="webConfig.logoUrl" />
+            </label>
+
+            <label>
+              Imagen principal
+              <input type="text" name="heroImageUrl" [(ngModel)]="webConfig.heroImageUrl" />
+            </label>
+          </form>
+        </article>
+
+        <!-- INICIO -->
+        <article class="panel-card">
+          <h3>Inicio de la tienda</h3>
+          <p>Textos principales que ve el cliente al entrar.</p>
+
+          <form class="admin-form">
+            <label>
+              Título principal
+              <input type="text" name="heroTitle" [(ngModel)]="webConfig.heroTitle" />
+            </label>
+
+            <label>
+              Descripción principal
+              <textarea
+                rows="4"
+                name="heroDescription"
+                [(ngModel)]="webConfig.heroDescription"
+              ></textarea>
+            </label>
+
+            <label>
+              Botón principal
+              <input
+                type="text"
+                name="primaryButtonText"
+                [(ngModel)]="webConfig.primaryButtonText"
+              />
+            </label>
+
+            <label>
+              Botón secundario
+              <input
+                type="text"
+                name="secondaryButtonText"
+                [(ngModel)]="webConfig.secondaryButtonText"
+              />
+            </label>
+          </form>
+        </article>
+
+        <!-- COLORES -->
+        <article class="panel-card">
+          <h3>Colores</h3>
+          <p>Personaliza los colores visuales de la marca.</p>
+
+          <form class="admin-form">
+            <label>
+              Color principal
+              <input
+                type="color"
+                name="primaryColor"
+                [(ngModel)]="webConfig.primaryColor"
+                (change)="applyWebConfig()"
+              />
+            </label>
+
+            <label>
+              Color secundario
+              <input
+                type="color"
+                name="secondaryColor"
+                [(ngModel)]="webConfig.secondaryColor"
+                (change)="applyWebConfig()"
+              />
+            </label>
+
+            <label>
+              Color de acento
+              <input
+                type="color"
+                name="accentColor"
+                [(ngModel)]="webConfig.accentColor"
+                (change)="applyWebConfig()"
+              />
+            </label>
+
+            <label>
+              Fondo
+              <input
+                type="color"
+                name="backgroundColor"
+                [(ngModel)]="webConfig.backgroundColor"
+                (change)="applyWebConfig()"
+              />
+            </label>
+
+            <label>
+              Texto
+              <input
+                type="color"
+                name="textColor"
+                [(ngModel)]="webConfig.textColor"
+                (change)="applyWebConfig()"
+              />
+            </label>
+          </form>
+        </article>
+
+        <!-- REDES -->
+        <article class="panel-card">
+          <h3>Redes y enlaces</h3>
+          <p>Modifica redes sociales y contacto.</p>
+
+          <form class="admin-form">
+            <label>
+              Instagram
+              <input type="text" name="instagramUrl" [(ngModel)]="webConfig.instagramUrl" />
+            </label>
+
+            <label>
+              Facebook
+              <input type="text" name="facebookUrl" [(ngModel)]="webConfig.facebookUrl" />
+            </label>
+
+            <label>
+              TikTok
+              <input type="text" name="tiktokUrl" [(ngModel)]="webConfig.tiktokUrl" />
+            </label>
+
+            <label>
+              WhatsApp
+              <input type="text" name="whatsappNumber" [(ngModel)]="webConfig.whatsappNumber" />
+            </label>
+          </form>
+        </article>
+
+        <!-- NAVEGACIÓN -->
+        <article class="panel-card full-card">
+          <h3>Menú y palabras de la página</h3>
+          <p>Cambia los nombres del menú, carrito, login y textos visibles para clientes.</p>
+
+          <form class="admin-form menu-config-grid">
+            <label>
+              Inicio
+              <input type="text" name="navInicio" [(ngModel)]="webConfig.navInicio" />
+            </label>
+
+            <label>
+              Colección
+              <input type="text" name="navColeccion" [(ngModel)]="webConfig.navColeccion" />
+            </label>
+
+            <label>
+              Nosotros
+              <input type="text" name="navNosotros" [(ngModel)]="webConfig.navNosotros" />
+            </label>
+
+            <label>
+              Contacto
+              <input type="text" name="navContacto" [(ngModel)]="webConfig.navContacto" />
+            </label>
+
+            <label>
+              Texto carrito
+              <input type="text" name="cartText" [(ngModel)]="webConfig.cartText" />
+            </label>
+
+            <label>
+              Texto login
+              <input type="text" name="loginText" [(ngModel)]="webConfig.loginText" />
+            </label>
+          </form>
+        </article>
+      </div>
+    </section>
+    <!-- CONTACTOS / SOLICITUDES -->
+    <section class="admin-section" *ngIf="activeSection() === 'contacts'">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Mensajes de clientes</span>
+          <h2>Contactos / Solicitudes</h2>
+          <p>
+            Más adelante aquí veremos consultas, mensajes por WhatsApp, solicitudes y clientes
+            interesados.
+          </p>
+        </div>
+      </div>
+
+      <article class="panel-card">
+        <div class="empty-state">
+          Todavía no hay solicitudes registradas. Luego conectaremos esta sección con un formulario
+          de contacto real.
+        </div>
+      </article>
+    </section>
+
+    <!-- REPORTES -->
+    <section class="admin-section" *ngIf="activeSection() === 'reports'">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Análisis empresarial</span>
+          <h2>Reportes</h2>
+          <p>Resumen de ventas, pedidos, clientes, métodos de pago y productos vendidos.</p>
+        </div>
+
+        <div class="heading-actions">
+          <button type="button" class="primary-action" (click)="exportFullExcelReport()">
+            📊 Exportar Excel
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <p>Ingresos estimados</p>
+          <h2>{{ money(totalSales()) }}</h2>
+          <span>Según pedidos confirmados.</span>
+        </article>
+
+        <article class="stat-card">
+          <p>Pedidos analizados</p>
+          <h2>{{ orders().length }}</h2>
+          <span>Órdenes registradas en MySQL.</span>
+        </article>
+
+        <article class="stat-card">
+          <p>Clientes registrados</p>
+          <h2>{{ users().length }}</h2>
+          <span>Usuarios de la plataforma.</span>
+        </article>
+
+        <article class="stat-card">
+          <p>Productos activos</p>
+          <h2>{{ activeProducts() }}</h2>
+          <span>Productos visibles en tienda.</span>
+        </article>
+      </div>
+
+      <article class="panel-card">
+        <div class="panel-title">
+          <h2>Reporte general</h2>
+          <span>Excel completo</span>
+        </div>
+
+        <div class="empty-state">
+          Este reporte descarga información completa para administración y contabilidad: pedidos,
+          clientes, productos vendidos, catálogo, métodos de pago, DNI/RUC, estados, fechas, horas,
+          subtotal, IGV y total.
+        </div>
+      </article>
+    </section>
+
+    <!-- ARCHIVOS -->
+    <section class="admin-section" *ngIf="activeSection() === 'files'">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Documentos</span>
+          <h2>Archivos</h2>
+          <p>Vouchers, comprobantes, reportes descargados y documentos administrativos.</p>
+        </div>
+      </div>
+
+      <article class="panel-card">
+        <div class="empty-state">
+          Luego aquí mostraremos vouchers, boletas, facturas y archivos exportados.
+        </div>
+      </article>
+    </section>
+
+    <!-- SEGURIDAD -->
+    <section class="admin-section" *ngIf="activeSection() === 'security'">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Control de acceso</span>
+          <h2>Seguridad</h2>
+          <p>Configuración de administrador, sesiones, credenciales y accesos.</p>
+        </div>
+      </div>
+
+      <article class="panel-card">
+        <div class="empty-state">
+          Luego aquí pondremos cambio de contraseña admin, historial de accesos y protección del
+          panel.
+        </div>
+      </article>
+    </section>
+
+    <!-- MODAL PARA VER VOUCHER / BOLETA / FACTURA / COMPROBANTE -->
+    <div class="receipt-modal-backdrop" *ngIf="receiptModalOpen">
+      <div class="receipt-modal">
+        <div class="receipt-modal-header">
+          <div>
+            <span class="modal-kicker">Documento generado</span>
+            <h2>{{ receiptModalTitle }}</h2>
+          </div>
+
+          <button type="button" class="modal-close" (click)="closeReceiptModal()">✕</button>
+        </div>
+
+        <div class="receipt-modal-body">
+          <div class="receipt-modal-paper" [innerHTML]="receiptModalContent"></div>
+        </div>
+
+        <div class="receipt-modal-footer">
+          <button type="button" class="secondary-action" (click)="closeReceiptModal()">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="receipt-modal-backdrop" *ngIf="receiptModalOpen">
+      <div class="receipt-modal">
+        <div class="receipt-modal-header">
+          <div>
+            <span class="modal-kicker">DOCUMENTO GENERADO</span>
+            <h2>{{ receiptModalTitle }}</h2>
+          </div>
+
+          <button type="button" class="modal-close" (click)="closeReceiptModal()">✕</button>
+        </div>
+
+        <div class="receipt-modal-body">
+          <div class="receipt-modal-paper" [innerHTML]="receiptModalContent"></div>
+        </div>
+
+        <div class="receipt-modal-footer">
+          <button type="button" class="secondary-action" (click)="closeReceiptModal()">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</section>

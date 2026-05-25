@@ -1,0 +1,60 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface RegisterRequest {
+  fullName: string;
+  email: string;
+  phone: string;
+  password: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface AuthUser {
+  id: number;
+  fullName: string;
+  email: string;
+  phone: string;
+  active: boolean;
+  message?: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  private apiUrl = 'http://localhost:8080/api/auth';
+  private storageKey = 'jonzko_user';
+
+  constructor(private http: HttpClient) {}
+
+  register(data: RegisterRequest): Observable<AuthUser> {
+    return this.http.post<AuthUser>(`${this.apiUrl}/register`, data);
+  }
+
+  login(data: LoginRequest): Observable<AuthUser> {
+    return this.http.post<AuthUser>(`${this.apiUrl}/login`, data);
+  }
+
+  saveUser(user: AuthUser): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(user));
+  }
+
+  getUser(): AuthUser | null {
+    const data = localStorage.getItem(this.storageKey);
+    return data ? JSON.parse(data) : null;
+  }
+
+  isLoggedIn(): boolean {
+    return this.getUser() !== null;
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.storageKey);
+  }
+}

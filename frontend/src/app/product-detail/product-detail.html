@@ -1,0 +1,69 @@
+<section class="detail-page">
+  <div *ngIf="loading()" class="loading">Cargando producto...</div>
+
+  <div *ngIf="error()" class="error">
+    {{ error() }}
+  </div>
+
+  <div *ngIf="product() as p" class="detail-container">
+    <div class="image-box">
+      <img [src]="p.imageUrl" [alt]="p.name" />
+    </div>
+
+    <div class="info-box">
+      <p class="brand">JONZKO SPORT</p>
+
+      <h1>{{ p.name }}</h1>
+
+      <div class="prices">
+        <span class="old-price" *ngIf="p.oldPrice"> S/ {{ p.oldPrice }} </span>
+
+        <span class="current-price"> S/ {{ p.price }} </span>
+      </div>
+
+      <p class="description">
+        {{ p.description }}
+      </p>
+
+      <div class="product-data">
+        <p><strong>Color:</strong> {{ p.color }}</p>
+        <p><strong>Tipo:</strong> {{ p.saleType }}</p>
+      </div>
+
+      <div class="sizes">
+        <h3>Selecciona tu talla</h3>
+
+        <div class="size-list">
+          <button
+            *ngFor="let size of sizesList()"
+            type="button"
+            [class.active]="selectedSize() === size"
+            (click)="selectSize(size)"
+          >
+            {{ size }}
+          </button>
+        </div>
+      </div>
+
+      <div class="quantity">
+        <h3>Cantidad</h3>
+
+        <div class="qty-control">
+          <button type="button" (click)="decreaseQty()">-</button>
+          <span>{{ quantity() }}</span>
+          <button type="button" (click)="increaseQty()">+</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="cart-btn" type="button" (click)="addToCart()">Agregar al carrito</button>
+
+        <button class="whatsapp-btn" type="button" (click)="buyWhatsapp()">
+          Comprar por WhatsApp
+        </button>
+      </div>
+
+      <a routerLink="/" class="back-link"> ← Volver a la tienda </a>
+    </div>
+  </div>
+</section>
