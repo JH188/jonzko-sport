@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PreUpdate;
+import jakarta.persistence.PrePersist;
+
 import jakarta.persistence.Table;
 
 import jakarta.validation.constraints.Email;
@@ -61,14 +63,20 @@ public class User {
     @Column(name = "active")
     private Boolean active = true;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
-    private LocalDateTime createdAt;
+   @Column(name = "created_at", nullable = false, updatable = false)
+private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", insertable = false)
-    private LocalDateTime updatedAt;
+@Column(name = "updated_at")
+private LocalDateTime updatedAt;
 
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
+    @PrePersist
+public void prePersist() {
+    this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
+}
+
+@PreUpdate
+public void preUpdate() {
+    this.updatedAt = LocalDateTime.now();
+}
 }
