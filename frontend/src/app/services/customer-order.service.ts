@@ -31,11 +31,11 @@ export class CustomerOrderService {
   constructor(private http: HttpClient) {}
 
   createOrder(data: CustomerOrderRequest): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/orders`, data);
+    return this.http.post<any>(`${this.apiUrl}/customer-orders`, data);
   }
 
   getOrdersByUser(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/orders/user/${userId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/customer-orders/user/${userId}`);
   }
 
   getAdminOrders(): Observable<any[]> {
