@@ -230,9 +230,13 @@ export class ApiService {
     return this.http.post<UserResponse>(`${this.apiUrl}/users/login`, data);
   }
 
-  getUsers(): Observable<UserResponse[]> {
-    return this.http.get<UserResponse[]>(`${this.apiUrl}/users`);
-  }
+  // ==========================
+// USUARIOS PARA ADMIN
+// GET: https://jonzko-sport-production.up.railway.app/api/admin/users
+// ==========================
+getUsers(): Observable<UserResponse[]> {
+  return this.http.get<UserResponse[]>(`${this.apiUrl}/admin/users`);
+}
 
   // ==========================
   // PEDIDOS
