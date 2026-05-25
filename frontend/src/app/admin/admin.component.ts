@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 
 import {
@@ -93,6 +95,9 @@ receiptModalOpen = false;
 
 receiptModalTitle = '';
 receiptModalContent = '';
+
+currentReceiptOrder: OrderResponse | null = null;
+currentReceiptType: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante' = 'Comprobante';
   productForm: ProductRequest = {
     name: '',
     category: '',
@@ -814,6 +819,9 @@ exportFullExcelReport(): void {
   XLSX.writeFile(workbook, `Reporte_JONZKO_${new Date().getTime()}.xlsx`);
 }
 viewVoucher(order: OrderResponse): void {
+  this.currentReceiptOrder = order;
+  this.currentReceiptType = 'Voucher';
+
   const content = this.buildReceiptHtml(order, 'Voucher');
   this.openReceiptModal(`Voucher del pedido #${order.id}`, content);
 }
@@ -822,139 +830,116 @@ viewSaleReceipt(
   order: OrderResponse,
   type: 'Boleta' | 'Factura' | 'Comprobante'
 ): void {
+  this.currentReceiptOrder = order;
+  this.currentReceiptType = type;
+
   const content = this.buildReceiptHtml(order, type);
   this.openReceiptModal(`${type} del pedido #${order.id}`, content);
 }
 
-downloadOrderPdf(
-  order: OrderResponse,
-  type: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante'
-): void {
-  const doc = new jsPDF('p', 'mm', 'a4');
+viewCurrentReceipt(order: OrderResponse): void {
+  const orderChanged =
+    !this.currentReceiptOrder || this.currentReceiptOrder.id !== order.id;
 
-  const subtotal = this.getSubtotal(order);
-  const delivery = this.getDeliveryCost(order);
-  const igv = Number(order.total || 0) - subtotal - delivery;
+  if (orderChanged) {
+    this.currentReceiptOrder = order;
 
-  const documentNumber =
-    order.documentNumber || order.customerPhone || `000${order.id}`;
+    if ((order.documentType || '').toLowerCase().includes('factura')) {
+      this.currentReceiptType = 'Factura';
+    } else if ((order.documentType || '').toLowerCase().includes('boleta')) {
+      this.currentReceiptType = 'Boleta';
+    } else {
+      this.currentReceiptType = 'Comprobante';
+    }
+  }
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(22);
-  doc.text(this.companyName, 14, 18);
-
-  doc.setFontSize(10);
-  doc.setFont('helvetica', 'normal');
-  doc.text(`RUC: ${this.companyRuc}`, 14, 26);
-  doc.text(this.companyAddress, 14, 32);
-  doc.text(this.companyEmail, 14, 38);
-
-  doc.setDrawColor(0, 0, 0);
-  doc.roundedRect(124, 12, 72, 36, 4, 4);
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(17);
-  doc.text(type.toUpperCase(), 160, 25, { align: 'center' });
-
-  doc.setFontSize(11);
-  doc.text(`${type.substring(0, 1)}001-${documentNumber}`, 160, 34, {
-    align: 'center'
-  });
-
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
-  doc.text(
-    `${this.formatDate(order.createdAt)} ${this.formatTime(order.createdAt)}`,
-    160,
-    42,
-    { align: 'center' }
-  );
-
-  doc.line(14, 55, 196, 55);
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(12);
-  doc.text('DATOS DEL CLIENTE', 14, 66);
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.text(`Cliente: ${order.customerName || 'No registrado'}`, 14, 76);
-  doc.text(`Correo: ${order.customerEmail || 'No registrado'}`, 14, 83);
-  doc.text(`Teléfono: ${order.customerPhone || 'No registrado'}`, 14, 90);
-  doc.text(
-    `Documento: ${order.documentType || type} ${documentNumber}`,
-    14,
-    97
-  );
-  doc.text(
-    `Ubicación: ${order.department || ''} / ${order.province || ''} / ${order.district || ''}`,
-    14,
-    104
-  );
-  doc.text(`Dirección: ${order.address || 'No registrada'}`, 14, 111);
-  doc.text(`Referencia: ${order.referenceText || 'Sin referencia'}`, 14, 118);
-
-  doc.setFont('helvetica', 'bold');
-  doc.text('DATOS DEL PAGO', 14, 132);
-
-  doc.setFont('helvetica', 'normal');
-  doc.text(`Pedido: ${this.getOrderCode(order)}`, 14, 142);
-  doc.text(`Método: ${order.paymentMethod || 'No registrado'}`, 14, 149);
-  doc.text(`Operación: ${this.getOperationCode(order)}`, 14, 156);
-  doc.text(`Estado: ${order.orderStatus || 'Sin estado'}`, 14, 163);
-
-  doc.setFont('helvetica', 'bold');
-  doc.text('PRODUCTOS VENDIDOS', 14, 177);
-
-  let y = 187;
-
-  this.parseItems(order).forEach((item, index) => {
-    const name = item.productName || item.name || 'Producto';
-    const size = item.selectedSize || '-';
-    const color = item.selectedColor || '-';
-    const quantity = Number(item.quantity || 1);
-    const price = Number(item.price || 0);
-    const totalLine = price * quantity;
-
-    doc.setFont('helvetica', 'normal');
-    doc.text(
-      `${index + 1}. ${name} | Talla: ${size} | Color: ${color} | Cant: ${quantity}`,
-      14,
-      y
-    );
-
-    doc.text(`S/ ${totalLine.toFixed(2)}`, 185, y, { align: 'right' });
-    y += 8;
-  });
-
-  y += 8;
-
-  doc.line(120, y, 196, y);
-  y += 8;
-
-  doc.text(`Subtotal: S/ ${subtotal.toFixed(2)}`, 130, y);
-  y += 7;
-  doc.text(`Delivery: S/ ${delivery.toFixed(2)}`, 130, y);
-  y += 7;
-  doc.text(`IGV 18%: S/ ${igv.toFixed(2)}`, 130, y);
-  y += 10;
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(15);
-  doc.text(`TOTAL: ${this.money(order.total)}`, 130, y);
-
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
-  doc.text(
-    'Documento generado desde el panel administrativo de JONZKO SPORT.',
-    105,
-    285,
-    { align: 'center' }
-  );
-
-  doc.save(`${type}_JONZKO_Pedido_${order.id}.pdf`);
+  const content = this.buildReceiptHtml(order, this.currentReceiptType);
+  this.openReceiptModal(`${this.currentReceiptType} del pedido #${order.id}`, content);
 }
 
+downloadCurrentReceipt(order: OrderResponse): void {
+  const orderChanged =
+    !this.currentReceiptOrder || this.currentReceiptOrder.id !== order.id;
+
+  if (orderChanged) {
+    this.currentReceiptOrder = order;
+
+    if ((order.documentType || '').toLowerCase().includes('factura')) {
+      this.currentReceiptType = 'Factura';
+    } else if ((order.documentType || '').toLowerCase().includes('boleta')) {
+      this.currentReceiptType = 'Boleta';
+    } else {
+      this.currentReceiptType = 'Comprobante';
+    }
+  }
+
+  this.downloadOrderPdf(order, this.currentReceiptType);
+}
+
+async downloadOrderPdf(
+  order: OrderResponse,
+  type: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante'
+): Promise<void> {
+  try {
+    const tempContainer = document.createElement('div');
+
+    tempContainer.style.position = 'fixed';
+    tempContainer.style.left = '-10000px';
+    tempContainer.style.top = '0';
+    tempContainer.style.width = '1100px';
+    tempContainer.style.background = '#ffffff';
+    tempContainer.style.zIndex = '-1';
+
+    tempContainer.innerHTML = this.buildReceiptHtml(order, type);
+    document.body.appendChild(tempContainer);
+
+    const receiptPage = tempContainer.querySelector('.receipt-page') as HTMLElement;
+
+    if (!receiptPage) {
+      document.body.removeChild(tempContainer);
+      alert('No se pudo generar el comprobante para PDF.');
+      return;
+    }
+
+    const canvas = await html2canvas(receiptPage, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff'
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+
+    const pdf = new jsPDF('p', 'mm', 'a4');
+
+    const pdfWidth = 210;
+    const pdfHeight = 297;
+
+    const imgWidth = pdfWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pdfHeight;
+
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
+    }
+
+    const fileName = `${type}_JONZKO_Pedido_${order.id}.pdf`;
+
+    pdf.save(fileName);
+
+    document.body.removeChild(tempContainer);
+  } catch (error) {
+    console.error('Error generando PDF bonito:', error);
+    alert('No se pudo descargar el PDF.');
+  }
+}
 
 private openPrintWindow(title: string, content: string): void {
   const printWindow = window.open('', '_blank');

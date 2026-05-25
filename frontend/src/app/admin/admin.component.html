@@ -733,18 +733,14 @@
                 Generar factura
               </button>
 
-              <button
-                type="button"
-                class="secondary-action"
-                (click)="viewSaleReceipt(order, 'Comprobante')"
-              >
+              <button type="button" class="secondary-action" (click)="viewCurrentReceipt(order)">
                 Ver comprobante
               </button>
 
               <button
                 type="button"
                 class="secondary-action"
-                (click)="downloadOrderPdf(order, 'Comprobante')"
+                (click)="downloadCurrentReceipt(order)"
               >
                 Descargar PDF
               </button>
@@ -1189,28 +1185,6 @@
         <div class="receipt-modal-header">
           <div>
             <span class="modal-kicker">Documento generado</span>
-            <h2>{{ receiptModalTitle }}</h2>
-          </div>
-
-          <button type="button" class="modal-close" (click)="closeReceiptModal()">✕</button>
-        </div>
-
-        <div class="receipt-modal-body">
-          <div class="receipt-modal-paper" [innerHTML]="receiptModalContent"></div>
-        </div>
-
-        <div class="receipt-modal-footer">
-          <button type="button" class="secondary-action" (click)="closeReceiptModal()">
-            Cerrar
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="receipt-modal-backdrop" *ngIf="receiptModalOpen">
-      <div class="receipt-modal">
-        <div class="receipt-modal-header">
-          <div>
-            <span class="modal-kicker">DOCUMENTO GENERADO</span>
             <h2>{{ receiptModalTitle }}</h2>
           </div>
 
