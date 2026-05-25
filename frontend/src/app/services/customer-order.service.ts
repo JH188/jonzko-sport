@@ -26,7 +26,7 @@ export interface CustomerOrderRequest {
   providedIn: 'root'
 })
 export class CustomerOrderService {
-  private apiUrl = 'http://localhost:8080/api/customer-orders';
+  private readonly apiUrl = 'https://jonzko-sport-production.up.railway.app/api/orders';
 
   constructor(private http: HttpClient) {}
 
@@ -36,5 +36,9 @@ export class CustomerOrderService {
 
   getOrdersByUser(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/user/${userId}`);
+  }
+
+  getAdminOrders(): Observable<any[]> {
+    return this.http.get<any[]>('https://jonzko-sport-production.up.railway.app/api/admin/orders');
   }
 }
