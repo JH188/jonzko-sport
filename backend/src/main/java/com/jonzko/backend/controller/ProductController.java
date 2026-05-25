@@ -22,7 +22,10 @@ import com.jonzko.backend.repository.ProductRepository;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(originPatterns = {
+        "http://localhost:*",
+        "https://*.vercel.app"
+})
 public class ProductController {
 
     private final ProductRepository productRepository;
