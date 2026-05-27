@@ -16,9 +16,9 @@
       <h1>{{ p.name }}</h1>
 
       <div class="prices">
-        <span class="old-price" *ngIf="p.oldPrice"> S/ {{ p.oldPrice }} </span>
+        <span class="old-price" *ngIf="p.oldPrice"> S/ {{ p.oldPrice | number:'1.2-2' }} </span>
 
-        <span class="current-price"> S/ {{ p.price }} </span>
+        <span class="current-price"> S/ {{ p.price | number: '1.2-2' }} </span>
         <small class="unit-price-label">Precio por unidad</small>
       </div>
 
@@ -58,7 +58,7 @@
 
           <div class="subtotal-detail">
             <span>Total</span>
-            <strong>S/ {{ (p.price * quantity()).toFixed(2) }}</strong>
+            <strong>S/ {{ (p.price * quantity()) | number:'1.2-2' }}</strong>
           </div>
         </div>
       </div>
