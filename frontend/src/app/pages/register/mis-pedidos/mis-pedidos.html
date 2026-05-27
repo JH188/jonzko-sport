@@ -41,6 +41,7 @@
 
         <select [(ngModel)]="selectedFilter">
           <option value="todos">Todos los pedidos</option>
+          <option value="Pagado">Pagados</option>
           <option value="Pendiente">Pendientes</option>
           <option value="Confirmado">Confirmados</option>
           <option value="Enviado">Enviados</option>
@@ -79,14 +80,18 @@
                   <h3>{{ formatFecha(pedido.createdAt) }}</h3>
                 </div>
 
-                <span class="status" [ngClass]="getStatusClass(pedido.orderStatus)">
-                  {{ pedido.orderStatus }}
+                <span
+                  class="status"
+                  [ngClass]="getStatusClass(pedido.paymentStatus || pedido.orderStatus)"
+                >
+                  {{ getStatusText(pedido) }}
                 </span>
               </div>
 
               <div class="order-body">
                 <p><strong>Total:</strong> S/ {{ pedido.total }}</p>
-                <p><strong>Método de pago:</strong> {{ pedido.paymentMethod }}</p>
+                <p><strong>Método de pago:</strong> {{ pedido.paymentMethod || 'Sin método' }}</p>
+                <p><strong>Estado de pago:</strong> {{ getStatusText(pedido) }}</p>
                 <p>
                   <strong>Comprobante:</strong> {{ pedido.documentType }} -
                   {{ pedido.documentNumber }}
@@ -133,8 +138,11 @@
             <p>{{ formatFecha(selectedPedido.createdAt) }}</p>
           </div>
 
-          <span class="status" [ngClass]="getStatusClass(selectedPedido.orderStatus)">
-            {{ selectedPedido.orderStatus }}
+          <span
+            class="status"
+            [ngClass]="getStatusClass(selectedPedido.paymentStatus || selectedPedido.orderStatus)"
+          >
+            {{ getStatusText(selectedPedido) }}
           </span>
         </div>
 
@@ -165,7 +173,8 @@
 
           <section>
             <h3>Pago</h3>
-            <p><strong>Método:</strong> {{ selectedPedido.paymentMethod }}</p>
+            <p><strong>Método:</strong> {{ selectedPedido.paymentMethod || 'Sin método' }}</p>
+            <p><strong>Estado:</strong> {{ getStatusText(selectedPedido) }}</p>
             <p><strong>Total:</strong> S/ {{ selectedPedido.total }}</p>
           </section>
         </div>
@@ -191,8 +200,12 @@
 
         <div class="modal-message">
           <strong>Importante:</strong>
-          Tu pedido fue registrado correctamente. Envía tu comprobante por WhatsApp para validar el
-          pago.
+          @if ((selectedPedido.paymentMethod || '').toLowerCase().includes('mercado')) {
+            Tu pago fue procesado correctamente con Mercado Pago. Tu pedido ya quedó registrado.
+          } @else {
+            Tu pedido fue registrado correctamente. Envía tu comprobante por WhatsApp para validar
+            el pago.
+          }
         </div>
 
         <button class="modal-ok" type="button" (click)="closeDetalle()">Entendido</button>

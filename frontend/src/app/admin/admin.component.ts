@@ -582,6 +582,9 @@ formatTime(value: string | null | undefined): string {
   }
 
  statusText(status: string | null | undefined): string {
+  if ((status || '').toLowerCase() === 'pagado') {
+  return 'status confirmed';
+}
   switch (status) {
     case 'Pendiente':
       return 'Pendiente';

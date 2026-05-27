@@ -82,7 +82,7 @@ closeDetalle(): void {
       const texto = this.searchText.toLowerCase();
 
       const codigo = String(pedido.id || '').toLowerCase();
-      const estado = String(pedido.orderStatus || '').toLowerCase();
+      const estado = String(pedido.paymentStatus || pedido.orderStatus || '').toLowerCase();
       const fecha = String(pedido.createdAt || '').toLowerCase();
       const metodo = String(pedido.paymentMethod || '').toLowerCase();
 
@@ -96,21 +96,43 @@ closeDetalle(): void {
         return matchText || !texto;
       }
 
-      return pedido.orderStatus === this.selectedFilter && (matchText || !texto);
+      const estadoPedido = String(pedido.paymentStatus || pedido.orderStatus || '').toLowerCase();
+const filtro = String(this.selectedFilter || '').toLowerCase();
+
+return estadoPedido === filtro && (matchText || !texto);
     });
   }
 
   getStatusClass(status: string): string {
-    const estado = (status || '').toLowerCase();
+  const estado = (status || '').toLowerCase();
 
-    if (estado === 'pendiente') return 'status-pending';
-    if (estado === 'confirmado') return 'status-confirmed';
-    if (estado === 'enviado') return 'status-sent';
-    if (estado === 'entregado') return 'status-delivered';
-    if (estado === 'cancelado') return 'status-cancelled';
+  if (estado === 'pagado') return 'status-confirmed';
+  if (estado === 'pago aprobado') return 'status-confirmed';
+  if (estado === 'confirmado') return 'status-confirmed';
+  if (estado === 'entregado') return 'status-delivered';
+  if (estado === 'enviado') return 'status-sent';
+  if (estado === 'pendiente') return 'status-pending';
+  if (estado === 'cancelado') return 'status-cancelled';
+  if (estado === 'rechazado') return 'status-cancelled';
 
-    return 'status-pending';
-  }
+  return 'status-pending';
+}
+getStatusText(pedido: any): string {
+  const estado = pedido.paymentStatus || pedido.orderStatus || '';
+
+  const estadoLower = String(estado).toLowerCase();
+
+  if (estadoLower === 'pagado') return 'Pagado';
+  if (estadoLower === 'pago aprobado') return 'Pagado';
+  if (estadoLower === 'confirmado') return 'Confirmado';
+  if (estadoLower === 'pendiente') return 'Pendiente';
+  if (estadoLower === 'enviado') return 'Enviado';
+  if (estadoLower === 'entregado') return 'Entregado';
+  if (estadoLower === 'cancelado') return 'Cancelado';
+  if (estadoLower === 'rechazado') return 'Rechazado';
+
+  return estado || 'Pendiente';
+}
 
   formatFecha(fecha: string): string {
     if (!fecha) return 'Sin fecha';

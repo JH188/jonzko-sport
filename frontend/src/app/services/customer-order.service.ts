@@ -18,8 +18,15 @@ export interface CustomerOrderRequest {
   referenceText: string;
 
   paymentMethod: string;
+  paymentStatus?: string;
+  orderStatus?: string;
+
   total: number;
   itemsJson: string;
+
+  mercadoPagoPaymentId?: string;
+  mercadoPagoStatus?: string;
+  mercadoPagoStatusDetail?: string;
 }
 
 @Injectable({
