@@ -2789,3 +2789,296 @@ main {
     font-size: 12px;
   }
 }
+/* =========================================================
+   CORRECCIÓN FINAL PREMIUM - JONZKO RESPONSIVE
+   Pegar al FINAL de app.css
+   ========================================================= */
+
+/* HERO más elegante */
+.hero {
+  min-height: auto !important;
+  padding: 90px 8% 90px !important;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 440px) !important;
+  gap: 70px !important;
+}
+
+.hero-content {
+  max-width: 720px !important;
+}
+
+.hero h1 {
+  font-size: clamp(64px, 7vw, 112px) !important;
+  line-height: 0.9 !important;
+  letter-spacing: 6px !important;
+  margin-bottom: 24px !important;
+}
+
+.hero p {
+  font-size: clamp(16px, 1.35vw, 19px) !important;
+  line-height: 1.65 !important;
+  max-width: 560px !important;
+  color: #202020 !important;
+}
+
+.badge {
+  font-size: 11px !important;
+  letter-spacing: 4px !important;
+  padding: 9px 22px !important;
+}
+
+/* COLECCIÓN más ancha y centrada */
+.collection-section {
+  width: min(100%, 1320px) !important;
+  margin: 0 auto !important;
+  padding: 70px 28px 90px !important;
+  background: #ffffff !important;
+}
+
+.collection-header {
+  max-width: 720px !important;
+  margin-bottom: 34px !important;
+}
+
+.collection-header h1 {
+  font-size: clamp(34px, 3.5vw, 58px) !important;
+  line-height: 1 !important;
+  letter-spacing: -1.5px !important;
+  margin: 18px 0 10px !important;
+}
+
+.collection-header p {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  color: #444 !important;
+}
+
+.collection-header .tag {
+  font-size: 10px !important;
+  letter-spacing: 4px !important;
+  padding: 8px 18px !important;
+}
+
+/* GRILLA DE PRODUCTOS */
+.products-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  width: 100% !important;
+}
+
+/* CARD PRODUCTO */
+.product-card {
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.055) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.product-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.10) !important;
+}
+
+/* IMAGEN */
+.product-image-box {
+  width: 100% !important;
+  height: 210px !important;
+  display: block !important;
+  background: #f4f4f4 !important;
+  overflow: hidden !important;
+}
+
+.product-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  padding: 0 !important;
+}
+
+/* CONTENIDO */
+.product-info {
+  padding: 18px 18px 20px !important;
+}
+
+.product-category {
+  margin: 0 0 8px !important;
+  font-size: 9px !important;
+  letter-spacing: 4px !important;
+  font-weight: 900 !important;
+  color: #444 !important;
+  text-transform: uppercase !important;
+}
+
+/* AQUÍ SE ARREGLA LO GRANDE: tu HTML usa h2 */
+.product-info h2,
+.product-card h2 {
+  font-size: clamp(21px, 1.45vw, 28px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.8px !important;
+  margin: 0 0 10px !important;
+  color: #000 !important;
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Descripción más fina */
+.product-description {
+  min-height: 48px !important;
+  margin: 0 0 14px !important;
+  font-size: 12.5px !important;
+  line-height: 1.5 !important;
+  color: #444 !important;
+
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+/* Precio */
+.product-price {
+  margin: auto 0 14px !important;
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+}
+
+.old-price {
+  font-size: 12px !important;
+  color: #777 !important;
+}
+
+.current-price {
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  color: #000 !important;
+}
+
+/* Botón */
+.product-button {
+  min-height: 38px !important;
+  width: 100% !important;
+  border-radius: 999px !important;
+  background: #000 !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+/* Nosotros: quitar sensación exagerada */
+.about {
+  padding: 70px 6% !important;
+}
+
+.about-card {
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+  padding: 42px !important;
+  border-radius: 24px !important;
+}
+
+.about-card h2 {
+  font-size: clamp(32px, 4vw, 54px) !important;
+}
+
+.about-card p {
+  font-size: 16px !important;
+}
+
+/* Laptop */
+@media (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .product-image-box {
+    height: 220px !important;
+  }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    padding: 55px 24px !important;
+  }
+
+  .hero p {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .hero-actions {
+    justify-content: center !important;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+  }
+
+  .collection-section {
+    padding: 45px 18px 70px !important;
+  }
+}
+
+/* Celular */
+@media (max-width: 620px) {
+  .products-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .product-card {
+    display: grid !important;
+    grid-template-columns: 125px 1fr !important;
+    border-radius: 16px !important;
+  }
+
+  .product-image-box {
+    width: 125px !important;
+    height: 175px !important;
+  }
+
+  .product-info {
+    padding: 14px !important;
+  }
+
+  .product-info h2,
+  .product-card h2 {
+    font-size: 18px !important;
+    line-height: 1.08 !important;
+  }
+
+  .product-description {
+    font-size: 12px !important;
+    -webkit-line-clamp: 2 !important;
+    min-height: auto !important;
+  }
+
+  .current-price {
+    font-size: 14px !important;
+  }
+
+  .product-button {
+    min-height: 36px !important;
+    font-size: 10.5px !important;
+  }
+
+  .hero h1 {
+    font-size: 54px !important;
+    letter-spacing: 4px !important;
+  }
+
+  .hero p {
+    font-size: 15px !important;
+  }
+}

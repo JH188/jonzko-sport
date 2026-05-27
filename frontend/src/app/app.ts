@@ -37,7 +37,7 @@ currentRoute = signal('');
   slogan = signal('ROPA URBANA PERUANA');
 
   heroTitle = signal('JONZKO');
-  heroDescription = signal('Ropa urbana con presencia, estilo y visión empresarial.');
+  heroDescription = signal('Ropa urbana peruana con presencia, estilo propio y actitud.');
   primaryButton = signal('Comprar ahora');
   secondaryButton = signal('Ver colección');
 
@@ -50,7 +50,7 @@ currentRoute = signal('');
 
   aboutTitle = signal('Sobre JONZKO');
   aboutDescription = signal(
-    'Marca urbana peruana creada con visión empresarial, estilo propio y presencia moderna.'
+    'Marca urbana peruana creada con estilo propio, presencia moderna y esencia urbana.'
   );
 
   instagramUrl = signal('https://www.instagram.com/jonzko.o/');
@@ -157,7 +157,7 @@ goToProductDetail(productId: number): void {
 
       this.heroTitle.set(config.heroTitle || 'JONZKO');
       this.heroDescription.set(
-        config.heroDescription || 'Ropa urbana con presencia, estilo y visión empresarial.'
+        config.heroDescription || 'Ropa urbana peruana con presencia, estilo propio y actitud.'
       );
 
       this.primaryButton.set(config.primaryButton || 'Comprar ahora');
@@ -175,7 +175,7 @@ goToProductDetail(productId: number): void {
       this.aboutTitle.set(config.aboutTitle || 'Sobre JONZKO');
       this.aboutDescription.set(
         config.aboutDescription ||
-          'Marca urbana peruana creada con visión empresarial, estilo propio y presencia moderna.'
+          'Marca urbana peruana creada con estilo propio, presencia moderna y esencia urbana.'
       );
 
       this.instagramUrl.set(config.instagramUrl || 'https://www.instagram.com/jonzko.o/');
