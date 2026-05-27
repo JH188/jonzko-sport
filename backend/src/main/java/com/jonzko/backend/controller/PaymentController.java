@@ -177,8 +177,9 @@ public ResponseEntity<?> processPayment(@RequestBody ProcessPaymentRequest reque
         customHeaders.put("x-idempotency-key", UUID.randomUUID().toString());
 
         MPRequestOptions requestOptions = MPRequestOptions.builder()
-                .customHeaders(customHeaders)
-                .build();
+        .accessToken(mercadoPagoAccessToken)
+        .customHeaders(customHeaders)
+        .build();
 
         Payment payment = paymentClient.create(paymentCreateRequest, requestOptions);
 
