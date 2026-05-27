@@ -3133,3 +3133,19 @@ main {
     margin-top: 0 !important;
   }
 }
+.cart-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cart-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  height: 28px;
+  font-size: 15px;
+  letter-spacing: 0;
+}

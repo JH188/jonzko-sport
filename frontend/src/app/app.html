@@ -28,8 +28,8 @@
         <a routerLink="/registro" class="register-btn"> Registrarse </a>
       }
 
-      <button class="cart-btn" type="button" (click)="toggleCart()">
-        Carrito ({{ cartCount() }})
+      <button class="cart-btn" type="button" (click)="toggleCart()" title="Ver carrito">
+        🛒 <span>({{ cartCount() }})</span>
       </button>
     </div>
   </header>
@@ -224,7 +224,7 @@
     <aside class="cart-panel">
       <div class="cart-header">
         <div>
-          <span class="section-tag">Carrito</span>
+          <span class="section-tag">🛒</span>
           <h2>Tu pedido</h2>
         </div>
 
