@@ -88,9 +88,9 @@
         </div>
 
         @if (products().length === 0) {
-          <div class="empty-products">
-            <h3>No hay productos disponibles</h3>
-            <p>Revisa si el backend está respondiendo correctamente.</p>
+          <div *ngIf="products().length === 0" class="loading-products">
+            <div class="loader"></div>
+            <h3>Cargando productos...</h3>
           </div>
         } @else {
           <div class="products-grid">
