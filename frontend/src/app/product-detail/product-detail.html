@@ -49,10 +49,17 @@
       <div class="quantity">
         <h3>Cantidad</h3>
 
-        <div class="qty-control">
-          <button type="button" (click)="decreaseQty()">-</button>
-          <span>{{ quantity() }}</span>
-          <button type="button" (click)="increaseQty()">+</button>
+        <div class="qty-row">
+          <div class="qty-control">
+            <button type="button" (click)="decreaseQty()">-</button>
+            <span>{{ quantity() }}</span>
+            <button type="button" (click)="increaseQty()">+</button>
+          </div>
+
+          <div class="subtotal-detail">
+            <span>Total</span>
+            <strong>S/ {{ (p.price * quantity()).toFixed(2) }}</strong>
+          </div>
         </div>
       </div>
 
