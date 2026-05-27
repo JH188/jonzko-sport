@@ -153,22 +153,23 @@ public ResponseEntity<?> processPayment(@RequestBody ProcessPaymentRequest reque
                 .build();
 
         PaymentCreateRequest paymentCreateRequest = PaymentCreateRequest.builder()
-                .transactionAmount(amount)
-                .token(request.token())
-                .description(
-                        request.description() == null || request.description().isBlank()
-                                ? "Compra JONZKO SPORT"
-                                : request.description()
-                )
-                .installments(request.installments() == null ? 1 : request.installments())
-                .paymentMethodId(request.paymentMethodId())
-                .payer(payer)
-                .externalReference(
-                        request.orderId() == null || request.orderId().isBlank()
-                                ? "JONZKO-" + System.currentTimeMillis()
-                                : request.orderId()
-                )
-                .build();
+        .transactionAmount(amount)
+        .token(request.token())
+        .description(
+                request.description() == null || request.description().isBlank()
+                        ? "Compra JONZKO SPORT"
+                        : request.description()
+        )
+        .installments(request.installments() == null ? 1 : request.installments())
+        .paymentMethodId(request.paymentMethodId())
+        .issuerId(request.issuerId())
+        .payer(payer)
+        .externalReference(
+                request.orderId() == null || request.orderId().isBlank()
+                        ? "JONZKO-" + System.currentTimeMillis()
+                        : request.orderId()
+        )
+        .build();
 
         PaymentClient paymentClient = new PaymentClient();
 
