@@ -195,3 +195,107 @@
   min-height: auto;
   padding-bottom: 60px;
 }
+/* ================================================= */
+/* PRODUCT DETAIL RESPONSIVE - JONZKO */
+/* ================================================= */
+
+.product-detail-page,
+.detail-page {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.product-detail-container,
+.detail-container,
+.detail-grid {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+/* PC */
+@media (min-width: 901px) {
+  .product-detail-container,
+  .detail-container,
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 430px;
+    gap: 56px;
+    align-items: center;
+  }
+}
+
+/* Tablet y celular */
+@media (max-width: 900px) {
+  .product-detail-page,
+  .detail-page {
+    padding: 28px 14px !important;
+  }
+
+  .product-detail-container,
+  .detail-container,
+  .detail-grid {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .product-image-card,
+  .detail-image-card,
+  .product-detail-image {
+    width: 100% !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    padding: 18px !important;
+    border-radius: 24px !important;
+  }
+
+  .product-image-card img,
+  .detail-image-card img,
+  .product-detail-image img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 430px !important;
+    object-fit: cover !important;
+    border-radius: 18px !important;
+  }
+
+  .product-info-card,
+  .detail-info-card,
+  .product-detail-info {
+    width: 100% !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    padding: 26px 22px !important;
+    border-radius: 24px !important;
+  }
+
+  .product-info-card h1,
+  .detail-info-card h1,
+  .product-detail-info h1 {
+    font-size: 30px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.5px !important;
+    word-break: normal !important;
+  }
+
+  .product-info-card p,
+  .detail-info-card p,
+  .product-detail-info p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .size-options,
+  .sizes,
+  .quantity-controls {
+    flex-wrap: wrap !important;
+  }
+
+  .add-cart-btn,
+  .add-to-cart-btn {
+    width: 100% !important;
+    min-height: 48px !important;
+  }
+}
