@@ -33,7 +33,9 @@ export class CheckoutComponent implements OnInit {
 
   loading = false;
 error = '';
-apiUrl = 'http://localhost:8080';
+
+apiUrl = 'https://jonzko-sport-production.up.railway.app';
+
 mpPublicKey = 'APP_USR-adf95601-0789-4063-a846-0eb95a68326c';
 paymentBrickController: any = null;
 yapePhone = '';
