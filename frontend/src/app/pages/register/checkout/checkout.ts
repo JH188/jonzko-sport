@@ -208,15 +208,51 @@ async cargarPaymentBrick(): Promise<void> {
                 console.log('Pago procesado:', response);
                 resolve(response);
 
-                if (response.status === 'approved') {
-                  localStorage.removeItem('jonzko_cart');
-                  window.dispatchEvent(new Event('jonzko-cart-updated'));
-                  this.router.navigate(['/pago-exitoso']);
-                } else if (response.status === 'pending' || response.status === 'in_process') {
-                  this.router.navigate(['/pago-pendiente']);
-                } else {
-                  this.router.navigate(['/pago-error']);
-                }
+if (response.status === 'approved' || response.statusDetail === 'accredited') {
+
+  const currentUser = this.user();
+
+  if (!currentUser) {
+    this.router.navigate(['/login']);
+    return;
+  }
+
+  const pedido = {
+    userId: currentUser.id,
+    customerName: this.nombres.trim(),
+    customerEmail: currentUser.email,
+    customerPhone: this.telefono.trim(),
+
+    documentType: this.tipoDocumento,
+    documentNumber: this.numeroDocumento.trim(),
+
+    department: this.departamento.trim(),
+    province: this.provincia.trim(),
+    district: this.distrito.trim(),
+    address: this.direccion.trim(),
+    referenceText: this.referencia.trim(),
+
+    paymentMethod: 'Mercado Pago - Pagado',
+    total: this.total(),
+    itemsJson: JSON.stringify(this.cart())
+  };
+
+  this.customerOrderService.createOrder(pedido).subscribe({
+    next: () => {
+      localStorage.removeItem('jonzko_cart');
+      window.dispatchEvent(new Event('jonzko-cart-updated'));
+
+      alert('Pago exitoso. Tu pedido fue registrado correctamente.');
+
+      this.router.navigate(['/mis-pedidos']);
+    },
+    error: (err) => {
+      console.error('El pago fue aprobado, pero no se registró el pedido:', err);
+      this.error = 'El pago fue aprobado, pero hubo un problema registrando el pedido.';
+    }
+  });
+
+}
               },
               error: (error) => {
                 this.loading = false;
