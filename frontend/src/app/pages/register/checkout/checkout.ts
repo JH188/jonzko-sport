@@ -33,6 +33,7 @@ export class CheckoutComponent implements OnInit {
 
   loading = false;
 error = '';
+successMessage = '';
 
 apiUrl = 'https://jonzko-sport-production.up.railway.app';
 
@@ -154,11 +155,11 @@ async cargarPaymentBrick(): Promise<void> {
             theme: 'default'
           }
         },
- paymentMethods: {
-  creditCard: 'all',
-  debitCard: 'all',
-  maxInstallments: 1
-}
+        paymentMethods: {
+          creditCard: 'all',
+          debitCard: 'all',
+          maxInstallments: 1
+        }
       },
       callbacks: {
         onReady: () => {
@@ -171,93 +172,163 @@ async cargarPaymentBrick(): Promise<void> {
 
           this.loading = true;
           this.error = '';
+          this.successMessage = '';
 
           return new Promise((resolve, reject) => {
             this.http.post<any>(
               `${this.apiUrl}/api/payments/mercadopago/process-payment`,
               {
-  ...formData,
+                ...formData,
 
-  token: formData.token,
-  transactionAmount: Number(this.total().toFixed(2)),
-  amount: Number(this.total().toFixed(2)),
-  installments: formData.installments,
-  paymentMethodId: formData.payment_method_id || formData.paymentMethodId,
-  issuerId: formData.issuer_id || formData.issuerId,
-  payer: {
-    email: formData.payer?.email || this.user()?.email || ''
-  },
+                token: formData.token,
+                transactionAmount: Number(this.total().toFixed(2)),
+                amount: Number(this.total().toFixed(2)),
+                installments: formData.installments,
+                paymentMethodId: formData.payment_method_id || formData.paymentMethodId,
+                issuerId: formData.issuer_id || formData.issuerId,
 
-  orderId: 'JONZKO-' + new Date().getTime(),
-  description: 'Compra JONZKO SPORT',
-  customerName: this.nombres,
-  customerEmail: this.user()?.email,
-  customerPhone: this.telefono,
-  documentType: this.tipoDocumento,
-  documentNumber: this.numeroDocumento,
-  department: this.departamento,
-  province: this.provincia,
-  district: this.distrito,
-  address: this.direccion,
-  referenceText: this.referencia,
-  itemsJson: JSON.stringify(this.cart())
-}
+                payer: {
+                  email: formData.payer?.email || this.user()?.email || ''
+                },
+
+                orderId: 'JONZKO-' + new Date().getTime(),
+                description: 'Compra JONZKO SPORT',
+                customerName: this.nombres,
+                customerEmail: this.user()?.email,
+                customerPhone: this.telefono,
+                documentType: this.tipoDocumento,
+                documentNumber: this.numeroDocumento,
+                department: this.departamento,
+                province: this.provincia,
+                district: this.distrito,
+                address: this.direccion,
+                referenceText: this.referencia,
+                itemsJson: JSON.stringify(this.cart())
+              }
             ).subscribe({
               next: (response) => {
-                this.loading = false;
                 console.log('Pago procesado:', response);
+
+                const status = response.status;
+                const statusDetail = response.statusDetail || response.status_detail;
+
+                const pagoAprobado =
+                  status === 'approved' ||
+                  statusDetail === 'accredited';
+
+                const pagoRechazado =
+                  status === 'rejected' ||
+                  status === 'cancelled' ||
+                  status === 'refunded' ||
+                  statusDetail === 'cc_rejected_bad_filled_security_code' ||
+                  statusDetail === 'cc_rejected_bad_filled_date' ||
+                  statusDetail === 'cc_rejected_bad_filled_other' ||
+                  statusDetail === 'cc_rejected_call_for_authorize' ||
+                  statusDetail === 'cc_rejected_card_disabled' ||
+                  statusDetail === 'cc_rejected_card_error' ||
+                  statusDetail === 'cc_rejected_duplicated_payment' ||
+                  statusDetail === 'cc_rejected_high_risk' ||
+                  statusDetail === 'cc_rejected_insufficient_amount' ||
+                  statusDetail === 'cc_rejected_invalid_installments' ||
+                  statusDetail === 'cc_rejected_max_attempts' ||
+                  statusDetail === 'cc_rejected_other_reason';
+
+                if (pagoAprobado) {
+                  const currentUser = this.user();
+
+                  if (!currentUser) {
+                    this.loading = false;
+                    this.router.navigate(['/login']);
+                    reject('Usuario no encontrado');
+                    return;
+                  }
+
+                  const pedido = {
+                    userId: currentUser.id,
+                    customerName: this.nombres.trim(),
+                    customerEmail: currentUser.email,
+                    customerPhone: this.telefono.trim(),
+
+                    documentType: this.tipoDocumento,
+                    documentNumber: this.numeroDocumento.trim(),
+
+                    department: this.departamento.trim(),
+                    province: this.provincia.trim(),
+                    district: this.distrito.trim(),
+                    address: this.direccion.trim(),
+                    referenceText: this.referencia.trim(),
+
+                    paymentMethod: 'Mercado Pago',
+                    paymentStatus: 'PAGADO',
+                    orderStatus: 'PAGADO',
+
+                    total: this.total(),
+                    itemsJson: JSON.stringify(this.cart()),
+
+                    mercadoPagoPaymentId: response.id || response.paymentId || '',
+                    mercadoPagoStatus: status || '',
+                    mercadoPagoStatusDetail: statusDetail || ''
+                  };
+
+                  this.customerOrderService.createOrder(pedido).subscribe({
+                    next: () => {
+                      this.loading = false;
+
+                      localStorage.removeItem('jonzko_cart');
+                      window.dispatchEvent(new Event('jonzko-cart-updated'));
+
+                      this.successMessage = '✅ Pago exitoso. Tu pedido fue registrado correctamente.';
+                      this.error = '';
+
+                      resolve(response);
+
+                      setTimeout(() => {
+                        this.router.navigate(['/mis-pedidos']);
+                      }, 1500);
+                    },
+                    error: (err) => {
+                      this.loading = false;
+
+                      console.error('El pago fue aprobado, pero no se registró el pedido:', err);
+
+                      this.error = 'El pago fue aprobado, pero hubo un problema registrando el pedido. Revisa el panel o la base de datos.';
+                      this.successMessage = '';
+
+                      reject(err);
+                    }
+                  });
+
+                  return;
+                }
+
+                if (pagoRechazado) {
+                  this.loading = false;
+
+                  this.error = '❌ Pago rechazado. No se registró ningún pedido.';
+                  this.successMessage = '';
+
+                  console.warn('Pago rechazado por Mercado Pago:', response);
+
+                  resolve(response);
+                  return;
+                }
+
+                this.loading = false;
+
+                this.error = `El pago no fue aprobado. Estado: ${status || 'desconocido'}. No se registró ningún pedido.`;
+                this.successMessage = '';
+
                 resolve(response);
-
-if (response.status === 'approved' || response.statusDetail === 'accredited') {
-
-  const currentUser = this.user();
-
-  if (!currentUser) {
-    this.router.navigate(['/login']);
-    return;
-  }
-
-  const pedido = {
-    userId: currentUser.id,
-    customerName: this.nombres.trim(),
-    customerEmail: currentUser.email,
-    customerPhone: this.telefono.trim(),
-
-    documentType: this.tipoDocumento,
-    documentNumber: this.numeroDocumento.trim(),
-
-    department: this.departamento.trim(),
-    province: this.provincia.trim(),
-    district: this.distrito.trim(),
-    address: this.direccion.trim(),
-    referenceText: this.referencia.trim(),
-
-    paymentMethod: 'Mercado Pago - Pagado',
-    total: this.total(),
-    itemsJson: JSON.stringify(this.cart())
-  };
-
-  this.customerOrderService.createOrder(pedido).subscribe({
-    next: () => {
-      localStorage.removeItem('jonzko_cart');
-      window.dispatchEvent(new Event('jonzko-cart-updated'));
-
-      alert('Pago exitoso. Tu pedido fue registrado correctamente.');
-
-      this.router.navigate(['/mis-pedidos']);
-    },
-    error: (err) => {
-      console.error('El pago fue aprobado, pero no se registró el pedido:', err);
-      this.error = 'El pago fue aprobado, pero hubo un problema registrando el pedido.';
-    }
-  });
-
-}
               },
+
               error: (error) => {
                 this.loading = false;
+
                 console.error('Error procesando pago:', error);
-                this.error = 'No se pudo procesar el pago con Mercado Pago.';
+
+                this.error = 'No se pudo procesar el pago con Mercado Pago. No se registró ningún pedido.';
+                this.successMessage = '';
+
                 reject(error);
               }
             });
@@ -267,6 +338,7 @@ if (response.status === 'approved' || response.statusDetail === 'accredited') {
         onError: (error: any) => {
           console.error('Error Payment Brick:', error);
           this.error = 'Ocurrió un error cargando Mercado Pago.';
+          this.successMessage = '';
         }
       }
     };
@@ -280,6 +352,7 @@ if (response.status === 'approved' || response.statusDetail === 'accredited') {
   } catch (error) {
     console.error('Error cargando Mercado Pago Brick:', error);
     this.error = 'No se pudo cargar el formulario de Mercado Pago.';
+    this.successMessage = '';
   }
 }
 volverDatos(): void {
