@@ -36,7 +36,7 @@ error = '';
 
 apiUrl = 'https://jonzko-sport-production.up.railway.app';
 
-mpPublicKey = 'APP_USR-adf95601-0789-4063-a846-0eb95a68326c';
+mpPublicKey = 'APP_USR-8668627032810157-052618-dd81c1f2b18f62b03545800f2964cb02-3429350658';
 paymentBrickController: any = null;
 yapePhone = '';
 yapeOtp = '';
