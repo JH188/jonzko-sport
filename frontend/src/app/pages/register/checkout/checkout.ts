@@ -179,22 +179,32 @@ async cargarPaymentBrick(): Promise<void> {
             this.http.post<any>(
               `${this.apiUrl}/api/payments/mercadopago/process-payment`,
               {
-                ...formData,
-                orderId: 'JONZKO-' + new Date().getTime(),
-                description: 'Compra JONZKO SPORT',
-                amount: Number(this.total().toFixed(2)),
-                customerName: this.nombres,
-                customerEmail: this.user()?.email,
-                customerPhone: this.telefono,
-                documentType: this.tipoDocumento,
-                documentNumber: this.numeroDocumento,
-                department: this.departamento,
-                province: this.provincia,
-                district: this.distrito,
-                address: this.direccion,
-                referenceText: this.referencia,
-                itemsJson: JSON.stringify(this.cart())
-              }
+  ...formData,
+
+  token: formData.token,
+  transactionAmount: Number(this.total().toFixed(2)),
+  amount: Number(this.total().toFixed(2)),
+  installments: formData.installments,
+  paymentMethodId: formData.payment_method_id || formData.paymentMethodId,
+  issuerId: formData.issuer_id || formData.issuerId,
+  payer: {
+    email: formData.payer?.email || this.user()?.email || ''
+  },
+
+  orderId: 'JONZKO-' + new Date().getTime(),
+  description: 'Compra JONZKO SPORT',
+  customerName: this.nombres,
+  customerEmail: this.user()?.email,
+  customerPhone: this.telefono,
+  documentType: this.tipoDocumento,
+  documentNumber: this.numeroDocumento,
+  department: this.departamento,
+  province: this.provincia,
+  district: this.distrito,
+  address: this.direccion,
+  referenceText: this.referencia,
+  itemsJson: JSON.stringify(this.cart())
+}
             ).subscribe({
               next: (response) => {
                 this.loading = false;
