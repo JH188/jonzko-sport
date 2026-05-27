@@ -312,11 +312,11 @@ goCheckout(): void {
   const user = this.authService.getUser();
 
   if (!user) {
-    alert('Primero debes iniciar sesión o registrarte para continuar con tu compra.');
-    this.closeCart();
-    this.router.navigate(['/login']);
-    return;
-  }
+  this.closeCart();
+  this.cartOpen.set(false);
+  this.router.navigate(['/login']);
+  return;
+}
 
   this.closeCart();
   this.cartOpen.set(false);
