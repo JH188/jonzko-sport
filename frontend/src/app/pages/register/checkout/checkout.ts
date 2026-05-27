@@ -155,13 +155,10 @@ async cargarPaymentBrick(): Promise<void> {
           }
         },
         paymentMethods: {
-          creditCard: 'all',
-          debitCard: 'all',
-          mercadoPago: 'all',
-          bankTransfer: 'all',
-          ticket: 'all',
-          maxInstallments: 1
-        }
+  creditCard: 'all',
+  debitCard: 'all',
+  maxInstallments: 1
+}
       },
       callbacks: {
         onReady: () => {
