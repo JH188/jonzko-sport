@@ -48,7 +48,22 @@ export interface ProductRequest {
   imageUrl: string;
   active: boolean;
 }
-
+// ==========================
+// VARIANTES DE PRODUCTO
+// Tallas, colores, precio y stock por producto
+// ==========================
+export interface ProductVariant {
+  id: number;
+  productId: number;
+  size: string;
+  color: string;
+  sku: string;
+  price: number;
+  stock: number;
+  active: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
 // ==========================
 // USUARIOS
 // ==========================
@@ -218,7 +233,39 @@ export class ApiService {
   deleteProduct(productId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/products/admin/${productId}`);
   }
+  // ==========================
+  // VARIANTES DE PRODUCTO PARA ADMIN
+  // Tallas, colores, stock y precio por producto
+  // ==========================
+  getAdminProductVariants(): Observable<ProductVariant[]> {
+    return this.http.get<ProductVariant[]>(`${this.apiUrl}/admin/product-variants`);
+  }
 
+  getAdminProductVariantsByProduct(productId: number): Observable<ProductVariant[]> {
+    return this.http.get<ProductVariant[]>(
+      `${this.apiUrl}/admin/product-variants/product/${productId}`
+    );
+  }
+
+  updateAdminProductVariant(
+    variantId: number,
+    data: ProductVariant
+  ): Observable<ProductVariant> {
+    return this.http.put<ProductVariant>(
+      `${this.apiUrl}/admin/product-variants/${variantId}`,
+      data
+    );
+  }
+
+  updateAdminProductVariantStock(
+    variantId: number,
+    stock: number
+  ): Observable<ProductVariant> {
+    return this.http.put<ProductVariant>(
+      `${this.apiUrl}/admin/product-variants/${variantId}/stock?stock=${stock}`,
+      {}
+    );
+  }
   // ==========================
   // USUARIOS
   // ==========================

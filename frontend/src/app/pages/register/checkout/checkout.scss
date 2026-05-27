@@ -440,3 +440,149 @@ textarea {
     font-size: 13px;
   }
 }
+.payment-separator {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 24px 0;
+  color: #222;
+  font-weight: 900;
+}
+
+.payment-separator::before,
+.payment-separator::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #dcdcdc;
+}
+
+.payment-separator span {
+  font-size: 14px;
+  background: #fff;
+  padding: 0 8px;
+}
+
+.yape-secure-box {
+  margin-top: 10px;
+  border: 1px solid #dedede;
+  border-radius: 18px;
+  background: #ffffff;
+  padding: 18px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.06);
+}
+
+.yape-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.yape-logo-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: #742384;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 16px;
+  text-transform: lowercase;
+  box-shadow: 0 10px 22px rgba(116, 35, 132, 0.22);
+}
+
+.yape-title h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 900;
+  color: #111;
+}
+
+.yape-title p {
+  margin: 0;
+  color: #555;
+  line-height: 1.45;
+  font-size: 13px;
+}
+
+.yape-secure-badge {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f3f3f3;
+  color: #111;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.yape-form {
+  display: grid;
+  gap: 10px;
+}
+
+.yape-form label {
+  font-size: 13px;
+  font-weight: 900;
+  color: #111;
+}
+
+.yape-form input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #d7d7d7;
+  border-radius: 12px;
+  padding: 0 14px;
+  outline: none;
+  font-weight: 600;
+  background: #fff;
+}
+
+.yape-form input:focus {
+  border-color: #742384;
+  box-shadow: 0 0 0 3px rgba(116, 35, 132, 0.12);
+}
+
+.btn-yape-online {
+  width: 100%;
+  margin-top: 8px;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 18px;
+  background: #742384;
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(116, 35, 132, 0.22);
+}
+
+.btn-yape-online:hover {
+  transform: translateY(-1px);
+}
+
+.btn-yape-online:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.yape-protected {
+  margin: 6px 0 0;
+  text-align: center;
+  color: #555;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .yape-header {
+    grid-template-columns: auto 1fr;
+  }
+
+  .yape-secure-badge {
+    grid-column: 1 / -1;
+    width: fit-content;
+  }
+}
