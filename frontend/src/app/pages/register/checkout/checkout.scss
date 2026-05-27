@@ -586,3 +586,307 @@ textarea {
     width: fit-content;
   }
 }
+/* ================================================= */
+/* CHECKOUT RESPONSIVE - JONZKO */
+/* ================================================= */
+
+.checkout-page {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.checkout-container {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+/* Grid principal checkout */
+.checkout-grid,
+.payment-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+/* Evita que los inputs/radios se estiren raro */
+.payment-methods {
+  width: 100%;
+  max-width: 520px;
+  border: 1px solid #e5e5e5;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.payment-option {
+  display: grid;
+  grid-template-columns: 18px 34px 1fr;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.payment-option:last-child {
+  border-bottom: none;
+}
+
+.payment-option input[type='radio'] {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  max-width: 16px !important;
+  margin: 0;
+  accent-color: #000;
+}
+
+.payment-icon {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #dcdcdc;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  background: #fff;
+}
+
+.payment-option strong,
+.payment-option span {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.payment-option small {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #dff8e8;
+  color: #058033;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* Botón pagar */
+.pay-button,
+.mercado-pago-btn {
+  width: 150px;
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  background: #3483fa;
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* Separador */
+.payment-separator {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 34px 0;
+  color: #555;
+  font-weight: 800;
+}
+
+.payment-separator::before,
+.payment-separator::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: #dedede;
+}
+
+/* Yape */
+.yape-card {
+  max-width: 560px;
+  border: 1px solid #e3e3e3;
+  border-radius: 24px;
+  padding: 22px;
+  background: #fff;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
+}
+
+.yape-header {
+  display: grid;
+  grid-template-columns: 54px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.yape-logo-img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  border-radius: 14px;
+  background: #7b1fa2;
+  padding: 6px;
+}
+
+.yape-header h3 {
+  margin: 0 0 5px;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.yape-header p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #333;
+}
+
+.yape-badge {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #f4f4f4;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.qr-box {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto 18px;
+  padding: 24px;
+  border: 1px solid #e5e5e5;
+  border-radius: 24px;
+  background: #f8f8f8;
+  display: grid;
+  place-items: center;
+}
+
+.qr-box img {
+  width: 230px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 18px;
+  background: #fff;
+  padding: 10px;
+}
+
+.yape-info {
+  margin-top: 14px;
+}
+
+.yape-info p {
+  margin: 7px 0;
+  font-size: 15px;
+}
+
+.whatsapp-proof-btn,
+.back-edit-btn {
+  width: 100%;
+  min-height: 52px;
+  border: none;
+  border-radius: 999px;
+  background: #050505;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  font-weight: 900;
+  margin-top: 14px;
+}
+
+.pending-note {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+  margin-top: 10px;
+  color: #333;
+}
+
+/* Resumen */
+.order-summary,
+.checkout-summary {
+  width: 100%;
+  border-radius: 24px;
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+  .checkout-grid,
+  .payment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .order-summary,
+  .checkout-summary {
+    position: static;
+  }
+
+  .payment-methods,
+  .yape-card {
+    max-width: 100%;
+  }
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  .checkout-container {
+    width: min(100% - 22px, 1180px);
+  }
+
+  .checkout-header {
+    padding: 28px 22px;
+    border-radius: 24px;
+  }
+
+  .checkout-header h1 {
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  .checkout-card,
+  .payment-card,
+  .order-summary,
+  .checkout-summary {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .payment-option {
+    grid-template-columns: 16px 30px 1fr;
+    gap: 10px;
+    padding: 13px;
+  }
+
+  .pay-button,
+  .mercado-pago-btn {
+    width: 100%;
+  }
+
+  .yape-card {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .yape-header {
+    grid-template-columns: 46px 1fr;
+  }
+
+  .yape-logo-img {
+    width: 46px;
+    height: 46px;
+  }
+
+  .yape-badge {
+    grid-column: 1 / -1;
+    width: max-content;
+  }
+
+  .qr-box {
+    padding: 18px;
+  }
+
+  .qr-box img {
+    width: 210px;
+  }
+}
