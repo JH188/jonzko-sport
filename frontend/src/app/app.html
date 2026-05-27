@@ -1,7 +1,6 @@
 @if (isAdminRoute()) {
   <router-outlet></router-outlet>
 } @else {
-
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="brand">
@@ -18,25 +17,15 @@
 
     <div class="nav-actions">
       @if (currentUser()) {
-        <span class="welcome-user">
-          Bienvenido, {{ currentUser()?.fullName }}
-        </span>
+        <span class="welcome-user"> Bienvenido, {{ currentUser()?.fullName }} </span>
 
-        <a routerLink="/mis-pedidos" class="orders-btn">
-          Mis pedidos
-        </a>
+        <a routerLink="/mis-pedidos" class="orders-btn"> Mis pedidos </a>
 
-        <button class="logout-btn" type="button" (click)="logout()">
-          Cerrar sesión
-        </button>
+        <button class="logout-btn" type="button" (click)="logout()">Cerrar sesión</button>
       } @else {
-        <a routerLink="/login" class="login-btn">
-          Iniciar sesión
-        </a>
+        <a routerLink="/login" class="login-btn"> Iniciar sesión </a>
 
-        <a routerLink="/registro" class="register-btn">
-          Registrarse
-        </a>
+        <a routerLink="/registro" class="register-btn"> Registrarse </a>
       }
 
       <button class="cart-btn" type="button" (click)="toggleCart()">
@@ -49,9 +38,7 @@
   @if (isStandalonePageRoute()) {
     <router-outlet></router-outlet>
   } @else {
-
     <main>
-
       <!-- INICIO -->
       <section id="inicio" class="hero">
         <div class="hero-content">
@@ -81,7 +68,10 @@
             playsinline
             preload="auto"
             [muted]="true"
-            onloadedmetadata="this.muted = true; this.volume = 0;"
+            onloadedmetadata="
+              this.muted = true;
+              this.volume = 0;
+            "
           >
             <source src="assets/hero-video.mp4" type="video/mp4" />
             Tu navegador no soporta video.
@@ -106,13 +96,8 @@
           <div class="products-grid">
             @for (product of products(); track product.id) {
               <article class="product-card">
-
                 <a class="product-image-box" [routerLink]="['/producto', product.id]">
-                  <img
-                    [src]="product.imageUrl"
-                    [alt]="product.name"
-                    class="product-image"
-                  />
+                  <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
                 </a>
 
                 <div class="product-info">
@@ -120,7 +105,7 @@
                     {{ product.category || 'ROPA URBANA' }}
                   </p>
 
-                  <h2>{{ product.name }}</h2>
+                  <h2>{{ cleanProductName(product.name) }}</h2>
 
                   <p class="product-description">
                     {{ product.description }}
@@ -128,21 +113,16 @@
 
                   <div class="product-price">
                     @if (product.oldPrice) {
-                      <span class="old-price">
-                        S/ {{ product.oldPrice }}
-                      </span>
+                      <span class="old-price"> S/ {{ product.oldPrice }} </span>
                     }
 
-                    <span class="current-price">
-                      S/ {{ product.price }}
-                    </span>
+                    <span class="current-price"> S/ {{ product.price }} </span>
                   </div>
 
                   <a class="product-button" [routerLink]="['/producto', product.id]">
                     Ver detalle y elegir talla
                   </a>
                 </div>
-
               </article>
             }
           </div>
@@ -165,9 +145,7 @@
         <div class="contact-content">
           <h2>Contacto</h2>
 
-          <p>
-            Escríbenos para compras, consultas o pedidos personalizados.
-          </p>
+          <p>Escríbenos para compras, consultas o pedidos personalizados.</p>
 
           <div class="contact-links">
             <a [href]="instagramUrl()" target="_blank">
@@ -192,7 +170,6 @@
           </div>
         </div>
       </section>
-
     </main>
   }
 
@@ -205,20 +182,15 @@
   } @else {
     <footer class="footer">
       <div class="footer-container">
-
         <div class="footer-brand">
           <div class="footer-logo">
             <img src="assets/logo.jpg" alt="Logo JONZKO" />
             <h3>JONZKO</h3>
           </div>
 
-          <p>
-            Marca urbana peruana enfocada en ropa con estilo, presencia y visión.
-          </p>
+          <p>Marca urbana peruana enfocada en ropa con estilo, presencia y visión.</p>
 
-          <p class="footer-ruc">
-            RUC: 10708448601
-          </p>
+          <p class="footer-ruc">RUC: 10708448601</p>
         </div>
 
         <div class="footer-column">
@@ -236,7 +208,6 @@
           <a href="#">Envíos</a>
           <a href="#">Términos y condiciones</a>
         </div>
-
       </div>
 
       <div class="footer-bottom">
@@ -251,16 +222,13 @@
     <div class="cart-overlay" (click)="closeCart()"></div>
 
     <aside class="cart-panel">
-
       <div class="cart-header">
         <div>
           <span class="section-tag">Carrito</span>
           <h2>Tu pedido</h2>
         </div>
 
-        <button type="button" class="close-cart" (click)="closeCart()">
-          ✕
-        </button>
+        <button type="button" class="close-cart" (click)="closeCart()">✕</button>
       </div>
 
       @if (cart().length === 0) {
@@ -269,51 +237,36 @@
           <p>Agrega productos para iniciar tu pedido.</p>
         </div>
       } @else {
-
         <div class="cart-items">
           @for (item of cart(); track item.id) {
             <div class="cart-item">
-
               <img [src]="item.imageUrl" [alt]="item.name" />
 
               <div class="cart-item-info">
                 <h3>{{ item.name }}</h3>
 
                 @if (item.selectedSize) {
-                  <p>
-                    <strong>Talla:</strong> {{ item.selectedSize }}
-                  </p>
+                  <p><strong>Talla:</strong> {{ item.selectedSize }}</p>
                 }
 
                 @if (item.selectedColor || item.color) {
-                  <p>
-                    <strong>Color:</strong> {{ item.selectedColor || item.color }}
-                  </p>
+                  <p><strong>Color:</strong> {{ item.selectedColor || item.color }}</p>
                 }
 
                 <p>S/ {{ item.price }}</p>
 
                 <div class="qty-actions">
-                  <button type="button" (click)="decreaseQty(item.id)">
-                    −
-                  </button>
+                  <button type="button" (click)="decreaseQty(item.id)">−</button>
 
                   <span>{{ item.quantity }}</span>
 
-                  <button type="button" (click)="increaseQty(item.id)">
-                    +
-                  </button>
+                  <button type="button" (click)="increaseQty(item.id)">+</button>
                 </div>
               </div>
 
-              <button
-                type="button"
-                class="remove-item"
-                (click)="removeFromCart(item.id)"
-              >
+              <button type="button" class="remove-item" (click)="removeFromCart(item.id)">
                 Quitar
               </button>
-
             </div>
           }
         </div>
@@ -323,11 +276,8 @@
           <strong>S/ {{ cartTotal().toFixed(2) }}</strong>
         </div>
 
-        <button type="button" class="checkout-btn" (click)="goCheckout()">
-          Continuar compra
-        </button>
+        <button type="button" class="checkout-btn" (click)="goCheckout()">Continuar compra</button>
       }
-
     </aside>
   }
 }

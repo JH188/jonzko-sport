@@ -138,7 +138,12 @@ goToProductDetail(productId: number): void {
       }
     });
   }
-
+cleanProductName(name: string): string {
+  return name
+    .replace(/JONZKO/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
   // ==========================
   // CONFIGURACIÓN WEB
   // ==========================

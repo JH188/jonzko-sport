@@ -3082,3 +3082,54 @@ main {
     font-size: 15px !important;
   }
 }
+/* =========================================================
+   AJUSTE SOLO PC/LAPTOP - CARDS MÁS COMPACTAS
+   No afecta móvil
+   ========================================================= */
+
+@media (min-width: 901px) {
+  .products-grid {
+    align-items: start !important;
+  }
+
+  .product-card {
+    height: auto !important;
+    min-height: 0 !important;
+    display: block !important;
+  }
+
+  .product-info {
+    height: auto !important;
+    min-height: 0 !important;
+    display: block !important;
+    padding: 18px 20px 22px !important;
+  }
+
+  .product-image-box {
+    height: 250px !important;
+  }
+
+  .product-info h2,
+  .product-card h2 {
+    font-size: 28px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.8px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .product-description {
+    min-height: 48px !important;
+    max-height: 58px !important;
+    margin-bottom: 18px !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+
+  .product-price {
+    margin: 0 0 16px !important;
+  }
+
+  .product-button {
+    margin-top: 0 !important;
+  }
+}
