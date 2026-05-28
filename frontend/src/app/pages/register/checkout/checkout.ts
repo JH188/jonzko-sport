@@ -32,7 +32,7 @@ metodosPagoDisponibles = [
   {
     value: 'Plin',
     label: 'Plin',
-    icon: 'assets/plin.png',
+    icon: 'assets/plin..png',
     description: 'Envía tu comprobante por WhatsApp'
   },
   {
