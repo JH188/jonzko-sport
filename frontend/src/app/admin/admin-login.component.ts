@@ -24,7 +24,7 @@ export class AdminLoginComponent {
 
     if (
       this.email.trim() === 'admin@jonzko.com' &&
-      this.password.trim() === 'admin123'
+      this.password.trim() === 'Jona@70844860'
     ) {
       localStorage.setItem('jonzko_admin_logged', 'true');
       this.router.navigate(['/admin']);
