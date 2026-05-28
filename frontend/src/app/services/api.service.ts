@@ -10,23 +10,15 @@ export interface Product {
   name: string;
   category: string;
   description: string;
-
-  // Precio actual/oferta
   price: number;
-
-  // Precio anterior, ejemplo: 65.00
-  oldPrice?: number;
-
-  // Datos de ropa
-  color?: string;
-  sizes?: string;
-
-  // Catálogo por pedido / stock real
   stock: number;
-  saleType?: string;
-
   imageUrl: string;
   active: boolean;
+
+  oldPrice?: number;
+  color?: string;
+  sizes?: string;
+  saleType?: string;
   createdAt?: string;
   updatedAt?: string;
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation, signal } from '@angular/core';import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
@@ -560,20 +561,22 @@ formatTime(value: string | null | undefined): string {
     .length;
 }
 
-  recentOrders(): OrderResponse[] {
-    return [...this.orders()]
-      .sort((a, b) => Number(b.id) - Number(a.id))
-      .slice(0, 5);
-  }
+recentOrders(): OrderResponse[] {
+  return [...this.orders()]
+    .sort((a, b) => Number(b.id) - Number(a.id))
+    .slice(0, 5);
+}
 
-  recentUsers(): UserResponse[] {
-    return [...this.users()]
-      .sort((a, b) => Number(b.id) - Number(a.id))
-      .slice(0, 5);
-  }
+recentUsers(): UserResponse[] {
+  return [...this.users()]
+    .sort((a, b) => Number(b.id) - Number(a.id))
+    .slice(0, 5);
+}
 
- recentProducts(): Product[] {
-  return [...this.products()].slice(0, 6);
+recentProducts(): Product[] {
+  return [...this.products()]
+    .filter(product => product.active)
+    .slice(0, 6);
 }
 
   money(value: number | string | null | undefined): string {
@@ -581,51 +584,34 @@ formatTime(value: string | null | undefined): string {
     return `S/ ${amount.toFixed(2)}`;
   }
 
- statusText(status: string | null | undefined): string {
-  if ((status || '').toLowerCase() === 'pagado') {
-  return 'status confirmed';
-}
-  switch (status) {
-    case 'Pendiente':
-      return 'Pendiente';
+statusText(status: string | null | undefined): string {
+  const estado = (status || '').toLowerCase();
 
-    case 'En proceso':
-      return 'En proceso';
+  if (estado === 'pagado') return 'Pagado';
+  if (estado === 'pago por validar') return 'Pago por validar';
+  if (estado === 'pendiente') return 'Pendiente';
+  if (estado === 'en proceso') return 'En proceso';
+  if (estado === 'confirmado') return 'Confirmado';
+  if (estado === 'enviado') return 'Enviado';
+  if (estado === 'entregado') return 'Entregado';
+  if (estado === 'cancelado') return 'Cancelado';
 
-    case 'Confirmado':
-      return 'Confirmado';
-
-    case 'Enviado':
-      return 'Enviado';
-
-    case 'Entregado':
-      return 'Entregado';
-
-    case 'Cancelado':
-      return 'Cancelado';
-
-    default:
-      return status || 'Sin estado';
-  }
+  return status || 'Sin estado';
 }
 
 statusClass(status: string | null | undefined): string {
-  switch (status) {
-    case 'Confirmado':
-    case 'Entregado':
-      return 'status confirmed';
+  const estado = (status || '').toLowerCase();
 
-    case 'Enviado':
-    case 'En proceso':
-      return 'status process';
+  if (estado === 'pagado') return 'status confirmed';
+  if (estado === 'confirmado') return 'status confirmed';
+  if (estado === 'entregado') return 'status confirmed';
 
-    case 'Cancelado':
-      return 'status rejected';
+  if (estado === 'enviado') return 'status process';
+  if (estado === 'en proceso') return 'status process';
 
-    case 'Pendiente':
-    default:
-      return 'status pending';
-  }
+  if (estado === 'cancelado') return 'status rejected';
+
+  return 'status pending';
 }
 enableOrderSound(): void {
   this.soundEnabled = true;
@@ -1221,7 +1207,7 @@ closeReceiptModal(): void {
 }
 
 getOrderCode(order: OrderResponse): string {
-  return (order as any).orderCode || `PED-${order.id}`;
+  return (order as any).orderCode || 'Pedido';
 }
 
 getSubtotal(order: OrderResponse): number {
