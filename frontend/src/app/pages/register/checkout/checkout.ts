@@ -32,7 +32,7 @@ export class CheckoutComponent implements OnInit {
   {
     value: 'Plin - Verificación manual',
     label: 'Plin',
-    icon: 'assets/plin.png',
+    icon: 'assets/plin..png',
     description: 'Envía tu comprobante por WhatsApp'
   },
   {
