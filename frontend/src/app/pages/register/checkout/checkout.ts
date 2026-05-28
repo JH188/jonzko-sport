@@ -42,7 +42,8 @@ yapePhone = '';
 yapeOtp = '';
 
 
-  paso: 'datos' | 'pago' = 'datos';
+  paso: 'datos' | 'pago' | 'exito' = 'datos';
+  pedidoRegistradoId: any = null;
 
 
   constructor(
@@ -240,14 +241,22 @@ if (response.status === 'approved' || response.statusDetail === 'accredited') {
     itemsJson: JSON.stringify(this.cart())
   };
 
-  this.customerOrderService.createOrder(pedido).subscribe({
-    next: () => {
+ this.customerOrderService.createOrder(pedido).subscribe({
+    next: (orderResponse: any) => {
+      this.loading = false;
+
+      this.pedidoRegistradoId = orderResponse?.id || orderResponse?.orderId || null;
+
       localStorage.removeItem('jonzko_cart');
       window.dispatchEvent(new Event('jonzko-cart-updated'));
 
-      alert('Pago exitoso. Tu pedido fue registrado correctamente.');
+      localStorage.setItem('jonzko_pago_exitoso', 'true');
 
-      this.router.navigate(['/mis-pedidos']);
+      this.paso = 'exito';
+
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
     },
     error: (err) => {
       console.error('El pago fue aprobado, pero no se registró el pedido:', err);
@@ -292,7 +301,11 @@ volverDatos(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 100);
 }
+irAMisPedidos(): void {
+  this.router.navigate(['/mis-pedidos']);
+}
   confirmarPago(): void {
+  
     this.error = '';
 
     const currentUser = this.user();

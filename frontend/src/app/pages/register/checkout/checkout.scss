@@ -890,3 +890,109 @@ textarea {
     width: 210px;
   }
 }
+/* ==========================
+   PAGO EXITOSO MERCADO PAGO
+   ========================== */
+
+.success-card {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  min-height: 460px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fff9 100%);
+  border: 1px solid #dff5e7;
+}
+
+.success-icon {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: #e8fff0;
+  display: grid;
+  place-items: center;
+  font-size: 46px;
+  margin-bottom: 8px;
+  box-shadow: 0 18px 40px rgba(0, 160, 70, 0.14);
+}
+
+.success-tag {
+  border-color: #b7e7c8;
+  background: #ecfff2;
+  color: #087c35;
+}
+
+.success-card h2 {
+  margin: 8px 0;
+  font-size: 38px;
+  color: #0a0a0a;
+}
+
+.success-card p {
+  margin: 6px 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.success-info {
+  width: 100%;
+  max-width: 460px;
+  margin: 20px auto;
+  padding: 18px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  text-align: left;
+}
+
+.success-info p {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 9px 0;
+  margin: 0;
+}
+
+.success-info p:last-child {
+  border-bottom: none;
+}
+
+.success-btn {
+  width: 100%;
+  max-width: 360px;
+  background: #111 !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 999px;
+  padding: 16px 22px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.18);
+}
+
+.success-link {
+  margin-top: 12px;
+  display: inline-block;
+  color: #111;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.success-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .success-card {
+    min-height: 420px;
+  }
+
+  .success-card h2 {
+    font-size: 30px;
+  }
+
+  .success-info p {
+    flex-direction: column;
+    gap: 2px;
+  }
+}

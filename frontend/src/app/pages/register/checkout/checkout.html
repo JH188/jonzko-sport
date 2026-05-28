@@ -141,6 +141,32 @@
           Volver a editar datos
         </button>
       </div>
+      <div class="checkout-card success-card" *ngIf="paso === 'exito'">
+        <div class="success-icon">✅</div>
+
+        <span class="tag success-tag">Pago confirmado</span>
+
+        <h2>Pago exitoso</h2>
+
+        <p>
+          Tu compra fue aprobada correctamente con
+          <strong>Mercado Pago</strong>.
+        </p>
+
+        <div class="success-info">
+          <p><strong>Cliente:</strong> {{ nombres }}</p>
+          <p><strong>Método:</strong> Mercado Pago - Pagado</p>
+          <p><strong>Total:</strong> S/ {{ total().toFixed(2) }}</p>
+
+          <p *ngIf="pedidoRegistradoId">
+            <strong>Código de pedido:</strong> #{{ pedidoRegistradoId }}
+          </p>
+        </div>
+
+        <button type="button" class="success-btn" (click)="irAMisPedidos()">Ver mis pedidos</button>
+
+        <a routerLink="/" class="success-link"> Volver a la tienda </a>
+      </div>
       <aside class="summary-card">
         <h2>Resumen del pedido</h2>
 
