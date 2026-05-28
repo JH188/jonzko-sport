@@ -21,22 +21,22 @@ export class CheckoutComponent implements OnInit {
 
   tipoDocumento = 'Boleta';
   numeroDocumento = '';
-  metodoPago = 'Yape - Verificación manual';
-  metodosPagoDisponibles = [
+  metodoPago = 'Yape';
+metodosPagoDisponibles = [
   {
-    value: 'Yape - Verificación manual',
+    value: 'Yape',
     label: 'Yape',
     icon: 'assets/yape.png',
     description: 'Envía tu comprobante por WhatsApp'
   },
   {
-    value: 'Plin - Verificación manual',
+    value: 'Plin',
     label: 'Plin',
-    icon: 'assets/plin..png',
+    icon: 'assets/plin.png',
     description: 'Envía tu comprobante por WhatsApp'
   },
   {
-    value: 'Transferencia BCP - Verificación manual',
+    value: 'Transferencia BCP',
     label: 'Transferencia BCP',
     icon: 'assets/bcp.png',
     description: 'Envía tu comprobante por WhatsApp'
@@ -350,15 +350,17 @@ irAMisPedidos(): void {
       referenceText: this.referencia.trim(),
 
       paymentMethod: this.metodoPago,
-      total: this.total(),
-      itemsJson: JSON.stringify(this.cart())
+paymentStatus: 'Pago por validar',
+orderStatus: 'Pendiente',
+total: this.total(),
+itemsJson: JSON.stringify(this.cart())
     };
 
     this.customerOrderService.createOrder(pedido).subscribe({
       next: (response: any) => {
         this.loading = false;
 
-        const mensaje = this.generarMensajeWhatsAppYape(response.orderId || response.id || 'SIN-CODIGO');
+        const mensaje = this.generarMensajeWhatsAppYape();
         const numeroWhatsApp = '51998989599';
 
         localStorage.removeItem('jonzko_cart');
@@ -447,7 +449,7 @@ confirmarYapeManual(): void {
   }
 
   this.loading = true;
-  this.metodoPago = this.metodoPago || 'Yape - Verificación manual';
+  this.metodoPago = this.metodoPago || 'Yape';
 
   const pedido = {
     userId: currentUser.id,
@@ -465,16 +467,17 @@ confirmarYapeManual(): void {
     referenceText: this.referencia.trim(),
 
     paymentMethod: this.metodoPago,
-    total: this.total(),
-    itemsJson: JSON.stringify(this.cart())
+paymentStatus: 'Pago por validar',
+orderStatus: 'Pendiente',
+total: this.total(),
+itemsJson: JSON.stringify(this.cart())
   };
 
   this.customerOrderService.createOrder(pedido).subscribe({
-    next: (response: any) => {
+    next: () => {
       this.loading = false;
 
-      const orderId = response.orderId || response.id || 'SIN-CODIGO';
-      const mensaje = this.generarMensajeWhatsAppYape(orderId);
+      const mensaje = this.generarMensajeWhatsAppYape();
       const numeroWhatsApp = '51998989599';
 
       localStorage.removeItem('jonzko_cart');
@@ -489,20 +492,19 @@ confirmarYapeManual(): void {
     },
     error: (err: any) => {
       this.loading = false;
-      console.error('Error registrando pedido Yape:', err);
+      console.error('Error registrando pedido manual:', err);
 
       if (err.error?.message) {
         this.error = err.error.message;
       } else {
-        this.error = 'No se pudo registrar el pedido con Yape.';
+        this.error = 'No se pudo registrar el pedido. Inténtalo nuevamente.';
       }
     }
   });
 }
-
-generarMensajeWhatsAppYape(orderId: number | string): string {
-  const productos = this.cart()
-    .map((item: any, index: number) => {
+generarMensajeWhatsAppYape(): string {
+  const productosTexto = this.cart()
+    .map((item, index) => {
       return `${index + 1}. ${item.name}
 Talla: ${item.selectedSize || 'No especificada'}
 Color: ${item.color || 'No especificado'}
@@ -513,12 +515,10 @@ Precio: S/ ${(item.price * item.quantity).toFixed(2)}`;
 
   return `Hola, soy ${this.nombres}. Acabo de realizar un pedido en JONZKO SPORT.
 
-Código de pedido: #${orderId}
-
 DATOS DEL CLIENTE:
 Nombre: ${this.nombres}
 Celular: ${this.telefono}
-Correo: ${this.user()?.email}
+Correo: ${this.user()?.email || ''}
 
 COMPROBANTE:
 Tipo: ${this.tipoDocumento}
@@ -532,10 +532,11 @@ Dirección: ${this.direccion}
 Referencia: ${this.referencia || 'Sin referencia'}
 
 PRODUCTOS:
-${productos}
+${productosTexto}
 
 PAGO:
 Método de pago: ${this.metodoPago}
+Estado: Pago por validar
 Total a validar: S/ ${this.total().toFixed(2)}
 
 Adjunto mi comprobante para validar mi pedido.`;
