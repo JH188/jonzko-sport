@@ -49,14 +49,21 @@ export class ProductDetail implements OnInit {
   }
 
   sizesList(): string[] {
-    const product = this.product();
+  const product = this.product();
 
-    if (!product?.sizes) {
-      return [];
-    }
-
-    return product.sizes.split(',').map(size => size.trim());
+  if (!product) {
+    return [];
   }
+
+  if (product.sizes && String(product.sizes).trim() !== '') {
+    return String(product.sizes)
+      .split(',')
+      .map(size => size.trim())
+      .filter(size => size.length > 0);
+  }
+
+  return ['S', 'M', 'L', 'XL'];
+}
 
   selectSize(size: string): void {
     this.selectedSize.set(size);
@@ -99,7 +106,7 @@ addToCart(): void {
       ...product,
       quantity: this.quantity(),
       selectedSize: this.selectedSize(),
-      selectedColor: product.color
+      selectedColor: product.color || 'No especificado'
     };
 
     cart.push(item);
