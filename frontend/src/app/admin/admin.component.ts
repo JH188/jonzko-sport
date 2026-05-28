@@ -21,10 +21,7 @@ type AdminSection =
   | 'products'
   | 'orders'
   | 'users'
-  | 'contacts'
   | 'reports'
-  | 'files'
-  | 'security'
   | 'customization'
   | 'more';
 

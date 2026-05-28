@@ -46,14 +46,6 @@
 
       <button
         type="button"
-        [class.active]="activeSection() === 'contacts'"
-        (click)="setSection('contacts')"
-      >
-        💬 Contactos / Solicitudes
-      </button>
-
-      <button
-        type="button"
         [class.active]="activeSection() === 'reports'"
         (click)="setSection('reports')"
       >
@@ -61,22 +53,6 @@
       </button>
 
       <p class="menu-group-title">Otros</p>
-
-      <button
-        type="button"
-        [class.active]="activeSection() === 'files'"
-        (click)="setSection('files')"
-      >
-        📁 Archivos
-      </button>
-
-      <button
-        type="button"
-        [class.active]="activeSection() === 'security'"
-        (click)="setSection('security')"
-      >
-        🔐 Seguridad
-      </button>
 
       <button
         type="button"
@@ -96,8 +72,6 @@
     </nav>
 
     <div class="admin-sidebar-actions">
-      <button type="button" class="store-btn" (click)="goToStore()">Ver tienda</button>
-
       <button type="button" class="logout-btn" (click)="logoutAdmin()">Cerrar sesión</button>
     </div>
   </aside>
@@ -120,12 +94,12 @@
     <!-- LOADING -->
     <div class="loading-box" *ngIf="loading()">Cargando información del sistema...</div>
 
-    <!-- DASHBOARD EMPRESARIAL -->
+    <!-- DASHBOARD  -->
     <section class="admin-section" *ngIf="activeSection() === 'dashboard'">
       <div class="dashboard-hero">
         <div>
           <span class="eyebrow">Resumen general</span>
-          <h2>Panel empresarial JONZKO</h2>
+          <h2>Panel</h2>
           <p>
             Control en tiempo real de productos, clientes registrados, pedidos, pagos pendientes y
             ventas confirmadas de la tienda online.
@@ -306,8 +280,8 @@
               Exportar reportes
             </button>
 
-            <button type="button" class="secondary-action" (click)="setSection('security')">
-              Seguridad
+            <button type="button" class="secondary-action" (click)="setSection('reports')">
+              Exportar Excel
             </button>
 
             <button type="button" class="secondary-action" (click)="goToStore()">Ver tienda</button>
@@ -608,7 +582,6 @@
             <table class="orders-table">
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Cliente</th>
                   <th>Correo</th>
                   <th>Teléfono</th>
@@ -624,10 +597,6 @@
 
               <tbody>
                 <tr *ngFor="let order of filteredOrders()">
-                  <td>
-                    <strong>#{{ order.id }}</strong>
-                  </td>
-
                   <td>
                     <strong>{{ order.customerName }}</strong>
                     <p>
@@ -685,7 +654,7 @@
             {{ statusText(order.orderStatus) }}
           </span>
 
-          <h2>Pedido #{{ order.id }}</h2>
+          <h2>Pedido</h2>
           <p class="detail-subtitle">Detalle completo del pedido</p>
 
           <div class="detail-section">
@@ -851,18 +820,6 @@
                 (click)="viewSaleReceipt(order, 'Boleta')"
               >
                 Generar boleta
-              </button>
-
-              <button
-                type="button"
-                class="secondary-action"
-                (click)="viewSaleReceipt(order, 'Factura')"
-              >
-                Generar factura
-              </button>
-
-              <button type="button" class="secondary-action" (click)="viewCurrentReceipt(order)">
-                Ver comprobante
               </button>
 
               <button
@@ -1195,39 +1152,23 @@
         </article>
       </div>
     </section>
-    <!-- CONTACTOS / SOLICITUDES -->
-    <section class="admin-section" *ngIf="activeSection() === 'contacts'">
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">Mensajes de clientes</span>
-          <h2>Contactos / Solicitudes</h2>
-          <p>
-            Más adelante aquí veremos consultas, mensajes por WhatsApp, solicitudes y clientes
-            interesados.
-          </p>
-        </div>
-      </div>
-
-      <article class="panel-card">
-        <div class="empty-state">
-          Todavía no hay solicitudes registradas. Luego conectaremos esta sección con un formulario
-          de contacto real.
-        </div>
-      </article>
-    </section>
 
     <!-- REPORTES -->
     <section class="admin-section" *ngIf="activeSection() === 'reports'">
       <div class="section-heading">
         <div>
-          <span class="eyebrow">Análisis empresarial</span>
+          <span class="eyebrow">Análisis </span>
           <h2>Reportes</h2>
           <p>Resumen de ventas, pedidos, clientes, métodos de pago y productos vendidos.</p>
         </div>
 
         <div class="heading-actions">
-          <button type="button" class="primary-action" (click)="exportFullExcelReport()">
-            📊 Exportar Excel
+          <button
+            class="excel-export-btn"
+            (click)="exportFullExcelReport()"
+            title="Descargar reporte Excel"
+          >
+            <img src="assets/excel.png" alt="Descargar Excel" />
           </button>
         </div>
       </div>
@@ -1268,41 +1209,6 @@
           Este reporte descarga información completa para administración y contabilidad: pedidos,
           clientes, productos vendidos, catálogo, métodos de pago, DNI/RUC, estados, fechas, horas,
           subtotal, IGV y total.
-        </div>
-      </article>
-    </section>
-
-    <!-- ARCHIVOS -->
-    <section class="admin-section" *ngIf="activeSection() === 'files'">
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">Documentos</span>
-          <h2>Archivos</h2>
-          <p>Vouchers, comprobantes, reportes descargados y documentos administrativos.</p>
-        </div>
-      </div>
-
-      <article class="panel-card">
-        <div class="empty-state">
-          Luego aquí mostraremos vouchers, boletas, facturas y archivos exportados.
-        </div>
-      </article>
-    </section>
-
-    <!-- SEGURIDAD -->
-    <section class="admin-section" *ngIf="activeSection() === 'security'">
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">Control de acceso</span>
-          <h2>Seguridad</h2>
-          <p>Configuración de administrador, sesiones, credenciales y accesos.</p>
-        </div>
-      </div>
-
-      <article class="panel-card">
-        <div class="empty-state">
-          Luego aquí pondremos cambio de contraseña admin, historial de accesos y protección del
-          panel.
         </div>
       </article>
     </section>
