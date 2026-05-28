@@ -120,38 +120,63 @@
     <!-- LOADING -->
     <div class="loading-box" *ngIf="loading()">Cargando información del sistema...</div>
 
-    <!-- DASHBOARD -->
+    <!-- DASHBOARD EMPRESARIAL -->
     <section class="admin-section" *ngIf="activeSection() === 'dashboard'">
+      <div class="dashboard-hero">
+        <div>
+          <span class="eyebrow">Resumen general</span>
+          <h2>Panel empresarial JONZKO</h2>
+          <p>
+            Control en tiempo real de productos, clientes registrados, pedidos, pagos pendientes y
+            ventas confirmadas de la tienda online.
+          </p>
+        </div>
+
+        <div class="dashboard-hero-actions">
+          <button type="button" class="secondary-action" (click)="setSection('orders')">
+            Ver pedidos
+          </button>
+
+          <button type="button" class="primary-action" (click)="loadAdminData()">
+            Actualizar panel
+          </button>
+        </div>
+      </div>
+
       <div class="stats-grid">
         <article class="stat-card">
           <p>Productos activos</p>
           <h2>{{ activeProducts() }}</h2>
-          <span>Catálogo disponible en tienda.</span>
+          <span>Productos visibles para los clientes en la tienda.</span>
         </article>
 
         <article class="stat-card">
           <p>Pedidos registrados</p>
           <h2>{{ orders().length }}</h2>
-          <span>Pedidos guardados en MySQL.</span>
+          <span>Pedidos guardados en la base de datos.</span>
         </article>
 
         <article class="stat-card">
-          <p>Pagos pendientes</p>
+          <p>Pagos por validar</p>
           <h2>{{ pendingOrders() }}</h2>
-          <span>Necesitan validación del administrador.</span>
+          <span>Pedidos pendientes de revisión por Yape, Plin o BCP.</span>
         </article>
 
         <article class="stat-card">
           <p>Ventas confirmadas</p>
           <h2>{{ money(totalSales()) }}</h2>
-          <span>Total de pagos confirmados.</span>
+          <span>Total generado por pedidos confirmados.</span>
         </article>
       </div>
 
       <div class="dashboard-grid">
         <article class="panel-card">
           <div class="panel-title">
-            <h2>Últimos pedidos</h2>
+            <div>
+              <h2>Últimos pedidos</h2>
+              <p>Pedidos recientes registrados por clientes.</p>
+            </div>
+
             <span>{{ recentOrders().length }} reciente(s)</span>
           </div>
 
@@ -161,8 +186,9 @@
 
           <div class="list-row" *ngFor="let order of recentOrders()">
             <div>
-              <strong>{{ getOrderCode(order) }}</strong>
+              <strong>Pedido</strong>
               <p>{{ order.customerName }} · {{ order.customerEmail }}</p>
+              <p>{{ order.paymentMethod || 'Sin método de pago' }}</p>
             </div>
 
             <div class="row-right">
@@ -176,7 +202,11 @@
 
         <article class="panel-card">
           <div class="panel-title">
-            <h2>Clientes recientes</h2>
+            <div>
+              <h2>Clientes recientes</h2>
+              <p>Usuarios nuevos registrados en la tienda.</p>
+            </div>
+
             <span>{{ recentUsers().length }} cliente(s)</span>
           </div>
 
@@ -188,6 +218,7 @@
             <div>
               <strong>{{ user.fullName }}</strong>
               <p>{{ user.email }}</p>
+              <p>{{ user.phone || 'Sin teléfono registrado' }}</p>
             </div>
 
             <span class="status confirmed" *ngIf="user.active">Activo</span>
@@ -196,13 +227,109 @@
         </article>
       </div>
 
+      <div class="dashboard-grid">
+        <article class="panel-card">
+          <div class="panel-title">
+            <div>
+              <h2>Estado de pedidos</h2>
+              <p>Resumen operativo para controlar ventas y entregas.</p>
+            </div>
+          </div>
+
+          <div class="list-row">
+            <div>
+              <strong>Pendientes</strong>
+              <p>Esperando validación del comprobante.</p>
+            </div>
+            <div class="row-right">
+              <strong>{{ pendingAdminOrders() }}</strong>
+              <span class="status pending">Pendiente</span>
+            </div>
+          </div>
+
+          <div class="list-row">
+            <div>
+              <strong>Confirmados</strong>
+              <p>Pagos revisados y aceptados.</p>
+            </div>
+            <div class="row-right">
+              <strong>{{ confirmedOrders() }}</strong>
+              <span class="status confirmed">Confirmado</span>
+            </div>
+          </div>
+
+          <div class="list-row">
+            <div>
+              <strong>Enviados</strong>
+              <p>Pedidos en camino al cliente.</p>
+            </div>
+            <div class="row-right">
+              <strong>{{ sentOrders() }}</strong>
+              <span class="status process">Enviado</span>
+            </div>
+          </div>
+
+          <div class="list-row">
+            <div>
+              <strong>Cancelados</strong>
+              <p>Pedidos anulados o rechazados.</p>
+            </div>
+            <div class="row-right">
+              <strong>{{ cancelledOrders() }}</strong>
+              <span class="status rejected">Cancelado</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-title">
+            <div>
+              <h2>Accesos rápidos</h2>
+              <p>Herramientas principales del administrador.</p>
+            </div>
+          </div>
+
+          <div class="quick-actions-grid">
+            <button type="button" class="secondary-action" (click)="setSection('products')">
+              Gestionar productos
+            </button>
+
+            <button type="button" class="secondary-action" (click)="setSection('orders')">
+              Revisar pagos
+            </button>
+
+            <button type="button" class="secondary-action" (click)="setSection('users')">
+              Ver clientes
+            </button>
+
+            <button type="button" class="secondary-action" (click)="setSection('reports')">
+              Exportar reportes
+            </button>
+
+            <button type="button" class="secondary-action" (click)="setSection('security')">
+              Seguridad
+            </button>
+
+            <button type="button" class="secondary-action" (click)="goToStore()">Ver tienda</button>
+          </div>
+        </article>
+      </div>
+
       <article class="panel-card products-featured">
         <div class="panel-title">
-          <h2>Productos destacados</h2>
+          <div>
+            <h2>Catálogo conectado</h2>
+            <p>Productos activos que también aparecen en la tienda para los clientes.</p>
+          </div>
+
           <span>{{ recentProducts().length }} producto(s)</span>
         </div>
 
-        <div class="featured-grid">
+        <div class="empty-state" *ngIf="recentProducts().length === 0">
+          Todavía no hay productos activos para mostrar.
+        </div>
+
+        <div class="featured-grid" *ngIf="recentProducts().length > 0">
           <div class="featured-product" *ngFor="let product of recentProducts()">
             <img [src]="product.imageUrl" [alt]="product.name" />
 
