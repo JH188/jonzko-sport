@@ -185,9 +185,12 @@ async cargarPaymentBrick(): Promise<void> {
   paymentMethodId: formData.payment_method_id || formData.paymentMethodId,
   issuerId: formData.issuer_id || formData.issuerId,
   payer: {
-    email: formData.payer?.email || this.user()?.email || ''
-  },
-
+  email: formData.payer?.email || this.user()?.email || '',
+  identification: {
+    type: formData.payer?.identification?.type || 'DNI',
+    number: formData.payer?.identification?.number || this.numeroDocumento
+  }
+},
   orderId: 'JONZKO-' + new Date().getTime(),
   description: 'Compra JONZKO SPORT',
   customerName: this.nombres,

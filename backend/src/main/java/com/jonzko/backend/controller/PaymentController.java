@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.mercadopago.client.common.IdentificationRequest;
 
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.payment.PaymentClient;
@@ -148,10 +149,24 @@ public ResponseEntity<?> processPayment(@RequestBody ProcessPaymentRequest reque
 
         MercadoPagoConfig.setAccessToken(mercadoPagoAccessToken);
 
-        PaymentPayerRequest payer = PaymentPayerRequest.builder()
-                .email(payerEmail)
-                .build();
+        IdentificationRequest identification = null;
 
+if (
+        request.payer() != null &&
+        request.payer().identification() != null &&
+        request.payer().identification().type() != null &&
+        request.payer().identification().number() != null
+) {
+    identification = IdentificationRequest.builder()
+            .type(request.payer().identification().type())
+            .number(request.payer().identification().number())
+            .build();
+}
+
+PaymentPayerRequest payer = PaymentPayerRequest.builder()
+        .email(payerEmail)
+        .identification(identification)
+        .build();
         PaymentCreateRequest paymentCreateRequest = PaymentCreateRequest.builder()
         .transactionAmount(amount)
         .token(request.token())
@@ -347,7 +362,14 @@ return ResponseEntity.ok(response);
 }
 
 public record PayerRequest(
-        String email
+        String email,
+        IdentificationDto identification
+) {
+}
+
+public record IdentificationDto(
+        String type,
+        String number
 ) {
 }
 
