@@ -5,8 +5,8 @@
         <span class="tag">Compra segura</span>
         <h1>Finalizar compra</h1>
         <p>
-          Bienvenido, <strong>{{ user()?.fullName }}</strong
-          >. Completa tus datos para generar tu pedido.
+          Bienvenido, <strong>{{ user()?.fullName }}</strong>.
+          Completa tus datos para generar tu pedido.
         </p>
       </div>
 
@@ -28,16 +28,15 @@
         <label>Tipo de comprobante</label>
         <select name="tipoDocumento" [(ngModel)]="tipoDocumento">
           <option value="Boleta">Boleta</option>
-          <option value="Factura">Factura</option>
         </select>
 
-        <label>{{ tipoDocumento === 'Boleta' ? 'DNI' : 'RUC' }}</label>
+        <label>DNI</label>
         <input
           type="text"
           name="numeroDocumento"
           [(ngModel)]="numeroDocumento"
-          [maxlength]="tipoDocumento === 'Boleta' ? 8 : 11"
-          [placeholder]="tipoDocumento === 'Boleta' ? 'Ingresa tu DNI' : 'Ingresa tu RUC'"
+          maxlength="8"
+          placeholder="Ingresa tu DNI"
         />
 
         <h2>Datos de envío</h2>
@@ -51,7 +50,12 @@
         />
 
         <label>Provincia</label>
-        <input type="text" name="provincia" [(ngModel)]="provincia" placeholder="Ejemplo: Lima" />
+        <input
+          type="text"
+          name="provincia"
+          [(ngModel)]="provincia"
+          placeholder="Ejemplo: Lima"
+        />
 
         <label>Distrito</label>
         <input
@@ -82,91 +86,86 @@
           {{ loading ? 'Registrando pedido...' : 'Continuar con el pago' }}
         </button>
       </form>
+
       <div class="checkout-card payment-card" *ngIf="paso === 'pago'">
         <span class="tag">Paso final</span>
-        <h2>Realiza tu pago</h2>
+
+        <h2>Elige tu método de pago</h2>
+
+        <p class="manual-payment-text">
+          Realiza el pago por Yape, Plin o transferencia BCP. Luego envía el comprobante por
+          WhatsApp para validar tu pedido.
+        </p>
 
         <div class="error" *ngIf="error">{{ error }}</div>
 
-        <div class="mp-brick-box">
-          <h3>Tarjeta de crédito o débito</h3>
-          <p>Tu pago será procesado de forma segura por Mercado Pago.</p>
+        <div class="payment-options">
+          @for (method of metodosPagoDisponibles; track method.value) {
+            <label class="payment-option" [class.active]="metodoPago === method.value">
+              <input
+                type="radio"
+                name="metodoPago"
+                [(ngModel)]="metodoPago"
+                [value]="method.value"
+              />
 
-          <div id="paymentBrick_container"></div>
+              <img [src]="method.icon" [alt]="method.label" />
+
+              <div>
+                <strong>{{ method.label }}</strong>
+                <small>{{ method.description }}</small>
+              </div>
+            </label>
+          }
         </div>
 
-        <div class="payment-separator">
-          <span>o</span>
-        </div>
-
-        <div class="yape-secure-box">
-          <div class="yape-header">
-            <img class="yape-logo-img" src="assets/yape.png" alt="Yape" />
-            <div class="yape-title">
-              <h3>Paga con Yape</h3>
-              <p>
-                Escanea el QR, realiza el pago y envíanos el comprobante por WhatsApp para confirmar
-                tu pedido.
-              </p>
-            </div>
-
-            <span class="yape-secure-badge">JONZKO</span>
-          </div>
-
-          <div class="yape-manual-content">
+        <div class="payment-data-card">
+          @if (metodoPago.includes('Yape')) {
             <div class="qr-box">
               <img src="assets/qr-ejemplo.jpeg" alt="QR Yape JONZKO SPORT" />
             </div>
 
-            <div class="yape-info">
-              <p><strong>Número Yape:</strong> 998989599</p>
-              <p><strong>Titular:</strong> Jonathan Huaman</p>
-              <p><strong>Total a pagar:</strong> S/ {{ total().toFixed(2) }}</p>
+            <p><strong>Número Yape:</strong> 998989599</p>
+            <p><strong>Titular:</strong> Jonathan Huaman</p>
+          }
+
+          @if (metodoPago.includes('Plin')) {
+            <div class="qr-box">
+              <img src="assets/qr-plin.jpeg" alt="QR Plin JONZKO SPORT" />
             </div>
 
-            <button
-              type="button"
-              class="btn-yape-online"
-              (click)="confirmarYapeManual()"
-              [disabled]="loading"
-            >
-              {{ loading ? 'Registrando pedido...' : 'Enviar comprobante por WhatsApp' }}
-            </button>
+            <p><strong>Número Plin:</strong> 998989599</p>
+            <p><strong>Titular:</strong> Jonathan Huaman</p>
+          }
 
-            <p class="yape-protected">Tu pedido quedará pendiente hasta validar el comprobante.</p>
-          </div>
+          @if (metodoPago.includes('BCP')) {
+            <p><strong>Banco:</strong> BCP</p>
+            <p><strong>Titular:</strong> Jonathan Huaman</p>
+            <p><strong>Número de cuenta:</strong> COLOCA_AQUI_TU_CUENTA</p>
+            <p><strong>CCI:</strong> COLOCA_AQUI_TU_CCI</p>
+          }
+
+          <p><strong>Total a pagar:</strong> S/ {{ total().toFixed(2) }}</p>
         </div>
+
+        <button
+          type="button"
+          class="btn-yape-online"
+          (click)="confirmarYapeManual()"
+          [disabled]="loading"
+        >
+          {{ loading ? 'Registrando pedido...' : 'Enviar comprobante por WhatsApp' }}
+        </button>
+
+        <p class="yape-protected">
+          Tu pedido quedará pendiente hasta validar el comprobante.
+        </p>
 
         <button type="button" class="btn-secondary" (click)="volverDatos()">
           Volver a editar datos
         </button>
       </div>
-      <div class="checkout-card success-card" *ngIf="paso === 'exito'">
-        <div class="success-icon">✅</div>
 
-        <span class="tag success-tag">Pago confirmado</span>
-
-        <h2>Pago exitoso</h2>
-
-        <p>
-          Tu compra fue aprobada correctamente con
-          <strong>Mercado Pago</strong>.
-        </p>
-
-        <div class="success-info">
-          <p><strong>Cliente:</strong> {{ nombres }}</p>
-          <p><strong>Método:</strong> Mercado Pago - Pagado</p>
-          <p><strong>Total:</strong> S/ {{ total().toFixed(2) }}</p>
-
-          <p *ngIf="pedidoRegistradoId">
-            <strong>Código de pedido:</strong> #{{ pedidoRegistradoId }}
-          </p>
-        </div>
-
-        <button type="button" class="success-btn" (click)="irAMisPedidos()">Ver mis pedidos</button>
-
-        <a routerLink="/" class="success-link"> Volver a la tienda </a>
-      </div>
       <aside class="summary-card">
         <h2>Resumen del pedido</h2>
 

@@ -21,7 +21,27 @@ export class CheckoutComponent implements OnInit {
 
   tipoDocumento = 'Boleta';
   numeroDocumento = '';
-  metodoPago = 'Mercado Pago';
+  metodoPago = 'Yape - Verificación manual';
+  metodosPagoDisponibles = [
+  {
+    value: 'Yape - Verificación manual',
+    label: 'Yape',
+    icon: 'assets/yape.png',
+    description: 'Envía tu comprobante por WhatsApp'
+  },
+  {
+    value: 'Plin - Verificación manual',
+    label: 'Plin',
+    icon: 'assets/plin.png',
+    description: 'Envía tu comprobante por WhatsApp'
+  },
+  {
+    value: 'Transferencia BCP - Verificación manual',
+    label: 'Transferencia BCP',
+    icon: 'assets/bcp.png',
+    description: 'Envía tu comprobante por WhatsApp'
+  }
+];
 
   nombres = '';
   telefono = '';
@@ -122,11 +142,8 @@ yapeOtp = '';
       return;
     }
 
-    this.paso = 'pago';
-    setTimeout(() => {
-  this.cargarPaymentBrick();
-}, 300);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+   this.paso = 'pago';
+window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 async cargarPaymentBrick(): Promise<void> {
   try {
@@ -430,7 +447,7 @@ confirmarYapeManual(): void {
   }
 
   this.loading = true;
-  this.metodoPago = 'Yape - Verificación manual';
+  this.metodoPago = this.metodoPago || 'Yape - Verificación manual';
 
   const pedido = {
     userId: currentUser.id,
@@ -447,7 +464,7 @@ confirmarYapeManual(): void {
     address: this.direccion.trim(),
     referenceText: this.referencia.trim(),
 
-    paymentMethod: 'Yape - Verificación manual',
+    paymentMethod: this.metodoPago,
     total: this.total(),
     itemsJson: JSON.stringify(this.cart())
   };
@@ -518,11 +535,9 @@ PRODUCTOS:
 ${productos}
 
 PAGO:
-Método de pago: Yape
-Número Yape: 998989599
-Titular: Jonathan Huaman
-Total pagado: S/ ${this.total().toFixed(2)}
+Método de pago: ${this.metodoPago}
+Total a validar: S/ ${this.total().toFixed(2)}
 
-Adjunto mi comprobante de Yape para validar mi pedido.`;
+Adjunto mi comprobante para validar mi pedido.`;
 }
 }
