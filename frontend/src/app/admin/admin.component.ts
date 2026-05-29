@@ -126,7 +126,7 @@ currentReceiptType: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante' = 'Comproba
     instagramUrl: 'https://www.instagram.com/jonzko.o/',
     facebookUrl: 'https://www.facebook.com/profile.php?id=61563952841904',
     tiktokUrl: 'https://www.tiktok.com/@jonzko1',
-    whatsappNumber: '51999999999',
+    whatsappNumber: '51998989599',
 
     navInicio: 'Inicio',
     navColeccion: 'Colección',
@@ -527,7 +527,7 @@ formatTime(value: string | null | undefined): string {
       instagramUrl: 'https://www.instagram.com/jonzko.o/',
       facebookUrl: 'https://www.facebook.com/profile.php?id=61563952841904',
       tiktokUrl: 'https://www.tiktok.com/@jonzko1',
-      whatsappNumber: '51999999999',
+      whatsappNumber: '51998989599',
 
       navInicio: 'Inicio',
       navColeccion: 'Colección',
