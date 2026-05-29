@@ -456,24 +456,39 @@ formatTime(value: string | null | undefined): string {
   // ==========================
 
   saveWebConfig(): void {
-    localStorage.setItem('jonzko_web_config', JSON.stringify(this.webConfig));
-    this.applyWebConfig();
-
-    alert(
-      'Configuración guardada localmente. Luego lo conectaremos con MySQL para que cambie para todos los usuarios.'
-    );
-  }
-
-  loadWebConfig(): void {
-    const savedConfig = localStorage.getItem('jonzko_web_config');
-
-    if (savedConfig) {
+  this.apiService.updateSettings(this.webConfig as any).subscribe({
+    next: (response: any) => {
       this.webConfig = {
         ...this.webConfig,
-        ...JSON.parse(savedConfig)
+        ...response
       };
+
+      this.applyWebConfig();
+      alert('Configuración guardada correctamente en MySQL.');
+    },
+    error: (error) => {
+      console.error('Error guardando configuración web:', error);
+      alert('No se pudo guardar la configuración en MySQL. Revisa backend o Railway.');
     }
-  }
+  });
+}
+
+  loadWebConfig(): void {
+  this.apiService.getSettings().subscribe({
+    next: (response: any) => {
+      this.webConfig = {
+        ...this.webConfig,
+        ...response
+      };
+
+      this.applyWebConfig();
+    },
+    error: (error) => {
+      console.error('Error cargando configuración web:', error);
+      this.applyWebConfig();
+    }
+  });
+}
 
   applyWebConfig(): void {
     document.documentElement.style.setProperty('--jonzko-primary', this.webConfig.primaryColor);
