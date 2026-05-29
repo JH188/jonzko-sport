@@ -83,6 +83,14 @@ public class SiteSetting {
 
     @Column(length = 1000)
     private String contactDescription;
+    
+    // Navegación y textos del header
+private String navInicio;
+private String navColeccion;
+private String navNosotros;
+private String navContacto;
+private String cartText;
+private String loginText;
 
     private Boolean active;
 

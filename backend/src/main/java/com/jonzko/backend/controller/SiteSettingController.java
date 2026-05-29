@@ -14,7 +14,12 @@ import com.jonzko.backend.repository.SiteSettingRepository;
 
 @RestController
 @RequestMapping("/api/settings")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {
+        "http://localhost:4200",
+        "https://jonzko.lat",
+        "https://www.jonzko.lat",
+        "https://jonzko-sport.vercel.app"
+})
 public class SiteSettingController {
 
     private final SiteSettingRepository siteSettingRepository;
@@ -66,6 +71,12 @@ public class SiteSettingController {
         settings.setCollectionDescription(request.getCollectionDescription());
         settings.setContactTitle(request.getContactTitle());
         settings.setContactDescription(request.getContactDescription());
+        settings.setNavInicio(request.getNavInicio());
+settings.setNavColeccion(request.getNavColeccion());
+settings.setNavNosotros(request.getNavNosotros());
+settings.setNavContacto(request.getNavContacto());
+settings.setCartText(request.getCartText());
+settings.setLoginText(request.getLoginText());
 
         SiteSetting savedSettings = siteSettingRepository.save(settings);
 
@@ -100,6 +111,12 @@ public class SiteSettingController {
                 .collectionDescription("Los primeros productos oficiales de JONZKO.")
                 .contactTitle("Contacto")
                 .contactDescription("Comunícate con nosotros para compras, consultas y pedidos.")
+                .navInicio("Inicio")
+.navColeccion("Colección")
+.navNosotros("Nosotros")
+.navContacto("Contacto")
+.cartText("Carrito")
+.loginText("Iniciar sesión")
 
                 .active(true)
                 .build();
