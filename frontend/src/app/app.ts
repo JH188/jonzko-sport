@@ -56,7 +56,7 @@ currentRoute = signal('');
   instagramUrl = signal('https://www.instagram.com/jonzko.o/');
   facebookUrl = signal('https://www.facebook.com/profile.php?id=61563952841904');
   tiktokUrl = signal('https://www.tiktok.com/@jonzko1');
-  whatsappUrl = signal('https://wa.me/51999999999');
+  whatsappUrl = signal('https://wa.me/51998989599');
 
   constructor(
   private apiService: ApiService,
@@ -147,16 +147,9 @@ cleanProductName(name: string): string {
   // ==========================
   // CONFIGURACIÓN WEB
   // ==========================
-  loadWebConfig(): void {
-    const savedConfig = localStorage.getItem('jonzko_web_config');
-
-    if (!savedConfig) {
-      return;
-    }
-
-    try {
-      const config = JSON.parse(savedConfig);
-
+loadWebConfig(): void {
+  this.apiService.getSettings().subscribe({
+    next: (config: any) => {
       this.storeName.set(config.storeName || 'JONZKO');
       this.slogan.set(config.slogan || 'ROPA URBANA PERUANA');
 
@@ -165,21 +158,21 @@ cleanProductName(name: string): string {
         config.heroDescription || 'Ropa urbana peruana con presencia, estilo propio y actitud.'
       );
 
-      this.primaryButton.set(config.primaryButton || 'Comprar ahora');
-      this.secondaryButton.set(config.secondaryButton || 'Ver colección');
+      this.primaryButton.set(config.primaryButtonText || 'Comprar ahora');
+      this.secondaryButton.set(config.secondaryButtonText || 'Ver colección');
 
       this.logoUrl.set(config.logoUrl || 'assets/logo.jpg');
       this.heroImageUrl.set(config.heroImageUrl || 'assets/polera.jpg');
 
-      this.collectionTag.set(config.collectionTag || '100% ALGODON');
+      this.collectionTag.set('100% ALGODON');
       this.collectionTitle.set(config.collectionTitle || 'Colección inicial');
       this.collectionDescription.set(
         config.collectionDescription || 'Productos oficiales disponibles para compra online.'
       );
 
-      this.aboutTitle.set(config.aboutTitle || 'Sobre JONZKO');
+      this.aboutTitle.set('Sobre JONZKO');
       this.aboutDescription.set(
-        config.aboutDescription ||
+        config.contactDescription ||
           'Marca urbana peruana creada con estilo propio, presencia moderna y esencia urbana.'
       );
 
@@ -188,12 +181,20 @@ cleanProductName(name: string): string {
         config.facebookUrl || 'https://www.facebook.com/profile.php?id=61563952841904'
       );
       this.tiktokUrl.set(config.tiktokUrl || 'https://www.tiktok.com/@jonzko1');
-      this.whatsappUrl.set(config.whatsappUrl || 'https://wa.me/51999999999');
 
-    } catch (error) {
-      console.error('Error leyendo configuración web:', error);
+      const phone = config.whatsappNumber || '51998989599';
+      const message = config.whatsappMessage || 'Hola, quiero información sobre JONZKO.';
+
+      this.whatsappUrl.set(
+        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
+      );
+    },
+    error: (error) => {
+      console.error('Error cargando configuración web desde MySQL:', error);
+      this.whatsappUrl.set('https://wa.me/51998989599');
     }
-  }
+  });
+}
 
   // ==========================
   // CARRITO
