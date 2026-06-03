@@ -6,10 +6,55 @@
   </div>
 
   <div *ngIf="product() as p" class="detail-container">
-    <div class="image-box">
-      <img [src]="p.imageUrl" [alt]="p.name" />
+    <!-- GALERÍA DE PRODUCTO -->
+    <div class="gallery-wrapper">
+      <div class="image-box product-gallery">
+        @if (activeMedia(); as media) {
+          @if (media.type === 'image') {
+            <img [src]="media.src" [alt]="p.name" />
+          }
+
+          @if (media.type === 'video') {
+            <video autoplay muted loop playsinline controls>
+              <source [src]="media.src" type="video/mp4" />
+            </video>
+          }
+        }
+
+        @if (productMedia().length > 1) {
+          <button type="button" class="gallery-arrow gallery-left" (click)="prevMedia()">‹</button>
+          <button type="button" class="gallery-arrow gallery-right" (click)="nextMedia()">›</button>
+
+          <div class="gallery-dots">
+            @for (media of productMedia(); track media.src; let i = $index) {
+              <button
+                type="button"
+                [class.active]="i === activeMediaIndex()"
+                (click)="goMedia(i)"
+              ></button>
+            }
+          </div>
+        }
+      </div>
+
+      @if (productMedia().length > 1) {
+        <div class="gallery-thumbnails">
+          @for (media of productMedia(); track media.src; let i = $index) {
+            <button type="button" [class.active]="i === activeMediaIndex()" (click)="goMedia(i)">
+              @if (media.type === 'image') {
+                <img [src]="media.src" alt="Miniatura producto" />
+              }
+
+              @if (media.type === 'video') {
+                <span>▶ Video</span>
+              }
+            </button>
+          }
+        </div>
+      }
     </div>
 
+    <!-- INFORMACIÓN DEL PRODUCTO -->
     <div class="info-box">
       <p class="brand">JONZKO SPORT</p>
 
@@ -19,8 +64,11 @@
         <span class="old-price" *ngIf="p.oldPrice"> S/ {{ p.oldPrice | number: '1.2-2' }} </span>
 
         <span class="current-price"> S/ {{ p.price | number: '1.2-2' }} </span>
+
         <small class="unit-price-label">Precio por unidad</small>
       </div>
+
+      <span class="stock-badge">Stock disponible</span>
 
       <p class="description">
         {{ p.description }}
@@ -44,6 +92,10 @@
             {{ size }}
           </button>
         </div>
+
+        <button type="button" class="size-guide-btn" (click)="openSizeGuide()">
+          Ver guía de tallas
+        </button>
       </div>
 
       <div class="quantity">
@@ -65,9 +117,89 @@
 
       <div class="actions">
         <button class="cart-btn" type="button" (click)="addToCart()">Agregar al carrito</button>
+
+        <button class="whatsapp-detail-btn" type="button" (click)="buyWhatsapp()">
+          Consultar por WhatsApp
+        </button>
       </div>
 
-      <a routerLink="/" class="back-link"> ← Volver a la tienda </a>
+      <div class="purchase-benefits">
+        <p>✅ Pago por Yape, Plin o transferencia</p>
+        <p>🚚 Envíos a todo el Perú</p>
+        <p>🔁 Cambios previa coordinación</p>
+      </div>
+
+      <a routerLink="/" class="back-link">← Volver a la tienda</a>
     </div>
   </div>
+
+  <!-- PRODUCTOS RELACIONADOS -->
+  @if (relatedProducts().length > 0) {
+    <section class="related-section">
+      <h2>También te puede gustar</h2>
+
+      <div class="related-grid">
+        @for (item of relatedProducts(); track item.id) {
+          <a class="related-card" [routerLink]="['/producto', item.id]">
+            <div class="related-image-box">
+              <img [src]="item.imageUrl" [alt]="item.name" class="related-main-image" />
+              <img
+                [src]="relatedHoverImageFor(item)"
+                [alt]="item.name"
+                class="related-hover-image"
+              />
+            </div>
+
+            <h3>{{ item.name }}</h3>
+            <p>S/ {{ item.price | number: '1.2-2' }}</p>
+          </a>
+        }
+      </div>
+    </section>
+  }
+
+  <!-- MODAL GUÍA DE TALLAS -->
+  @if (sizeGuideOpen()) {
+    <div class="size-modal-backdrop" (click)="closeSizeGuide()">
+      <div class="size-modal" (click)="$event.stopPropagation()">
+        <button type="button" class="size-close" (click)="closeSizeGuide()">✕</button>
+
+        <h2>Guía de tallas</h2>
+        <p>Medidas aproximadas referenciales para elegir mejor tu prenda.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Talla</th>
+              <th>Pecho</th>
+              <th>Largo</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>S</td>
+              <td>52 cm</td>
+              <td>68 cm</td>
+            </tr>
+            <tr>
+              <td>M</td>
+              <td>55 cm</td>
+              <td>70 cm</td>
+            </tr>
+            <tr>
+              <td>L</td>
+              <td>58 cm</td>
+              <td>72 cm</td>
+            </tr>
+            <tr>
+              <td>XL</td>
+              <td>61 cm</td>
+              <td>74 cm</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
 </section>

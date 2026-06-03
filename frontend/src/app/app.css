@@ -5032,3 +5032,115 @@ body {
     padding: 4px 6px !important;
   }
 }
+/* =========================================================
+   FOOTER ATENCIÓN + MODAL TÉRMINOS JONZKO
+   ========================================================= */
+
+.footer-attention {
+  gap: 18px !important;
+}
+
+.footer-info-item {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+.footer-info-item strong {
+  color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+}
+
+.footer-info-item small {
+  max-width: 260px !important;
+  color: rgba(255, 255, 255, 0.68) !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+}
+
+.footer-terms-btn {
+  width: fit-content !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  text-decoration: underline !important;
+  text-underline-offset: 5px !important;
+}
+
+.footer-terms-btn:hover {
+  opacity: 0.75 !important;
+}
+
+.terms-modal-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  background: rgba(0, 0, 0, 0.72) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 22px !important;
+}
+
+.terms-modal {
+  width: min(720px, 94vw) !important;
+  max-height: 86vh !important;
+  overflow-y: auto !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-radius: 24px !important;
+  padding: 38px 38px 34px !important;
+  position: relative !important;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35) !important;
+}
+
+.terms-close {
+  position: absolute !important;
+  top: 18px !important;
+  right: 18px !important;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+}
+
+.terms-modal h2 {
+  font-size: 38px !important;
+  margin: 0 0 18px !important;
+}
+
+.terms-modal h3 {
+  font-size: 20px !important;
+  margin: 24px 0 8px !important;
+}
+
+.terms-modal p {
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+  color: #333333 !important;
+}
+
+@media (max-width: 700px) {
+  .footer-info-item small {
+    max-width: 100% !important;
+  }
+
+  .terms-modal {
+    padding: 34px 24px 28px !important;
+    border-radius: 20px !important;
+  }
+
+  .terms-modal h2 {
+    font-size: 30px !important;
+  }
+}

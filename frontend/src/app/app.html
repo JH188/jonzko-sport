@@ -35,7 +35,7 @@
 
     <nav>
       <a href="/#inicio">Inicio</a>
-      <a href="/#coleccion">Producto</a>
+      <a href="/#producto">Producto</a>
       <a href="/#nosotros">Nosotros</a>
       <a href="/#contacto">Contacto</a>
     </nav>
@@ -100,7 +100,7 @@
               <div class="hero-slider-content">
                 <span>{{ slide.subtitle }}</span>
                 <h1>{{ slide.title }}</h1>
-                <a href="#coleccion">{{ slide.buttonText }}</a>
+                <a href="#producto">{{ slide.buttonText }}</a>
               </div>
             </div>
           }
@@ -238,7 +238,7 @@
   @if (isStandalonePageRoute()) {
     <footer class="footer-mini">
       <p>© 2026 JONZKO SPORT. Todos los derechos reservados.</p>
-      <p>Diseñado para venta online de productos urbanos.</p>
+      <p>Compras online</p>
     </footer>
   } @else {
     <footer class="footer">
@@ -257,23 +257,38 @@
         <div class="footer-column">
           <h4>Tienda</h4>
           <a href="/#inicio">Inicio</a>
-          <a href="/#coleccion">Colección</a>
+          <a href="/#producto">Producto</a>
           <a href="/#nosotros">Nosotros</a>
           <a href="/#contacto">Contacto</a>
         </div>
 
-        <div class="footer-column">
+        <div class="footer-column footer-attention">
           <h4>Atención</h4>
-          <a href="#">Cambios y devoluciones</a>
-          <a href="#">Métodos de pago</a>
-          <a href="#">Envíos</a>
-          <a href="#">Términos y condiciones</a>
+
+          <div class="footer-info-item">
+            <strong>Cambios y devoluciones</strong>
+            <small>Aplican por fallas de fábrica o error en talla, previa coordinación.</small>
+          </div>
+
+          <div class="footer-info-item">
+            <strong>Métodos de pago</strong>
+            <small>Yape, Plin y transferencias bancarias.</small>
+          </div>
+
+          <div class="footer-info-item">
+            <strong>Envíos</strong>
+            <small>Realizamos envíos a todo el Perú.</small>
+          </div>
+
+          <button type="button" class="footer-terms-btn" (click)="openTerms()">
+            Términos y condiciones
+          </button>
         </div>
       </div>
 
       <div class="footer-bottom">
         <p>© 2026 JONZKO SPORT. Todos los derechos reservados.</p>
-        <p>Diseñado para venta online de productos urbanos.</p>
+        <p>Compras online</p>
       </div>
     </footer>
   }
@@ -341,4 +356,42 @@
       }
     </aside>
   }
+  @if (termsOpen()) {
+  <div class="terms-modal-backdrop" (click)="closeTerms()">
+    <div class="terms-modal" (click)="$event.stopPropagation()">
+      <button type="button" class="terms-close" (click)="closeTerms()">✕</button>
+
+      <h2>Términos y condiciones</h2>
+
+      <p>
+        Al realizar una compra en JONZKO SPORT, el cliente acepta brindar datos reales
+        para el registro del pedido, coordinación de pago y envío.
+      </p>
+
+      <h3>Pagos</h3>
+      <p>
+        Aceptamos pagos por Yape, Plin y transferencias bancarias. El pedido será
+        procesado después de confirmar el pago correspondiente.
+      </p>
+
+      <h3>Envíos</h3>
+      <p>
+        Realizamos envíos a todo el Perú. El tiempo de entrega puede variar según la
+        ciudad, agencia de envío y disponibilidad del producto.
+      </p>
+
+      <h3>Cambios</h3>
+      <p>
+        Los cambios se coordinan por fallas de fábrica o errores en talla/modelo,
+        siempre que la prenda no haya sido usada, lavada o dañada.
+      </p>
+
+      <h3>Contacto</h3>
+      <p>
+        Para dudas sobre compras, tallas, pagos o envíos, puede comunicarse
+        mediante nuestras redes sociales o WhatsApp oficial.
+      </p>
+    </div>
+  </div>
+}
 }

@@ -25,6 +25,15 @@ export class App implements OnInit, OnDestroy {
   products = signal<Product[]>([]);
 cart = signal<CartItem[]>([]);
 cartOpen = signal(false);
+termsOpen = signal(false);
+
+openTerms(): void {
+  this.termsOpen.set(true);
+}
+
+closeTerms(): void {
+  this.termsOpen.set(false);
+}
 activeHeroSlide = signal(0);
 mobileMenuOpen = signal(false);
 private heroInterval: any;
@@ -111,7 +120,7 @@ currentRoute = signal('');
   collectionTitle = signal('Nuestro Producto');
   collectionDescription = signal('Productos oficiales disponibles para compra online.');
 
-  aboutTitle = signal('Sobre JONZKO');
+  aboutTitle = signal('Sobre Nosotros');
   aboutDescription = signal(
     'Marca urbana peruana creada con estilo propio, presencia moderna y esencia urbana.'
   );
@@ -238,7 +247,7 @@ loadWebConfig(): void {
         config.collectionDescription || 'Productos oficiales disponibles para compra online.'
       );
 
-      this.aboutTitle.set('Sobre JONZKO');
+      this.aboutTitle.set('Sobre Nosotros');
       this.aboutDescription.set(
         config.contactDescription ||
           'Marca urbana peruana creada con estilo propio, presencia moderna y esencia urbana.'
