@@ -87,7 +87,7 @@ settings.setLoginText(request.getLoginText());
         SiteSetting defaultSettings = SiteSetting.builder()
                 .storeName("JONZKO")
                 .slogan("Ropa urbana peruana")
-                .logoUrl("assets/logo.jpg")
+                .logoUrl("assets/logo.png")
                 .heroImageUrl("assets/polera.jpg")
 
                 .heroTitle("JONZKO")

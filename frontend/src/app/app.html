@@ -1,11 +1,35 @@
 @if (isAdminRoute()) {
   <router-outlet></router-outlet>
 } @else {
+  <!-- BARRA SUPERIOR ANIMADA -->
+  <div class="top-marquee">
+    <div class="top-marquee-track">
+      <div class="top-marquee-group">
+        <span>ENVÍOS A TODO EL PERÚ</span>
+        <span>COMPRA SEGURA</span>
+        <span>CAMBIOS DISPONIBLES</span>
+        <span>JONZKO SPORT</span>
+      </div>
+
+      <div class="top-marquee-group" aria-hidden="true">
+        <span>ENVÍOS A TODO EL PERÚ</span>
+        <span>COMPRA SEGURA</span>
+        <span>CAMBIOS DISPONIBLES</span>
+        <span>JONZKO SPORT</span>
+      </div>
+
+      <div class="top-marquee-group" aria-hidden="true">
+        <span>ENVÍOS A TODO EL PERÚ</span>
+        <span>COMPRA SEGURA</span>
+        <span>CAMBIOS DISPONIBLES</span>
+        <span>JONZKO SPORT</span>
+      </div>
+    </div>
+  </div>
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="brand">
       <img [src]="logoUrl()" alt="Logo JONZKO" />
-      <span>{{ storeName() }}</span>
     </div>
 
     <nav>
@@ -39,43 +63,47 @@
     <router-outlet></router-outlet>
   } @else {
     <main>
-      <!-- INICIO -->
-      <section id="inicio" class="hero">
-        <div class="hero-content">
-          <span class="badge">{{ slogan() }}</span>
+      <!-- INICIO / HERO CARRUSEL -->
+      <section id="inicio" class="hero-slider">
+        <div class="hero-track">
+          @for (slide of heroSlides(); track slide.src; let i = $index) {
+            <div class="hero-slide" [class.active]="i === activeHeroSlide()">
+              @if (slide.type === 'image') {
+                <img [src]="slide.src" [alt]="slide.title" />
+              }
 
-          <h1>{{ heroTitle() }}</h1>
+              @if (slide.type === 'video') {
+                <video autoplay muted loop playsinline preload="auto" [muted]="true">
+                  <source [src]="slide.src" type="video/mp4" />
+                </video>
+              }
 
-          <p>{{ heroDescription() }}</p>
+              <div class="hero-overlay"></div>
 
-          <div class="hero-actions">
-            <a href="#coleccion" class="primary-btn">
-              {{ primaryButton() }}
-            </a>
-
-            <a href="#coleccion" class="secondary-btn">
-              {{ secondaryButton() }}
-            </a>
-          </div>
+              <div class="hero-slider-content">
+                <span>{{ slide.subtitle }}</span>
+                <h1>{{ slide.title }}</h1>
+                <a href="#coleccion">{{ slide.buttonText }}</a>
+              </div>
+            </div>
+          }
         </div>
+        <button type="button" class="hero-arrow hero-arrow-left" (click)="prevHeroSlide()">
+          ‹
+        </button>
 
-        <div class="hero-media-card">
-          <video
-            class="hero-video"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-            [muted]="true"
-            onloadedmetadata="
-              this.muted = true;
-              this.volume = 0;
-            "
-          >
-            <source src="assets/hero-video.mp4" type="video/mp4" />
-            Tu navegador no soporta video.
-          </video>
+        <button type="button" class="hero-arrow hero-arrow-right" (click)="nextHeroSlide()">
+          ›
+        </button>
+
+        <div class="hero-dots">
+          @for (slide of heroSlides(); track slide.src; let i = $index) {
+            <button
+              type="button"
+              [class.active]="i === activeHeroSlide()"
+              (click)="goHeroSlide(i)"
+            ></button>
+          }
         </div>
       </section>
 
@@ -184,7 +212,7 @@
       <div class="footer-container">
         <div class="footer-brand">
           <div class="footer-logo">
-            <img src="assets/logo.jpg" alt="Logo JONZKO" />
+            <img src="assets/logo.png" alt="Logo JONZKO" />
             <h3>JONZKO</h3>
           </div>
 

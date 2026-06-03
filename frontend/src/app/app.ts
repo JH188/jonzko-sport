@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterLink, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
@@ -18,14 +18,69 @@ interface CartItem extends Product {
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   openCustomerLogin(): void {
   alert('Aquí irá el inicio de sesión del cliente. El administrador entra aparte por /admin-login.');
 }
   products = signal<Product[]>([]);
 cart = signal<CartItem[]>([]);
 cartOpen = signal(false);
+activeHeroSlide = signal(0);
+private heroInterval: any;
 
+heroSlides = signal([
+  {
+    type: 'image',
+    src: 'assets/polo-negro.jpeg',
+    subtitle: 'NUEVA COLECCIÓN',
+    title: 'OVERSIZE',
+    buttonText: 'Comprar ahora',
+  },
+  {
+    type: 'image',
+    src: 'assets/polera-negra-clasica.jpeg',
+    subtitle: 'JONZKO SPORT',
+    title: 'ESTILO URBANO',
+    buttonText: 'Ver colección',
+  },
+  {
+    type: 'image',
+    src: 'assets/polo-negro.jpeg',
+    subtitle: 'MODA PERUANA',
+    title: 'BLACK & WHITE',
+    buttonText: 'Descubrir prendas',
+  },
+]);
+
+startHeroAutoplay(): void {
+  this.heroInterval = setInterval(() => {
+    this.nextHeroSlide();
+  }, 4500);
+}
+
+restartHeroAutoplay(): void {
+  clearInterval(this.heroInterval);
+  this.startHeroAutoplay();
+}
+
+goHeroSlide(index: number): void {
+  this.activeHeroSlide.set(index);
+  this.restartHeroAutoplay();
+}
+
+nextHeroSlide(): void {
+  const total = this.heroSlides().length;
+  const next = (this.activeHeroSlide() + 1) % total;
+  this.activeHeroSlide.set(next);
+  this.restartHeroAutoplay();
+}
+
+prevHeroSlide(): void {
+  const total = this.heroSlides().length;
+  const prev = this.activeHeroSlide() === 0 ? total - 1 : this.activeHeroSlide() - 1;
+  this.activeHeroSlide.set(prev);
+  this.restartHeroAutoplay();
+}
 currentUser = signal<AuthUser | null>(null);
 
 currentRoute = signal('');
@@ -41,7 +96,7 @@ currentRoute = signal('');
   primaryButton = signal('Comprar ahora');
   secondaryButton = signal('Ver colección');
 
-  logoUrl = signal('assets/logo.jpg');
+  logoUrl = signal('assets/logo.png');
   heroImageUrl = signal('assets/polera.jpg');
 
   collectionTag = signal('100% ALGODON');
@@ -65,6 +120,7 @@ currentRoute = signal('');
 ) {}
 
  ngOnInit(): void {
+  this.startHeroAutoplay();
   this.loadWebConfig();
   this.loadProducts();
   this.loadCart();
@@ -88,6 +144,9 @@ currentRoute = signal('');
   // ==========================
 // USUARIO / SESIÓN
 // ==========================
+ngOnDestroy(): void {
+  clearInterval(this.heroInterval);
+}
 loadCurrentUser(): void {
   this.currentUser.set(this.authService.getUser());
 }
@@ -161,7 +220,7 @@ loadWebConfig(): void {
       this.primaryButton.set(config.primaryButtonText || 'Comprar ahora');
       this.secondaryButton.set(config.secondaryButtonText || 'Ver colección');
 
-      this.logoUrl.set(config.logoUrl || 'assets/logo.jpg');
+      this.logoUrl.set('assets/logo.png');
       this.heroImageUrl.set(config.heroImageUrl || 'assets/polera.jpg');
 
       this.collectionTag.set('100% ALGODON');

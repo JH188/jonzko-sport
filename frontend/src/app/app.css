@@ -47,13 +47,13 @@ button {
   z-index: 1000;
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
 }
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.brand img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
-
 .brand img {
   width: 48px;
   height: 48px;
@@ -3262,4 +3262,1051 @@ main {
   to {
     transform: rotate(360deg);
   }
+}/* HERO SOLO VIDEO / FOTO - RESPONSIVE */
+.hero {
+  min-height: calc(100vh - 90px);
+  padding: 70px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7f7;
+}
+
+.hero-media-card {
+  width: min(520px, 92vw);
+  height: 650px;
+  border-radius: 32px;
+  overflow: hidden;
+  background: #eeeeee;
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.2);
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    padding: 45px 22px 55px;
+  }
+
+  .hero-media-card {
+    width: min(100%, 390px);
+    height: 520px;
+    border-radius: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 35px 16px 45px;
+  }
+
+  .hero-media-card {
+    width: 100%;
+    height: 470px;
+    border-radius: 22px;
+  }
+}
+/* =========================================================
+   HERO CARRUSEL FULL WIDTH - JONZKO
+   ========================================================= */
+
+.hero-slider {
+  width: 100%;
+  height: calc(100vh - 86px);
+  min-height: 640px;
+  position: relative;
+  overflow: hidden;
+  background: #000000;
+}
+
+.hero-track,
+.hero-slide {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+.hero-slide img,
+.hero-slide video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.12) 42%,
+      rgba(0, 0, 0, 0.18) 100%
+    );
+  z-index: 3;
+}
+
+.hero-slider-content {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: min(900px, 92%);
+  color: #ffffff;
+  text-shadow: 0 10px 35px rgba(0, 0, 0, 0.55);
+}
+
+.hero-slider-content span {
+  display: block;
+  font-size: clamp(22px, 3vw, 46px);
+  font-family: Georgia, 'Times New Roman', serif;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.hero-slider-content h1 {
+  margin: 0;
+  font-size: clamp(58px, 8vw, 130px);
+  line-height: 0.9;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 900;
+  letter-spacing: 4px;
+}
+
+.hero-slider-content a {
+  margin-top: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+  height: 56px;
+  padding: 0 32px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 15px;
+  font-weight: 900;
+  text-decoration: none;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+}
+
+.hero-slider-content a:hover {
+  transform: translateY(-2px);
+}
+
+.hero-dots {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.hero-dots button {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  border: 2px solid #ffffff;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: 0.25s ease;
+}
+
+.hero-dots button.active {
+  width: 30px;
+  background: #ffffff;
+  opacity: 1;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .hero-slider {
+    height: calc(100vh - 130px);
+    min-height: 560px;
+  }
+
+  .hero-slider-content h1 {
+    font-size: clamp(48px, 12vw, 86px);
+  }
+
+  .hero-slider-content span {
+    font-size: clamp(20px, 5vw, 34px);
+  }
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  .hero-slider {
+    height: 78vh;
+    min-height: 520px;
+  }
+
+  .hero-slide img,
+  .hero-slide video {
+    object-position: center;
+  }
+
+  .hero-overlay {
+    background: rgba(0, 0, 0, 0.28);
+  }
+
+  .hero-slider-content {
+    width: 92%;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 52px;
+    letter-spacing: 2px;
+  }
+
+  .hero-slider-content span {
+    font-size: 21px;
+  }
+
+  .hero-slider-content a {
+    height: 50px;
+    min-width: 155px;
+    font-size: 14px;
+  }
+
+  .hero-dots {
+    bottom: 18px;
+  }
+}
+/* =========================================================
+   HERO CARRUSEL - AUTOPLAY + FLECHAS + FOTO MEJOR AJUSTADA
+   ========================================================= */
+
+.hero-slider {
+  width: 100%;
+  height: calc(100vh - 86px);
+  min-height: 650px;
+  max-height: 820px;
+  position: relative;
+  overflow: hidden;
+  background: #000000;
+}
+
+.hero-track,
+.hero-slide {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+.hero-slide img,
+.hero-slide video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 38%;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.12) 45%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  z-index: 3;
+}
+
+.hero-slider-content {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(900px, 92%);
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
+}
+
+.hero-slider-content span {
+  display: block;
+  font-size: clamp(24px, 3vw, 46px);
+  font-family: Georgia, 'Times New Roman', serif;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.hero-slider-content h1 {
+  margin: 0;
+  font-size: clamp(58px, 8vw, 128px);
+  line-height: 0.9;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 900;
+  letter-spacing: 4px;
+}
+
+.hero-slider-content a {
+  margin-top: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+  height: 56px;
+  padding: 0 32px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 15px;
+  font-weight: 900;
+  text-decoration: none;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+}
+
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  font-size: 46px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: 0.25s ease;
+  backdrop-filter: blur(8px);
+}
+
+.hero-arrow:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-50%) scale(1.06);
+}
+
+.hero-arrow-left {
+  left: 32px;
+}
+
+.hero-arrow-right {
+  right: 32px;
+}
+
+.hero-dots {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.hero-dots button {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  border: 2px solid #ffffff;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: 0.25s ease;
+}
+
+.hero-dots button.active {
+  width: 32px;
+  background: #ffffff;
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .hero-slider {
+    height: calc(100vh - 130px);
+    min-height: 560px;
+  }
+
+  .hero-arrow {
+    width: 44px;
+    height: 44px;
+    font-size: 36px;
+  }
+
+  .hero-arrow-left {
+    left: 18px;
+  }
+
+  .hero-arrow-right {
+    right: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-slider {
+    height: 78vh;
+    min-height: 520px;
+  }
+
+  .hero-slide img,
+  .hero-slide video {
+    object-position: center;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 48px;
+    letter-spacing: 2px;
+  }
+
+  .hero-slider-content span {
+    font-size: 20px;
+  }
+
+  .hero-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 30px;
+  }
+
+  .hero-arrow-left {
+    left: 10px;
+  }
+
+  .hero-arrow-right {
+    right: 10px;
+  }
+}
+/* =========================================================
+   AJUSTE NAVBAR JONZKO - LOGO + MENÚ MÁS EQUILIBRADO
+   ========================================================= */
+
+.navbar {
+  justify-content: flex-start !important;
+  gap: 85px !important;
+}
+
+.brand {
+  display: flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+  min-width: auto !important;
+}
+
+.brand img {
+  width: 54px !important;
+  height: 54px !important;
+}
+
+.navbar nav {
+  margin-left: 0 !important;
+}
+
+.nav-actions {
+  margin-left: auto !important;
+}
+
+/* Tablet / celular: mantener centrado y ordenado */
+@media (max-width: 900px) {
+  .navbar {
+    justify-content: center !important;
+    gap: 12px !important;
+  }
+
+  .brand {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .navbar nav {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .nav-actions {
+    width: 100% !important;
+    margin-left: 0 !important;
+    justify-content: center !important;
+  }
+}
+/* =========================================================
+   AJUSTE BIENVENIDA EN NAVBAR
+   ========================================================= */
+
+.welcome-user {
+  margin-right: 14px !important;
+  max-width: 210px !important;
+  font-size: 12px !important;
+  opacity: 0.95 !important;
+}
+
+.nav-actions {
+  gap: 14px !important;
+}
+
+/* En celular que no se malogre */
+@media (max-width: 900px) {
+  .welcome-user {
+    margin-right: 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+    max-width: 100% !important;
+  }
+
+  .nav-actions {
+    gap: 8px !important;
+  }
+}
+/* =========================================================
+   BARRA SUPERIOR ANIMADA - JONZKO
+   ========================================================= */
+
+.top-marquee {
+  width: 100%;
+  height: 34px;
+  background: #000000;
+  color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  z-index: 1100;
+}
+
+.top-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 42px;
+  width: max-content;
+  white-space: nowrap;
+  animation: jonzkoMarquee 22s linear infinite;
+}
+
+.top-marquee-track span {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.top-marquee-track span::after {
+  content: "•";
+  margin-left: 42px;
+  opacity: 0.75;
+}
+
+@keyframes jonzkoMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  .top-marquee {
+    height: 30px;
+  }
+
+  .top-marquee-track {
+    gap: 30px;
+    animation-duration: 18s;
+  }
+
+  .top-marquee-track span {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .top-marquee-track span::after {
+    margin-left: 30px;
+  }
+}
+/* =========================================================
+   BARRA SUPERIOR ANIMADA - INFINITA SIN ESPACIOS
+   ========================================================= */
+
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.top-marquee {
+  width: 100%;
+  height: 32px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #000000;
+  color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-top: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  z-index: 1200;
+}
+
+.top-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: jonzkoMarqueeInfinite 28s linear infinite;
+}
+
+.top-marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.top-marquee-group span {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0 34px;
+}
+
+.top-marquee-group span::after {
+  content: "•";
+  margin-left: 34px;
+  opacity: 0.75;
+}
+
+@keyframes jonzkoMarqueeInfinite {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@media (max-width: 600px) {
+  .top-marquee {
+    height: 30px;
+  }
+
+  .top-marquee-track {
+    animation-duration: 20s;
+  }
+
+  .top-marquee-group span {
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 0 24px;
+  }
+
+  .top-marquee-group span::after {
+    margin-left: 24px;
+  }
+}
+/* =========================================================
+   CORRECCIÓN FINAL: SIN ESPACIOS + BARRA BLANCA ANIMADA
+   ========================================================= */
+
+:host {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Barra superior blanca */
+.top-marquee {
+  width: 100vw !important;
+  height: 32px !important;
+  margin: 0 !important;
+  margin-left: calc(50% - 50vw) !important;
+  padding: 0 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  border-top: none !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+  position: relative !important;
+  z-index: 1200 !important;
+}
+
+/* Movimiento continuo */
+.top-marquee-track {
+  display: flex !important;
+  width: max-content !important;
+  animation: jonzkoMarqueeInfinite 26s linear infinite !important;
+}
+
+.top-marquee-group {
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+.top-marquee-group span {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  padding: 0 38px !important;
+  color: #000000 !important;
+}
+
+.top-marquee-group span::after {
+  content: "•";
+  margin-left: 38px;
+  color: #000000;
+  opacity: 0.65;
+}
+
+@keyframes jonzkoMarqueeInfinite {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* Navbar sin espacios laterales */
+.navbar {
+  width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+}
+
+/* Hero sin espacios laterales */
+.hero-slider {
+  width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  .top-marquee {
+    height: 30px !important;
+  }
+
+  .top-marquee-track {
+    animation-duration: 20s !important;
+  }
+
+  .top-marquee-group span {
+    font-size: 10px !important;
+    letter-spacing: 2px !important;
+    padding: 0 26px !important;
+  }
+
+  .top-marquee-group span::after {
+    margin-left: 26px;
+  }
+}
+/* =========================================================
+   HERO PREMIUM - LETRAS 10/10 JONZKO
+   ========================================================= */
+
+.hero-slider-content {
+  width: min(920px, 92%) !important;
+  text-align: center !important;
+  color: #ffffff !important;
+  text-shadow: 0 12px 38px rgba(0, 0, 0, 0.75) !important;
+}
+
+.hero-slider-content span {
+  display: block !important;
+  margin-bottom: 14px !important;
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-size: clamp(18px, 2.2vw, 38px) !important;
+  font-weight: 700 !important;
+  letter-spacing: 8px !important;
+  text-transform: uppercase !important;
+}
+
+.hero-slider-content h1 {
+  margin: 0 !important;
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-size: clamp(58px, 8vw, 126px) !important;
+  line-height: 0.86 !important;
+  font-weight: 900 !important;
+  letter-spacing: 7px !important;
+  text-transform: uppercase !important;
+}
+
+.hero-slider-content a {
+  margin-top: 34px !important;
+  min-width: 170px !important;
+  height: 52px !important;
+  padding: 0 34px !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.2px !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.26) !important;
+  transition: 0.25s ease !important;
+}
+
+.hero-slider-content a:hover {
+  transform: translateY(-2px) !important;
+  background: #f2f2f2 !important;
+}
+
+/* Oscurece un poco el fondo para que las letras se lean premium */
+.hero-overlay {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.38) 0%,
+    rgba(0, 0, 0, 0.22) 45%,
+    rgba(0, 0, 0, 0.38) 100%
+  ) !important;
+}
+
+/* Barra superior más fina */
+.top-marquee {
+  height: 31px !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-bottom: 1px solid #e7e7e7 !important;
+}
+
+.top-marquee-group span {
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  letter-spacing: 4px !important;
+  color: #000000 !important;
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  .hero-slider-content span {
+    font-size: 15px !important;
+    letter-spacing: 4px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 46px !important;
+    letter-spacing: 3px !important;
+    line-height: 0.92 !important;
+  }
+
+  .hero-slider-content a {
+    height: 48px !important;
+    min-width: 150px !important;
+    font-size: 13px !important;
+    margin-top: 26px !important;
+  }
+}
+/* =========================================================
+   BARRA SUPERIOR PREMIUM - JONZKO
+   ========================================================= */
+
+.top-marquee {
+  height: 26px !important;
+  background: #0a0a0a !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  display: flex !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+.top-marquee-track {
+  display: flex !important;
+  width: max-content !important;
+  animation: jonzkoMarqueeInfinite 32s linear infinite !important;
+}
+
+.top-marquee-group {
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+.top-marquee-group span {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 2.5px !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  padding: 0 28px !important;
+}
+
+.top-marquee-group span::after {
+  content: "•";
+  margin-left: 28px !important;
+  font-size: 9px !important;
+  opacity: 0.55 !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 600px) {
+  .top-marquee {
+    height: 24px !important;
+  }
+
+  .top-marquee-track {
+    animation-duration: 24s !important;
+  }
+
+  .top-marquee-group span {
+    font-size: 9px !important;
+    letter-spacing: 1.8px !important;
+    padding: 0 20px !important;
+  }
+
+  .top-marquee-group span::after {
+    margin-left: 20px !important;
+  }
+}
+/* =========================================================
+   AJUSTE HERO CELULAR - TEXTO MÁS LIMPIO
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .hero-slider {
+    height: 78vh !important;
+    min-height: 560px !important;
+  }
+
+  .hero-slider-content {
+    width: 92% !important;
+    top: 54% !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 13px !important;
+    letter-spacing: 5px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: clamp(42px, 14vw, 62px) !important;
+    line-height: 0.92 !important;
+    letter-spacing: 2px !important;
+    max-width: 100% !important;
+    word-break: normal !important;
+  }
+
+  .hero-slider-content a {
+    margin-top: 26px !important;
+    height: 48px !important;
+    min-width: 170px !important;
+    font-size: 13px !important;
+  }
+
+  .hero-arrow {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 28px !important;
+  }
+
+  .hero-arrow-left {
+    left: 8px !important;
+  }
+
+  .hero-arrow-right {
+    right: 8px !important;
+  }
+}
+/* LOGO NAVBAR LIMPIO */
+.brand img {
+  width: 58px !important;
+  height: 58px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+/* =========================================================
+   LOGO JONZKO MÁS INTEGRADO AL NAVBAR
+   ========================================================= */
+
+.brand img {
+  width: 50px !important;
+  height: 50px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  filter: brightness(1.08) contrast(1.12) !important;
+}
+
+.brand {
+  display: flex !important;
+  align-items: center !important;
 }
