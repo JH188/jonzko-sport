@@ -26,6 +26,7 @@ export class App implements OnInit, OnDestroy {
 cart = signal<CartItem[]>([]);
 cartOpen = signal(false);
 activeHeroSlide = signal(0);
+mobileMenuOpen = signal(false);
 private heroInterval: any;
 
 heroSlides = signal([
@@ -51,6 +52,13 @@ heroSlides = signal([
     buttonText: 'Descubrir prendas',
   },
 ]);
+toggleMobileMenu(): void {
+  this.mobileMenuOpen.update(value => !value);
+}
+
+closeMobileMenu(): void {
+  this.mobileMenuOpen.set(false);
+}
 
 startHeroAutoplay(): void {
   this.heroInterval = setInterval(() => {
@@ -139,6 +147,7 @@ currentRoute = signal('');
     this.loadWebConfig();
     this.loadCurrentUser();
     this.closeCart();
+    this.closeMobileMenu();
   });
   }
   // ==========================
