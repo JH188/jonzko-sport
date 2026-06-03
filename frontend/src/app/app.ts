@@ -32,21 +32,21 @@ private heroInterval: any;
 heroSlides = signal([
   {
     type: 'image',
-    src: 'assets/polo-negro.jpeg',
+    src: 'assets/principal1.jpg',
     subtitle: 'NUEVA COLECCIÓN',
     title: 'OVERSIZE',
     buttonText: 'Comprar ahora',
   },
   {
     type: 'image',
-    src: 'assets/polera-negra-clasica.jpeg',
+    src: 'assets/principal2.jpeg',
     subtitle: 'JONZKO SPORT',
     title: 'ESTILO URBANO',
     buttonText: 'Ver colección',
   },
   {
     type: 'image',
-    src: 'assets/polo-negro.jpeg',
+    src: 'assets/principal3.jpeg',
     subtitle: 'MODA PERUANA',
     title: 'BLACK & WHITE',
     buttonText: 'Descubrir prendas',
@@ -107,8 +107,8 @@ currentRoute = signal('');
   logoUrl = signal('assets/logo.png');
   heroImageUrl = signal('assets/polera.jpg');
 
-  collectionTag = signal('100% ALGODON');
-  collectionTitle = signal('Colección inicial');
+  collectionTag = signal('ROPA URBANA');
+  collectionTitle = signal('Nuestro Producto');
   collectionDescription = signal('Productos oficiales disponibles para compra online.');
 
   aboutTitle = signal('Sobre JONZKO');
@@ -232,8 +232,8 @@ loadWebConfig(): void {
       this.logoUrl.set('assets/logo.png');
       this.heroImageUrl.set(config.heroImageUrl || 'assets/polera.jpg');
 
-      this.collectionTag.set('100% ALGODON');
-      this.collectionTitle.set(config.collectionTitle || 'Colección inicial');
+      this.collectionTag.set('ROPA URBANA');
+      this.collectionTitle.set(config.collectionTitle || 'Nuestro Producto');
       this.collectionDescription.set(
         config.collectionDescription || 'Productos oficiales disponibles para compra online.'
       );
@@ -263,7 +263,51 @@ loadWebConfig(): void {
     }
   });
 }
+hoverImageFor(product: Product): string {
+  const name = (product.name || '').toLowerCase();
 
+  if (name.includes('blanca')) {
+    return 'assets/polera-blanca-2.jpeg';
+  }
+
+  if (name.includes('morada')) {
+    return 'assets/polera-morada-2.jpeg';
+  }
+
+  if (name.includes('plomo') || name.includes('oscuro')) {
+    return 'assets/polera-plomo-2.jpeg';
+  }
+
+  if (name.includes('negra') && name.includes('polera')) {
+    return 'assets/polera-negra-2.jpg';
+  }
+
+  if (name.includes('verde')) {
+    return 'assets/polera-verde-2.jpeg';
+  }
+
+  if (
+    name.includes('polo') &&
+    name.includes('manga') &&
+    name.includes('larga') &&
+    name.includes('negro')
+  ) {
+    return 'assets/polo-manga-larga-negro-2.jpg';
+  }
+
+  return product.imageUrl;
+}
+
+discountPercent(product: Product): number {
+  const oldPrice = Number(product.oldPrice || 0);
+  const price = Number(product.price || 0);
+
+  if (!oldPrice || !price || oldPrice <= price) {
+    return 0;
+  }
+
+  return Math.round(((oldPrice - price) / oldPrice) * 100);
+}
   // ==========================
   // CARRITO
   // ==========================

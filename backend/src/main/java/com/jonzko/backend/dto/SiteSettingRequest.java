@@ -35,7 +35,7 @@ public class SiteSettingRequest {
     private String contactDescription;
     // Navegación y textos del header
 private String navInicio;
-private String navColeccion;
+private String navProducto;
 private String navNosotros;
 private String navContacto;
 private String cartText;

@@ -72,7 +72,7 @@ public class SiteSettingController {
         settings.setContactTitle(request.getContactTitle());
         settings.setContactDescription(request.getContactDescription());
         settings.setNavInicio(request.getNavInicio());
-settings.setNavColeccion(request.getNavColeccion());
+settings.setNavProducto(request.getNavProducto());
 settings.setNavNosotros(request.getNavNosotros());
 settings.setNavContacto(request.getNavContacto());
 settings.setCartText(request.getCartText());
@@ -107,12 +107,12 @@ settings.setLoginText(request.getLoginText());
                 .whatsappNumber("")
                 .whatsappMessage("Hola, quiero información sobre JONZKO.")
 
-                .collectionTitle("Colección inicial")
+                .collectionTitle("Nuestro Producto")
                 .collectionDescription("Los primeros productos oficiales de JONZKO.")
                 .contactTitle("Contacto")
                 .contactDescription("Comunícate con nosotros para compras, consultas y pedidos.")
                 .navInicio("Inicio")
-.navColeccion("Colección")
+.navProducto("Producto")
 .navNosotros("Nosotros")
 .navContacto("Contacto")
 .cartText("Carrito")

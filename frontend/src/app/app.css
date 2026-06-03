@@ -4443,3 +4443,163 @@ body {
     letter-spacing: 5px !important;
   }
 }
+/* =========================================================
+   PRODUCTOS PRO - HOVER IMAGE + DESCUENTO
+   ========================================================= */
+
+.product-card {
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 18px !important;
+  background: #ffffff !important;
+  transition: transform 0.28s ease, box-shadow 0.28s ease !important;
+}
+
+.product-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12) !important;
+}
+
+.product-image-box {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 315px !important;
+  overflow: hidden !important;
+  background: #f6f6f6 !important;
+}
+
+.product-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  transition: opacity 0.35s ease, transform 0.45s ease !important;
+}
+
+.product-main-image {
+  opacity: 1 !important;
+}
+
+.product-hover-image {
+  position: absolute !important;
+  inset: 0 !important;
+  opacity: 0 !important;
+}
+
+.product-card:hover .product-main-image {
+  opacity: 0 !important;
+  transform: scale(1.04) !important;
+}
+
+.product-card:hover .product-hover-image {
+  opacity: 1 !important;
+  transform: scale(1.04) !important;
+}
+
+.discount-badge {
+  position: absolute !important;
+  top: 14px !important;
+  left: 14px !important;
+  z-index: 5 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  padding: 6px 10px !important;
+  border-radius: 2px !important;
+  letter-spacing: 0.5px !important;
+}
+
+.new-badge {
+  position: absolute !important;
+  left: 14px !important;
+  bottom: 14px !important;
+  z-index: 5 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  padding: 5px 8px !important;
+  border-radius: 2px !important;
+  letter-spacing: 0.4px !important;
+}
+
+.old-price {
+  text-decoration: line-through !important;
+  color: #888888 !important;
+  font-size: 13px !important;
+  margin-right: 12px !important;
+}
+
+.current-price {
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+}
+
+.product-button {
+  text-transform: uppercase !important;
+  letter-spacing: 0.4px !important;
+}
+
+/* CELULAR */
+@media (max-width: 700px) {
+  .products-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 22px 12px !important;
+  }
+
+  .product-card {
+    border-radius: 12px !important;
+    box-shadow: none !important;
+  }
+
+  .product-image-box {
+    height: 235px !important;
+    border-radius: 10px !important;
+  }
+
+  .product-info {
+    padding: 14px 6px 18px !important;
+    text-align: center !important;
+  }
+
+  .product-category,
+  .product-description {
+    display: none !important;
+  }
+
+  .product-info h2 {
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+    margin: 10px 0 10px !important;
+  }
+
+  .product-price {
+    justify-content: center !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .product-button {
+    display: none !important;
+  }
+
+  .discount-badge {
+    top: 8px !important;
+    left: 8px !important;
+    font-size: 10px !important;
+    padding: 5px 7px !important;
+  }
+
+  .new-badge {
+    left: 8px !important;
+    bottom: 8px !important;
+    font-size: 9px !important;
+    padding: 4px 6px !important;
+  }
+}
