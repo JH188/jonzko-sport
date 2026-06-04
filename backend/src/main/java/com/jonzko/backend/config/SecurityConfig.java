@@ -24,10 +24,26 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // ==========================
+                        // BLOQUEAR ADMIN PRIMERO
+                        // IMPORTANTE: va antes de /api/products/**
+                        // ==========================
+                        .requestMatchers("/api/admin/**").denyAll()
+                        .requestMatchers("/api/products/admin/**").denyAll()
+                        .requestMatchers("/api/admin/product-variants/**").denyAll()
+
+                        // ==========================
+                        // BLOQUEAR PEDIDOS PUBLICOS
+                        // ==========================
+                        .requestMatchers(HttpMethod.GET, "/api/orders").denyAll()
+                        .requestMatchers(HttpMethod.GET, "/api/orders/**").denyAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/**").denyAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/orders/**").denyAll()
+
+                        // ==========================
                         // RUTAS PUBLICAS DE LA TIENDA
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
 
                         // ==========================
@@ -38,20 +54,9 @@ public class SecurityConfig {
 
                         // ==========================
                         // CREAR PEDIDO PUBLICO
+                        // El cliente debe poder comprar
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
-
-                        // ==========================
-                        // BLOQUEAR ADMIN PUBLICO
-                        // ==========================
-                        .requestMatchers("/api/admin/**").denyAll()
-                        .requestMatchers("/api/products/admin/**").denyAll()
-
-                        // ==========================
-                        // BLOQUEAR PEDIDOS PUBLICOS
-                        // ==========================
-                        .requestMatchers(HttpMethod.GET, "/api/orders").denyAll()
-                        .requestMatchers(HttpMethod.GET, "/api/orders/**").denyAll()
 
                         // ==========================
                         // TODO LO DEMAS BLOQUEADO
