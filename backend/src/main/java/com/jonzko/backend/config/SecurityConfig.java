@@ -94,7 +94,8 @@ public class SecurityConfig {
                         // ==========================
                         // TODO LO DEMAS BLOQUEADO
                         // ==========================
-                        // ==========================
+                        // ==========================git commit -m "Enviar token JWT en servicios admin Angular"
+
 // CONFIGURACION ADMIN
 // ==========================
 .requestMatchers(HttpMethod.PUT, "/api/settings").hasRole("ADMIN")
