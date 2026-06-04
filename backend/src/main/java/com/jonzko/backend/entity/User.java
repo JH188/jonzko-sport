@@ -3,6 +3,8 @@ package com.jonzko.backend.entity;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.PrePersist;
-
 import jakarta.persistence.Table;
 
 import jakarta.validation.constraints.Email;
@@ -56,6 +57,8 @@ public class User {
     private String phone;
 
     // Contraseña obligatoria
+    // IMPORTANTE: No se devuelve en respuestas JSON
+    @JsonIgnore
     @NotBlank(message = "La contraseña es obligatoria")
     @Size(min = 6, message = "La contraseña debe tener mínimo 6 caracteres")
     @Column(name = "password", nullable = false, length = 255)
@@ -64,21 +67,21 @@ public class User {
     @Column(name = "active")
     private Boolean active = true;
 
-   @Column(name = "created_at", nullable = false, updatable = false)
-private LocalDateTime createdAt;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-@Column(name = "updated_at")
-private LocalDateTime updatedAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-@PrePersist
-public void prePersist() {
-    LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Lima"));
-    this.createdAt = now;
-    this.updatedAt = now;
-}
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Lima"));
+        this.createdAt = now;
+        this.updatedAt = now;
+    }
 
-@PreUpdate
-public void preUpdate() {
-    this.updatedAt = LocalDateTime.now(ZoneId.of("America/Lima"));
-}
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now(ZoneId.of("America/Lima"));
+    }
 }
