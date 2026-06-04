@@ -23,44 +23,33 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
 
-                        // ==========================
-                        // BLOQUEAR ADMIN PRIMERO
-                        // IMPORTANTE: va antes de /api/products/**
-                        // ==========================
+                        // Permitir preflight CORS de Angular
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // Bloquear admin primero
                         .requestMatchers("/api/admin/**").denyAll()
                         .requestMatchers("/api/products/admin/**").denyAll()
                         .requestMatchers("/api/admin/product-variants/**").denyAll()
 
-                        // ==========================
-                        // BLOQUEAR PEDIDOS PUBLICOS
-                        // ==========================
+                        // Bloquear lectura publica de pedidos
                         .requestMatchers(HttpMethod.GET, "/api/orders").denyAll()
                         .requestMatchers(HttpMethod.GET, "/api/orders/**").denyAll()
                         .requestMatchers(HttpMethod.PUT, "/api/orders/**").denyAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/orders/**").denyAll()
 
-                        // ==========================
-                        // RUTAS PUBLICAS DE LA TIENDA
-                        // ==========================
+                        // Rutas publicas de la tienda
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
 
-                        // ==========================
-                        // REGISTRO Y LOGIN PUBLICOS
-                        // ==========================
+                        // Registro y login publicos
                         .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
 
-                        // ==========================
-                        // CREAR PEDIDO PUBLICO
-                        // El cliente debe poder comprar
-                        // ==========================
+                        // Crear pedido publico
                         .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
 
-                        // ==========================
-                        // TODO LO DEMAS BLOQUEADO
-                        // ==========================
+                        // Todo lo demas bloqueado
                         .anyRequest().denyAll()
                 );
 
