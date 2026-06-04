@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                    
 
                         // ==========================
                         // PREFLIGHT CORS
@@ -93,6 +94,15 @@ public class SecurityConfig {
                         // ==========================
                         // TODO LO DEMAS BLOQUEADO
                         // ==========================
+                        // ==========================
+// CONFIGURACION ADMIN
+// ==========================
+.requestMatchers(HttpMethod.PUT, "/api/settings").hasRole("ADMIN")
+
+// ==========================
+// PAGOS ADMIN
+// ==========================
+.requestMatchers(HttpMethod.PUT, "/api/orders/*/payment-status").hasRole("ADMIN")
                         .anyRequest().denyAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
