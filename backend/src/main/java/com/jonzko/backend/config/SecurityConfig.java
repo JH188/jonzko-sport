@@ -23,33 +23,54 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
 
-                        // Permitir preflight CORS de Angular
+                        // ==========================
+                        // PERMITIR PREFLIGHT CORS
+                        // ==========================
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // Bloquear admin primero
+                        // ==========================
+                        // BLOQUEAR ADMIN PRIMERO
+                        // ==========================
                         .requestMatchers("/api/admin/**").denyAll()
                         .requestMatchers("/api/products/admin/**").denyAll()
                         .requestMatchers("/api/admin/product-variants/**").denyAll()
 
-                        // Bloquear lectura publica de pedidos
+                        // ==========================
+                        // TIENDA PUBLICA
+                        // ==========================
+                        .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
+
+                        // ==========================
+                        // LOGIN Y REGISTRO PUBLICO
+                        // ==========================
+                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+
+                        // ==========================
+                        // CREAR PEDIDO PUBLICO
+                        // Tu checkout usa /api/customer-orders
+                        // ==========================
+                        .requestMatchers(HttpMethod.POST, "/api/customer-orders").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
+
+                        // ==========================
+                        // BLOQUEAR LECTURA PUBLICA DE PEDIDOS
+                        // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/orders").denyAll()
                         .requestMatchers(HttpMethod.GET, "/api/orders/**").denyAll()
                         .requestMatchers(HttpMethod.PUT, "/api/orders/**").denyAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/orders/**").denyAll()
 
-                        // Rutas publicas de la tienda
-                        .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/customer-orders").denyAll()
+                        .requestMatchers(HttpMethod.GET, "/api/customer-orders/**").denyAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/customer-orders/**").denyAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/customer-orders/**").denyAll()
 
-                        // Registro y login publicos
-                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-
-                        // Crear pedido publico
-                        .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
-
-                        // Todo lo demas bloqueado
+                        // ==========================
+                        // TODO LO DEMAS BLOQUEADO
+                        // ==========================
                         .anyRequest().denyAll()
                 );
 
