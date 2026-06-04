@@ -78,6 +78,9 @@ export interface UserResponse {
   phone: string;
   active: boolean;
   createdAt?: string;
+
+  // JWT del usuario normal
+  token?: string;
 }
 
 // ==========================
@@ -180,6 +183,19 @@ export class ApiService {
   private readonly apiUrl = 'https://jonzko-sport-production.up.railway.app/api';
 
   constructor(private http: HttpClient) {}
+
+  private getUserHeaders(): { headers: HttpHeaders } {
+  const token =
+    localStorage.getItem('jonzko_user_token') ||
+    localStorage.getItem('token') ||
+    '';
+
+  return {
+    headers: new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+  };
+}
   private getAdminHeaders(): { headers: HttpHeaders } {
   const token = localStorage.getItem('jonzko_admin_token') || '';
 
@@ -305,6 +321,12 @@ getUsers(): Observable<UserResponse[]> {
 
 getOrders(): Observable<OrderResponse[]> {
   return this.http.get<OrderResponse[]>(`${this.apiUrl}/orders`);
+}
+getOrdersByUser(userId: number): Observable<OrderResponse[]> {
+  return this.http.get<OrderResponse[]>(
+    `${this.apiUrl}/customer-orders/user/${userId}`,
+    this.getUserHeaders()
+  );
 }
 
 // ==========================
