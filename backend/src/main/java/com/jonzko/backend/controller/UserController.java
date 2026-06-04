@@ -1,7 +1,9 @@
 package com.jonzko.backend.controller;
+
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,16 +16,30 @@ import com.jonzko.backend.dto.RegisterRequest;
 import com.jonzko.backend.dto.UserResponse;
 import com.jonzko.backend.entity.User;
 import com.jonzko.backend.repository.UserRepository;
+import com.jonzko.backend.security.JwtService;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {
+        "https://jonzko.lat",
+        "https://www.jonzko.lat",
+        "https://jonzko-sport.vercel.app",
+        "http://localhost:4200"
+})
 public class UserController {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            JwtService jwtService
+    ) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/register")
@@ -41,34 +57,57 @@ public class UserController {
             return ResponseEntity.badRequest().body(Map.of("message", "La contraseña es obligatoria"));
         }
 
-        if (userRepository.existsByEmail(request.getEmail())) {
+        String email = request.getEmail().trim().toLowerCase();
+
+        if (userRepository.existsByEmail(email)) {
             return ResponseEntity.badRequest().body(Map.of("message", "Este correo ya está registrado"));
         }
 
         User user = User.builder()
-                .fullName(request.getFullName())
-                .email(request.getEmail())
+                .fullName(request.getFullName().trim())
+                .email(email)
                 .phone(request.getPhone())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .active(true)
+                .role("USER")
                 .build();
 
         User savedUser = userRepository.save(user);
 
-        return ResponseEntity.ok(UserResponse.fromEntity(savedUser));
+        String token = jwtService.generateToken(savedUser);
+
+        return ResponseEntity.ok(Map.of(
+                "id", savedUser.getId(),
+                "fullName", savedUser.getFullName(),
+                "email", savedUser.getEmail(),
+                "phone", savedUser.getPhone(),
+                "active", savedUser.getActive(),
+                "role", savedUser.getRole(),
+                "token", token
+        ));
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 
-        User user = userRepository.findByEmail(request.getEmail())
+        if (request.getEmail() == null || request.getEmail().isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("message", "El correo es obligatorio"));
+        }
+
+        if (request.getPassword() == null || request.getPassword().isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("message", "La contraseña es obligatoria"));
+        }
+
+        String email = request.getEmail().trim().toLowerCase();
+
+        User user = userRepository.findByEmail(email)
                 .orElse(null);
 
         if (user == null) {
             return ResponseEntity.badRequest().body(Map.of("message", "Correo no registrado"));
         }
 
-        if (!user.getPassword().equals(request.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             return ResponseEntity.badRequest().body(Map.of("message", "Contraseña incorrecta"));
         }
 
@@ -76,16 +115,28 @@ public class UserController {
             return ResponseEntity.badRequest().body(Map.of("message", "Usuario inactivo"));
         }
 
-        return ResponseEntity.ok(UserResponse.fromEntity(user));
+        String role = user.getRole() != null ? user.getRole() : "USER";
+user.setRole(role);
+
+String token = jwtService.generateToken(user);
+        return ResponseEntity.ok(Map.of(
+                "id", user.getId(),
+                "fullName", user.getFullName(),
+                "email", user.getEmail(),
+                "phone", user.getPhone(),
+                "active", user.getActive(),
+                "role", role,
+                "token", token
+        ));
     }
 
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
         return ResponseEntity.ok(
-        userRepository.findAll()
-                .stream()
-                .map(UserResponse::fromEntity)
-                .toList()
-);
+                userRepository.findAll()
+                        .stream()
+                        .map(UserResponse::fromEntity)
+                        .toList()
+        );
     }
 }
