@@ -31,7 +31,7 @@ export interface AuthUser {
 })
 export class AuthService {
 
-  private apiUrl = 'https://jonzko-sport-production.up.railway.app/api/auth';
+  private apiUrl = 'https://jonzko-sport-production.up.railway.app/api/users';
   private storageKey = 'jonzko_user';
   private tokenKey = 'jonzko_user_token';
 
