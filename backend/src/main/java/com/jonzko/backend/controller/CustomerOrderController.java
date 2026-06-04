@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jonzko.backend.dto.CustomerOrderRequest;
 import com.jonzko.backend.entity.CustomerOrder;
+import com.jonzko.backend.entity.User;
 import com.jonzko.backend.repository.CustomerOrderRepository;
+import com.jonzko.backend.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/customer-orders")
@@ -22,9 +25,14 @@ import com.jonzko.backend.repository.CustomerOrderRepository;
 public class CustomerOrderController {
 
     private final CustomerOrderRepository customerOrderRepository;
+    private final UserRepository userRepository;
 
-    public CustomerOrderController(CustomerOrderRepository customerOrderRepository) {
+    public CustomerOrderController(
+            CustomerOrderRepository customerOrderRepository,
+            UserRepository userRepository
+    ) {
         this.customerOrderRepository = customerOrderRepository;
+        this.userRepository = userRepository;
     }
 
     @PostMapping
@@ -94,7 +102,37 @@ public class CustomerOrderController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getOrdersByUser(@PathVariable Long userId) {
+    public ResponseEntity<?> getOrdersByUser(
+            @PathVariable Long userId,
+            Authentication authentication
+    ) {
+        if (authentication == null || authentication.getName() == null) {
+            return ResponseEntity.status(401).body(Map.of(
+                    "message", "Debes iniciar sesión para ver tus pedidos"
+            ));
+        }
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
+
+        if (user == null) {
+            return ResponseEntity.status(401).body(Map.of(
+                    "message", "Usuario no encontrado"
+            ));
+        }
+
+        boolean isAdmin = authentication.getAuthorities()
+                .stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin && !user.getId().equals(userId)) {
+            return ResponseEntity.status(403).body(Map.of(
+                    "message", "No tienes permiso para ver pedidos de otro usuario"
+            ));
+        }
+
         return ResponseEntity.ok(customerOrderRepository.findByUserIdOrderByCreatedAtDesc(userId));
     }
 }

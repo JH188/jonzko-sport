@@ -34,8 +34,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
+
                 .authorizeHttpRequests(auth -> auth
-                    
 
                         // ==========================
                         // PREFLIGHT CORS
@@ -48,11 +48,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/admin-login").permitAll()
 
                         // ==========================
-                        // ADMIN PROTEGIDO CON JWT
+                        // LOGIN Y REGISTRO USUARIO PUBLICO
                         // ==========================
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/products/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/admin/product-variants/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
 
                         // ==========================
                         // TIENDA PUBLICA
@@ -62,31 +61,47 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
 
                         // ==========================
-                        // LOGIN Y REGISTRO USUARIO PUBLICO
-                        // ==========================
-                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-
-                        // ==========================
                         // CREAR PEDIDO PUBLICO
+                        // El cliente puede crear pedido desde checkout
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/customer-orders").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
 
                         // ==========================
-                        // MIS PEDIDOS TEMPORAL
-                        // Luego lo protegeremos mejor con JWT de usuario
+                        // MIS PEDIDOS PROTEGIDO CON JWT
+                        // Ya no será público
                         // ==========================
-                        .requestMatchers(HttpMethod.GET, "/api/customer-orders/user/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/customer-orders/user/**").authenticated()
 
                         // ==========================
-                        // BLOQUEOS PUBLICOS
+                        // ADMIN PROTEGIDO CON JWT
+                        // ==========================
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/products/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/product-variants/**").hasRole("ADMIN")
+
+                        // ==========================
+                        // CONFIGURACION ADMIN
+                        // ==========================
+                        .requestMatchers(HttpMethod.PUT, "/api/settings").hasRole("ADMIN")
+
+                        // ==========================
+                        // PAGOS ADMIN
+                        // ==========================
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/payment-status").hasRole("ADMIN")
+
+                        // ==========================
+                        // BLOQUEOS PUBLICOS DE ORDERS ANTIGUO
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/orders").denyAll()
                         .requestMatchers(HttpMethod.GET, "/api/orders/**").denyAll()
                         .requestMatchers(HttpMethod.PUT, "/api/orders/**").denyAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/orders/**").denyAll()
 
+                        // ==========================
+                        // BLOQUEOS PUBLICOS DE CUSTOMER ORDERS
+                        // OJO: /api/customer-orders/user/** ya fue protegido arriba
+                        // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders").denyAll()
                         .requestMatchers(HttpMethod.PUT, "/api/customer-orders/**").denyAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/customer-orders/**").denyAll()
@@ -94,18 +109,9 @@ public class SecurityConfig {
                         // ==========================
                         // TODO LO DEMAS BLOQUEADO
                         // ==========================
-                        // ==========================git commit -m "Enviar token JWT en servicios admin Angular"
-
-// CONFIGURACION ADMIN
-// ==========================
-.requestMatchers(HttpMethod.PUT, "/api/settings").hasRole("ADMIN")
-
-// ==========================
-// PAGOS ADMIN
-// ==========================
-.requestMatchers(HttpMethod.PUT, "/api/orders/*/payment-status").hasRole("ADMIN")
                         .anyRequest().denyAll()
                 )
+
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
