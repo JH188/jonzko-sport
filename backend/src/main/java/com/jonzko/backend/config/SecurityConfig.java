@@ -50,13 +50,18 @@ public class SecurityConfig {
 
                         // ==========================
                         // CREAR PEDIDO PUBLICO
-                        // Tu checkout usa /api/customer-orders
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/customer-orders").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
 
                         // ==========================
-                        // BLOQUEAR LECTURA PUBLICA DE PEDIDOS
+                        // MIS PEDIDOS DEL USUARIO
+                        // Permite que el usuario vea sus pedidos
+                        // ==========================
+                        .requestMatchers(HttpMethod.GET, "/api/customer-orders/user/*").permitAll()
+
+                        // ==========================
+                        // BLOQUEAR LECTURA PUBLICA GENERAL DE PEDIDOS
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/orders").denyAll()
                         .requestMatchers(HttpMethod.GET, "/api/orders/**").denyAll()
@@ -64,7 +69,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/orders/**").denyAll()
 
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders").denyAll()
-                        .requestMatchers(HttpMethod.GET, "/api/customer-orders/**").denyAll()
                         .requestMatchers(HttpMethod.PUT, "/api/customer-orders/**").denyAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/customer-orders/**").denyAll()
 
