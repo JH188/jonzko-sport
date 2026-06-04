@@ -48,10 +48,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/admin-login").permitAll()
 
                         // ==========================
-                        // LOGIN Y REGISTRO USUARIO PUBLICO
+                        // LOGIN Y REGISTRO USUARIO NORMAL
                         // ==========================
-                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
 
                         // ==========================
                         // TIENDA PUBLICA
@@ -69,7 +71,7 @@ public class SecurityConfig {
 
                         // ==========================
                         // MIS PEDIDOS PROTEGIDO CON JWT
-                        // Ya no será público
+                        // Sin token ya no muestra pedidos
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders/user/**").authenticated()
 
@@ -100,7 +102,7 @@ public class SecurityConfig {
 
                         // ==========================
                         // BLOQUEOS PUBLICOS DE CUSTOMER ORDERS
-                        // OJO: /api/customer-orders/user/** ya fue protegido arriba
+                        // OJO: /api/customer-orders/user/** ya está protegido arriba
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders").denyAll()
                         .requestMatchers(HttpMethod.PUT, "/api/customer-orders/**").denyAll()
