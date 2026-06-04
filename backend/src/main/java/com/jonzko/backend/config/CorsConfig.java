@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOriginPatterns(
+                        .allowedOrigins(
                                 "https://jonzko.lat",
                                 "https://www.jonzko.lat",
                                 "https://jonzko-sport.vercel.app",
@@ -22,7 +22,6 @@ public class CorsConfig {
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                         .allowedHeaders("*")
-                        .exposedHeaders("*")
                         .allowCredentials(false)
                         .maxAge(3600);
             }
