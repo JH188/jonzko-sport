@@ -5,13 +5,25 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.jonzko.backend.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -19,21 +31,27 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
 
                         // ==========================
-                        // PERMITIR PREFLIGHT CORS
+                        // PREFLIGHT CORS
                         // ==========================
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // ==========================
-                        // BLOQUEAR ADMIN PRIMERO
+                        // LOGIN ADMIN JWT
                         // ==========================
-                        .requestMatchers("/api/admin/**").denyAll()
-                        .requestMatchers("/api/products/admin/**").denyAll()
-                        .requestMatchers("/api/admin/product-variants/**").denyAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/admin-login").permitAll()
+
+                        // ==========================
+                        // ADMIN PROTEGIDO CON JWT
+                        // ==========================
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/products/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/product-variants/**").hasRole("ADMIN")
 
                         // ==========================
                         // TIENDA PUBLICA
@@ -43,7 +61,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
 
                         // ==========================
-                        // LOGIN Y REGISTRO PUBLICO
+                        // LOGIN Y REGISTRO USUARIO PUBLICO
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
@@ -55,13 +73,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
 
                         // ==========================
-                        // MIS PEDIDOS DEL USUARIO
-                        // Permite que el usuario vea sus pedidos
+                        // MIS PEDIDOS TEMPORAL
+                        // Luego lo protegeremos mejor con JWT de usuario
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders/user/*").permitAll()
 
                         // ==========================
-                        // BLOQUEAR LECTURA PUBLICA GENERAL DE PEDIDOS
+                        // BLOQUEOS PUBLICOS
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/orders").denyAll()
                         .requestMatchers(HttpMethod.GET, "/api/orders/**").denyAll()
@@ -76,8 +94,14 @@ public class SecurityConfig {
                         // TODO LO DEMAS BLOQUEADO
                         // ==========================
                         .anyRequest().denyAll()
-                );
+                )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
