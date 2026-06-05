@@ -65,12 +65,11 @@ export class CustomerOrderService {
   }
 
   getOrdersByUser(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(
-      `${this.apiUrl}/customer-orders/user/${userId}`,
-      this.getUserHeaders()
-    );
-  }
-
+  return this.http.get<any[]>(
+    `${this.apiUrl}/customer-orders/my-orders`,
+    this.getUserHeaders()
+  );
+}
   getAdminOrders(): Observable<any[]> {
     return this.http.get<any[]>(
       `${this.apiUrl}/admin/orders`,

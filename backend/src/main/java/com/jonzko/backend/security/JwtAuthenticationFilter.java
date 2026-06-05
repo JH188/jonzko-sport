@@ -50,6 +50,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String email = claims.getSubject();
         String role = claims.get("role", String.class);
 
+        if (role == null || role.isBlank()) {
+            role = "USER";
+        }
+
+        role = role.toUpperCase();
+
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(
                         email,

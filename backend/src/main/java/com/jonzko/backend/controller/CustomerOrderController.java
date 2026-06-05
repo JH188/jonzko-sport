@@ -101,7 +101,7 @@ public class CustomerOrderController {
         ));
     }
 
-    @GetMapping("/user/{userId}")
+       @GetMapping("/user/{userId}")
     public ResponseEntity<?> getOrdersByUser(
             @PathVariable Long userId,
             Authentication authentication
@@ -134,5 +134,29 @@ public class CustomerOrderController {
         }
 
         return ResponseEntity.ok(customerOrderRepository.findByUserIdOrderByCreatedAtDesc(userId));
+    }
+
+    @GetMapping("/my-orders")
+    public ResponseEntity<?> getMyOrders(Authentication authentication) {
+        if (authentication == null || authentication.getName() == null) {
+            return ResponseEntity.status(401).body(Map.of(
+                    "message", "Debes iniciar sesión para ver tus pedidos"
+            ));
+        }
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
+
+        if (user == null) {
+            return ResponseEntity.status(401).body(Map.of(
+                    "message", "Usuario no encontrado"
+            ));
+        }
+
+        return ResponseEntity.ok(
+                customerOrderRepository.findByUserIdOrderByCreatedAtDesc(user.getId())
+        );
     }
 }

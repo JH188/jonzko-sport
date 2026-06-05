@@ -73,7 +73,8 @@ public class SecurityConfig {
                         // MIS PEDIDOS PROTEGIDO CON JWT
                         // Sin token ya no muestra pedidos
                         // ==========================
-                        .requestMatchers(HttpMethod.GET, "/api/customer-orders/user/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/customer-orders/my-orders").authenticated()
+.requestMatchers(HttpMethod.GET, "/api/customer-orders/user/**").authenticated()
 
                         // ==========================
                         // ADMIN PROTEGIDO CON JWT
