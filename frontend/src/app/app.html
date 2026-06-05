@@ -55,8 +55,6 @@
             @if (currentUser()) {
               <p class="user-dropdown-name">Hola, {{ currentUser()?.fullName }}</p>
 
-              <a routerLink="/mis-pedidos" (click)="closeUserMenu()"> Mis pedidos </a>
-
               <button type="button" (click)="logout(); closeUserMenu()">Cerrar sesión</button>
             } @else {
               <a routerLink="/login" (click)="closeUserMenu()"> Iniciar sesión </a>
