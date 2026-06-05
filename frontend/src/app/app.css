@@ -5144,3 +5144,1060 @@ body {
     font-size: 30px !important;
   }
 }
+/* ===============================
+   JONZKO PREMIUM HEADER
+================================ */
+
+.premium-navbar {
+  background: #ffffff;
+  color: #111111;
+  height: 82px;
+  padding: 0 70px;
+  border-bottom: 1px solid #ece7df;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 32px;
+  z-index: 100;
+}
+
+.premium-brand img {
+  max-height: 52px;
+  width: auto;
+  object-fit: contain;
+}
+
+.premium-nav {
+  display: flex;
+  align-items: center;
+  gap: 42px;
+}
+
+.premium-nav a {
+  color: #111111;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.premium-nav a::after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background: #b89455;
+  position: absolute;
+  left: 0;
+  bottom: -9px;
+  transition: 0.3s ease;
+}
+
+.premium-nav a:hover::after {
+  width: 100%;
+}
+
+.premium-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-icon-btn,
+.cart-icon-btn {
+  width: 43px;
+  height: 43px;
+  border: none;
+  background: transparent;
+  color: #111111;
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.cart-icon-btn {
+  width: auto;
+  min-width: 58px;
+  gap: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-icon-btn span {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.premium-orders-btn {
+  background: #b89455;
+  color: #ffffff !important;
+  padding: 15px 24px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: none;
+  box-shadow: 0 10px 25px rgba(184, 148, 85, 0.25);
+}
+
+.premium-orders-btn:hover {
+  background: #a47f42;
+}
+
+/* Ocultamos lo antiguo si todavía aparece */
+.welcome-user,
+.logout-btn {
+  display: none !important;
+}
+/* ===============================
+   HERO PREMIUM JONZKO
+================================ */
+
+.hero-slider {
+  height: calc(100vh - 112px);
+  min-height: 620px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hero-slide img,
+.hero-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.68) 0%,
+      rgba(0, 0, 0, 0.45) 34%,
+      rgba(0, 0, 0, 0.12) 72%,
+      rgba(0, 0, 0, 0.25) 100%
+    );
+}
+
+.hero-slider-content {
+  position: absolute;
+  z-index: 5;
+  left: 7%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(520px, 88vw);
+  color: #ffffff;
+  text-align: left;
+}
+
+.hero-slider-content span {
+  display: block;
+  color: #c2a166;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.hero-slider-content h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: #ffffff;
+  font-size: clamp(58px, 7vw, 115px);
+  line-height: 0.88;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 22px;
+  text-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+}
+
+.hero-slider-content a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #b89455;
+  color: #ffffff;
+  padding: 16px 27px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25);
+}
+
+.hero-slider-content a::after {
+  content: "→";
+  font-size: 16px;
+}
+
+.hero-slider-content a:hover {
+  background: #a47f42;
+  transform: translateY(-2px);
+}
+
+.hero-arrow {
+  position: absolute;
+  z-index: 8;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.65);
+  background: rgba(0,0,0,0.25);
+  color: #ffffff;
+  font-size: 42px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.hero-arrow-left {
+  left: 24px;
+}
+
+.hero-arrow-right {
+  right: 24px;
+}
+
+.hero-dots {
+  position: absolute;
+  z-index: 9;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 9px;
+}
+
+.hero-dots button {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+  background: transparent;
+  cursor: pointer;
+}
+
+.hero-dots button.active {
+  width: 28px;
+  border-radius: 20px;
+  background: #b89455;
+  border-color: #b89455;
+}
+/* ===============================
+   RESPONSIVE JONZKO
+================================ */
+
+@media (max-width: 900px) {
+  .premium-navbar {
+    height: 74px;
+    padding: 0 18px;
+    top: 30px;
+  }
+
+  .premium-nav {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+    background: transparent;
+    border: none;
+    font-size: 26px;
+    color: #111111;
+  }
+
+  .premium-brand img {
+    max-height: 46px;
+  }
+
+  .premium-actions {
+    gap: 4px;
+  }
+
+  .premium-orders-btn {
+    padding: 12px 14px;
+    font-size: 10px;
+  }
+
+  .user-icon-btn {
+    display: none;
+  }
+
+  .hero-slider {
+    height: 610px;
+    min-height: 610px;
+  }
+
+  .hero-slider-content {
+    left: 24px;
+    top: 52%;
+    width: calc(100% - 48px);
+  }
+
+  .hero-slider-content span {
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 58px;
+    line-height: 0.95;
+  }
+
+  .hero-slider-content a {
+    padding: 14px 20px;
+    font-size: 11px;
+  }
+
+  .hero-arrow {
+    width: 42px;
+    height: 42px;
+    font-size: 32px;
+  }
+
+  .hero-arrow-left {
+    left: 10px;
+  }
+
+  .hero-arrow-right {
+    right: 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  .top-marquee {
+    font-size: 10px;
+  }
+
+  .premium-navbar {
+    height: 68px;
+    padding: 0 14px;
+  }
+
+  .premium-brand img {
+    max-height: 42px;
+  }
+
+  .cart-icon-btn {
+    min-width: 44px;
+    font-size: 15px;
+  }
+
+  .premium-orders-btn {
+    display: none;
+  }
+
+  .hero-slider {
+    height: 560px;
+    min-height: 560px;
+  }
+
+  .hero-slider-content {
+    left: 20px;
+    top: 54%;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 48px;
+  }
+
+  .hero-slider-content span {
+    font-size: 11px;
+  }
+
+  .hero-slider-content a {
+    padding: 13px 18px;
+    font-size: 10px;
+  }
+}
+/* =========================================================
+   CORRECCIÓN FINAL NAVBAR PREMIUM JONZKO
+   PEGAR AL FINAL DE app.css
+   ========================================================= */
+
+.premium-navbar {
+  background: #ffffff !important;
+  color: #111111 !important;
+  height: 84px !important;
+  min-height: 84px !important;
+  padding: 0 68px !important;
+  display: grid !important;
+  grid-template-columns: 180px 1fr auto !important;
+  align-items: center !important;
+  gap: 24px !important;
+  position: sticky !important;
+  top: 31px !important;
+  z-index: 1000 !important;
+  border-bottom: 1px solid #eee7dc !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Logo */
+.premium-navbar .brand {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.premium-navbar .brand img {
+  width: auto !important;
+  height: 54px !important;
+  max-height: 54px !important;
+  object-fit: contain !important;
+  border: none !important;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+}
+
+/* Menú central */
+.premium-navbar .premium-nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 42px !important;
+}
+
+.premium-navbar .premium-nav a {
+  display: inline-flex !important;
+  color: #111111 !important;
+  opacity: 1 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.6px !important;
+  text-transform: uppercase !important;
+  position: relative !important;
+}
+
+.premium-navbar .premium-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background: #b89455;
+  transition: 0.25s ease;
+}
+
+.premium-navbar .premium-nav a:hover::after {
+  width: 100%;
+}
+
+/* Acciones derecha */
+.premium-navbar .premium-actions,
+.premium-navbar .nav-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 14px !important;
+}
+
+/* Botón Mis pedidos */
+.premium-navbar .premium-orders-btn,
+.premium-navbar .orders-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 46px !important;
+  padding: 0 25px !important;
+  border-radius: 2px !important;
+  background: #b89455 !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 12px 25px rgba(184, 148, 85, 0.22) !important;
+}
+
+/* Carrito */
+.premium-navbar .cart-icon-btn,
+.premium-navbar .cart-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  height: 46px !important;
+  min-width: 58px !important;
+  padding: 0 15px !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 1px solid #e2d9cc !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+}
+
+.premium-navbar .cart-icon-btn span,
+.premium-navbar .cart-btn span {
+  color: #111111 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+/* Ocultar textos largos antiguos */
+.premium-navbar .welcome-user,
+.premium-navbar .logout-btn,
+.premium-navbar .login-btn,
+.premium-navbar .register-btn {
+  display: none !important;
+}
+
+/* Botón menú móvil oculto en PC */
+.premium-navbar .mobile-menu-btn {
+  display: none !important;
+}
+/* =========================================================
+   NAVBAR PREMIUM RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .premium-navbar {
+    height: 72px !important;
+    min-height: 72px !important;
+    padding: 0 16px !important;
+    grid-template-columns: 45px 1fr auto !important;
+    top: 30px !important;
+  }
+
+  .premium-navbar .mobile-menu-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    color: #111111 !important;
+    font-size: 28px !important;
+    border: none !important;
+  }
+
+  .premium-navbar .brand {
+    justify-content: center !important;
+  }
+
+  .premium-navbar .brand img {
+    height: 44px !important;
+    max-height: 44px !important;
+  }
+
+  .premium-navbar .premium-nav {
+    display: none !important;
+  }
+
+  .premium-navbar .premium-orders-btn,
+  .premium-navbar .orders-btn {
+    display: none !important;
+  }
+
+  .premium-navbar .cart-icon-btn,
+  .premium-navbar .cart-btn {
+    height: 42px !important;
+    min-width: 52px !important;
+    padding: 0 12px !important;
+  }
+
+  .mobile-menu-panel {
+    position: absolute !important;
+    top: 72px !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+    padding: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    border-top: 1px solid #eee7dc !important;
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12) !important;
+    z-index: 2000 !important;
+  }
+
+  .mobile-menu-panel a,
+  .mobile-menu-panel button {
+    color: #111111 !important;
+    background: transparent !important;
+    text-align: left !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    font-size: 13px !important;
+    padding: 10px 0 !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .premium-navbar {
+    height: 68px !important;
+    min-height: 68px !important;
+  }
+
+  .premium-navbar .brand img {
+    height: 40px !important;
+  }
+
+  .premium-navbar .cart-btn span,
+  .premium-navbar .cart-icon-btn span {
+    font-size: 11px !important;
+  }
+
+  .mobile-menu-panel {
+    top: 68px !important;
+  }
+}
+/* =========================================================
+   LOGO ORIGINAL JONZKO - SOLO IMAGEN
+   ========================================================= */
+
+.premium-navbar .brand {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.premium-navbar .brand img {
+  display: block !important;
+  width: auto !important;
+  height: 62px !important;
+  max-height: 62px !important;
+  object-fit: contain !important;
+  border: none !important;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+
+  /* Convierte logo claro a negro si el PNG tiene fondo transparente */
+  filter: brightness(0) saturate(100%) !important;
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  .premium-navbar .brand img {
+    height: 48px !important;
+    max-height: 48px !important;
+  }
+}
+/* =========================================================
+   AJUSTE FINAL NAVBAR JONZKO - PC Y MÓVIL
+   ========================================================= */
+
+.premium-navbar {
+  height: 78px !important;
+  min-height: 78px !important;
+  padding: 0 54px !important;
+  display: grid !important;
+  grid-template-columns: 120px 1fr 230px !important;
+  align-items: center !important;
+  gap: 18px !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+/* Logo más alineado y no tan separado */
+.premium-navbar .brand {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.premium-navbar .brand img {
+  height: 58px !important;
+  max-height: 58px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  border: none !important;
+  border-radius: 0 !important;
+  filter: brightness(0) saturate(100%) !important;
+}
+
+/* Menú centrado pero más compacto */
+.premium-navbar .premium-nav {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 36px !important;
+}
+
+.premium-navbar .premium-nav a {
+  color: #111111 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+}
+
+/* Botones derechos más juntos */
+.premium-navbar .premium-actions,
+.premium-navbar .nav-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+}
+
+/* Iconos bonitos */
+.user-icon-btn,
+.cart-icon-btn {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  border: 1px solid #e4d9c8 !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+}
+
+.cart-icon-btn {
+  width: auto !important;
+  min-width: 62px !important;
+  border-radius: 999px !important;
+  gap: 6px !important;
+  padding: 0 14px !important;
+}
+
+.nav-svg {
+  width: 19px !important;
+  height: 19px !important;
+  fill: #111111 !important;
+  display: block !important;
+}
+
+.cart-icon-btn span {
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  color: #111111 !important;
+}
+
+/* Botón Mis pedidos */
+.premium-orders-btn,
+.orders-btn {
+  height: 44px !important;
+  padding: 0 22px !important;
+  border-radius: 2px !important;
+  background: #b89455 !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Hover elegante */
+.user-icon-btn:hover,
+.cart-icon-btn:hover {
+  border-color: #b89455 !important;
+  transform: translateY(-1px);
+}
+
+.premium-orders-btn:hover,
+.orders-btn:hover {
+  background: #a47f42 !important;
+}
+/* =========================================================
+   NAVBAR MÓVIL JONZKO
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .premium-navbar {
+    height: 68px !important;
+    min-height: 68px !important;
+    padding: 0 14px !important;
+    grid-template-columns: 44px 1fr auto !important;
+    gap: 8px !important;
+  }
+
+  .premium-navbar .mobile-menu-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    color: #111111 !important;
+    font-size: 28px !important;
+  }
+
+  .premium-navbar .brand {
+    justify-content: center !important;
+  }
+
+  .premium-navbar .brand img {
+    height: 44px !important;
+    max-height: 44px !important;
+  }
+
+  .premium-navbar .premium-nav {
+    display: none !important;
+  }
+
+  .premium-navbar .premium-actions {
+    gap: 6px !important;
+  }
+
+  .user-icon-btn {
+    display: none !important;
+  }
+
+  .premium-orders-btn,
+  .orders-btn {
+    display: none !important;
+  }
+
+  .cart-icon-btn {
+    height: 40px !important;
+    min-width: 54px !important;
+    padding: 0 12px !important;
+  }
+
+  .nav-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .premium-navbar {
+    height: 64px !important;
+    min-height: 64px !important;
+  }
+
+  .premium-navbar .brand img {
+    height: 40px !important;
+    max-height: 40px !important;
+  }
+
+  .cart-icon-btn {
+    min-width: 50px !important;
+  }
+}
+/* =========================================================
+   MENÚ DE USUARIO PREMIUM - JONZKO
+   Solo diseño: login / registro / cerrar sesión
+   ========================================================= */
+
+.user-menu-wrapper {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Botón del usuario */
+.user-icon-btn {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  border: 1px solid #e4d9c8 !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  transition: 0.25s ease !important;
+}
+
+.user-icon-btn:hover {
+  border-color: #b89455 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 10px 22px rgba(184, 148, 85, 0.18) !important;
+}
+
+/* Iconos SVG */
+.nav-svg {
+  width: 18px !important;
+  height: 18px !important;
+  fill: #111111 !important;
+  display: block !important;
+}
+
+/* Caja desplegable */
+.user-dropdown {
+  position: absolute !important;
+  top: 56px !important;
+  right: 0 !important;
+  width: 220px !important;
+  background: #ffffff !important;
+  border: 1px solid #eadfce !important;
+  border-radius: 14px !important;
+  padding: 12px !important;
+  z-index: 9999 !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16) !important;
+}
+
+/* Flechita superior del menú */
+.user-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  right: 17px;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-left: 1px solid #eadfce;
+  border-top: 1px solid #eadfce;
+  transform: rotate(45deg);
+}
+
+/* Nombre del usuario */
+.user-dropdown-name {
+  margin: 0 0 10px !important;
+  padding: 11px 12px !important;
+  border-radius: 10px !important;
+  background: #f7f1e8 !important;
+  color: #111111 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  line-height: 1.35 !important;
+}
+
+/* Links y botones del desplegable */
+.user-dropdown a,
+.user-dropdown button {
+  width: 100% !important;
+  min-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 10px 12px !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: #111111 !important;
+  border: none !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  transition: 0.2s ease !important;
+}
+
+.user-dropdown a:hover,
+.user-dropdown button:hover {
+  background: #f7f1e8 !important;
+  color: #b89455 !important;
+}
+
+/* =========================================================
+   AJUSTE FINAL DE ESPACIOS DEL NAVBAR
+   ========================================================= */
+
+.premium-navbar {
+  grid-template-columns: 110px 1fr 265px !important;
+  padding: 0 46px !important;
+}
+
+.premium-navbar .premium-nav {
+  gap: 34px !important;
+}
+
+.premium-navbar .premium-actions,
+.premium-navbar .nav-actions {
+  gap: 9px !important;
+}
+
+/* Carrito más elegante */
+.cart-icon-btn {
+  height: 44px !important;
+  min-width: 62px !important;
+  border-radius: 999px !important;
+  border: 1px solid #e4d9c8 !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 0 13px !important;
+  cursor: pointer !important;
+  transition: 0.25s ease !important;
+}
+
+.cart-icon-btn:hover {
+  border-color: #b89455 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 10px 22px rgba(184, 148, 85, 0.18) !important;
+}
+
+.cart-icon-btn span {
+  color: #111111 !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+}
+
+/* Botón Mis pedidos / Ingresar */
+.premium-orders-btn,
+.orders-btn {
+  height: 44px !important;
+  padding: 0 22px !important;
+  border-radius: 2px !important;
+  background: #b89455 !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 12px 25px rgba(184, 148, 85, 0.22) !important;
+}
+
+.premium-orders-btn:hover,
+.orders-btn:hover {
+  background: #a47f42 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* =========================================================
+   RESPONSIVE MÓVIL
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .premium-navbar {
+    grid-template-columns: 44px 1fr auto !important;
+    padding: 0 14px !important;
+  }
+
+  .user-menu-wrapper {
+    display: none !important;
+  }
+
+  .premium-orders-btn,
+  .orders-btn {
+    display: none !important;
+  }
+
+  .cart-icon-btn {
+    height: 40px !important;
+    min-width: 54px !important;
+    padding: 0 12px !important;
+  }
+
+  .nav-svg {
+    width: 17px !important;
+    height: 17px !important;
+  }
+}

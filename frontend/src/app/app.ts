@@ -36,6 +36,15 @@ closeTerms(): void {
 }
 activeHeroSlide = signal(0);
 mobileMenuOpen = signal(false);
+userMenuOpen = signal(false);
+
+toggleUserMenu(): void {
+  this.userMenuOpen.update(value => !value);
+}
+
+closeUserMenu(): void {
+  this.userMenuOpen.set(false);
+}
 private heroInterval: any;
 
 heroSlides = signal([

@@ -27,35 +27,60 @@
     </div>
   </div>
   <!-- NAVBAR -->
-  <header class="navbar">
+  <header class="navbar premium-navbar">
     <button type="button" class="mobile-menu-btn" (click)="toggleMobileMenu()">☰</button>
     <div class="brand">
       <img [src]="logoUrl()" alt="Logo JONZKO" />
     </div>
 
-    <nav>
+    <nav class="premium-nav">
       <a href="/#inicio">Inicio</a>
       <a href="/#producto">Producto</a>
       <a href="/#nosotros">Nosotros</a>
       <a href="/#contacto">Contacto</a>
     </nav>
 
-    <div class="nav-actions">
-      @if (currentUser()) {
-        <span class="welcome-user"> Bienvenido, {{ currentUser()?.fullName }} </span>
+    <div class="nav-actions premium-actions">
+      <div class="user-menu-wrapper">
+        <button class="user-icon-btn" type="button" (click)="toggleUserMenu()" title="Cuenta">
+          <svg viewBox="0 0 24 24" class="nav-svg">
+            <path
+              d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.866 0-7 2.239-7 5v1h14v-1c0-2.761-3.134-5-7-5z"
+            />
+          </svg>
+        </button>
 
-        <a routerLink="/mis-pedidos" class="orders-btn"> Mis pedidos </a>
+        @if (userMenuOpen()) {
+          <div class="user-dropdown">
+            @if (currentUser()) {
+              <p class="user-dropdown-name">Hola, {{ currentUser()?.fullName }}</p>
 
-        <button class="logout-btn" type="button" (click)="logout()">Cerrar sesión</button>
-      } @else {
-        <a routerLink="/login" class="login-btn"> Iniciar sesión </a>
+              <a routerLink="/mis-pedidos" (click)="closeUserMenu()"> Mis pedidos </a>
 
-        <a routerLink="/registro" class="register-btn"> Registrarse </a>
-      }
+              <button type="button" (click)="logout(); closeUserMenu()">Cerrar sesión</button>
+            } @else {
+              <a routerLink="/login" (click)="closeUserMenu()"> Iniciar sesión </a>
 
-      <button class="cart-btn" type="button" (click)="toggleCart()" title="Ver carrito">
-        🛒 <span>({{ cartCount() }})</span>
+              <a routerLink="/registro" (click)="closeUserMenu()"> Registrarse </a>
+            }
+          </div>
+        }
+      </div>
+
+      <button class="cart-icon-btn" type="button" (click)="toggleCart()" title="Ver carrito">
+        <svg viewBox="0 0 24 24" class="nav-svg">
+          <path
+            d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.2 14.75h7.45c.75 0 1.41-.41 1.75-1.03L20 7H6.21L5.27 5H2V3h4.55l1.1 2.31L9.7 10h6.9l-1.1 2H8.1l-.9 1.63v.12z"
+          />
+        </svg>
+        <span>({{ cartCount() }})</span>
       </button>
+
+      @if (currentUser()) {
+        <a routerLink="/mis-pedidos" class="orders-btn premium-orders-btn"> MIS PEDIDOS </a>
+      } @else {
+        <a routerLink="/login" class="orders-btn premium-orders-btn"> INGRESAR </a>
+      }
     </div>
     @if (mobileMenuOpen()) {
       <div class="mobile-menu-panel">
@@ -357,41 +382,41 @@
     </aside>
   }
   @if (termsOpen()) {
-  <div class="terms-modal-backdrop" (click)="closeTerms()">
-    <div class="terms-modal" (click)="$event.stopPropagation()">
-      <button type="button" class="terms-close" (click)="closeTerms()">✕</button>
+    <div class="terms-modal-backdrop" (click)="closeTerms()">
+      <div class="terms-modal" (click)="$event.stopPropagation()">
+        <button type="button" class="terms-close" (click)="closeTerms()">✕</button>
 
-      <h2>Términos y condiciones</h2>
+        <h2>Términos y condiciones</h2>
 
-      <p>
-        Al realizar una compra en JONZKO SPORT, el cliente acepta brindar datos reales
-        para el registro del pedido, coordinación de pago y envío.
-      </p>
+        <p>
+          Al realizar una compra en JONZKO SPORT, el cliente acepta brindar datos reales para el
+          registro del pedido, coordinación de pago y envío.
+        </p>
 
-      <h3>Pagos</h3>
-      <p>
-        Aceptamos pagos por Yape, Plin y transferencias bancarias. El pedido será
-        procesado después de confirmar el pago correspondiente.
-      </p>
+        <h3>Pagos</h3>
+        <p>
+          Aceptamos pagos por Yape, Plin y transferencias bancarias. El pedido será procesado
+          después de confirmar el pago correspondiente.
+        </p>
 
-      <h3>Envíos</h3>
-      <p>
-        Realizamos envíos a todo el Perú. El tiempo de entrega puede variar según la
-        ciudad, agencia de envío y disponibilidad del producto.
-      </p>
+        <h3>Envíos</h3>
+        <p>
+          Realizamos envíos a todo el Perú. El tiempo de entrega puede variar según la ciudad,
+          agencia de envío y disponibilidad del producto.
+        </p>
 
-      <h3>Cambios</h3>
-      <p>
-        Los cambios se coordinan por fallas de fábrica o errores en talla/modelo,
-        siempre que la prenda no haya sido usada, lavada o dañada.
-      </p>
+        <h3>Cambios</h3>
+        <p>
+          Los cambios se coordinan por fallas de fábrica o errores en talla/modelo, siempre que la
+          prenda no haya sido usada, lavada o dañada.
+        </p>
 
-      <h3>Contacto</h3>
-      <p>
-        Para dudas sobre compras, tallas, pagos o envíos, puede comunicarse
-        mediante nuestras redes sociales o WhatsApp oficial.
-      </p>
+        <h3>Contacto</h3>
+        <p>
+          Para dudas sobre compras, tallas, pagos o envíos, puede comunicarse mediante nuestras
+          redes sociales o WhatsApp oficial.
+        </p>
+      </div>
     </div>
-  </div>
-}
+  }
 }
