@@ -6201,3 +6201,107 @@ body {
     height: 17px !important;
   }
 }
+/* =========================================================
+   AJUSTE TEXTO HERO - MÁS A LA IZQUIERDA PC / MÓVIL
+   ========================================================= */
+
+/* PC */
+.hero-slider-content {
+  left: 6% !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  max-width: 520px !important;
+  text-align: left !important;
+}
+
+/* Subtítulo: NUEVA COLECCIÓN */
+.hero-slider-content span {
+  font-size: 28px !important;
+  letter-spacing: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+/* Título grande: OVERSIZE */
+.hero-slider-content h1 {
+  font-size: clamp(82px, 7vw, 130px) !important;
+  line-height: 0.9 !important;
+  letter-spacing: 4px !important;
+  margin-bottom: 28px !important;
+}
+
+/* Botón */
+.hero-slider-content a {
+  margin-left: 170px !important;
+}
+
+/* Laptop */
+@media (max-width: 1200px) {
+  .hero-slider-content {
+    left: 5% !important;
+    max-width: 470px !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 22px !important;
+    letter-spacing: 7px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 86px !important;
+  }
+
+  .hero-slider-content a {
+    margin-left: 120px !important;
+  }
+}
+
+/* Tablet y móvil */
+@media (max-width: 900px) {
+  .hero-slider-content {
+    left: 22px !important;
+    top: 48% !important;
+    max-width: 330px !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 14px !important;
+    letter-spacing: 4px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 52px !important;
+    line-height: 0.95 !important;
+    letter-spacing: 2px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .hero-slider-content a {
+    margin-left: 0 !important;
+    padding: 13px 18px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* Celular pequeño */
+@media (max-width: 480px) {
+  .hero-slider-content {
+    left: 16px !important;
+    top: 45% !important;
+    max-width: 285px !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 12px !important;
+    letter-spacing: 3px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 42px !important;
+  }
+
+  .hero-slider-content a {
+    font-size: 10px !important;
+    padding: 12px 16px !important;
+  }
+}
