@@ -6305,3 +6305,1194 @@ body {
     padding: 12px 16px !important;
   }
 }
+/* =========================================================
+   PRODUCTOS PREMIUM JONZKO - PC / TABLET / MÓVIL
+   SOLO DISEÑO
+   ========================================================= */
+
+.collection-section {
+  width: 100% !important;
+  max-width: 1480px !important;
+  margin: 0 auto !important;
+  padding: 72px 48px 86px !important;
+  background: #fbfaf7 !important;
+}
+
+/* Encabezado productos */
+.collection-header {
+  margin-bottom: 34px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.collection-header .tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 8px 18px !important;
+  border-radius: 999px !important;
+  border: 1px solid #ded6c9 !important;
+  background: #ffffff !important;
+  color: #9a7a43 !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+}
+
+.collection-header h1 {
+  margin: 18px 0 8px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(38px, 4vw, 58px) !important;
+  line-height: 1 !important;
+  color: #111111 !important;
+  letter-spacing: -1px !important;
+}
+
+.collection-header p {
+  margin: 0 !important;
+  color: #555555 !important;
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+}
+
+/* Grilla PC */
+.products-grid {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 28px !important;
+  align-items: stretch !important;
+}
+
+/* Tarjeta */
+.product-card {
+  background: #ffffff !important;
+  border: 1px solid #e8e1d7 !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+  min-height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.product-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: #c6a56a !important;
+  box-shadow: 0 26px 65px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Imagen */
+.product-image-box {
+  position: relative !important;
+  width: 100% !important;
+  height: 330px !important;
+  display: block !important;
+  overflow: hidden !important;
+  background: #f1eee9 !important;
+}
+
+.product-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  padding: 0 !important;
+  display: block !important;
+  transition: opacity 0.35s ease, transform 0.35s ease !important;
+}
+
+/* Hover de imagen */
+.product-main-image {
+  opacity: 1 !important;
+}
+
+.product-hover-image {
+  position: absolute !important;
+  inset: 0 !important;
+  opacity: 0 !important;
+}
+
+.product-card:hover .product-main-image {
+  opacity: 0 !important;
+  transform: scale(1.04) !important;
+}
+
+.product-card:hover .product-hover-image {
+  opacity: 1 !important;
+  transform: scale(1.04) !important;
+}
+
+/* Etiquetas */
+.discount-badge {
+  position: absolute !important;
+  top: 12px !important;
+  left: 12px !important;
+  z-index: 5 !important;
+  background: #050505 !important;
+  color: #ffffff !important;
+  padding: 6px 10px !important;
+  border-radius: 3px !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.new-badge {
+  position: absolute !important;
+  left: 12px !important;
+  bottom: 12px !important;
+  z-index: 5 !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  padding: 6px 10px !important;
+  border-radius: 3px !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.6px !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Información */
+.product-info {
+  padding: 22px 20px 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+}
+
+.product-category {
+  margin: 0 0 10px !important;
+  color: #9a7a43 !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  letter-spacing: 5px !important;
+  text-transform: uppercase !important;
+}
+
+.product-info h2 {
+  margin: 0 0 10px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  color: #111111 !important;
+  font-size: 23px !important;
+  line-height: 1.05 !important;
+  font-weight: 900 !important;
+}
+
+.product-description {
+  min-height: 42px !important;
+  margin: 0 0 18px !important;
+  color: #555555 !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+/* Precio */
+.product-price {
+  margin: auto 0 18px !important;
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 10px !important;
+}
+
+.old-price {
+  color: #8c8c8c !important;
+  font-size: 13px !important;
+  text-decoration: line-through !important;
+}
+
+.current-price {
+  color: #111111 !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+}
+
+/* Botón */
+.product-button {
+  width: 100% !important;
+  min-height: 46px !important;
+  border-radius: 999px !important;
+  background: #050505 !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.product-button:hover {
+  background: #b89455 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 12px 28px rgba(184, 148, 85, 0.28) !important;
+}
+
+/* =========================================================
+   RESPONSIVE PRODUCTOS
+   ========================================================= */
+
+/* Laptop */
+@media (max-width: 1250px) {
+  .collection-section {
+    padding: 60px 34px 76px !important;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+  }
+
+  .product-image-box {
+    height: 310px !important;
+  }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .collection-section {
+    padding: 50px 22px 66px !important;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+  }
+
+  .product-image-box {
+    height: 300px !important;
+  }
+
+  .product-info h2 {
+    font-size: 21px !important;
+  }
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .collection-section {
+    padding: 42px 14px 58px !important;
+    background: #fbfaf7 !important;
+  }
+
+  .collection-header {
+    margin-bottom: 24px !important;
+  }
+
+  .collection-header .tag {
+    font-size: 9px !important;
+    letter-spacing: 3px !important;
+    padding: 7px 14px !important;
+  }
+
+  .collection-header h1 {
+    font-size: 34px !important;
+    margin-top: 14px !important;
+  }
+
+  .collection-header p {
+    font-size: 13px !important;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  .product-card {
+    border-radius: 14px !important;
+  }
+
+  .product-image-box {
+    height: 210px !important;
+  }
+
+  .discount-badge {
+    top: 8px !important;
+    left: 8px !important;
+    font-size: 9px !important;
+    padding: 5px 7px !important;
+  }
+
+  .new-badge {
+    left: 8px !important;
+    bottom: 8px !important;
+    font-size: 8px !important;
+    padding: 5px 7px !important;
+  }
+
+  .product-info {
+    padding: 14px 12px 13px !important;
+  }
+
+  .product-category {
+    font-size: 8px !important;
+    letter-spacing: 3px !important;
+    margin-bottom: 7px !important;
+  }
+
+  .product-info h2 {
+    font-size: 16px !important;
+    line-height: 1.08 !important;
+    margin-bottom: 7px !important;
+  }
+
+  .product-description {
+    min-height: 34px !important;
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 10px !important;
+    -webkit-line-clamp: 2 !important;
+  }
+
+  .product-price {
+    gap: 6px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .old-price {
+    font-size: 10px !important;
+  }
+
+  .current-price {
+    font-size: 14px !important;
+  }
+
+  .product-button {
+    min-height: 38px !important;
+    font-size: 10px !important;
+    letter-spacing: 0.3px !important;
+  }
+}
+
+/* Celular pequeño */
+@media (max-width: 390px) {
+  .products-grid {
+    gap: 12px !important;
+  }
+
+  .product-image-box {
+    height: 185px !important;
+  }
+
+  .product-info h2 {
+    font-size: 15px !important;
+  }
+
+  .product-button {
+    font-size: 9px !important;
+  }
+}
+/* =========================================================
+   SECCIÓN DESTACADOS URBANOS - JONZKO
+   PC / TABLET / MÓVIL
+   ========================================================= */
+
+.featured-urban-section {
+  width: 100% !important;
+  max-width: 1480px !important;
+  margin: 0 auto !important;
+  background: #f8f5ef !important;
+  display: grid !important;
+  grid-template-columns: 0.9fr 1.35fr !important;
+  min-height: 520px !important;
+  border-top: 1px solid #eee5d8 !important;
+  border-bottom: 1px solid #eee5d8 !important;
+  overflow: hidden !important;
+}
+
+/* Lado izquierdo */
+.featured-urban-content {
+  padding: 74px 64px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.featured-tag {
+  color: #b89455 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 18px !important;
+}
+
+.featured-urban-content h2 {
+  margin: 0 0 22px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(38px, 4vw, 62px) !important;
+  line-height: 1.02 !important;
+  color: #111111 !important;
+  font-weight: 900 !important;
+}
+
+.featured-urban-content p {
+  margin: 0 !important;
+  max-width: 440px !important;
+  color: #4c4c4c !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+}
+
+/* Beneficios */
+.featured-benefits {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  margin-top: 40px !important;
+}
+
+.featured-benefit {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+}
+
+.featured-benefit span {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  border: 1px solid #d8c7ac !important;
+  color: #9a7a43 !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 21px !important;
+  font-weight: 900 !important;
+}
+
+.featured-benefit strong {
+  color: #111111 !important;
+  font-size: 10px !important;
+  line-height: 1.35 !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Botón */
+.featured-btn {
+  margin-top: 34px !important;
+  width: fit-content !important;
+  min-height: 46px !important;
+  padding: 0 24px !important;
+  background: #b89455 !important;
+  color: #ffffff !important;
+  border-radius: 2px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.6px !important;
+  text-decoration: none !important;
+  transition: 0.25s ease !important;
+}
+
+.featured-btn:hover {
+  background: #a47f42 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Galería derecha */
+.featured-urban-gallery {
+  display: grid !important;
+  grid-template-columns: 1.25fr 1fr !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 6px !important;
+  min-height: 520px !important;
+}
+
+.featured-img {
+  background: #dfd9cf !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.featured-img-large {
+  grid-row: span 2 !important;
+}
+
+.featured-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  transition: transform 0.45s ease !important;
+}
+
+.featured-img:hover img {
+  transform: scale(1.04) !important;
+}
+
+/* Cuando todavía no agregas imágenes, se verá un fondo elegante */
+.featured-img::before {
+  content: "JONZKO" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  color: rgba(0, 0, 0, 0.18) !important;
+  font-size: 34px !important;
+  font-weight: 900 !important;
+  letter-spacing: 8px !important;
+  z-index: 0 !important;
+}
+
+.featured-img img {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* =========================================================
+   RESPONSIVE DESTACADOS
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .featured-urban-section {
+    grid-template-columns: 1fr !important;
+  }
+
+  .featured-urban-content {
+    padding: 58px 38px !important;
+  }
+
+  .featured-urban-gallery {
+    min-height: 460px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .featured-urban-section {
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .featured-urban-content {
+    padding: 46px 20px 38px !important;
+  }
+
+  .featured-urban-content h2 {
+    font-size: 36px !important;
+  }
+
+  .featured-urban-content p {
+    font-size: 14px !important;
+  }
+
+  .featured-benefits {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 20px 16px !important;
+    margin-top: 32px !important;
+  }
+
+  .featured-benefit span {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 18px !important;
+  }
+
+  .featured-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .featured-urban-gallery {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 260px 180px !important;
+    min-height: auto !important;
+  }
+
+  .featured-img-large {
+    grid-column: span 2 !important;
+    grid-row: auto !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .featured-urban-content {
+    padding: 40px 16px 34px !important;
+  }
+
+  .featured-urban-gallery {
+    grid-template-rows: 230px 150px !important;
+  }
+
+  .featured-tag {
+    font-size: 10px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .featured-urban-content h2 {
+    font-size: 32px !important;
+  }
+}
+/* =========================================================
+   GALERÍA / ESTILO JONZKO - PC / MÓVIL
+   ========================================================= */
+
+.jonzko-gallery-section {
+  width: 100% !important;
+  max-width: 1480px !important;
+  margin: 0 auto !important;
+  padding: 78px 48px 92px !important;
+  background: #fbfaf7 !important;
+}
+
+.jonzko-gallery-header {
+  max-width: 720px !important;
+  margin-bottom: 34px !important;
+}
+
+.jonzko-gallery-header span {
+  color: #b89455 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+}
+
+.jonzko-gallery-header h2 {
+  margin: 14px 0 12px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(36px, 4vw, 58px) !important;
+  line-height: 1 !important;
+  color: #111111 !important;
+}
+
+.jonzko-gallery-header p {
+  margin: 0 !important;
+  color: #555555 !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+/* Galería */
+.jonzko-gallery-grid {
+  display: grid !important;
+  grid-template-columns: 1.2fr 1fr 1fr !important;
+  grid-auto-rows: 280px !important;
+  gap: 16px !important;
+}
+
+.gallery-card {
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 18px !important;
+  background: #e8e0d4 !important;
+  border: 1px solid #e1d6c4 !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08) !important;
+}
+
+.gallery-card img,
+.gallery-card video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  transition: transform 0.45s ease !important;
+}
+
+.gallery-card:hover img,
+.gallery-card:hover video {
+  transform: scale(1.04) !important;
+}
+
+.gallery-video-card {
+  grid-row: span 2 !important;
+}
+
+.gallery-wide {
+  grid-column: span 2 !important;
+}
+
+/* Placeholder elegante si aún no agregas imágenes */
+.gallery-card::before {
+  content: "JONZKO" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  color: rgba(0, 0, 0, 0.18) !important;
+  font-size: 32px !important;
+  font-weight: 900 !important;
+  letter-spacing: 8px !important;
+  z-index: 0 !important;
+}
+
+.gallery-card img,
+.gallery-card video {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .jonzko-gallery-section {
+    padding: 64px 28px 78px !important;
+  }
+
+  .jonzko-gallery-grid {
+    grid-template-columns: 1fr 1fr !important;
+    grid-auto-rows: 260px !important;
+  }
+
+  .gallery-video-card {
+    grid-row: span 1 !important;
+  }
+
+  .gallery-wide {
+    grid-column: span 2 !important;
+  }
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .jonzko-gallery-section {
+    padding: 48px 14px 62px !important;
+  }
+
+  .jonzko-gallery-header {
+    margin-bottom: 24px !important;
+  }
+
+  .jonzko-gallery-header span {
+    font-size: 10px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .jonzko-gallery-header h2 {
+    font-size: 34px !important;
+  }
+
+  .jonzko-gallery-header p {
+    font-size: 13px !important;
+  }
+
+  .jonzko-gallery-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: 250px !important;
+    gap: 14px !important;
+  }
+
+  .gallery-wide {
+    grid-column: span 1 !important;
+  }
+
+  .gallery-card {
+    border-radius: 14px !important;
+  }
+}
+/* =========================================================
+   CONTACTO PREMIUM JONZKO - PC / MÓVIL
+   ========================================================= */
+
+.contact-premium-section {
+  width: 100% !important;
+  max-width: 1480px !important;
+  margin: 0 auto !important;
+  padding: 72px 48px 34px !important;
+  background: #fbfaf7 !important;
+}
+
+.contact-premium-card {
+  width: 100% !important;
+  background: #f6f2eb !important;
+  border: 1px solid #e3d8c7 !important;
+  border-radius: 18px !important;
+  padding: 42px 52px !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1px 1.4fr !important;
+  gap: 52px !important;
+  align-items: center !important;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.06) !important;
+}
+
+.contact-premium-left span,
+.contact-premium-right span {
+  color: #b89455 !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+}
+
+.contact-premium-left h2 {
+  margin: 12px 0 14px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(28px, 3vw, 42px) !important;
+  line-height: 1.05 !important;
+  color: #111111 !important;
+}
+
+.contact-premium-left p,
+.contact-premium-right p {
+  margin: 0 0 22px !important;
+  color: #555555 !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+.contact-whatsapp-btn {
+  width: fit-content !important;
+  min-height: 46px !important;
+  padding: 0 24px !important;
+  background: #b89455 !important;
+  color: #ffffff !important;
+  border-radius: 2px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.5px !important;
+  text-decoration: none !important;
+}
+
+.contact-whatsapp-btn:hover {
+  background: #a47f42 !important;
+}
+
+.contact-premium-divider {
+  width: 1px !important;
+  height: 100% !important;
+  min-height: 135px !important;
+  background: #d7c7ae !important;
+}
+
+.contact-premium-links {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 14px !important;
+}
+
+.contact-premium-links a {
+  min-width: 138px !important;
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 1px solid #eadfce !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  text-decoration: none !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04) !important;
+}
+
+.contact-premium-links a:hover {
+  transform: translateY(-1px) !important;
+  border-color: #b89455 !important;
+}
+
+.contact-premium-links img {
+  width: 19px !important;
+  height: 19px !important;
+  object-fit: contain !important;
+}
+
+/* =========================================================
+   FOOTER PREMIUM JONZKO
+   ========================================================= */
+
+.footer-premium {
+  background: #fbfaf7 !important;
+  color: #111111 !important;
+  padding: 42px 48px 22px !important;
+  border-top: 1px solid #e3d8c7 !important;
+}
+
+.footer-premium-container {
+  max-width: 1480px !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: 1.3fr 0.7fr 1fr 1fr 1.25fr !important;
+  gap: 34px !important;
+  align-items: flex-start !important;
+}
+
+.footer-premium-logo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.footer-premium-logo img {
+  width: 48px !important;
+  height: 48px !important;
+  object-fit: contain !important;
+  filter: brightness(0) saturate(100%) !important;
+}
+
+.footer-premium-logo h3 {
+  margin: 0 !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  font-weight: 950 !important;
+  letter-spacing: 1px !important;
+}
+
+.footer-premium-logo span {
+  display: block !important;
+  margin-top: 4px !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  letter-spacing: 5px !important;
+}
+
+.footer-premium-brand p {
+  margin: 0 0 16px !important;
+  color: #555555 !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  max-width: 260px !important;
+}
+
+.footer-premium-brand strong {
+  font-size: 13px !important;
+  color: #111111 !important;
+}
+
+.footer-premium-column h4,
+.footer-premium-payments h4,
+.footer-premium-review h4 {
+  margin: 0 0 18px !important;
+  color: #111111 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 1px !important;
+}
+
+.footer-premium-column a,
+.footer-premium-column button {
+  display: block !important;
+  margin-bottom: 12px !important;
+  background: transparent !important;
+  color: #555555 !important;
+  border: none !important;
+  padding: 0 !important;
+  text-align: left !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+}
+
+.footer-premium-column a:hover,
+.footer-premium-column button:hover {
+  color: #b89455 !important;
+}
+
+.payment-icons {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+.payment-icons span {
+  min-width: 58px !important;
+  height: 34px !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  border: 1px solid #e3d8c7 !important;
+  color: #111111 !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.review-card {
+  background: #ffffff !important;
+  border: 1px solid #e3d8c7 !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+}
+
+.review-user {
+  display: flex !important;
+  gap: 12px !important;
+}
+
+.review-avatar {
+  width: 44px !important;
+  height: 44px !important;
+  flex: 0 0 44px !important;
+  border-radius: 50% !important;
+  background: #111111 !important;
+  color: #ffffff !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+}
+
+.review-card strong {
+  color: #b89455 !important;
+  font-size: 13px !important;
+}
+
+.review-card p {
+  margin: 6px 0 !important;
+  color: #555555 !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+.review-card small {
+  color: #111111 !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+}
+
+.footer-premium-bottom {
+  max-width: 1480px !important;
+  margin: 34px auto 0 !important;
+  padding-top: 18px !important;
+  border-top: 1px solid #e3d8c7 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  color: #555555 !important;
+  font-size: 12px !important;
+}
+
+/* =========================================================
+   RESPONSIVE CONTACTO + FOOTER
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .contact-premium-section {
+    padding: 60px 28px 28px !important;
+  }
+
+  .contact-premium-card {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    padding: 34px !important;
+  }
+
+  .contact-premium-divider {
+    width: 100% !important;
+    height: 1px !important;
+    min-height: 1px !important;
+  }
+
+  .footer-premium {
+    padding: 38px 28px 22px !important;
+  }
+
+  .footer-premium-container {
+    grid-template-columns: 1.2fr 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .contact-premium-section {
+    padding: 48px 14px 22px !important;
+  }
+
+  .contact-premium-card {
+    padding: 26px 20px !important;
+    border-radius: 16px !important;
+  }
+
+  .contact-whatsapp-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .contact-premium-links {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .contact-premium-links a {
+    min-width: 0 !important;
+    width: 100% !important;
+    font-size: 12px !important;
+  }
+
+  .footer-premium {
+    padding: 34px 18px 20px !important;
+  }
+
+  .footer-premium-container {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+
+  .footer-premium-bottom {
+    flex-direction: column !important;
+    font-size: 11px !important;
+  }
+
+  .payment-icons span {
+    min-width: 64px !important;
+  }
+}
+/* =========================================================
+   IMÁGENES MÉTODOS DE PAGO - YAPE / PLIN / BCP
+   ========================================================= */
+
+.payment-images {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  align-items: center !important;
+}
+
+.payment-images span {
+  width: 74px !important;
+  height: 42px !important;
+  padding: 7px !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  border: 1px solid #e3d8c7 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.payment-images img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+@media (max-width: 700px) {
+  .payment-images span {
+    width: 72px !important;
+    height: 40px !important;
+  }
+}
+/* Foto del cliente en reseña */
+.review-photo {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border: 2px solid #111111 !important;
+  background: #f3f3f3 !important;
+  display: block !important;
+}

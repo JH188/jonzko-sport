@@ -212,45 +212,131 @@
           </div>
         }
       </section>
+      <!-- DESTACADOS / BLOQUE VISUAL URBANO -->
+      <section id="nosotros" class="featured-urban-section">
+        <div class="featured-urban-content">
+          <span class="featured-tag">SOBRE NOSOTROS</span>
 
-      <!-- NOSOTROS -->
-      <section id="nosotros" class="about">
-        <div class="about-card">
-          <span>{{ slogan() }}</span>
+          <h2>Más que ropa,<br />es actitud.</h2>
 
-          <h2>{{ aboutTitle() }}</h2>
+          <p>
+            JONZKO nace en la calle, para la gente que vive con estilo propio. Creamos prendas
+            oversize de alta calidad que te acompañan en tu día a día.
+          </p>
 
-          <p>{{ aboutDescription() }}</p>
+          <div class="featured-benefits">
+            <div class="featured-benefit">
+              <span>◇</span>
+              <strong>CALIDAD<br />PREMIUM</strong>
+            </div>
+
+            <div class="featured-benefit">
+              <span>♕</span>
+              <strong>DISEÑO<br />EXCLUSIVO</strong>
+            </div>
+
+            <div class="featured-benefit">
+              <span>▣</span>
+              <strong>OVERSIZE<br />FIT</strong>
+            </div>
+
+            <div class="featured-benefit">
+              <span>◎</span>
+              <strong>COMUNIDAD<br />JONZKO</strong>
+            </div>
+          </div>
+
+          <a href="#contacto" class="featured-btn">
+            CONÓCENOS MÁS
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="featured-urban-gallery">
+          <div class="featured-img featured-img-large">
+            <img src="assets/polera-negra.jpg" alt="JONZKO destacado principal" />
+          </div>
+
+          <div class="featured-img">
+            <img src="assets/logo.jpg" alt="JONZKO destacado secundario" />
+          </div>
+
+          <div class="featured-img">
+            <img src="assets/yape.png" alt="Detalle prenda JONZKO" />
+          </div>
         </div>
       </section>
 
-      <!-- CONTACTO -->
-      <section id="contacto" class="contact-section">
-        <div class="contact-content">
-          <h2>Contacto</h2>
+      <!-- GALERÍA / ESTILO JONZKO -->
+      <section class="jonzko-gallery-section">
+        <div class="jonzko-gallery-header">
+          <span>ESTILO JONZKO</span>
+          <h2>Diseños que hablan por ti.</h2>
+          <p>Mira más detalles de nuestras prendas, estilo urbano y contenido de la marca.</p>
+        </div>
 
-          <p>Escríbenos para compras, consultas o pedidos personalizados.</p>
+        <div class="jonzko-gallery-grid">
+          <div class="gallery-card gallery-video-card">
+            <video autoplay muted loop playsinline preload="metadata">
+              <source src="assets/jonzko-video-1.mp4" type="video/mp4" />
+            </video>
+          </div>
 
-          <div class="contact-links">
-            <a [href]="instagramUrl()" target="_blank">
-              <img src="assets/instagram.png" alt="Instagram" />
-              Instagram
+          <div class="gallery-card">
+            <img src="assets/polera-negra.jpg" alt="Detalle urbano JONZKO" />
+          </div>
+
+          <div class="gallery-card">
+            <img src="assets/polera-negra.jpg" alt="Prenda JONZKO" />
+          </div>
+
+          <div class="gallery-card gallery-wide">
+            <img src="assets/polera-negra.jpg" alt="Colección JONZKO" />
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACTO PREMIUM -->
+      <section id="contacto" class="contact-premium-section">
+        <div class="contact-premium-card">
+          <div class="contact-premium-left">
+            <span>CONTACTO</span>
+            <h2>Escríbenos, estamos<br />para ayudarte.</h2>
+            <p>Consultas, pedidos personalizados y atención al cliente.</p>
+
+            <a [href]="whatsappUrl()" target="_blank" class="contact-whatsapp-btn">
+              ESCRÍBENOS POR WHATSAPP
+              <span>→</span>
             </a>
+          </div>
 
-            <a [href]="facebookUrl()" target="_blank">
-              <img src="assets/facebook.png" alt="Facebook" />
-              Facebook
-            </a>
+          <div class="contact-premium-divider"></div>
 
-            <a [href]="tiktokUrl()" target="_blank">
-              <img src="assets/tik-tok.png" alt="TikTok" />
-              TikTok
-            </a>
+          <div class="contact-premium-right">
+            <span>SÍGUENOS EN REDES</span>
+            <p>Únete a nuestra comunidad urbana.</p>
 
-            <a [href]="whatsappUrl()" target="_blank">
-              <img src="assets/whatsapp..png" alt="WhatsApp" />
-              WhatsApp
-            </a>
+            <div class="contact-premium-links">
+              <a [href]="instagramUrl()" target="_blank">
+                <img src="assets/instagram.png" alt="Instagram" />
+                Instagram
+              </a>
+
+              <a [href]="facebookUrl()" target="_blank">
+                <img src="assets/facebook.png" alt="Facebook" />
+                Facebook
+              </a>
+
+              <a [href]="tiktokUrl()" target="_blank">
+                <img src="assets/tik-tok.png" alt="TikTok" />
+                TikTok
+              </a>
+
+              <a [href]="whatsappUrl()" target="_blank">
+                <img src="assets/whatsapp..png" alt="WhatsApp" />
+                WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -264,52 +350,74 @@
       <p>Compras online</p>
     </footer>
   } @else {
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-brand">
-          <div class="footer-logo">
+    <footer class="footer-premium">
+      <div class="footer-premium-container">
+        <div class="footer-premium-brand">
+          <div class="footer-premium-logo">
             <img src="assets/logo.png" alt="Logo JONZKO" />
-            <h3>JONZKO</h3>
+            <div>
+              <h3>JONZKO</h3>
+              <span>SPORT</span>
+            </div>
           </div>
 
           <p>Marca urbana peruana enfocada en ropa con estilo, presencia y visión.</p>
 
-          <p class="footer-ruc">RUC: 10708448601</p>
+          <strong>RUC: 10708448601</strong>
         </div>
 
-        <div class="footer-column">
-          <h4>Tienda</h4>
+        <div class="footer-premium-column">
+          <h4>TIENDA</h4>
           <a href="/#inicio">Inicio</a>
-          <a href="/#producto">Producto</a>
+          <a href="/#producto">Productos</a>
           <a href="/#nosotros">Nosotros</a>
           <a href="/#contacto">Contacto</a>
         </div>
 
-        <div class="footer-column footer-attention">
-          <h4>Atención</h4>
+        <div class="footer-premium-column">
+          <h4>ATENCIÓN</h4>
+          <a href="/#contacto">Cambios y devoluciones</a>
+          <a href="/#contacto">Métodos de pago</a>
+          <a href="/#contacto">Envíos</a>
+          <button type="button" (click)="openTerms()">Términos y condiciones</button>
+        </div>
 
-          <div class="footer-info-item">
-            <strong>Cambios y devoluciones</strong>
-            <small>Aplican por fallas de fábrica o error en talla, previa coordinación.</small>
+        <div class="footer-premium-payments">
+          <h4>MÉTODOS DE PAGO</h4>
+
+          <div class="payment-icons payment-images">
+            <span>
+              <img src="assets/yape.png" alt="Yape" />
+            </span>
+
+            <span>
+              <img src="assets/plin..png" alt="Plin" />
+            </span>
+
+            <span>
+              <img src="assets/bcp.png" alt="BCP" />
+            </span>
           </div>
+        </div>
 
-          <div class="footer-info-item">
-            <strong>Métodos de pago</strong>
-            <small>Yape, Plin y transferencias bancarias.</small>
+        <div class="footer-premium-review">
+          <h4>LO QUE DICEN NUESTROS CLIENTES</h4>
+
+          <div class="review-card">
+            <div class="review-user">
+              <img class="review-photo" src="assets/cliente-jmv.jpeg" alt="Cliente J.M.V" />
+
+              <div>
+                <strong>★★★★★</strong>
+                <p>Buena calidad, la polera tiene buen acabado y el diseño se ve elegante.</p>
+                <small>— J.M.V · Cliente verificado</small>
+              </div>
+            </div>
           </div>
-
-          <div class="footer-info-item">
-            <strong>Envíos</strong>
-            <small>Realizamos envíos a todo el Perú.</small>
-          </div>
-
-          <button type="button" class="footer-terms-btn" (click)="openTerms()">
-            Términos y condiciones
-          </button>
         </div>
       </div>
 
-      <div class="footer-bottom">
+      <div class="footer-premium-bottom">
         <p>© 2026 JONZKO SPORT. Todos los derechos reservados.</p>
         <p>Compras online</p>
       </div>

@@ -60,7 +60,7 @@ heroSlides = signal([
     src: 'assets/principal2.jpeg',
     subtitle: 'JONZKO SPORT',
     title: 'ESTILO URBANO',
-    buttonText: 'Ver colección',
+    buttonText: 'Ver productos',
   },
   {
     type: 'image',
