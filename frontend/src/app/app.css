@@ -7496,3 +7496,557 @@ body {
   background: #f3f3f3 !important;
   display: block !important;
 }
+/* =========================================================
+   CARRITO PREMIUM JONZKO - PC / MÓVIL
+   SOLO DISEÑO, NO TOCA FUNCIONES
+   ========================================================= */
+
+.cart-premium-overlay,
+.cart-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.72) !important;
+  backdrop-filter: blur(3px) !important;
+  z-index: 9000 !important;
+}
+
+.cart-premium-panel,
+.cart-panel {
+  position: fixed !important;
+  top: 18px !important;
+  right: 18px !important;
+  bottom: 18px !important;
+  width: 560px !important;
+  max-width: calc(100vw - 36px) !important;
+  height: auto !important;
+  background: #fffdf9 !important;
+  color: #111111 !important;
+  z-index: 9001 !important;
+  padding: 34px 34px 28px !important;
+  border-radius: 18px !important;
+  overflow-y: auto !important;
+  box-shadow: -24px 0 80px rgba(0, 0, 0, 0.28) !important;
+  border: 1px solid #e4d6c3 !important;
+}
+
+.cart-premium-close,
+.close-cart {
+  position: absolute !important;
+  top: 26px !important;
+  right: 26px !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  background: #050505 !important;
+  color: #ffffff !important;
+  font-size: 18px !important;
+  display: grid !important;
+  place-items: center !important;
+  cursor: pointer !important;
+}
+
+.cart-premium-brand {
+  color: #b89455 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 7px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 22px !important;
+}
+
+.cart-premium-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding-right: 56px !important;
+}
+
+.cart-premium-icon {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 12px !important;
+  background: #050505 !important;
+  color: #ffffff !important;
+  display: grid !important;
+  place-items: center !important;
+  position: relative !important;
+  font-size: 22px !important;
+}
+
+.cart-premium-icon span {
+  position: absolute !important;
+  top: -8px !important;
+  right: -8px !important;
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 50% !important;
+  background: #c19a5b !important;
+  color: #111111 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.cart-premium-header h2 {
+  margin: 0 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 40px !important;
+  line-height: 1 !important;
+  color: #111111 !important;
+}
+
+.cart-premium-header p {
+  margin: 4px 0 0 !important;
+  color: #555555 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+.cart-premium-divider {
+  height: 1px !important;
+  background: #e2d8ca !important;
+  margin: 26px 0 !important;
+}
+
+.cart-premium-items {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+
+.cart-premium-item {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 136px 1fr !important;
+  gap: 18px !important;
+  background: #fffdf9 !important;
+  border: 1px solid #e2d8ca !important;
+  border-radius: 18px !important;
+  padding: 16px !important;
+  box-shadow: none !important;
+}
+
+.cart-premium-item img {
+  width: 136px !important;
+  height: 155px !important;
+  border-radius: 14px !important;
+  object-fit: cover !important;
+  background: #f3eee7 !important;
+}
+
+.cart-item-x {
+  position: absolute !important;
+  top: 12px !important;
+  right: 14px !important;
+  border: none !important;
+  background: transparent !important;
+  color: #333333 !important;
+  font-size: 22px !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+}
+
+.cart-premium-info {
+  padding-right: 22px !important;
+}
+
+.cart-product-top {
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+}
+
+.cart-product-top h3 {
+  margin: 0 0 6px !important;
+  color: #111111 !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+}
+
+.cart-product-top p {
+  margin: 0 !important;
+  color: #555555 !important;
+  font-size: 13px !important;
+}
+
+.cart-product-top strong {
+  color: #111111 !important;
+  font-size: 17px !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
+}
+
+.cart-product-meta {
+  margin-top: 14px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  color: #333333 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+.cart-premium-qty {
+  margin-top: 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+  padding: 7px 12px !important;
+  border: 1px solid #e2d8ca !important;
+  border-radius: 999px !important;
+  background: #fffaf3 !important;
+}
+
+.cart-premium-qty button {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: none !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  cursor: pointer !important;
+}
+
+.cart-premium-qty span {
+  min-width: 16px !important;
+  text-align: center !important;
+  color: #111111 !important;
+  font-weight: 900 !important;
+}
+
+.remove-item {
+  display: none !important;
+}
+
+/* Métodos de pago */
+.cart-payment-methods {
+  margin-top: 28px !important;
+  padding-top: 22px !important;
+  border-top: 1px solid #e2d8ca !important;
+}
+
+.cart-payment-methods h3 {
+  margin: 0 0 14px !important;
+  color: #111111 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 20px !important;
+}
+
+.cart-payment-icons {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 12px !important;
+}
+
+.cart-payment-icons img {
+  width: 100% !important;
+  height: 72px !important;
+  object-fit: contain !important;
+  padding: 12px !important;
+  border: 1px solid #e2d8ca !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+}
+
+/* Total */
+.cart-premium-total {
+  margin-top: 28px !important;
+  padding-top: 20px !important;
+  border-top: 1px solid #e2d8ca !important;
+}
+
+.cart-premium-total > div {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 8px 0 !important;
+  color: #333333 !important;
+}
+
+.cart-premium-total span {
+  font-size: 16px !important;
+  color: #333333 !important;
+}
+
+.cart-premium-total small {
+  color: #777777 !important;
+  font-size: 13px !important;
+}
+
+.cart-premium-total strong {
+  font-size: 20px !important;
+  color: #111111 !important;
+}
+
+.cart-total-main {
+  border-top: 1px solid #e2d8ca !important;
+  margin-top: 6px !important;
+  padding-top: 16px !important;
+}
+
+.cart-total-main span {
+  text-transform: uppercase !important;
+  font-weight: 900 !important;
+}
+
+.cart-total-main strong {
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 32px !important;
+}
+
+/* Botón finalizar */
+.cart-premium-checkout,
+.checkout-btn {
+  width: 100% !important;
+  min-height: 62px !important;
+  margin-top: 22px !important;
+  border-radius: 10px !important;
+  background: #050505 !important;
+  color: #ffffff !important;
+  border: 2px solid #b89455 !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  letter-spacing: 1px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 18px !important;
+  cursor: pointer !important;
+}
+
+.cart-premium-checkout span {
+  font-size: 24px !important;
+}
+
+/* Beneficios */
+.cart-premium-benefits {
+  margin-top: 20px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid #e2d8ca !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 12px !important;
+}
+
+.cart-premium-benefits div {
+  text-align: center !important;
+  color: #111111 !important;
+}
+
+.cart-premium-benefits span {
+  color: #b89455 !important;
+  font-size: 22px !important;
+}
+
+.cart-premium-benefits p {
+  margin: 6px 0 0 !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+}
+
+.cart-premium-empty {
+  margin-top: 28px !important;
+  background: #f7f1e8 !important;
+  border: 1px solid #e2d8ca !important;
+}
+
+/* Móvil */
+@media (max-width: 700px) {
+  .cart-premium-panel,
+  .cart-panel {
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 24px 24px 0 0 !important;
+    padding: 28px 18px 24px !important;
+  }
+
+  .cart-premium-header h2 {
+    font-size: 36px !important;
+  }
+
+  .cart-premium-item {
+    grid-template-columns: 110px 1fr !important;
+    gap: 14px !important;
+    padding: 13px !important;
+  }
+
+  .cart-premium-item img {
+    width: 110px !important;
+    height: 135px !important;
+  }
+
+  .cart-product-top {
+    flex-direction: column !important;
+  }
+
+  .cart-product-top h3 {
+    font-size: 16px !important;
+  }
+
+  .cart-payment-icons img {
+    height: 60px !important;
+  }
+
+  .cart-premium-benefits {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .cart-premium-item {
+    grid-template-columns: 95px 1fr !important;
+  }
+
+  .cart-premium-item img {
+    width: 95px !important;
+    height: 120px !important;
+  }
+
+  .cart-payment-icons {
+    gap: 8px !important;
+  }
+
+  .cart-payment-icons img {
+    height: 54px !important;
+    padding: 8px !important;
+  }
+}
+/* =========================================================
+   CORREGIR MARGEN BLANCO DEL HERO - JONZKO
+   PC / MÓVIL
+   ========================================================= */
+
+/* Evita espacios laterales generales */
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+main {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Hero ancho completo */
+.hero-slider {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding: 0 !important;
+  border: none !important;
+  overflow: hidden !important;
+}
+
+/* Slides también al 100% */
+.hero-track,
+.hero-slide {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Imagen/video del hero completo */
+.hero-slide img,
+.hero-slide video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* Quita espacio entre navbar y hero */
+.premium-navbar {
+  margin-bottom: 0 !important;
+}
+
+.hero-slider {
+  margin-top: 0 !important;
+}
+/* Quitar separación entre header y hero */
+header.navbar,
+.premium-navbar {
+  border-bottom: none !important;
+}
+
+#inicio {
+  margin-top: 0 !important;
+}
+/* =========================================================
+   MÉTODOS DE PAGO - SOLO ICONOS RESPONSIVE
+   ========================================================= */
+
+.detail-payment-icons {
+  gap: 14px !important;
+  align-items: center !important;
+  border-top: 1px solid #e4d7c3 !important;
+}
+
+.detail-payment-icons h4 {
+  width: 100% !important;
+  margin: 0 0 6px !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  color: #111111 !important;
+}
+
+.detail-payment-icons img {
+  width: auto !important;
+  height: 30px !important;
+  max-width: 70px !important;
+  object-fit: contain !important;
+
+  /* quitamos caja */
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Tablet */
+@media (max-width: 800px) {
+  .detail-payment-icons {
+    gap: 12px !important;
+  }
+
+  .detail-payment-icons img {
+    height: 28px !important;
+    max-width: 64px !important;
+  }
+}
+
+/* Celular */
+@media (max-width: 480px) {
+  .detail-payment-icons {
+    gap: 10px !important;
+    justify-content: flex-start !important;
+  }
+
+  .detail-payment-icons h4 {
+    font-size: 11px !important;
+    letter-spacing: 1.2px !important;
+  }
+
+  .detail-payment-icons img {
+    height: 24px !important;
+    max-width: 58px !important;
+  }
+}
