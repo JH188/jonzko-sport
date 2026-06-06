@@ -8050,3 +8050,580 @@ header.navbar,
     max-width: 58px !important;
   }
 }
+/* =========================================================
+   AJUSTE FINAL - CARRITO MÁS PEQUEÑO PC / CELULAR
+   Pegar al FINAL de app.css
+   ========================================================= */
+
+.cart-overlay {
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(3px) !important;
+}
+
+.cart-panel {
+  top: 12px !important;
+  right: 12px !important;
+  width: 390px !important;
+  max-width: calc(100vw - 24px) !important;
+  height: calc(100vh - 24px) !important;
+  border-radius: 24px !important;
+  padding: 22px !important;
+  background: #fffdf9 !important;
+  box-shadow: -18px 0 55px rgba(0, 0, 0, 0.22) !important;
+}
+
+/* Encabezado más compacto */
+.cart-header {
+  margin-bottom: 18px !important;
+  padding-bottom: 14px !important;
+}
+
+.cart-header h2 {
+  font-size: 28px !important;
+  line-height: 1 !important;
+}
+
+.cart-header span {
+  font-size: 10px !important;
+  letter-spacing: 4px !important;
+}
+
+/* Botón cerrar */
+.close-cart {
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 15px !important;
+}
+
+/* Caja carrito vacío más pequeña */
+.empty-cart {
+  padding: 32px 18px !important;
+  border-radius: 18px !important;
+}
+
+.empty-cart h3 {
+  font-size: 19px !important;
+}
+
+.empty-cart p {
+  font-size: 14px !important;
+}
+
+/* Productos dentro del carrito */
+.cart-item {
+  grid-template-columns: 72px 1fr !important;
+  padding: 12px !important;
+  border-radius: 18px !important;
+}
+
+.cart-item img {
+  width: 72px !important;
+  height: 88px !important;
+  border-radius: 13px !important;
+}
+
+.cart-item-info h3 {
+  font-size: 14px !important;
+}
+
+.cart-item-info p {
+  font-size: 12px !important;
+}
+
+.qty-actions button {
+  width: 27px !important;
+  height: 27px !important;
+}
+
+.remove-item {
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+}
+
+.cart-total {
+  font-size: 17px !important;
+}
+
+.cart-total strong {
+  font-size: 21px !important;
+}
+
+.checkout-btn {
+  height: 48px !important;
+  font-size: 13px !important;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .cart-panel {
+    width: 360px !important;
+    max-width: calc(100vw - 22px) !important;
+    top: 11px !important;
+    right: 11px !important;
+    height: calc(100vh - 22px) !important;
+    border-radius: 22px !important;
+  }
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  .cart-panel {
+    width: 310px !important;
+    max-width: calc(100vw - 18px) !important;
+    top: 9px !important;
+    right: 9px !important;
+    height: auto !important;
+    max-height: calc(100vh - 18px) !important;
+    border-radius: 20px !important;
+    padding: 16px !important;
+  }
+
+  .cart-header h2 {
+    font-size: 24px !important;
+  }
+
+  .cart-header span {
+    font-size: 9px !important;
+    letter-spacing: 3px !important;
+  }
+
+  .empty-cart {
+    padding: 28px 14px !important;
+  }
+
+  .empty-cart h3 {
+    font-size: 17px !important;
+  }
+
+  .empty-cart p {
+    font-size: 13px !important;
+  }
+}
+
+/* Celular pequeño */
+@media (max-width: 390px) {
+  .cart-panel {
+    width: 292px !important;
+    max-width: calc(100vw - 16px) !important;
+    top: 8px !important;
+    right: 8px !important;
+    padding: 14px !important;
+  }
+
+  .cart-header h2 {
+    font-size: 22px !important;
+  }
+}
+/* =========================================================
+   JONZKO - CARRITO COMPACTO FINAL PC / MÓVIL
+   PEGAR AL FINAL DE app.css
+   ========================================================= */
+
+.cart-panel {
+  width: 350px !important;
+  max-width: calc(100vw - 28px) !important;
+  height: auto !important;
+  max-height: calc(100vh - 24px) !important;
+  top: 12px !important;
+  right: 14px !important;
+  padding: 18px !important;
+  border-radius: 22px !important;
+  overflow-y: auto !important;
+}
+
+/* Header más pequeño */
+.cart-header {
+  margin-bottom: 14px !important;
+  padding-bottom: 12px !important;
+  gap: 10px !important;
+}
+
+.cart-header h2 {
+  font-size: 28px !important;
+  line-height: 0.95 !important;
+  margin: 0 !important;
+}
+
+.cart-header span {
+  font-size: 9px !important;
+  letter-spacing: 4px !important;
+  margin-bottom: 5px !important;
+}
+
+.close-cart {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 14px !important;
+}
+
+/* Producto más compacto */
+.cart-item {
+  grid-template-columns: 72px 1fr !important;
+  gap: 10px !important;
+  padding: 12px !important;
+  border-radius: 16px !important;
+}
+
+.cart-item img {
+  width: 72px !important;
+  height: 86px !important;
+  border-radius: 12px !important;
+}
+
+.cart-item-info h3 {
+  font-size: 13px !important;
+  margin-bottom: 4px !important;
+}
+
+.cart-item-info p {
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  margin: 2px 0 !important;
+}
+
+.qty-actions {
+  margin-top: 8px !important;
+  gap: 8px !important;
+}
+
+.qty-actions button {
+  width: 26px !important;
+  height: 26px !important;
+}
+
+.qty-actions span {
+  font-size: 13px !important;
+}
+
+.remove-item,
+.remove-icon {
+  font-size: 12px !important;
+}
+
+/* Métodos de pago más pequeños */
+.payment-methods,
+.cart-payment-methods {
+  margin-top: 14px !important;
+  padding-top: 14px !important;
+}
+
+.payment-methods h3,
+.cart-payment-methods h3 {
+  font-size: 19px !important;
+  margin-bottom: 12px !important;
+}
+
+.payment-options,
+.payment-icons {
+  gap: 8px !important;
+}
+
+.payment-options img,
+.payment-icons img,
+.payment-methods img,
+.cart-payment-methods img {
+  max-width: 48px !important;
+  max-height: 32px !important;
+}
+
+/* Totales más compactos */
+.cart-footer,
+.cart-summary {
+  margin-top: 14px !important;
+  padding-top: 14px !important;
+}
+
+.cart-total,
+.cart-total-row {
+  margin-bottom: 8px !important;
+  font-size: 13px !important;
+}
+
+.cart-total strong,
+.cart-total-row.total-main,
+.cart-summary strong {
+  font-size: 19px !important;
+}
+
+.checkout-btn {
+  height: 46px !important;
+  margin-top: 12px !important;
+  font-size: 12px !important;
+}
+
+/* Ocultar beneficios en móvil para que no se alargue demasiado */
+.cart-benefits,
+.cart-trust,
+.cart-extra-info {
+  gap: 8px !important;
+  font-size: 10px !important;
+}
+
+/* =========================================================
+   CELULAR
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .cart-panel {
+    width: 285px !important;
+    max-width: calc(100vw - 20px) !important;
+    top: 8px !important;
+    right: 8px !important;
+    padding: 14px !important;
+    border-radius: 18px !important;
+    max-height: calc(100vh - 16px) !important;
+  }
+
+  .cart-header h2 {
+    font-size: 23px !important;
+  }
+
+  .cart-header span {
+    font-size: 8px !important;
+    letter-spacing: 3px !important;
+  }
+
+  .close-cart {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .cart-item {
+    grid-template-columns: 64px 1fr !important;
+    padding: 10px !important;
+  }
+
+  .cart-item img {
+    width: 64px !important;
+    height: 78px !important;
+  }
+
+  .cart-item-info h3 {
+    font-size: 12px !important;
+  }
+
+  .cart-item-info p {
+    font-size: 10.5px !important;
+  }
+
+  .qty-actions button {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .payment-methods h3,
+  .cart-payment-methods h3 {
+    font-size: 17px !important;
+  }
+
+  .payment-options img,
+  .payment-icons img,
+  .payment-methods img,
+  .cart-payment-methods img {
+    max-width: 42px !important;
+    max-height: 28px !important;
+  }
+
+  .cart-total strong,
+  .cart-total-row.total-main,
+  .cart-summary strong {
+    font-size: 18px !important;
+  }
+
+  .checkout-btn {
+    height: 42px !important;
+    font-size: 11px !important;
+  }
+
+  .cart-benefits,
+  .cart-trust,
+  .cart-extra-info {
+    display: none !important;
+  }
+}
+
+/* CELULAR MUY PEQUEÑO */
+@media (max-width: 390px) {
+  .cart-panel {
+    width: 270px !important;
+    right: 7px !important;
+    top: 7px !important;
+    padding: 12px !important;
+  }
+
+  .cart-header h2 {
+    font-size: 21px !important;
+  }
+}
+/* =========================================================
+   JONZKO - CARRITO MÓVIL MÁS CORTO Y COMPACTO
+   PEGAR AL FINAL DE app.css
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .cart-panel,
+  .cart-premium-panel {
+    width: 265px !important;
+    max-width: calc(100vw - 18px) !important;
+
+    height: auto !important;
+    min-height: unset !important;
+    max-height: calc(100vh - 18px) !important;
+
+    top: 8px !important;
+    right: 8px !important;
+    bottom: auto !important;
+
+    padding: 13px !important;
+    border-radius: 18px !important;
+    overflow-y: auto !important;
+  }
+
+  .cart-premium-brand {
+    font-size: 8px !important;
+    letter-spacing: 5px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .cart-premium-header {
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .cart-premium-icon {
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 12px !important;
+    font-size: 18px !important;
+  }
+
+  .cart-premium-icon span {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 10px !important;
+  }
+
+  .cart-premium-header h2 {
+    font-size: 34px !important;
+    line-height: 0.9 !important;
+    margin: 0 !important;
+  }
+
+  .cart-premium-header p {
+    font-size: 11px !important;
+    margin: 4px 0 0 !important;
+  }
+
+  .cart-premium-close,
+  .close-cart {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 13px !important;
+  }
+
+  .cart-premium-divider {
+    margin: 14px 0 !important;
+  }
+
+  .cart-premium-item,
+  .cart-item {
+    grid-template-columns: 58px 1fr !important;
+    gap: 9px !important;
+    padding: 10px !important;
+    border-radius: 15px !important;
+  }
+
+  .cart-premium-item img,
+  .cart-item img {
+    width: 58px !important;
+    height: 72px !important;
+    border-radius: 11px !important;
+  }
+
+  .cart-product-top h3,
+  .cart-item-info h3 {
+    font-size: 12px !important;
+    margin: 0 0 3px !important;
+  }
+
+  .cart-product-top p,
+  .cart-item-info p {
+    font-size: 9.5px !important;
+    line-height: 1.2 !important;
+  }
+
+  .cart-product-top strong {
+    font-size: 12px !important;
+  }
+
+  .cart-product-meta {
+    gap: 4px !important;
+    margin-top: 5px !important;
+  }
+
+  .cart-product-meta span {
+    font-size: 10px !important;
+  }
+
+  .cart-premium-qty,
+  .qty-actions {
+    margin-top: 8px !important;
+    height: 34px !important;
+  }
+
+  .cart-premium-qty button,
+  .qty-actions button {
+    width: 23px !important;
+    height: 23px !important;
+    font-size: 12px !important;
+  }
+
+  .cart-premium-qty span,
+  .qty-actions span {
+    font-size: 12px !important;
+  }
+
+  .cart-item-x {
+    top: 10px !important;
+    right: 10px !important;
+    font-size: 16px !important;
+  }
+
+  .cart-premium-total {
+    margin-top: 14px !important;
+    padding-top: 14px !important;
+  }
+
+  .cart-premium-total > div {
+    margin-bottom: 8px !important;
+  }
+
+  .cart-premium-total span {
+    font-size: 12px !important;
+  }
+
+  .cart-premium-total small {
+    font-size: 9.5px !important;
+  }
+
+  .cart-premium-total strong {
+    font-size: 16px !important;
+  }
+
+  .cart-total-main {
+    padding-top: 8px !important;
+    margin-top: 6px !important;
+  }
+
+  .cart-total-main strong {
+    font-size: 29px !important;
+  }
+
+  .cart-premium-checkout,
+  .checkout-btn {
+    height: 42px !important;
+    margin-top: 12px !important;
+    font-size: 11px !important;
+    border-radius: 10px !important;
+  }
+}
