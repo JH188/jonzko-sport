@@ -1123,3 +1123,773 @@
     height: 220px !important;
   }
 }
+/* =========================================================
+   PRODUCT DETAIL PREMIUM JONZKO - DISEÑO FINAL PC / MÓVIL
+   SOLO DISEÑO, NO TOCA FUNCIONES
+   ========================================================= */
+
+.detail-page {
+  background: #fbfaf7 !important;
+  padding: 70px 32px 80px !important;
+  color: #111111 !important;
+  overflow-x: hidden !important;
+}
+
+/* Contenedor principal */
+.detail-container {
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: 1.12fr 0.88fr !important;
+  gap: 58px !important;
+  align-items: start !important;
+}
+
+/* =========================
+   GALERÍA IZQUIERDA
+========================= */
+
+.gallery-wrapper {
+  display: grid !important;
+  grid-template-columns: 92px 1fr !important;
+  gap: 22px !important;
+  align-items: start !important;
+}
+
+/* Imagen principal */
+.image-box,
+.product-gallery {
+  order: 2 !important;
+  width: 100% !important;
+  height: 650px !important;
+  padding: 0 !important;
+  background: #ffffff !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid #e7ddcf !important;
+}
+
+.product-gallery img,
+.product-gallery video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 0 !important;
+}
+
+/* Miniaturas verticales */
+.gallery-thumbnails {
+  order: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  margin-top: 0 !important;
+}
+
+.gallery-thumbnails button {
+  width: 92px !important;
+  height: 112px !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  border: 2px solid transparent !important;
+  background: #ffffff !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.06) !important;
+  transition: 0.25s ease !important;
+}
+
+.gallery-thumbnails button.active,
+.gallery-thumbnails button:hover {
+  border-color: #b89455 !important;
+  transform: translateY(-2px) !important;
+}
+
+.gallery-thumbnails img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.gallery-thumbnails span {
+  width: 100% !important;
+  height: 100% !important;
+  background: #050505 !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+/* Flechas de la imagen */
+.gallery-arrow {
+  width: 46px !important;
+  height: 46px !important;
+  background: rgba(0, 0, 0, 0.45) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  border-radius: 50% !important;
+  font-size: 34px !important;
+  z-index: 20 !important;
+}
+
+.gallery-left {
+  left: 22px !important;
+}
+
+.gallery-right {
+  right: 22px !important;
+}
+
+.gallery-dots {
+  bottom: 18px !important;
+}
+
+.gallery-dots button.active {
+  background: #b89455 !important;
+  border-color: #b89455 !important;
+}
+
+/* =========================
+   INFORMACIÓN DERECHA
+========================= */
+
+.info-box {
+  background: #ffffff !important;
+  border: 1px solid #e7ddcf !important;
+  border-radius: 22px !important;
+  padding: 46px 44px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08) !important;
+  position: sticky !important;
+  top: 120px !important;
+}
+
+.info-box .brand {
+  color: #b89455 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 6px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 14px !important;
+}
+
+.info-box h1 {
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(42px, 4vw, 62px) !important;
+  line-height: 0.95 !important;
+  color: #111111 !important;
+  margin: 0 0 20px !important;
+}
+
+/* Precio */
+.prices {
+  display: flex !important;
+  align-items: baseline !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  margin-bottom: 12px !important;
+}
+
+.old-price {
+  color: #8b8b8b !important;
+  font-size: 17px !important;
+  text-decoration: line-through !important;
+}
+
+.current-price {
+  color: #111111 !important;
+  font-size: 34px !important;
+  font-weight: 950 !important;
+}
+
+.unit-price-label {
+  font-size: 12px !important;
+  color: #555555 !important;
+  font-weight: 800 !important;
+}
+
+.stock-badge {
+  display: inline-flex !important;
+  width: fit-content !important;
+  margin: 0 0 24px !important;
+  padding: 7px 13px !important;
+  border-radius: 999px !important;
+  background: #eaf8ee !important;
+  color: #168237 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+.description {
+  color: #333333 !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  margin-bottom: 24px !important;
+}
+
+/* Datos del producto */
+.product-data {
+  background: #f7f5f1 !important;
+  border: 1px solid #eee4d6 !important;
+  border-radius: 16px !important;
+  padding: 18px 20px !important;
+  margin-bottom: 26px !important;
+}
+
+.product-data p {
+  margin: 5px 0 !important;
+  font-size: 14px !important;
+}
+
+/* Tallas */
+.sizes h3,
+.quantity h3 {
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  margin: 0 0 12px !important;
+}
+
+.size-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+}
+
+.size-list button {
+  width: 50px !important;
+  height: 44px !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  border: 1px solid #d8d0c4 !important;
+  color: #111111 !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  transition: 0.25s ease !important;
+}
+
+.size-list button.active,
+.size-list button:hover {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #111111 !important;
+}
+
+.size-guide-btn {
+  margin-top: 5px !important;
+  background: transparent !important;
+  color: #111111 !important;
+  border: none !important;
+  padding: 0 !important;
+  font-weight: 900 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px !important;
+}
+
+/* Cantidad + total */
+.quantity {
+  margin-top: 26px !important;
+}
+
+.qty-row {
+  display: grid !important;
+  grid-template-columns: 1fr 150px !important;
+  gap: 18px !important;
+  align-items: center !important;
+}
+
+.qty-control {
+  display: flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+  margin: 0 !important;
+}
+
+.qty-control button {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+}
+
+.qty-control span {
+  font-size: 18px !important;
+  font-weight: 900 !important;
+}
+
+.subtotal-detail {
+  background: #f7f5f1 !important;
+  border: 1px solid #e5dac9 !important;
+  border-radius: 14px !important;
+  padding: 14px 16px !important;
+  text-align: right !important;
+}
+
+.subtotal-detail span {
+  display: block !important;
+  color: #b89455 !important;
+  font-size: 10px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  font-weight: 900 !important;
+}
+
+.subtotal-detail strong {
+  display: block !important;
+  color: #111111 !important;
+  font-size: 16px !important;
+  margin-top: 2px !important;
+}
+
+/* Botones */
+.actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  margin-top: 26px !important;
+  margin-bottom: 22px !important;
+}
+
+.cart-btn,
+.whatsapp-detail-btn {
+  width: 100% !important;
+  height: 50px !important;
+  border-radius: 999px !important;
+  padding: 0 20px !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  transition: 0.25s ease !important;
+}
+
+.cart-btn {
+  background: #050505 !important;
+  color: #ffffff !important;
+  border: 1px solid #050505 !important;
+}
+
+.whatsapp-detail-btn {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 1px solid #b89455 !important;
+}
+
+.cart-btn:hover,
+.whatsapp-detail-btn:hover {
+  transform: translateY(-1px) !important;
+}
+
+/* Beneficios */
+.purchase-benefits {
+  background: #f7f5f1 !important;
+  border-radius: 16px !important;
+  padding: 18px 20px !important;
+  border: 1px solid #eee4d6 !important;
+}
+
+.purchase-benefits p {
+  margin: 7px 0 !important;
+  color: #222222 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+.back-link {
+  margin-top: 24px !important;
+  display: inline-flex !important;
+  color: #111111 !important;
+  font-weight: 900 !important;
+  text-decoration: none !important;
+}
+
+/* =========================
+   RELACIONADOS
+========================= */
+
+.related-section {
+  max-width: 1320px !important;
+  margin: 70px auto 0 !important;
+}
+
+.related-section h2 {
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(34px, 4vw, 52px) !important;
+  margin: 0 0 26px !important;
+}
+
+.related-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+
+.related-card {
+  background: #ffffff !important;
+  border: 1px solid #e7ddcf !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  color: #111111 !important;
+  text-decoration: none !important;
+  transition: 0.25s ease !important;
+}
+
+.related-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.1) !important;
+}
+
+.related-image-box {
+  height: 230px !important;
+  background: #f2eee8 !important;
+}
+
+.related-image-box img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.related-card h3 {
+  font-size: 16px !important;
+  margin: 14px 14px 4px !important;
+}
+
+.related-card p {
+  margin: 0 14px 16px !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+}
+
+/* =========================================================
+   RESPONSIVE PRODUCT DETAIL
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .detail-container {
+    grid-template-columns: 1fr !important;
+    max-width: 760px !important;
+    gap: 34px !important;
+  }
+
+  .info-box {
+    position: static !important;
+  }
+
+  .gallery-wrapper {
+    grid-template-columns: 1fr !important;
+  }
+
+  .image-box,
+  .product-gallery {
+    order: 1 !important;
+    height: 620px !important;
+  }
+
+  .gallery-thumbnails {
+    order: 2 !important;
+    flex-direction: row !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  .gallery-thumbnails button {
+    width: 100% !important;
+    height: 96px !important;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .detail-page {
+    padding: 24px 12px 54px !important;
+  }
+
+  .detail-container {
+    width: 100% !important;
+    gap: 24px !important;
+  }
+
+  .image-box,
+  .product-gallery {
+    height: 480px !important;
+    border-radius: 16px !important;
+  }
+
+  .gallery-thumbnails {
+    gap: 8px !important;
+  }
+
+  .gallery-thumbnails button {
+    height: 76px !important;
+    border-radius: 10px !important;
+  }
+
+  .info-box {
+    padding: 30px 20px !important;
+    border-radius: 18px !important;
+  }
+
+  .info-box .brand {
+    font-size: 10px !important;
+    letter-spacing: 4px !important;
+  }
+
+  .info-box h1 {
+    font-size: 38px !important;
+  }
+
+  .current-price {
+    font-size: 28px !important;
+  }
+
+  .qty-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .subtotal-detail {
+    text-align: left !important;
+  }
+
+  .actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .related-section {
+    margin-top: 48px !important;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  .related-image-box {
+    height: 180px !important;
+  }
+
+  .related-card h3 {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .image-box,
+  .product-gallery {
+    height: 420px !important;
+  }
+
+  .related-image-box {
+    height: 160px !important;
+  }
+}
+/* =========================================================
+   DETALLES FINALES PRODUCT DETAIL - JONZKO
+   Breadcrumb + pagos + beneficios
+   ========================================================= */
+
+/* Breadcrumb superior */
+.product-breadcrumb {
+  max-width: 1320px !important;
+  margin: 0 auto 22px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: #777 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.product-breadcrumb a {
+  color: #555 !important;
+  text-decoration: none !important;
+}
+
+.product-breadcrumb a:hover {
+  color: #b89455 !important;
+}
+
+.product-breadcrumb strong {
+  color: #111 !important;
+  font-weight: 900 !important;
+}
+
+/* Para que la caja derecha se parezca más al modelo */
+.info-box {
+  padding: 40px 42px !important;
+}
+
+.info-box h1 {
+  font-size: clamp(38px, 3.7vw, 54px) !important;
+  line-height: 1 !important;
+  margin-bottom: 16px !important;
+}
+
+.info-box .brand {
+  color: #b89455 !important;
+}
+
+/* Precio más compacto */
+.prices {
+  margin-bottom: 10px !important;
+}
+
+.current-price {
+  font-size: 30px !important;
+}
+
+.old-price {
+  font-size: 15px !important;
+}
+
+/* Bloque beneficios premium */
+.premium-benefits {
+  margin-top: 22px !important;
+  padding: 16px !important;
+  border-radius: 16px !important;
+  background: #fbfaf7 !important;
+  border: 1px solid #e4d7c3 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 12px !important;
+}
+
+.benefit-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+}
+
+.benefit-icon {
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 7px !important;
+  border: 1px solid #c9a15d !important;
+  color: #b89455 !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 10px !important;
+  flex: 0 0 24px !important;
+}
+
+.benefit-item strong {
+  display: block !important;
+  color: #111 !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  line-height: 1.25 !important;
+}
+
+.benefit-item small {
+  display: block !important;
+  color: #555 !important;
+  font-size: 10px !important;
+  line-height: 1.25 !important;
+}
+
+/* Imágenes de pago */
+.detail-payment-icons {
+  grid-column: 1 / -1 !important;
+  padding-top: 12px !important;
+  border-top: 1px solid #e4d7c3 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+}
+
+.detail-payment-icons img {
+  width: 58px !important;
+  height: 34px !important;
+  object-fit: contain !important;
+  background: #ffffff !important;
+  border: 1px solid #e4d7c3 !important;
+  border-radius: 8px !important;
+  padding: 5px !important;
+}
+
+/* Botones más parecidos al modelo */
+.actions {
+  grid-template-columns: 1.1fr 1fr !important;
+}
+
+.cart-btn {
+  letter-spacing: 0.5px !important;
+}
+
+.whatsapp-detail-btn {
+  border-color: #b89455 !important;
+  color: #111 !important;
+}
+
+/* Responsive */
+@media (max-width: 1050px) {
+  .product-breadcrumb {
+    max-width: 760px !important;
+    padding: 0 4px !important;
+  }
+
+  .info-box h1 {
+    font-size: 42px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-breadcrumb {
+    font-size: 11px !important;
+    gap: 7px !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    margin-bottom: 16px !important;
+  }
+
+  .info-box {
+    padding: 28px 20px !important;
+  }
+
+  .info-box h1 {
+    font-size: 34px !important;
+  }
+
+  .current-price {
+    font-size: 26px !important;
+  }
+
+  .premium-benefits {
+    grid-template-columns: 1fr !important;
+    gap: 13px !important;
+  }
+
+  .detail-payment-icons {
+    justify-content: flex-start !important;
+  }
+
+  .detail-payment-icons img {
+    width: 62px !important;
+    height: 36px !important;
+  }
+
+  .actions {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* Título métodos de pago dentro del detalle */
+.detail-payment-icons h4 {
+  width: 100% !important;
+  margin: 0 0 4px !important;
+  color: #111111 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+}

@@ -5,6 +5,14 @@
     {{ error() }}
   </div>
 
+  <div *ngIf="product() as p" class="product-breadcrumb">
+    <a routerLink="/">Inicio</a>
+    <span>›</span>
+    <a routerLink="/">Poleras</a>
+    <span>›</span>
+    <strong>{{ p.name }}</strong>
+  </div>
+
   <div *ngIf="product() as p" class="detail-container">
     <!-- GALERÍA DE PRODUCTO -->
     <div class="gallery-wrapper">
@@ -123,10 +131,38 @@
         </button>
       </div>
 
-      <div class="purchase-benefits">
-        <p>✅ Pago por Yape, Plin o transferencia</p>
-        <p>🚚 Envíos a todo el Perú</p>
-        <p>🔁 Cambios previa coordinación</p>
+      <div class="purchase-benefits premium-benefits">
+        <div class="benefit-item">
+          <span class="benefit-icon">▣</span>
+          <div>
+            <strong>Pago seguro</strong>
+            <small>Yape, Plin o transferencia</small>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <span class="benefit-icon">▣</span>
+          <div>
+            <strong>Envíos a todo el Perú</strong>
+            <small>Coordina tu entrega</small>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <span class="benefit-icon">▣</span>
+          <div>
+            <strong>Cambios disponibles</strong>
+            <small>Previa coordinación</small>
+          </div>
+        </div>
+
+        <div class="detail-payment-icons">
+          <h4>Métodos de pago</h4>
+
+          <img src="assets/yape.png" alt="Yape" />
+          <img src="assets/plin..png" alt="Plin" />
+          <img src="assets/bcp.png" alt="BCP" />
+        </div>
       </div>
 
       <a routerLink="/" class="back-link">← Volver a la tienda</a>
