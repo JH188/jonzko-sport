@@ -403,14 +403,28 @@
         <div class="footer-premium-review">
           <h4>LO QUE DICEN NUESTROS CLIENTES</h4>
 
-          <div class="review-card">
-            <div class="review-user">
-              <img class="review-photo" src="assets/cliente-jmv.jpeg" alt="Cliente J.M.V" />
+          <div class="review-slider">
+            <div class="review-card">
+              <div class="review-user">
+                <img class="review-photo" src="assets/cliente-jmv.jpeg" alt="Cliente J.M.V" />
 
-              <div>
-                <strong>★★★★★</strong>
-                <p>Buena calidad, la polera tiene buen acabado y el diseño se ve elegante.</p>
-                <small>— J.M.V · Cliente verificado</small>
+                <div>
+                  <strong>★★★★★</strong>
+                  <p>Buena calidad, la polera tiene buen acabado y el diseño se ve elegante.</p>
+                  <small>— J.M.V · Cliente Satisfechos</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-user">
+                <img class="review-photo" src="assets/cliente-kp.jpeg" alt="Cliente K.P" />
+
+                <div>
+                  <strong>★★★★★</strong>
+                  <p>La polera está bonita, cómoda y el diseño se ve muy bien.</p>
+                  <small>— K.P · Cliente Satisfechos</small>
+                </div>
               </div>
             </div>
           </div>
@@ -425,95 +439,95 @@
   }
 
   <!-- CARRITO LATERAL PREMIUM -->
-@if (cartOpen()) {
-  <div class="cart-overlay cart-premium-overlay" (click)="closeCart()"></div>
+  @if (cartOpen()) {
+    <div class="cart-overlay cart-premium-overlay" (click)="closeCart()"></div>
 
-  <aside class="cart-panel cart-premium-panel">
-    <button type="button" class="close-cart cart-premium-close" (click)="closeCart()">✕</button>
+    <aside class="cart-panel cart-premium-panel">
+      <button type="button" class="close-cart cart-premium-close" (click)="closeCart()">✕</button>
 
-    <div class="cart-premium-brand">JONZKO SPORT</div>
+      <div class="cart-premium-brand">JONZKO SPORT</div>
 
-    <div class="cart-premium-header">
-      <div class="cart-premium-icon">
-        🛒
-        <span>{{ cartCount() }}</span>
+      <div class="cart-premium-header">
+        <div class="cart-premium-icon">
+          🛒
+          <span>{{ cartCount() }}</span>
+        </div>
+
+        <div>
+          <h2>Tu carrito</h2>
+          <p>{{ cartCount() }} artículo en tu pedido</p>
+        </div>
       </div>
 
-      <div>
-        <h2>Tu carrito</h2>
-        <p>{{ cartCount() }} artículo en tu pedido</p>
-      </div>
-    </div>
+      @if (cart().length === 0) {
+        <div class="empty-cart cart-premium-empty">
+          <h3>Tu carrito está vacío</h3>
+          <p>Agrega productos para iniciar tu pedido.</p>
+        </div>
+      } @else {
+        <div class="cart-premium-divider"></div>
 
-    @if (cart().length === 0) {
-      <div class="empty-cart cart-premium-empty">
-        <h3>Tu carrito está vacío</h3>
-        <p>Agrega productos para iniciar tu pedido.</p>
-      </div>
-    } @else {
-      <div class="cart-premium-divider"></div>
+        <div class="cart-items cart-premium-items">
+          @for (item of cart(); track item.id) {
+            <div class="cart-item cart-premium-item">
+              <button type="button" class="cart-item-x" (click)="removeFromCart(item.id)">×</button>
 
-      <div class="cart-items cart-premium-items">
-        @for (item of cart(); track item.id) {
-          <div class="cart-item cart-premium-item">
-            <button type="button" class="cart-item-x" (click)="removeFromCart(item.id)">×</button>
+              <img [src]="item.imageUrl" [alt]="item.name" />
 
-            <img [src]="item.imageUrl" [alt]="item.name" />
+              <div class="cart-item-info cart-premium-info">
+                <div class="cart-product-top">
+                  <div>
+                    <h3>{{ item.name }}</h3>
+                    <p>Oversize | Algodón premium</p>
+                  </div>
 
-            <div class="cart-item-info cart-premium-info">
-              <div class="cart-product-top">
-                <div>
-                  <h3>{{ item.name }}</h3>
-                  <p>Oversize | Algodón premium</p>
+                  <strong>S/ {{ item.price }}</strong>
                 </div>
 
-                <strong>S/ {{ item.price }}</strong>
-              </div>
+                <div class="cart-product-meta">
+                  @if (item.selectedSize) {
+                    <span>✓ Talla: {{ item.selectedSize }}</span>
+                  }
 
-              <div class="cart-product-meta">
-                @if (item.selectedSize) {
-                  <span>✓ Talla: {{ item.selectedSize }}</span>
-                }
+                  @if (item.selectedColor || item.color) {
+                    <span>• Color: {{ item.selectedColor || item.color }}</span>
+                  }
+                </div>
 
-                @if (item.selectedColor || item.color) {
-                  <span>• Color: {{ item.selectedColor || item.color }}</span>
-                }
-              </div>
-
-              <div class="qty-actions cart-premium-qty">
-                <button type="button" (click)="decreaseQty(item.id)">−</button>
-                <span>{{ item.quantity }}</span>
-                <button type="button" (click)="increaseQty(item.id)">+</button>
+                <div class="qty-actions cart-premium-qty">
+                  <button type="button" (click)="decreaseQty(item.id)">−</button>
+                  <span>{{ item.quantity }}</span>
+                  <button type="button" (click)="increaseQty(item.id)">+</button>
+                </div>
               </div>
             </div>
+          }
+        </div>
+
+        <div class="cart-premium-total">
+          <div>
+            <span>Subtotal</span>
+            <strong>S/ {{ cartTotal().toFixed(2) }}</strong>
           </div>
-        }
-      </div>
 
-      <div class="cart-premium-total">
-        <div>
-          <span>Subtotal</span>
-          <strong>S/ {{ cartTotal().toFixed(2) }}</strong>
+          <div>
+            <span>Envío</span>
+            <small>Calculado en el siguiente paso</small>
+          </div>
+
+          <div class="cart-total-main">
+            <span>Total</span>
+            <strong>S/ {{ cartTotal().toFixed(2) }}</strong>
+          </div>
         </div>
 
-        <div>
-          <span>Envío</span>
-          <small>Calculado en el siguiente paso</small>
-        </div>
-
-        <div class="cart-total-main">
-          <span>Total</span>
-          <strong>S/ {{ cartTotal().toFixed(2) }}</strong>
-        </div>
-      </div>
-
-      <button type="button" class="checkout-btn cart-premium-checkout" (click)="goCheckout()">
-        FINALIZAR COMPRA
-        <span>→</span>
-      </button>
-    }
-  </aside>
-}
+        <button type="button" class="checkout-btn cart-premium-checkout" (click)="goCheckout()">
+          FINALIZAR COMPRA
+          <span>→</span>
+        </button>
+      }
+    </aside>
+  }
   @if (termsOpen()) {
     <div class="terms-modal-backdrop" (click)="closeTerms()">
       <div class="terms-modal" (click)="$event.stopPropagation()">

@@ -8627,3 +8627,98 @@ header.navbar,
     border-radius: 10px !important;
   }
 }
+/* =========================================================
+   JONZKO - COMENTARIOS DE CLIENTES DESLIZABLES
+   PEGAR AL FINAL DE app.css
+   ========================================================= */
+
+.footer-premium-review {
+  min-width: 0 !important;
+}
+
+.review-slider {
+  display: flex !important;
+  gap: 16px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: x mandatory !important;
+  padding: 4px 4px 10px !important;
+  max-width: 360px !important;
+  cursor: grab !important;
+}
+
+.review-slider:active {
+  cursor: grabbing !important;
+}
+
+.review-slider::-webkit-scrollbar {
+  height: 6px !important;
+}
+
+.review-slider::-webkit-scrollbar-track {
+  background: #f1ece3 !important;
+  border-radius: 999px !important;
+}
+
+.review-slider::-webkit-scrollbar-thumb {
+  background: #b89555 !important;
+  border-radius: 999px !important;
+}
+
+.review-slider .review-card {
+  flex: 0 0 320px !important;
+  scroll-snap-align: start !important;
+  border: 1px solid #e2d5bf !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  background: #fffdf8 !important;
+}
+
+.review-user {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.review-photo {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  flex-shrink: 0 !important;
+}
+
+.review-card strong {
+  color: #b89555 !important;
+  font-size: 14px !important;
+  letter-spacing: 1px !important;
+}
+
+.review-card p {
+  margin: 6px 0 8px !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  color: #111 !important;
+}
+
+.review-card small {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  color: #000 !important;
+}
+
+/* Celular */
+@media (max-width: 768px) {
+  .review-slider {
+    max-width: 100% !important;
+  }
+
+  .review-slider .review-card {
+    flex: 0 0 280px !important;
+  }
+
+  .review-photo {
+    width: 44px !important;
+    height: 44px !important;
+  }
+}
