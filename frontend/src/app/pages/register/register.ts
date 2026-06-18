@@ -132,8 +132,8 @@ export class RegisterComponent implements OnDestroy {
         if (err.error?.message) {
           this.error = err.error.message;
         } else {
-          this.error = 'No se pudo verificar el correo.';
-        }
+  this.error = 'No se pudo verificar el correo. Intenta reenviar el código.';
+}
       }
     });
   }

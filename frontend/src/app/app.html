@@ -77,7 +77,9 @@
             } @else {
               <a routerLink="/login" (click)="closeUserMenu()"> Iniciar sesión </a>
 
-              <a routerLink="/registro" (click)="closeUserMenu()"> Registrarse </a>
+              <a routerLink="/registro" class="register-green-link" (click)="closeUserMenu()">
+                Registrarse
+              </a>
             }
           </div>
         }
@@ -133,7 +135,13 @@
             </button>
           } @else {
             <a routerLink="/login" (click)="closeMobileMenu()">Iniciar sesión</a>
-            <a routerLink="/registro" (click)="closeMobileMenu()">Registrarse</a>
+            <a
+              routerLink="/registro"
+              class="mobile-register-green-link"
+              (click)="closeMobileMenu()"
+            >
+              Registrarse
+            </a>
           }
         </div>
       </div>

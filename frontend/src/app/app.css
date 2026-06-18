@@ -9596,3 +9596,35 @@ header.navbar,
   background: #8f0000 !important;
   color: #fff !important;
 }
+/* REGISTRARSE VERDE - USUARIOS NUEVOS */
+.user-dropdown .register-green-link,
+.mobile-menu-grid .mobile-register-green-link {
+  background: #ecfdf3 !important;
+  color: #166534 !important;
+  border: 1px solid #86efac !important;
+  border-radius: 12px !important;
+  font-weight: 900 !important;
+}
+
+.user-dropdown .register-green-link:hover,
+.mobile-menu-grid .mobile-register-green-link:hover {
+  background: #16a34a !important;
+  color: #ffffff !important;
+}
+
+/* CERRAR SESIÓN ROJO */
+.user-dropdown .user-logout-btn,
+.mobile-menu-grid .mobile-logout-btn {
+  background: #b40000 !important;
+  color: #ffffff !important;
+  border: 1px solid #b40000 !important;
+  border-radius: 12px !important;
+  font-weight: 900 !important;
+  box-shadow: 0 10px 22px rgba(180, 0, 0, 0.22) !important;
+}
+
+.user-dropdown .user-logout-btn:hover,
+.mobile-menu-grid .mobile-logout-btn:hover {
+  background: #8f0000 !important;
+  color: #ffffff !important;
+}
