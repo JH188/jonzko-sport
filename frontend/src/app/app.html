@@ -41,13 +41,29 @@
     </nav>
 
     <div class="nav-actions premium-actions">
-      <div class="user-menu-wrapper">
-        <button class="user-icon-btn" type="button" (click)="toggleUserMenu()" title="Cuenta">
+      <div
+        class="user-menu-wrapper"
+        [class.user-logged]="currentUser()"
+        [class.user-guest]="!currentUser()"
+      >
+        <button
+          class="user-icon-btn"
+          [class.logged-in]="currentUser()"
+          type="button"
+          (click)="toggleUserMenu()"
+          [title]="currentUser() ? 'Sesión iniciada' : 'Cuenta'"
+        >
           <svg viewBox="0 0 24 24" class="nav-svg">
             <path
               d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.866 0-7 2.239-7 5v1h14v-1c0-2.761-3.134-5-7-5z"
             />
           </svg>
+
+          @if (currentUser()) {
+            <span class="user-status-mobile">
+              Hola, {{ currentUser()?.fullName || 'Cliente' }}
+            </span>
+          }
         </button>
 
         @if (userMenuOpen()) {
@@ -82,18 +98,40 @@
     </div>
     @if (mobileMenuOpen()) {
       <div class="mobile-menu-panel">
-        <a href="/#inicio" (click)="closeMobileMenu()">Inicio</a>
-        <a href="/#producto" (click)="closeMobileMenu()">Producto</a>
-        <a href="/#nosotros" (click)="closeMobileMenu()">Nosotros</a>
-        <a href="/#contacto" (click)="closeMobileMenu()">Contacto</a>
-
         @if (currentUser()) {
-          <a routerLink="/mis-pedidos" (click)="closeMobileMenu()">Mis pedidos</a>
-          <button type="button" (click)="logout(); closeMobileMenu()">Cerrar sesión</button>
+          <div class="mobile-user-card">
+            <span class="mobile-user-dot"></span>
+
+            <div>
+              <small>Sesión iniciada</small>
+              <strong>Hola, {{ currentUser()?.fullName || 'Cliente' }}</strong>
+            </div>
+          </div>
         } @else {
-          <a routerLink="/login" (click)="closeMobileMenu()">Iniciar sesión</a>
-          <a routerLink="/registro" (click)="closeMobileMenu()">Registrarse</a>
+          <div class="mobile-user-card mobile-user-card-off">
+            <span class="mobile-user-dot"></span>
+
+            <div>
+              <small>Invitado</small>
+              <strong>Aún no has iniciado sesión</strong>
+            </div>
+          </div>
         }
+
+        <div class="mobile-menu-grid">
+          <a href="/#inicio" (click)="closeMobileMenu()">Inicio</a>
+          <a href="/#producto" (click)="closeMobileMenu()">Producto</a>
+          <a href="/#nosotros" (click)="closeMobileMenu()">Nosotros</a>
+          <a href="/#contacto" (click)="closeMobileMenu()">Contacto</a>
+
+          @if (currentUser()) {
+            <a routerLink="/mis-pedidos" (click)="closeMobileMenu()">Mis pedidos</a>
+            <button type="button" (click)="logout(); closeMobileMenu()">Cerrar sesión</button>
+          } @else {
+            <a routerLink="/login" (click)="closeMobileMenu()">Iniciar sesión</a>
+            <a routerLink="/registro" (click)="closeMobileMenu()">Registrarse</a>
+          }
+        </div>
       </div>
     }
   </header>

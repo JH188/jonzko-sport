@@ -8722,3 +8722,852 @@ header.navbar,
     height: 44px !important;
   }
 }
+/* ===================================== */
+/* JONZKO - LOGIN VISUAL + MENÚ MÓVIL */
+/* ===================================== */
+
+.user-icon-btn {
+  position: relative;
+  overflow: visible;
+}
+
+/* Usuario logueado: rojo */
+.user-icon-btn.logged-in {
+  background: #b40000 !important;
+  border-color: #b40000 !important;
+  color: #fff !important;
+  box-shadow: 0 10px 25px rgba(180, 0, 0, 0.25);
+}
+
+.user-icon-btn.logged-in .nav-svg {
+  fill: #fff !important;
+}
+
+/* Puntito verde de activo */
+.user-icon-btn.logged-in::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 9px;
+  height: 9px;
+  background: #00c853;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+.user-status-mobile {
+  display: none;
+}
+
+/* Menú usuario PC */
+.user-dropdown {
+  z-index: 99999 !important;
+}
+
+.user-dropdown-name {
+  max-width: 220px;
+  line-height: 1.3;
+}
+
+/* ===================================== */
+/* MÓVIL */
+/* ===================================== */
+
+@media (max-width: 768px) {
+  .premium-navbar {
+    position: relative !important;
+    min-height: 72px !important;
+    padding: 10px 14px !important;
+    display: grid !important;
+    grid-template-columns: 46px 1fr auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .mobile-menu-btn {
+    width: 44px !important;
+    height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 30px !important;
+    line-height: 1 !important;
+  }
+
+  .brand {
+    justify-self: center !important;
+  }
+
+  .brand img {
+    max-height: 50px !important;
+    width: auto !important;
+  }
+
+  .premium-nav {
+    display: none !important;
+  }
+
+  .premium-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    justify-content: flex-end !important;
+  }
+
+  .user-menu-wrapper {
+    display: flex !important;
+  }
+
+  .user-icon-btn {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+  }
+
+  .user-icon-btn .nav-svg {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .cart-icon-btn {
+    height: 42px !important;
+    min-width: 68px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+
+  .cart-icon-btn .nav-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .cart-icon-btn span {
+    font-size: 13px !important;
+    font-weight: 900 !important;
+  }
+
+  .premium-orders-btn {
+    display: none !important;
+  }
+
+  /* Dropdown del icono usuario en móvil */
+  .user-dropdown {
+    position: absolute !important;
+    top: 58px !important;
+    right: 0 !important;
+    width: 230px !important;
+    padding: 14px !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18) !important;
+    border: 1px solid #eee !important;
+  }
+
+  .user-dropdown-name {
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .user-dropdown a,
+  .user-dropdown button {
+    width: 100% !important;
+    min-height: 40px !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+  }
+
+  /* Menú hamburguesa bonito */
+  .mobile-menu-panel {
+    position: absolute !important;
+    top: 100% !important;
+    left: 10px !important;
+    right: 10px !important;
+    z-index: 9999 !important;
+    background: #fff !important;
+    padding: 14px !important;
+    border-radius: 0 0 22px 22px !important;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16) !important;
+    border-top: 1px solid #e6e6e6 !important;
+  }
+
+  .mobile-user-card {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 12px !important;
+    margin-bottom: 12px !important;
+    border-radius: 16px !important;
+    background: #fff3f3 !important;
+    border: 1px solid rgba(180, 0, 0, 0.18) !important;
+  }
+
+  .mobile-user-card-off {
+    background: #f6f6f6 !important;
+    border-color: #e5e5e5 !important;
+  }
+
+  .mobile-user-dot {
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important;
+    background: #00c853 !important;
+    flex: 0 0 auto !important;
+  }
+
+  .mobile-user-card-off .mobile-user-dot {
+    background: #bdbdbd !important;
+  }
+
+  .mobile-user-card small {
+    display: block !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    color: #777 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+  }
+
+  .mobile-user-card strong {
+    display: block !important;
+    max-width: 250px !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    color: #111 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .mobile-menu-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .mobile-menu-grid a,
+  .mobile-menu-grid button {
+    width: 100% !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 8px !important;
+    margin: 0 !important;
+    border: 1px solid #ededed !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    color: #111 !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    letter-spacing: 0.3px !important;
+    font-family: inherit !important;
+  }
+
+  .mobile-menu-grid a:hover,
+  .mobile-menu-grid button:hover {
+    background: #111 !important;
+    color: #fff !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .premium-navbar {
+    padding: 9px 12px !important;
+    grid-template-columns: 42px 1fr auto !important;
+  }
+
+  .mobile-menu-btn {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 28px !important;
+  }
+
+  .brand img {
+    max-height: 46px !important;
+  }
+
+  .user-icon-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+  }
+
+  .cart-icon-btn {
+    height: 40px !important;
+    min-width: 64px !important;
+    padding: 0 10px !important;
+  }
+
+  .mobile-menu-panel {
+    left: 8px !important;
+    right: 8px !important;
+    padding: 12px !important;
+  }
+
+  .mobile-menu-grid {
+    gap: 8px !important;
+  }
+
+  .mobile-menu-grid a,
+  .mobile-menu-grid button {
+    font-size: 11.5px !important;
+    min-height: 42px !important;
+  }
+}
+/* ===================================== */
+/* JONZKO - NAVBAR MÓVIL BONITO */
+/* ===================================== */
+
+.user-icon-btn {
+  position: relative;
+  overflow: visible;
+}
+
+/* Cuando el usuario inició sesión */
+.user-icon-btn.logged-in {
+  background: #b40000 !important;
+  border-color: #b40000 !important;
+  color: #fff !important;
+  box-shadow: 0 10px 25px rgba(180, 0, 0, 0.25);
+}
+
+.user-icon-btn.logged-in .nav-svg {
+  fill: #fff !important;
+}
+
+.user-icon-btn.logged-in::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 9px;
+  height: 9px;
+  background: #00c853;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .premium-navbar {
+    position: relative !important;
+    min-height: 72px !important;
+    padding: 10px 14px !important;
+    display: grid !important;
+    grid-template-columns: 46px 1fr auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .mobile-menu-btn {
+    width: 44px !important;
+    height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 30px !important;
+  }
+
+  .brand {
+    justify-self: center !important;
+  }
+
+  .brand img {
+    max-height: 50px !important;
+    width: auto !important;
+  }
+
+  .premium-nav {
+    display: none !important;
+  }
+
+  .premium-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    justify-content: flex-end !important;
+  }
+
+  /* En móvil, si NO está logueado, ocultamos icono usuario */
+  .user-menu-wrapper.user-guest {
+    display: none !important;
+  }
+
+  /* En móvil, si está logueado, sí aparece el icono rojo */
+  .user-menu-wrapper.user-logged {
+    display: flex !important;
+  }
+
+  .user-icon-btn {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+  }
+
+  .user-icon-btn .nav-svg {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .cart-icon-btn {
+    height: 42px !important;
+    min-width: 68px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+
+  .cart-icon-btn .nav-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .cart-icon-btn span {
+    font-size: 13px !important;
+    font-weight: 900 !important;
+  }
+
+  /* En móvil no mostramos el botón grande MIS PEDIDOS / INGRESAR */
+  .premium-orders-btn {
+    display: none !important;
+  }
+
+  .user-dropdown {
+    position: absolute !important;
+    top: 58px !important;
+    right: 0 !important;
+    width: 230px !important;
+    padding: 14px !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18) !important;
+    border: 1px solid #eee !important;
+    z-index: 99999 !important;
+  }
+
+  .user-dropdown-name {
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    margin-bottom: 10px !important;
+    line-height: 1.3 !important;
+  }
+
+  .user-dropdown button {
+    width: 100% !important;
+    min-height: 40px !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+  }
+
+  .mobile-menu-panel {
+    position: absolute !important;
+    top: 100% !important;
+    left: 10px !important;
+    right: 10px !important;
+    z-index: 9999 !important;
+    background: #fff !important;
+    padding: 14px !important;
+    border-radius: 0 0 22px 22px !important;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16) !important;
+    border-top: 1px solid #e6e6e6 !important;
+  }
+
+  .mobile-user-card {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 12px !important;
+    margin-bottom: 12px !important;
+    border-radius: 16px !important;
+    background: #fff3f3 !important;
+    border: 1px solid rgba(180, 0, 0, 0.18) !important;
+  }
+
+  .mobile-user-dot {
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important;
+    background: #00c853 !important;
+    flex: 0 0 auto !important;
+  }
+
+  .mobile-user-card small {
+    display: block !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    color: #777 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+  }
+
+  .mobile-user-card strong {
+    display: block !important;
+    max-width: 250px !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    color: #111 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .mobile-menu-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .mobile-menu-grid a,
+  .mobile-menu-grid button {
+    width: 100% !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 8px !important;
+    margin: 0 !important;
+    border: 1px solid #ededed !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    color: #111 !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    letter-spacing: 0.3px !important;
+    font-family: inherit !important;
+  }
+
+  .mobile-menu-grid a:hover,
+  .mobile-menu-grid button:hover {
+    background: #111 !important;
+    color: #fff !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .premium-navbar {
+    padding: 9px 12px !important;
+    grid-template-columns: 42px 1fr auto !important;
+  }
+
+  .mobile-menu-btn {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 28px !important;
+  }
+
+  .brand img {
+    max-height: 46px !important;
+  }
+
+  .user-icon-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+  }
+
+  .cart-icon-btn {
+    height: 40px !important;
+    min-width: 64px !important;
+    padding: 0 10px !important;
+  }
+
+  .mobile-menu-panel {
+    left: 8px !important;
+    right: 8px !important;
+    padding: 12px !important;
+  }
+
+  .mobile-menu-grid {
+    gap: 8px !important;
+  }
+
+  .mobile-menu-grid a,
+  .mobile-menu-grid button {
+    font-size: 11.5px !important;
+    min-height: 42px !important;
+  }
+}
+/* ===================================== */
+/* JONZKO - NAVBAR MÓVIL LOGIN BONITO */
+/* ===================================== */
+
+.user-icon-btn {
+  position: relative;
+  overflow: visible;
+}
+
+.user-icon-btn.logged-in {
+  background: #b40000 !important;
+  border-color: #b40000 !important;
+  color: #fff !important;
+  box-shadow: 0 10px 25px rgba(180, 0, 0, 0.25);
+}
+
+.user-icon-btn.logged-in .nav-svg {
+  fill: #fff !important;
+}
+
+.user-icon-btn.logged-in::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 9px;
+  height: 9px;
+  background: #00c853;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .premium-navbar {
+    position: relative !important;
+    min-height: 72px !important;
+    padding: 10px 14px !important;
+    display: grid !important;
+    grid-template-columns: 46px 1fr auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .mobile-menu-btn {
+    width: 44px !important;
+    height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 30px !important;
+  }
+
+  .brand {
+    justify-self: center !important;
+  }
+
+  .brand img {
+    max-height: 50px !important;
+    width: auto !important;
+  }
+
+  .premium-nav {
+    display: none !important;
+  }
+
+  .premium-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    justify-content: flex-end !important;
+  }
+
+  .user-menu-wrapper.user-guest {
+    display: none !important;
+  }
+
+  .user-menu-wrapper.user-logged {
+    display: flex !important;
+  }
+
+  .user-icon-btn {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+  }
+
+  .user-icon-btn .nav-svg {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .cart-icon-btn {
+    height: 42px !important;
+    min-width: 68px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+
+  .cart-icon-btn .nav-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .cart-icon-btn span {
+    font-size: 13px !important;
+    font-weight: 900 !important;
+  }
+
+  .premium-orders-btn {
+    display: none !important;
+  }
+
+  .mobile-menu-panel {
+    position: absolute !important;
+    top: 100% !important;
+    left: 10px !important;
+    right: 10px !important;
+    z-index: 9999 !important;
+    background: #fff !important;
+    padding: 14px !important;
+    border-radius: 0 0 22px 22px !important;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16) !important;
+    border-top: 1px solid #e6e6e6 !important;
+  }
+
+  .mobile-user-card {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 12px !important;
+    margin-bottom: 12px !important;
+    border-radius: 16px !important;
+    background: #fff3f3 !important;
+    border: 1px solid rgba(180, 0, 0, 0.18) !important;
+  }
+
+  .mobile-user-dot {
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important;
+    background: #00c853 !important;
+    flex: 0 0 auto !important;
+  }
+
+  .mobile-user-card small {
+    display: block !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    color: #777 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+  }
+
+  .mobile-user-card strong {
+    display: block !important;
+    max-width: 250px !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    color: #111 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .mobile-menu-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .mobile-menu-grid a,
+  .mobile-menu-grid button {
+    width: 100% !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 8px !important;
+    margin: 0 !important;
+    border: 1px solid #ededed !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    color: #111 !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    letter-spacing: 0.3px !important;
+    font-family: inherit !important;
+  }
+
+  .mobile-menu-grid a:hover,
+  .mobile-menu-grid button:hover {
+    background: #111 !important;
+    color: #fff !important;
+  }
+
+  .mobile-orders-link {
+    background: #111 !important;
+    color: #fff !important;
+    border-color: #111 !important;
+  }
+
+  .mobile-logout-btn {
+    background: #b40000 !important;
+    color: #fff !important;
+    border-color: #b40000 !important;
+    box-shadow: 0 10px 22px rgba(180, 0, 0, 0.22) !important;
+  }
+
+  .mobile-logout-btn:hover {
+    background: #8f0000 !important;
+    color: #fff !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .premium-navbar {
+    padding: 9px 12px !important;
+    grid-template-columns: 42px 1fr auto !important;
+  }
+
+  .mobile-menu-btn {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 28px !important;
+  }
+
+  .brand img {
+    max-height: 46px !important;
+  }
+
+  .user-icon-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+  }
+
+  .cart-icon-btn {
+    height: 40px !important;
+    min-width: 64px !important;
+    padding: 0 10px !important;
+  }
+
+  .mobile-menu-panel {
+    left: 8px !important;
+    right: 8px !important;
+    padding: 12px !important;
+  }
+
+  .mobile-menu-grid {
+    gap: 8px !important;
+  }
+
+  .mobile-menu-grid a,
+  .mobile-menu-grid button {
+    font-size: 11.5px !important;
+    min-height: 42px !important;
+  }
+}
