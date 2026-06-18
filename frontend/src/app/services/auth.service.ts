@@ -13,9 +13,14 @@ export interface LoginRequest {
   email: string;
   password: string;
 }
+
 export interface VerifyEmailRequest {
   email: string;
   code: string;
+}
+
+export interface ResendVerificationCodeRequest {
+  email: string;
 }
 
 export interface AuthMessageResponse {
@@ -39,9 +44,8 @@ export interface AuthUser {
   email: string;
   phone: string;
   active: boolean;
+  emailVerified?: boolean;
   message?: string;
-
-  // JWT del usuario normal
   token?: string;
 }
 
@@ -50,7 +54,6 @@ export interface AuthUser {
 })
 export class AuthService {
 
-  private apiUrl = 'https://jonzko-sport-production.up.railway.app/api/users';
   private authApiUrl = 'https://jonzko-sport-production.up.railway.app/api/auth';
 
   private storageKey = 'jonzko_user';
@@ -59,18 +62,23 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   register(data: RegisterRequest): Observable<AuthUser> {
-    return this.http.post<AuthUser>(`${this.apiUrl}/register`, data);
+    return this.http.post<AuthUser>(`${this.authApiUrl}/register`, data);
   }
 
   login(data: LoginRequest): Observable<AuthUser> {
-    return this.http.post<AuthUser>(`${this.apiUrl}/login`, data);
+    return this.http.post<AuthUser>(`${this.authApiUrl}/login`, data);
   }
+
   verifyEmail(data: VerifyEmailRequest): Observable<AuthUser> {
-  return this.http.post<AuthUser>(`${this.apiUrl}/verify-email`, data);
-}
-resendVerificationCode(data: VerifyEmailRequest): Observable<AuthMessageResponse> {
-  return this.http.post<AuthMessageResponse>(`${this.apiUrl}/resend-verification-code`, data);
-}
+    return this.http.post<AuthUser>(`${this.authApiUrl}/verify-email`, data);
+  }
+
+  resendVerificationCode(data: ResendVerificationCodeRequest): Observable<AuthMessageResponse> {
+    return this.http.post<AuthMessageResponse>(
+      `${this.authApiUrl}/resend-verification-code`,
+      data
+    );
+  }
 
   forgotPassword(data: ForgotPasswordRequest): Observable<AuthMessageResponse> {
     return this.http.post<AuthMessageResponse>(`${this.authApiUrl}/forgot-password`, data);

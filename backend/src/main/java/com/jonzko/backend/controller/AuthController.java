@@ -61,9 +61,34 @@ public class AuthController {
         String phoneNormalizado = user.getPhone().trim();
         String fullNameNormalizado = user.getFullName().trim();
 
-        if (userRepository.existsByEmail(emailNormalizado)) {
-            return ResponseEntity.badRequest().body(Map.of(
-                    "email", "Este correo ya está registrado"
+        Optional<User> userExistenteOptional = userRepository.findByEmail(emailNormalizado);
+
+        if (userExistenteOptional.isPresent()) {
+            User userExistente = userExistenteOptional.get();
+
+            if (Boolean.TRUE.equals(userExistente.getEmailVerified())) {
+                return ResponseEntity.badRequest().body(Map.of(
+                        "message", "Este correo ya está registrado. Inicia sesión para continuar."
+                ));
+            }
+
+            userExistente.setFullName(fullNameNormalizado);
+            userExistente.setPhone(phoneNormalizado);
+            userExistente.setPassword(passwordEncoder.encode(user.getPassword()));
+            userExistente.setActive(true);
+            userExistente.setEmailVerified(false);
+
+            enviarCodigoVerificacion(userExistente);
+
+            return ResponseEntity.ok(Map.of(
+                    "id", userExistente.getId(),
+                    "fullName", userExistente.getFullName(),
+                    "email", userExistente.getEmail(),
+                    "phone", userExistente.getPhone(),
+                    "active", userExistente.getActive(),
+                    "emailVerified", userExistente.getEmailVerified(),
+                    "requiresVerification", true,
+                    "message", "Tu cuenta ya existe, pero falta verificar tu correo. Te enviamos un nuevo código."
             ));
         }
 
@@ -72,18 +97,145 @@ public class AuthController {
         user.setPhone(phoneNormalizado);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
+        user.setEmailVerified(false);
 
         User savedUser = userRepository.save(user);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", savedUser.getId());
-        response.put("fullName", savedUser.getFullName());
-        response.put("email", savedUser.getEmail());
-        response.put("phone", savedUser.getPhone());
-        response.put("active", savedUser.getActive());
-        response.put("message", "Usuario registrado correctamente");
+        enviarCodigoVerificacion(savedUser);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Map.of(
+                "id", savedUser.getId(),
+                "fullName", savedUser.getFullName(),
+                "email", savedUser.getEmail(),
+                "phone", savedUser.getPhone(),
+                "active", savedUser.getActive(),
+                "emailVerified", savedUser.getEmailVerified(),
+                "requiresVerification", true,
+                "message", "Cuenta creada. Te enviamos un código a tu correo para activar tu cuenta."
+        ));
+    }
+
+    @PostMapping("/verify-email")
+    public ResponseEntity<?> verifyEmail(@RequestBody Map<String, String> request) {
+
+        String emailNormalizado = request.getOrDefault("email", "").trim().toLowerCase();
+        String code = request.getOrDefault("code", "").trim();
+
+        if (emailNormalizado.isEmpty() || code.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Ingresa el correo y el código de verificación."
+            ));
+        }
+
+        if (code.length() != 6) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "El código debe tener 6 dígitos."
+            ));
+        }
+
+        Optional<User> userOptional = userRepository.findByEmail(emailNormalizado);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Código inválido o expirado."
+            ));
+        }
+
+        User user = userOptional.get();
+
+        if (Boolean.TRUE.equals(user.getEmailVerified())) {
+            return ResponseEntity.ok(Map.of(
+                    "id", user.getId(),
+                    "fullName", user.getFullName(),
+                    "email", user.getEmail(),
+                    "phone", user.getPhone(),
+                    "active", user.getActive(),
+                    "emailVerified", user.getEmailVerified(),
+                    "message", "Tu cuenta ya estaba verificada."
+            ));
+        }
+
+        if (user.getVerificationCodeHash() == null || user.getVerificationCodeExpiresAt() == null) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Código inválido o expirado."
+            ));
+        }
+
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Lima"));
+
+        if (user.getVerificationCodeExpiresAt().isBefore(now)) {
+            user.setVerificationCodeHash(null);
+            user.setVerificationCodeExpiresAt(null);
+            userRepository.save(user);
+
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "El código expiró. Solicita un nuevo código."
+            ));
+        }
+
+        boolean codigoCorrecto = passwordEncoder.matches(code, user.getVerificationCodeHash());
+
+        if (!codigoCorrecto) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Código incorrecto."
+            ));
+        }
+
+        user.setEmailVerified(true);
+        user.setVerificationCodeHash(null);
+        user.setVerificationCodeExpiresAt(null);
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok(Map.of(
+                "id", user.getId(),
+                "fullName", user.getFullName(),
+                "email", user.getEmail(),
+                "phone", user.getPhone(),
+                "active", user.getActive(),
+                "emailVerified", user.getEmailVerified(),
+                "message", "Cuenta verificada correctamente."
+        ));
+    }
+
+    @PostMapping("/resend-verification-code")
+    public ResponseEntity<?> resendVerificationCode(@RequestBody Map<String, String> request) {
+
+        String emailNormalizado = request.getOrDefault("email", "").trim().toLowerCase();
+
+        if (emailNormalizado.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Ingresa tu correo para reenviar el código."
+            ));
+        }
+
+        Optional<User> userOptional = userRepository.findByEmail(emailNormalizado);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "No existe una cuenta con este correo."
+            ));
+        }
+
+        User user = userOptional.get();
+
+        if (Boolean.TRUE.equals(user.getEmailVerified())) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Este correo ya está verificado. Inicia sesión."
+            ));
+        }
+
+        if (user.getActive() != null && !user.getActive()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "La cuenta está desactivada."
+            ));
+        }
+
+        enviarCodigoVerificacion(user);
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Nuevo código enviado. Revisa tu correo."
+        ));
     }
 
     @PostMapping("/login")
@@ -130,12 +282,21 @@ public class AuthController {
             ));
         }
 
+        if (!Boolean.TRUE.equals(user.getEmailVerified())) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "code", "EMAIL_NOT_VERIFIED",
+                    "email", user.getEmail(),
+                    "message", "Tu correo aún no está verificado. Solicita un nuevo código para activar tu cuenta."
+            ));
+        }
+
         Map<String, Object> response = new HashMap<>();
         response.put("id", user.getId());
         response.put("fullName", user.getFullName());
         response.put("email", user.getEmail());
         response.put("phone", user.getPhone());
         response.put("active", user.getActive());
+        response.put("emailVerified", user.getEmailVerified());
         response.put("message", "Login correcto");
 
         return ResponseEntity.ok(response);
@@ -272,6 +433,23 @@ public class AuthController {
     @GetMapping("/users")
     public ResponseEntity<?> listUsers() {
         return ResponseEntity.ok(userRepository.findAll());
+    }
+
+    private void enviarCodigoVerificacion(User user) {
+        String code = generateSixDigitCode();
+
+        user.setVerificationCodeHash(passwordEncoder.encode(code));
+        user.setVerificationCodeExpiresAt(
+                LocalDateTime.now(ZoneId.of("America/Lima")).plusMinutes(10)
+        );
+
+        userRepository.save(user);
+
+        brevoEmailService.sendEmailVerificationCode(
+        user.getEmail(),
+        user.getFullName(),
+        code
+);
     }
 
     private String generateSixDigitCode() {

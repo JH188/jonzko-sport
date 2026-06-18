@@ -9571,3 +9571,13 @@ header.navbar,
     min-height: 42px !important;
   }
 }
+.mobile-logout-btn {
+  background: #b40000 !important;
+  color: #fff !important;
+  border-color: #b40000 !important;
+}
+
+.mobile-logout-btn:hover {
+  background: #8f0000 !important;
+  color: #fff !important;
+}

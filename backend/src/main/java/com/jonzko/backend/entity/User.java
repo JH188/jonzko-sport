@@ -65,6 +65,16 @@ public class User {
     @Column(name = "active")
     private Boolean active = true;
 
+    @Column(name = "email_verified", nullable = false)
+    private Boolean emailVerified = false;
+
+    @JsonIgnore
+    @Column(name = "verification_code_hash", length = 255)
+    private String verificationCodeHash;
+
+    @Column(name = "verification_code_expires_at")
+    private LocalDateTime verificationCodeExpiresAt;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -79,6 +89,10 @@ public class User {
 
         if (this.active == null) {
             this.active = true;
+        }
+
+        if (this.emailVerified == null) {
+            this.emailVerified = false;
         }
 
         if (this.role == null || this.role.isBlank()) {

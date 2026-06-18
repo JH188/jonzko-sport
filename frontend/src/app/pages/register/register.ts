@@ -69,9 +69,14 @@ export class RegisterComponent implements OnDestroy {
     this.authService.register(data).subscribe({
       next: (resp: any) => {
         this.loading = false;
+
         this.email = emailNormalizado;
         this.step = 'verify';
-this.success = 'Código enviado. Revisa tu correo e ingresa el código de verificación.';        this.startResendCountdown();
+
+        this.success =
+          resp?.message || 'Te enviamos un código a tu correo para activar tu cuenta.';
+
+        this.startResendCountdown();
       },
       error: (err) => {
         this.loading = false;
@@ -113,8 +118,9 @@ this.success = 'Código enviado. Revisa tu correo e ingresa el código de verifi
     }).subscribe({
       next: (user: any) => {
         this.loading = false;
+
         this.authService.saveUser(user);
-        this.success = 'Cuenta verificada correctamente.';
+        this.success = user?.message || 'Cuenta verificada correctamente.';
 
         setTimeout(() => {
           this.router.navigate(['/']);
@@ -150,12 +156,11 @@ this.success = 'Código enviado. Revisa tu correo e ingresa el código de verifi
     this.loading = true;
 
     this.authService.resendVerificationCode({
-      email: emailNormalizado,
-      code: '000000'
+      email: emailNormalizado
     }).subscribe({
-      next: (resp) => {
+      next: (resp: any) => {
         this.loading = false;
-        this.success = resp.message || 'Nuevo código enviado. Revisa tu correo.';
+        this.success = resp?.message || 'Nuevo código enviado. Revisa tu correo.';
         this.startResendCountdown();
       },
       error: (err) => {
