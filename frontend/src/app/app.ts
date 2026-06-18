@@ -198,6 +198,7 @@ isStandalonePageRoute(): boolean {
     this.currentRoute().startsWith('/producto') ||
     this.currentRoute().startsWith('/login') ||
     this.currentRoute().startsWith('/registro') ||
+    this.currentRoute().startsWith('/reset-password') ||
     this.currentRoute().startsWith('/checkout') ||
     this.currentRoute().startsWith('/mis-pedidos')
   );
