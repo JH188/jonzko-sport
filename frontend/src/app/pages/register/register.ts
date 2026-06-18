@@ -71,8 +71,7 @@ export class RegisterComponent implements OnDestroy {
         this.loading = false;
         this.email = emailNormalizado;
         this.step = 'verify';
-        this.success = resp.message || 'Cuenta creada. Revisa tu correo e ingresa el código.';
-        this.startResendCountdown();
+this.success = 'Código enviado. Revisa tu correo e ingresa el código de verificación.';        this.startResendCountdown();
       },
       error: (err) => {
         this.loading = false;
@@ -115,7 +114,7 @@ export class RegisterComponent implements OnDestroy {
       next: (user: any) => {
         this.loading = false;
         this.authService.saveUser(user);
-        this.success = 'Correo verificado correctamente.';
+        this.success = 'Cuenta verificada correctamente.';
 
         setTimeout(() => {
           this.router.navigate(['/']);

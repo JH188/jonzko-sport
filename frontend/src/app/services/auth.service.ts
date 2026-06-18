@@ -33,10 +33,6 @@ export interface ResetPasswordRequest {
   confirmPassword: string;
 }
 
-export interface AuthMessageResponse {
-  message: string;
-}
-
 export interface AuthUser {
   id: number;
   fullName: string;

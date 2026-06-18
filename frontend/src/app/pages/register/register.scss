@@ -137,3 +137,28 @@ input[readonly] {
   opacity: 0.65;
   cursor: not-allowed;
 }
+.success p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.resend-count {
+  margin-top: 6px !important;
+  font-weight: 800;
+}
+
+.resend-inline-btn {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #137333;
+  color: #ffffff;
+  border: none;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.resend-inline-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

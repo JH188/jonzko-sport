@@ -53,22 +53,27 @@
       />
 
       <div class="error" *ngIf="error">{{ error }}</div>
-      <div class="success" *ngIf="success">{{ success }}</div>
+      <div class="success" *ngIf="success">
+        <p>{{ success }}</p>
+
+        <p *ngIf="resendSeconds > 0" class="resend-count">
+          Podrás reenviar código en {{ resendSeconds }}s
+        </p>
+
+        <button
+          *ngIf="resendSeconds === 0"
+          type="button"
+          class="resend-inline-btn"
+          (click)="resendCode()"
+          [disabled]="loading"
+        >
+          Reenviar código
+        </button>
+      </div>
 
       <button type="submit" [disabled]="loading">
         {{ loading ? 'Verificando...' : 'Verificar cuenta' }}
       </button>
-      <button
-        type="button"
-        class="resend-btn"
-        (click)="resendCode()"
-        [disabled]="loading || resendSeconds > 0"
-      >
-        <span *ngIf="resendSeconds > 0"> Reenviar código en {{ resendSeconds }}s </span>
-
-        <span *ngIf="resendSeconds === 0"> Reenviar código </span>
-      </button>
-
       <button type="button" class="secondary-btn" (click)="backToRegister()" [disabled]="loading">
         Cambiar datos
       </button>
