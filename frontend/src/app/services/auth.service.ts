@@ -72,6 +72,9 @@ export class AuthService {
   verifyEmail(data: VerifyEmailRequest): Observable<AuthUser> {
   return this.http.post<AuthUser>(`${this.apiUrl}/verify-email`, data);
 }
+resendVerificationCode(data: VerifyEmailRequest): Observable<AuthMessageResponse> {
+  return this.http.post<AuthMessageResponse>(`${this.apiUrl}/resend-verification-code`, data);
+}
 
   forgotPassword(data: ForgotPasswordRequest): Observable<AuthMessageResponse> {
     return this.http.post<AuthMessageResponse>(`${this.authApiUrl}/forgot-password`, data);

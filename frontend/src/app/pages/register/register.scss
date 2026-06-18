@@ -126,3 +126,14 @@ input[readonly] {
   background: #f2f2f2;
   color: #555;
 }
+.resend-btn {
+  margin-top: 0;
+  background: #b58b4a;
+  color: #fff;
+  border: none;
+}
+
+.resend-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

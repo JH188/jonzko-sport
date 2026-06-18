@@ -3,30 +3,16 @@
     <h1 *ngIf="step === 'register'">Crear cuenta</h1>
     <h1 *ngIf="step === 'verify'">Verificar correo</h1>
 
-    <p class="subtitle" *ngIf="step === 'register'">
-      Regístrate para comprar en JONZKO SPORT
-    </p>
+    <p class="subtitle" *ngIf="step === 'register'">Regístrate para comprar en JONZKO SPORT</p>
 
-    <p class="subtitle" *ngIf="step === 'verify'">
-      Ingresa el código que enviamos a tu correo.
-    </p>
+    <p class="subtitle" *ngIf="step === 'verify'">Ingresa el código que enviamos a tu correo.</p>
 
     <form *ngIf="step === 'register'" (ngSubmit)="register()">
       <label>Nombre completo</label>
-      <input
-        type="text"
-        name="fullName"
-        [(ngModel)]="fullName"
-        placeholder="Nombre completo"
-      />
+      <input type="text" name="fullName" [(ngModel)]="fullName" placeholder="Nombre completo" />
 
       <label>Correo electrónico</label>
-      <input
-        type="email"
-        name="email"
-        [(ngModel)]="email"
-        placeholder="correo@gmail.com"
-      />
+      <input type="email" name="email" [(ngModel)]="email" placeholder="correo@gmail.com" />
 
       <label>Celular</label>
       <input
@@ -55,12 +41,7 @@
 
     <form *ngIf="step === 'verify'" (ngSubmit)="verifyEmail()">
       <label>Correo electrónico</label>
-      <input
-        type="email"
-        name="email"
-        [(ngModel)]="email"
-        readonly
-      />
+      <input type="email" name="email" [(ngModel)]="email" readonly />
 
       <label>Código de verificación</label>
       <input
@@ -76,6 +57,16 @@
 
       <button type="submit" [disabled]="loading">
         {{ loading ? 'Verificando...' : 'Verificar cuenta' }}
+      </button>
+      <button
+        type="button"
+        class="resend-btn"
+        (click)="resendCode()"
+        [disabled]="loading || resendSeconds > 0"
+      >
+        <span *ngIf="resendSeconds > 0"> Reenviar código en {{ resendSeconds }}s </span>
+
+        <span *ngIf="resendSeconds === 0"> Reenviar código </span>
       </button>
 
       <button type="button" class="secondary-btn" (click)="backToRegister()" [disabled]="loading">

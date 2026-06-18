@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
 
   step: 'register' | 'verify' = 'register';
 
@@ -25,6 +25,9 @@ export class RegisterComponent {
   loading = false;
   error = '';
   success = '';
+
+  resendSeconds = 0;
+  private resendInterval: any;
 
   constructor(
     private authService: AuthService,
@@ -69,6 +72,7 @@ export class RegisterComponent {
         this.email = emailNormalizado;
         this.step = 'verify';
         this.success = resp.message || 'Cuenta creada. Revisa tu correo e ingresa el código.';
+        this.startResendCountdown();
       },
       error: (err) => {
         this.loading = false;
@@ -129,10 +133,69 @@ export class RegisterComponent {
     });
   }
 
+  resendCode(): void {
+    this.error = '';
+    this.success = '';
+
+    if (this.resendSeconds > 0 || this.loading) {
+      return;
+    }
+
+    const emailNormalizado = this.email.trim().toLowerCase();
+
+    if (!emailNormalizado) {
+      this.error = 'No se encontró el correo.';
+      return;
+    }
+
+    this.loading = true;
+
+    this.authService.resendVerificationCode({
+      email: emailNormalizado,
+      code: '000000'
+    }).subscribe({
+      next: (resp) => {
+        this.loading = false;
+        this.success = resp.message || 'Nuevo código enviado. Revisa tu correo.';
+        this.startResendCountdown();
+      },
+      error: (err) => {
+        this.loading = false;
+
+        if (err.error?.message) {
+          this.error = err.error.message;
+        } else {
+          this.error = 'No se pudo reenviar el código.';
+        }
+      }
+    });
+  }
+
+  startResendCountdown(): void {
+    clearInterval(this.resendInterval);
+
+    this.resendSeconds = 30;
+
+    this.resendInterval = setInterval(() => {
+      this.resendSeconds--;
+
+      if (this.resendSeconds <= 0) {
+        clearInterval(this.resendInterval);
+        this.resendSeconds = 0;
+      }
+    }, 1000);
+  }
+
   backToRegister(): void {
     this.step = 'register';
     this.code = '';
     this.error = '';
     this.success = '';
+    clearInterval(this.resendInterval);
+    this.resendSeconds = 0;
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.resendInterval);
   }
 }

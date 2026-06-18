@@ -206,6 +206,54 @@ public class UserController {
                 "message", "Correo verificado correctamente"
         ));
     }
+    @PostMapping("/resend-verification-code")
+public ResponseEntity<?> resendVerificationCode(@RequestBody VerifyEmailRequest request) {
+
+    if (request.getEmail() == null || request.getEmail().isBlank()) {
+        return ResponseEntity.badRequest().body(Map.of("message", "El correo es obligatorio"));
+    }
+
+    String email = request.getEmail().trim().toLowerCase();
+
+    Optional<User> userOptional = userRepository.findByEmail(email);
+
+    if (userOptional.isEmpty()) {
+        return ResponseEntity.badRequest().body(Map.of("message", "Correo no registrado"));
+    }
+
+    User user = userOptional.get();
+
+    if (Boolean.TRUE.equals(user.getActive())) {
+        return ResponseEntity.badRequest().body(Map.of("message", "Esta cuenta ya está verificada"));
+    }
+
+    List<EmailVerificationCode> codigosAnteriores =
+            emailVerificationCodeRepository.findByEmailAndUsedFalse(email);
+
+    codigosAnteriores.forEach(codigo -> codigo.setUsed(true));
+    emailVerificationCodeRepository.saveAll(codigosAnteriores);
+
+    String code = generateSixDigitCode();
+
+    EmailVerificationCode verificationCode = new EmailVerificationCode();
+    verificationCode.setUser(user);
+    verificationCode.setEmail(email);
+    verificationCode.setCodeHash(passwordEncoder.encode(code));
+    verificationCode.setExpiresAt(LocalDateTime.now(ZoneId.of("America/Lima")).plusMinutes(10));
+    verificationCode.setUsed(false);
+
+    emailVerificationCodeRepository.save(verificationCode);
+
+    brevoEmailService.sendEmailVerificationCode(
+            user.getEmail(),
+            user.getFullName(),
+            code
+    );
+
+    return ResponseEntity.ok(Map.of(
+            "message", "Nuevo código enviado. Revisa tu correo."
+    ));
+}
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
