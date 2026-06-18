@@ -1,6 +1,10 @@
 package com.jonzko.backend.controller;
 
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,8 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jonzko.backend.dto.ForgotPasswordRequest;
+import com.jonzko.backend.dto.ResetPasswordRequest;
+import com.jonzko.backend.entity.PasswordResetCode;
 import com.jonzko.backend.entity.User;
+import com.jonzko.backend.repository.PasswordResetCodeRepository;
 import com.jonzko.backend.repository.UserRepository;
+import com.jonzko.backend.service.BrevoEmailService;
 
 import jakarta.validation.Valid;
 
@@ -25,23 +34,27 @@ import jakarta.validation.Valid;
 public class AuthController {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordResetCodeRepository passwordResetCodeRepository;
+    private final BrevoEmailService brevoEmailService;
 
-    public AuthController(UserRepository userRepository) {
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final SecureRandom secureRandom = new SecureRandom();
+
+    public AuthController(
+            UserRepository userRepository,
+            PasswordResetCodeRepository passwordResetCodeRepository,
+            BrevoEmailService brevoEmailService
+    ) {
         this.userRepository = userRepository;
+        this.passwordResetCodeRepository = passwordResetCodeRepository;
+        this.brevoEmailService = brevoEmailService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody User user, BindingResult result) {
 
         if (result.hasErrors()) {
-            Map<String, String> errores = new HashMap<>();
-
-            result.getFieldErrors().forEach(error -> {
-                errores.put(error.getField(), error.getDefaultMessage());
-            });
-
-            return ResponseEntity.badRequest().body(errores);
+            return ResponseEntity.badRequest().body(getValidationErrors(result));
         }
 
         String emailNormalizado = user.getEmail().trim().toLowerCase();
@@ -106,7 +119,10 @@ public class AuthController {
             ));
         }
 
-        boolean passwordCorrecta = passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
+        boolean passwordCorrecta = passwordEncoder.matches(
+                loginRequest.getPassword(),
+                user.getPassword()
+        );
 
         if (!passwordCorrecta) {
             return ResponseEntity.badRequest().body(Map.of(
@@ -125,8 +141,151 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(
+            @Valid @RequestBody ForgotPasswordRequest request,
+            BindingResult result
+    ) {
+
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(getValidationErrors(result));
+        }
+
+        String emailNormalizado = request.getEmail().trim().toLowerCase();
+
+        Optional<User> userOptional = userRepository.findByEmail(emailNormalizado);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.ok(Map.of(
+                    "message", "Si el correo está registrado, recibirás un código de recuperación"
+            ));
+        }
+
+        User user = userOptional.get();
+
+        if (user.getActive() != null && !user.getActive()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "La cuenta está desactivada"
+            ));
+        }
+
+        List<PasswordResetCode> codigosAnteriores =
+                passwordResetCodeRepository.findByEmailAndUsedFalse(emailNormalizado);
+
+        codigosAnteriores.forEach(codigo -> codigo.setUsed(true));
+        passwordResetCodeRepository.saveAll(codigosAnteriores);
+
+        String code = generateSixDigitCode();
+
+        PasswordResetCode resetCode = new PasswordResetCode();
+        resetCode.setUser(user);
+        resetCode.setEmail(emailNormalizado);
+        resetCode.setCodeHash(passwordEncoder.encode(code));
+        resetCode.setExpiresAt(LocalDateTime.now(ZoneId.of("America/Lima")).plusMinutes(10));
+        resetCode.setUsed(false);
+
+        passwordResetCodeRepository.save(resetCode);
+
+        brevoEmailService.sendPasswordResetCode(
+                user.getEmail(),
+                user.getFullName(),
+                code
+        );
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Si el correo está registrado, recibirás un código de recuperación"
+        ));
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(
+            @Valid @RequestBody ResetPasswordRequest request,
+            BindingResult result
+    ) {
+
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(getValidationErrors(result));
+        }
+
+        String emailNormalizado = request.getEmail().trim().toLowerCase();
+        String code = request.getCode().trim();
+        String newPassword = request.getNewPassword();
+        String confirmPassword = request.getConfirmPassword();
+
+        if (!newPassword.equals(confirmPassword)) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "confirmPassword", "Las contraseñas no coinciden"
+            ));
+        }
+
+        Optional<User> userOptional = userRepository.findByEmail(emailNormalizado);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Código inválido o expirado"
+            ));
+        }
+
+        Optional<PasswordResetCode> codeOptional =
+                passwordResetCodeRepository.findTopByEmailAndUsedFalseOrderByCreatedAtDesc(emailNormalizado);
+
+        if (codeOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Código inválido o expirado"
+            ));
+        }
+
+        PasswordResetCode resetCode = codeOptional.get();
+
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Lima"));
+
+        if (resetCode.getExpiresAt().isBefore(now)) {
+            resetCode.setUsed(true);
+            passwordResetCodeRepository.save(resetCode);
+
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Código inválido o expirado"
+            ));
+        }
+
+        boolean codigoCorrecto = passwordEncoder.matches(code, resetCode.getCodeHash());
+
+        if (!codigoCorrecto) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Código inválido o expirado"
+            ));
+        }
+
+        User user = userOptional.get();
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        resetCode.setUsed(true);
+        passwordResetCodeRepository.save(resetCode);
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Contraseña actualizada correctamente"
+        ));
+    }
+
     @GetMapping("/users")
     public ResponseEntity<?> listUsers() {
         return ResponseEntity.ok(userRepository.findAll());
+    }
+
+    private String generateSixDigitCode() {
+        int number = secureRandom.nextInt(1_000_000);
+        return String.format("%06d", number);
+    }
+
+    private Map<String, String> getValidationErrors(BindingResult result) {
+        Map<String, String> errores = new HashMap<>();
+
+        result.getFieldErrors().forEach(error -> {
+            errores.put(error.getField(), error.getDefaultMessage());
+        });
+
+        return errores;
     }
 }

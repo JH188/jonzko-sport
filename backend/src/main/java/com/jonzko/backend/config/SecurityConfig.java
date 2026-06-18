@@ -48,10 +48,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/admin-login").permitAll()
 
                         // ==========================
-                        // LOGIN Y REGISTRO USUARIO NORMAL
+                        // LOGIN, REGISTRO Y RECUPERACION USUARIO
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/forgot-password").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/reset-password").permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
 
@@ -64,17 +67,15 @@ public class SecurityConfig {
 
                         // ==========================
                         // CREAR PEDIDO PUBLICO
-                        // El cliente puede crear pedido desde checkout
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/customer-orders").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
 
                         // ==========================
                         // MIS PEDIDOS PROTEGIDO CON JWT
-                        // Sin token ya no muestra pedidos
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders/my-orders").authenticated()
-.requestMatchers(HttpMethod.GET, "/api/customer-orders/user/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/customer-orders/user/**").authenticated()
 
                         // ==========================
                         // ADMIN PROTEGIDO CON JWT
@@ -103,7 +104,6 @@ public class SecurityConfig {
 
                         // ==========================
                         // BLOQUEOS PUBLICOS DE CUSTOMER ORDERS
-                        // OJO: /api/customer-orders/user/** ya está protegido arriba
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders").denyAll()
                         .requestMatchers(HttpMethod.PUT, "/api/customer-orders/**").denyAll()
