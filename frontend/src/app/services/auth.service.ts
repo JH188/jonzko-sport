@@ -14,6 +14,21 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  email: string;
+  code: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export interface AuthMessageResponse {
+  message: string;
+}
+
 export interface AuthUser {
   id: number;
   fullName: string;
@@ -32,6 +47,8 @@ export interface AuthUser {
 export class AuthService {
 
   private apiUrl = 'https://jonzko-sport-production.up.railway.app/api/users';
+  private authApiUrl = 'https://jonzko-sport-production.up.railway.app/api/auth';
+
   private storageKey = 'jonzko_user';
   private tokenKey = 'jonzko_user_token';
 
@@ -43,6 +60,14 @@ export class AuthService {
 
   login(data: LoginRequest): Observable<AuthUser> {
     return this.http.post<AuthUser>(`${this.apiUrl}/login`, data);
+  }
+
+  forgotPassword(data: ForgotPasswordRequest): Observable<AuthMessageResponse> {
+    return this.http.post<AuthMessageResponse>(`${this.authApiUrl}/forgot-password`, data);
+  }
+
+  resetPassword(data: ResetPasswordRequest): Observable<AuthMessageResponse> {
+    return this.http.post<AuthMessageResponse>(`${this.authApiUrl}/reset-password`, data);
   }
 
   saveUser(user: AuthUser): void {

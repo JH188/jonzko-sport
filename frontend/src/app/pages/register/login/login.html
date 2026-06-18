@@ -10,6 +10,10 @@
       <label>Contraseña</label>
       <input type="password" name="password" [(ngModel)]="password" placeholder="Tu contraseña" />
 
+      <a class="forgot-link" routerLink="/reset-password">
+        ¿Olvidaste tu contraseña?
+      </a>
+
       <div class="error" *ngIf="error">{{ error }}</div>
 
       <button type="submit" [disabled]="loading">

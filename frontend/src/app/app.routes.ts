@@ -7,6 +7,8 @@ import { RegisterComponent } from './pages/register/register';
 import { LoginComponent } from './pages/register/login/login';
 import { MisPedidosComponent } from './pages/register/mis-pedidos/mis-pedidos';
 import { CheckoutComponent } from './pages/register/checkout/checkout';
+import { ResetPasswordComponent } from './pages/register/reset-password';
+
 export const routes: Routes = [
   {
     path: 'producto/:id',
@@ -19,6 +21,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent
   },
   {
     path: 'mis-pedidos',
