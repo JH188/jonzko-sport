@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,11 +54,11 @@ public class User {
     @Column(name = "phone", nullable = false, length = 20)
     private String phone;
 
-    @JsonIgnore
-    @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, message = "La contraseña debe tener mínimo 6 caracteres")
-    @Column(name = "password", nullable = false, length = 255)
-    private String password;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+@NotBlank(message = "La contraseña es obligatoria")
+@Size(min = 6, message = "La contraseña debe tener mínimo 6 caracteres")
+@Column(name = "password", nullable = false, length = 255)
+private String password;
 
     @Column(name = "role", nullable = false, length = 20)
     private String role = "USER";

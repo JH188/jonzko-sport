@@ -226,3 +226,31 @@ input[readonly] {
   line-height: 1.4;
   margin: 12px 0;
 }
+.auth-card .success {
+  background: #ecfdf3 !important;
+  border: 1px solid #86efac !important;
+  color: #166534 !important;
+  padding: 12px 14px !important;
+  border-radius: 14px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  margin: 12px 0 !important;
+}
+
+.auth-card .success p {
+  margin: 0 0 8px !important;
+  color: #166534 !important;
+}
+
+.auth-card .error {
+  background: #fff1f2 !important;
+  border: 1px solid #fca5a5 !important;
+  color: #991b1b !important;
+  padding: 12px 14px !important;
+  border-radius: 14px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  margin: 12px 0 !important;
+}

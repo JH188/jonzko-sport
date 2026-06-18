@@ -71,7 +71,9 @@
             @if (currentUser()) {
               <p class="user-dropdown-name">Hola, {{ currentUser()?.fullName }}</p>
 
-              <button type="button" (click)="logout(); closeUserMenu()">Cerrar sesión</button>
+              <button type="button" class="user-logout-btn" (click)="logout(); closeUserMenu()">
+                Cerrar sesión
+              </button>
             } @else {
               <a routerLink="/login" (click)="closeUserMenu()"> Iniciar sesión </a>
 
@@ -126,7 +128,9 @@
 
           @if (currentUser()) {
             <a routerLink="/mis-pedidos" (click)="closeMobileMenu()">Mis pedidos</a>
-            <button type="button" (click)="logout(); closeMobileMenu()">Cerrar sesión</button>
+            <button type="button" class="mobile-logout-btn" (click)="logout(); closeMobileMenu()">
+              Cerrar sesión
+            </button>
           } @else {
             <a routerLink="/login" (click)="closeMobileMenu()">Iniciar sesión</a>
             <a routerLink="/registro" (click)="closeMobileMenu()">Registrarse</a>
