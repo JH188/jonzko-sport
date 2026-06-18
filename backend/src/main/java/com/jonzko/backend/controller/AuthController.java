@@ -24,6 +24,7 @@ import com.jonzko.backend.entity.PasswordResetCode;
 import com.jonzko.backend.entity.User;
 import com.jonzko.backend.repository.PasswordResetCodeRepository;
 import com.jonzko.backend.repository.UserRepository;
+import com.jonzko.backend.security.JwtService;
 import com.jonzko.backend.service.BrevoEmailService;
 
 import jakarta.validation.Valid;
@@ -36,6 +37,7 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordResetCodeRepository passwordResetCodeRepository;
     private final BrevoEmailService brevoEmailService;
+    private final JwtService jwtService;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final SecureRandom secureRandom = new SecureRandom();
@@ -43,11 +45,13 @@ public class AuthController {
     public AuthController(
             UserRepository userRepository,
             PasswordResetCodeRepository passwordResetCodeRepository,
-            BrevoEmailService brevoEmailService
+            BrevoEmailService brevoEmailService,
+            JwtService jwtService
     ) {
         this.userRepository = userRepository;
         this.passwordResetCodeRepository = passwordResetCodeRepository;
         this.brevoEmailService = brevoEmailService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/register")
@@ -151,6 +155,7 @@ public class AuthController {
                     "phone", user.getPhone(),
                     "active", user.getActive(),
                     "emailVerified", user.getEmailVerified(),
+                    "token", jwtService.generateToken(user),
                     "message", "Tu cuenta ya estaba verificada."
             ));
         }
@@ -194,6 +199,7 @@ public class AuthController {
                 "phone", user.getPhone(),
                 "active", user.getActive(),
                 "emailVerified", user.getEmailVerified(),
+                "token", jwtService.generateToken(user),
                 "message", "Cuenta verificada correctamente."
         ));
     }
@@ -297,6 +303,7 @@ public class AuthController {
         response.put("phone", user.getPhone());
         response.put("active", user.getActive());
         response.put("emailVerified", user.getEmailVerified());
+        response.put("token", jwtService.generateToken(user));
         response.put("message", "Login correcto");
 
         return ResponseEntity.ok(response);
@@ -446,10 +453,10 @@ public class AuthController {
         userRepository.save(user);
 
         brevoEmailService.sendEmailVerificationCode(
-        user.getEmail(),
-        user.getFullName(),
-        code
-);
+                user.getEmail(),
+                user.getFullName(),
+                code
+        );
     }
 
     private String generateSixDigitCode() {
