@@ -51,15 +51,16 @@ public class SecurityConfig {
                         // LOGIN, REGISTRO Y RECUPERACION USUARIO
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users/verify-email").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users/resend-verification-code").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/forgot-password").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/reset-password").permitAll()
+.requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+.requestMatchers(HttpMethod.POST, "/api/auth/verify-email").permitAll()
+.requestMatchers(HttpMethod.POST, "/api/auth/resend-verification-code").permitAll()
+.requestMatchers(HttpMethod.POST, "/api/auth/forgot-password").permitAll()
+.requestMatchers(HttpMethod.POST, "/api/auth/reset-password").permitAll()
 
-                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
-
+.requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+.requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+.requestMatchers(HttpMethod.POST, "/api/users/verify-email").permitAll()
+.requestMatchers(HttpMethod.POST, "/api/users/resend-verification-code").permitAll()
                         // ==========================
                         // TIENDA PUBLICA
                         // ==========================
