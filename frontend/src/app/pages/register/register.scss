@@ -107,3 +107,22 @@ button:disabled {
     font-size: 26px;
   }
 }
+.success {
+  background: #e8f8ee;
+  color: #137333;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.secondary-btn {
+  margin-top: 0;
+  background: transparent;
+  color: #111;
+  border: 1px solid #111;
+}
+
+input[readonly] {
+  background: #f2f2f2;
+  color: #555;
+}

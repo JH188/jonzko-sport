@@ -13,6 +13,14 @@ export interface LoginRequest {
   email: string;
   password: string;
 }
+export interface VerifyEmailRequest {
+  email: string;
+  code: string;
+}
+
+export interface AuthMessageResponse {
+  message: string;
+}
 
 export interface ForgotPasswordRequest {
   email: string;
@@ -61,6 +69,9 @@ export class AuthService {
   login(data: LoginRequest): Observable<AuthUser> {
     return this.http.post<AuthUser>(`${this.apiUrl}/login`, data);
   }
+  verifyEmail(data: VerifyEmailRequest): Observable<AuthUser> {
+  return this.http.post<AuthUser>(`${this.apiUrl}/verify-email`, data);
+}
 
   forgotPassword(data: ForgotPasswordRequest): Observable<AuthMessageResponse> {
     return this.http.post<AuthMessageResponse>(`${this.authApiUrl}/forgot-password`, data);

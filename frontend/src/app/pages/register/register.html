@@ -1,22 +1,41 @@
 <section class="auth-page">
   <div class="auth-card">
-    <h1>Crear cuenta</h1>
-    <p class="subtitle">Regístrate para comprar en JONZKO SPORT</p>
+    <h1 *ngIf="step === 'register'">Crear cuenta</h1>
+    <h1 *ngIf="step === 'verify'">Verificar correo</h1>
 
-    <form (ngSubmit)="register()">
+    <p class="subtitle" *ngIf="step === 'register'">
+      Regístrate para comprar en JONZKO SPORT
+    </p>
+
+    <p class="subtitle" *ngIf="step === 'verify'">
+      Ingresa el código que enviamos a tu correo.
+    </p>
+
+    <form *ngIf="step === 'register'" (ngSubmit)="register()">
       <label>Nombre completo</label>
       <input
         type="text"
         name="fullName"
         [(ngModel)]="fullName"
-        placeholder="Ejemplo: Jonathan Huaman"
+        placeholder="Nombre completo"
       />
 
       <label>Correo electrónico</label>
-      <input type="email" name="email" [(ngModel)]="email" placeholder="ejemplo@gmail.com" />
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="correo@gmail.com"
+      />
 
       <label>Celular</label>
-      <input type="text" name="phone" [(ngModel)]="phone" placeholder="987654321" maxlength="9" />
+      <input
+        type="tel"
+        name="phone"
+        [(ngModel)]="phone"
+        maxlength="9"
+        placeholder="Celular de 9 dígitos"
+      />
 
       <label>Contraseña</label>
       <input
@@ -31,6 +50,36 @@
 
       <button type="submit" [disabled]="loading">
         {{ loading ? 'Creando cuenta...' : 'Registrarme' }}
+      </button>
+    </form>
+
+    <form *ngIf="step === 'verify'" (ngSubmit)="verifyEmail()">
+      <label>Correo electrónico</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        readonly
+      />
+
+      <label>Código de verificación</label>
+      <input
+        type="text"
+        name="code"
+        [(ngModel)]="code"
+        maxlength="6"
+        placeholder="Código de 6 dígitos"
+      />
+
+      <div class="error" *ngIf="error">{{ error }}</div>
+      <div class="success" *ngIf="success">{{ success }}</div>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Verificando...' : 'Verificar cuenta' }}
+      </button>
+
+      <button type="button" class="secondary-btn" (click)="backToRegister()" [disabled]="loading">
+        Cambiar datos
       </button>
     </form>
 
