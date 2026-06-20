@@ -18,6 +18,7 @@ import com.jonzko.backend.entity.CustomerOrder;
 import com.jonzko.backend.entity.User;
 import com.jonzko.backend.repository.CustomerOrderRepository;
 import com.jonzko.backend.repository.UserRepository;
+import com.jonzko.backend.service.AdminNotificationEmailService;
 
 @RestController
 @RequestMapping("/api/customer-orders")
@@ -26,13 +27,16 @@ public class CustomerOrderController {
 
     private final CustomerOrderRepository customerOrderRepository;
     private final UserRepository userRepository;
+    private final AdminNotificationEmailService adminNotificationEmailService;
 
     public CustomerOrderController(
             CustomerOrderRepository customerOrderRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            AdminNotificationEmailService adminNotificationEmailService
     ) {
         this.customerOrderRepository = customerOrderRepository;
         this.userRepository = userRepository;
+        this.adminNotificationEmailService = adminNotificationEmailService;
     }
 
     @PostMapping
@@ -94,6 +98,9 @@ public class CustomerOrderController {
 
         CustomerOrder saved = customerOrderRepository.save(order);
 
+        // Enviar notificación automática al correo del administrador
+        adminNotificationEmailService.enviarNuevoPedidoCliente(saved);
+
         return ResponseEntity.ok(Map.of(
                 "message", "Pedido registrado correctamente",
                 "orderId", saved.getId(),
@@ -101,7 +108,7 @@ public class CustomerOrderController {
         ));
     }
 
-       @GetMapping("/user/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<?> getOrdersByUser(
             @PathVariable Long userId,
             Authentication authentication

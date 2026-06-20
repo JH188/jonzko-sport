@@ -1,16 +1,18 @@
 package com.jonzko.backend.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jonzko.backend.entity.Order;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jonzko.backend.entity.CustomerOrder;
+import com.jonzko.backend.entity.Order;
 
 @Service
 public class AdminNotificationEmailService {
@@ -27,62 +29,134 @@ public class AdminNotificationEmailService {
     @Value("${app.admin.email:jonathan.huaman18@gmail.com}")
     private String adminEmail;
 
-    @Value("${app.admin.url:https://jonzko.lat/admin}")
+    @Value("${app.admin.url:https://www.jonzko.lat/admin}")
     private String adminUrl;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    public void enviarNuevoPedidoCliente(CustomerOrder order) {
+        if (order == null) {
+            return;
+        }
+
+        String subject = "Nuevo pedido en JONZKO #" + order.getId();
+
+        String htmlContent = """
+                <div style="font-family: Arial, sans-serif; background:#f6f6f6; padding:24px;">
+                  <div style="max-width:650px; margin:auto; background:#ffffff; border-radius:14px; padding:24px; border:1px solid #e5e5e5;">
+                    <h2 style="margin:0 0 12px; color:#111;">Nuevo pedido en JONZKO</h2>
+                    <p style="color:#444;">Hola Jonathan, tienes un nuevo pedido registrado en tu tienda.</p>
+
+                    <div style="background:#fafafa; border:1px solid #eee; border-radius:12px; padding:16px; margin:18px 0;">
+                      <p><b>Pedido:</b> #%s</p>
+                      <p><b>Cliente:</b> %s</p>
+                      <p><b>Correo:</b> %s</p>
+                      <p><b>Teléfono:</b> %s</p>
+                      <p><b>Documento:</b> %s - %s</p>
+                      <p><b>Ubicación:</b> %s / %s / %s</p>
+                      <p><b>Dirección:</b> %s</p>
+                      <p><b>Referencia:</b> %s</p>
+                      <p><b>Método de pago:</b> %s</p>
+                      <p><b>Estado:</b> %s</p>
+                      <p><b>Total:</b> S/ %s</p>
+                    </div>
+
+                    <div style="background:#fff; border:1px solid #eee; border-radius:12px; padding:16px; margin:18px 0;">
+                      <p><b>Productos:</b></p>
+                      <pre style="white-space:pre-wrap; font-family:Arial, sans-serif; color:#333;">%s</pre>
+                    </div>
+
+                    <a href="%s"
+                       style="display:inline-block; background:#000; color:#fff; text-decoration:none; padding:14px 22px; border-radius:999px; font-weight:bold;">
+                      Entrar al administrador
+                    </a>
+
+                    <p style="font-size:12px; color:#777; margin-top:22px;">
+                      JONZKO SPORT - Notificación automática.
+                    </p>
+                  </div>
+                </div>
+                """.formatted(
+                safe(order.getId()),
+                safe(order.getCustomerName()),
+                safe(order.getCustomerEmail()),
+                safe(order.getCustomerPhone()),
+                safe(order.getDocumentType()),
+                safe(order.getDocumentNumber()),
+                safe(order.getDepartment()),
+                safe(order.getProvince()),
+                safe(order.getDistrict()),
+                safe(order.getAddress()),
+                safe(order.getReferenceText()),
+                safe(order.getPaymentMethod()),
+                safe(order.getOrderStatus()),
+                safe(order.getTotal()),
+                safe(order.getItemsJson()),
+                adminUrl
+        );
+
+        enviarCorreo(subject, htmlContent);
+    }
+
     public void enviarNuevoPedido(Order order) {
+        if (order == null) {
+            return;
+        }
+
+        String subject = "Nuevo pedido en JONZKO " + safe(order.getOrderCode());
+
+        String htmlContent = """
+                <div style="font-family: Arial, sans-serif; background:#f6f6f6; padding:24px;">
+                  <div style="max-width:650px; margin:auto; background:#ffffff; border-radius:14px; padding:24px; border:1px solid #e5e5e5;">
+                    <h2 style="margin:0 0 12px; color:#111;">Nuevo pedido en JONZKO</h2>
+                    <p style="color:#444;">Hola Jonathan, tienes un nuevo pedido en tu tienda.</p>
+
+                    <div style="background:#fafafa; border:1px solid #eee; border-radius:12px; padding:16px; margin:18px 0;">
+                      <p><b>Código:</b> %s</p>
+                      <p><b>Cliente:</b> %s</p>
+                      <p><b>Correo:</b> %s</p>
+                      <p><b>Teléfono:</b> %s</p>
+                      <p><b>Dirección:</b> %s, %s, %s - %s</p>
+                      <p><b>Método de pago:</b> %s</p>
+                      <p><b>Total:</b> S/ %s</p>
+                      <p><b>Estado:</b> %s</p>
+                    </div>
+
+                    <a href="%s"
+                       style="display:inline-block; background:#000; color:#fff; text-decoration:none; padding:14px 22px; border-radius:999px; font-weight:bold;">
+                      Entrar al administrador
+                    </a>
+
+                    <p style="font-size:12px; color:#777; margin-top:22px;">
+                      JONZKO SPORT - Notificación automática.
+                    </p>
+                  </div>
+                </div>
+                """.formatted(
+                safe(order.getOrderCode()),
+                safe(order.getCustomerName()),
+                safe(order.getCustomerEmail()),
+                safe(order.getCustomerPhone()),
+                safe(order.getDepartment()),
+                safe(order.getProvince()),
+                safe(order.getDistrict()),
+                safe(order.getAddress()),
+                safe(order.getPaymentMethod()),
+                safe(order.getTotal()),
+                safe(order.getOrderStatus()),
+                adminUrl
+        );
+
+        enviarCorreo(subject, htmlContent);
+    }
+
+    private void enviarCorreo(String subject, String htmlContent) {
         if (brevoApiKey == null || brevoApiKey.isBlank()) {
-            System.out.println("BREVO_API_KEY no configurado. No se envió correo de pedido.");
+            System.out.println("BREVO_API_KEY no configurado. No se envió correo.");
             return;
         }
 
         try {
-            String subject = "Nuevo pedido en JONZKO " + safe(order.getOrderCode());
-
-            String htmlContent = """
-                    <div style="font-family: Arial, sans-serif; background:#f6f6f6; padding:24px;">
-                      <div style="max-width:620px; margin:auto; background:#ffffff; border-radius:14px; padding:24px; border:1px solid #e5e5e5;">
-                        <h2 style="margin:0 0 12px; color:#111;">Nuevo pedido en JONZKO</h2>
-                        <p style="color:#444;">Hola Jonathan, tienes un nuevo pedido en tu tienda.</p>
-
-                        <div style="background:#fafafa; border:1px solid #eee; border-radius:12px; padding:16px; margin:18px 0;">
-                          <p><b>Código:</b> %s</p>
-                          <p><b>Cliente:</b> %s</p>
-                          <p><b>Correo:</b> %s</p>
-                          <p><b>Teléfono:</b> %s</p>
-                          <p><b>Dirección:</b> %s, %s, %s - %s</p>
-                          <p><b>Método de pago:</b> %s</p>
-                          <p><b>Total:</b> S/ %s</p>
-                          <p><b>Estado:</b> %s</p>
-                        </div>
-
-                        <a href="%s"
-                           style="display:inline-block; background:#000; color:#fff; text-decoration:none; padding:14px 22px; border-radius:999px; font-weight:bold;">
-                          Entrar al administrador
-                        </a>
-
-                        <p style="font-size:12px; color:#777; margin-top:22px;">
-                          JONZKO SPORT - Notificación automática.
-                        </p>
-                      </div>
-                    </div>
-                    """.formatted(
-                    safe(order.getOrderCode()),
-                    safe(order.getCustomerName()),
-                    safe(order.getCustomerEmail()),
-                    safe(order.getCustomerPhone()),
-                    safe(order.getDepartment()),
-                    safe(order.getProvince()),
-                    safe(order.getDistrict()),
-                    safe(order.getAddress()),
-                    safe(order.getPaymentMethod()),
-                    safe(order.getTotal()),
-                    safe(order.getOrderStatus()),
-                    adminUrl
-            );
-
             Map<String, Object> body = Map.of(
                     "sender", Map.of(
                             "name", senderName,
