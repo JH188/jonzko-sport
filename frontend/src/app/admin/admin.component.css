@@ -2208,3 +2208,78 @@ td p {
     height: 220px;
   }
 }
+/* SUBIDA DE IMAGEN PRODUCTO */
+.admin-form input[type="file"] {
+  width: 100%;
+  padding: 14px;
+  border: 1px dashed #cfcfcf;
+  border-radius: 16px;
+  background: #fafafa;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.admin-form input[type="file"]::file-selector-button {
+  border: none;
+  background: #000;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.admin-form input[type="file"]::file-selector-button:hover {
+  opacity: 0.85;
+}
+
+.image-preview-box {
+  margin-top: 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 18px;
+  padding: 14px;
+  background: #fafafa;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.image-preview-box img {
+  width: 120px;
+  height: 140px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  background: #f3f3f3;
+}
+
+.image-preview-box small {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 800;
+  color: #111;
+}
+
+.image-preview-box input {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.image-preview-box .delete-btn {
+  width: fit-content;
+}
+
+@media (max-width: 650px) {
+  .image-preview-box {
+    grid-template-columns: 1fr;
+  }
+
+  .image-preview-box img {
+    width: 100%;
+    height: 220px;
+  }
+}
