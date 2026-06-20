@@ -211,19 +211,19 @@ currentReceiptType: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante' = 'Comproba
 
   saveProduct(): void {
     const data: ProductRequest = {
-      name: this.productForm.name,
-      category: this.productForm.category,
-      description: this.productForm.description,
-      price: Number(this.productForm.price),
-      stock: Number(this.productForm.stock),
-      imageUrl: this.productForm.imageUrl,
-      active: this.productForm.active
-    };
+  name: (this.productForm.name || '').trim(),
+  category: (this.productForm.category || '').trim(),
+  description: (this.productForm.description || '').trim(),
+  price: Number(this.productForm.price),
+  stock: Number(this.productForm.stock),
+  imageUrl: (this.productForm.imageUrl || '').trim(),
+  active: this.productForm.active
+};
 
-    if (!data.name || !data.category || !data.description || !data.imageUrl) {
-      alert('Completa todos los datos del producto.');
-      return;
-    }
+if (!data.name || !data.category || !data.imageUrl) {
+  alert('Completa nombre, categoría e imagen del producto.');
+  return;
+}
 
     if (data.price <= 0) {
       alert('El precio debe ser mayor a 0.');
@@ -265,7 +265,7 @@ currentReceiptType: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante' = 'Comproba
     this.productForm = {
       name: product.name,
       category: product.category,
-      description: product.description,
+      description: product.description || '',
       price: Number(product.price),
       stock: Number(product.stock),
       imageUrl: product.imageUrl,

@@ -321,11 +321,11 @@
     <section class="admin-section" *ngIf="activeSection() === 'products'">
       <div class="section-heading">
         <div>
-          <span class="eyebrow">Gestión de catálogo</span>
-          <h2>Productos de la tienda</h2>
+          <span class="eyebrow">Gestión de exclusivos</span>
+          <h2>Exclusivos de la tienda</h2>
           <p>
-            Desde aquí agregas, editas, activas, desactivas o eliminas productos. Los cambios se
-            guardan en MySQL y se reflejan para todos los usuarios.
+            Desde aquí agregas, editas, activas, desactivas o eliminas prendas exclusivas. Los
+            cambios se guardan en MySQL y se reflejan para todos los usuarios.
           </p>
         </div>
       </div>
@@ -359,12 +359,12 @@
             </label>
 
             <label>
-              Descripción
+              Descripción opcional
               <textarea
                 name="description"
                 [(ngModel)]="productForm.description"
                 rows="4"
-                placeholder="Describe el producto..."
+                placeholder="Opcional. Puedes dejarlo vacío si quieres una card más limpia."
               ></textarea>
             </label>
 
@@ -436,7 +436,9 @@
               <div class="product-info">
                 <h4>{{ product.name }}</h4>
                 <p>{{ product.category }}</p>
-                <small>{{ product.description }}</small>
+                <small *ngIf="product.description && product.description.trim()">
+                  {{ product.description }}
+                </small>
 
                 <div class="product-meta">
                   <strong>{{ money(product.price) }}</strong>
