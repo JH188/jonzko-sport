@@ -2,7 +2,8 @@ import { Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import * as XLSX from 'xlsx';
+import * as ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -757,126 +758,966 @@ clearOrderFilters(): void {
   this.dateToFilter = '';
 }
 
-exportFullExcelReport(): void {
+async exportFullExcelReport(): Promise<void> {
   const orders = this.filteredOrders();
   const users = this.users();
   const products = this.products();
+  const now = new Date();
 
-  const resumen = [
-    {
-      'Tienda': 'JONZKO SPORT',
-      'Fecha de descarga': new Date().toLocaleString('es-PE'),
-      'Pedidos analizados': orders.length,
-      'Clientes registrados': users.length,
-      'Productos registrados': products.length,
-      'Productos activos': this.activeProducts(),
-      'Ingresos confirmados': this.totalRevenue(),
-      'Pendientes': this.pendingAdminOrders(),
-      'Confirmados': this.confirmedOrders(),
-      'Enviados': this.sentOrders(),
-      'Cancelados': this.cancelledOrders()
-    }
-  ];
+  const workbook = new ExcelJS.Workbook();
+  workbook.creator = 'JONZKO SPORT';
+  workbook.lastModifiedBy = 'Panel administrador JONZKO';
+  workbook.created = now;
+  workbook.modified = now;
 
-  const pedidos = orders.map(order => {
-    const subtotal = Number(order.total || 0) / 1.18;
-    const igv = Number(order.total || 0) - subtotal;
+  const colors = {
+    black: 'FF0B0B0B',
+    dark: 'FF1F2937',
+    gold: 'FFC8A45D',
+    softGold: 'FFFFF4D6',
+    white: 'FFFFFFFF',
+    gray: 'FFF3F4F6',
+    lightGray: 'FFE5E7EB',
+    green: 'FF16A34A',
+    red: 'FFDC2626',
+    blue: 'FF2563EB',
+    orange: 'FFF97316'
+  };
 
-    return {
-      'ID Pedido': order.id,
-      'Código': this.getOrderCode(order),
-      'Cliente': order.customerName,
-      'Correo': order.customerEmail,
-      'Teléfono': order.customerPhone,
-      'Tipo documento': order.documentType || 'Boleta',
-      'Número documento': order.documentNumber || 'No registrado',
-      'Departamento': order.department,
-      'Provincia': order.province,
-      'Distrito': order.district,
-      'Dirección': order.address,
-      'Referencia': order.referenceText,
-      'Método de pago': order.paymentMethod,
-      'Estado': order.orderStatus,
-      'Tipo usuario': this.getUserType(order),
-      'Subtotal estimado': Number(subtotal.toFixed(2)),
-      'IGV estimado': Number(igv.toFixed(2)),
-      'Total': Number(order.total || 0),
-      'Fecha': this.formatDate(order.createdAt),
-      'Hora': this.formatTime(order.createdAt),
-      'Última actualización': `${this.formatDate(order.updatedAt || order.createdAt)} ${this.formatTime(order.updatedAt || order.createdAt)}`
-    };
-  });
+  const moneyFormat = '"S/ "#,##0.00';
+  const numberFormat = '#,##0';
+
+  const normalize = (value: any): string =>
+    String(value || '').trim().toLowerCase();
+
+  const isConfirmed = (order: OrderResponse): boolean => {
+    const status = normalize(order.orderStatus);
+    return status === 'confirmado' || status === 'entregado';
+  };
+
+  const isPending = (order: OrderResponse): boolean => {
+    const status = normalize(order.orderStatus);
+    return status === 'pendiente' || status === 'pendiente_confirmacion';
+  };
+
+  const isSent = (order: OrderResponse): boolean =>
+    normalize(order.orderStatus) === 'enviado';
+
+  const isCancelled = (order: OrderResponse): boolean =>
+    normalize(order.orderStatus) === 'cancelado';
+
+  const totalBruto = orders.reduce(
+    (sum, order) => sum + Number(order.total || 0),
+    0
+  );
+
+  const totalConfirmado = orders
+    .filter(isConfirmed)
+    .reduce((sum, order) => sum + Number(order.total || 0), 0);
+
+  const totalPendiente = orders
+    .filter(isPending)
+    .reduce((sum, order) => sum + Number(order.total || 0), 0);
+
+  const totalCancelado = orders
+    .filter(isCancelled)
+    .reduce((sum, order) => sum + Number(order.total || 0), 0);
+
+  const pedidosConfirmados = orders.filter(isConfirmed).length;
+  const pedidosPendientes = orders.filter(isPending).length;
+  const pedidosEnviados = orders.filter(isSent).length;
+  const pedidosCancelados = orders.filter(isCancelled).length;
+
+  const ticketPromedio =
+    pedidosConfirmados > 0 ? totalConfirmado / pedidosConfirmados : 0;
+
+  const subtotalConfirmado = totalConfirmado / 1.18;
+  const igvConfirmado = totalConfirmado - subtotalConfirmado;
 
   const productosVendidos: any[] = [];
 
   orders.forEach(order => {
     this.parseItems(order).forEach(item => {
+      const quantity = Number(item.quantity || 1);
+      const price = Number(item.price || item.unitPrice || 0);
+      const total = quantity * price;
+
       productosVendidos.push({
-        'ID Pedido': order.id,
-        'Cliente': order.customerName,
-        'Correo': order.customerEmail,
-        'Producto': item.productName || item.name || 'Producto',
-        'Categoría': item.category || '',
-        'Talla': item.selectedSize || '',
-        'Color': item.selectedColor || '',
-        'Cantidad': item.quantity || 1,
-        'Precio unitario': Number(item.price || 0),
-        'Total producto': Number(item.price || 0) * Number(item.quantity || 1),
-        'Método de pago': order.paymentMethod,
-        'Estado pedido': order.orderStatus,
-        'Fecha': this.formatDate(order.createdAt),
-        'Hora': this.formatTime(order.createdAt)
+        idPedido: order.id,
+        codigo: this.getOrderCode(order),
+        cliente: order.customerName || '',
+        correo: order.customerEmail || '',
+        producto: item.productName || item.name || 'Producto',
+        categoria: item.category || '',
+        talla: item.selectedSize || item.size || '',
+        color: item.selectedColor || item.color || '',
+        cantidad: quantity,
+        precio: price,
+        total,
+        metodoPago: order.paymentMethod || 'No registrado',
+        estado: order.orderStatus || '',
+        fecha: this.formatDate(order.createdAt),
+        hora: this.formatTime(order.createdAt)
       });
     });
   });
 
-  const clientes = users.map(user => ({
-    'ID Cliente': user.id,
-    'Nombre': user.fullName,
-    'Correo': user.email,
-    'Teléfono': user.phone,
-    'Estado': user.active ? 'Activo' : 'Inactivo',
-    'Fecha registro': user.createdAt || 'Sin fecha'
-  }));
+  const productMap = new Map<string, { cantidad: number; total: number }>();
 
-  const catalogo = products.map(product => ({
-    'ID Producto': product.id,
-    'Nombre': product.name,
-    'Categoría': product.category,
-    'Descripción': product.description,
-    'Precio actual': product.price,
-    'Precio anterior': product.oldPrice || '',
-    'Color': product.color || '',
-    'Tallas': product.sizes || '',
-    'Stock': product.stock,
-    'Tipo de venta': product.saleType || '',
-    'Imagen': product.imageUrl,
-    'Activo': product.active ? 'Sí' : 'No',
-    'Fecha creación': product.createdAt || '',
-    'Última actualización': product.updatedAt || ''
-  }));
+  productosVendidos.forEach(item => {
+    const key = item.producto || 'Producto';
+    const current = productMap.get(key) || { cantidad: 0, total: 0 };
 
-  const metodosPago = ['Yape', 'Plin', 'Transferencia'].map(method => {
-    const filtered = orders.filter(order => (order.paymentMethod || '').toLowerCase() === method.toLowerCase());
+    current.cantidad += Number(item.cantidad || 0);
+    current.total += Number(item.total || 0);
 
-    return {
-      'Método de pago': method,
-      'Cantidad pedidos': filtered.length,
-      'Total vendido': filtered.reduce((sum, order) => sum + Number(order.total || 0), 0)
-    };
+    productMap.set(key, current);
   });
 
-  const workbook = XLSX.utils.book_new();
+  const topProductos = Array.from(productMap.entries())
+    .map(([producto, data]) => ({
+      producto,
+      cantidad: data.cantidad,
+      total: data.total
+    }))
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 10);
 
-  XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(resumen), 'Resumen');
-  XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(pedidos), 'Pedidos');
-  XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(productosVendidos), 'Productos vendidos');
-  XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(clientes), 'Clientes');
-  XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(catalogo), 'Catálogo');
-  XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(metodosPago), 'Métodos de pago');
+  const paymentMethods = Array.from(
+    new Set(
+      orders
+        .map(order => order.paymentMethod || 'No registrado')
+        .filter(method => method.trim() !== '')
+    )
+  );
 
-  XLSX.writeFile(workbook, `Reporte_JONZKO_${new Date().getTime()}.xlsx`);
+  const metodosPago = paymentMethods.length > 0
+    ? paymentMethods.map(method => {
+        const filtered = orders.filter(
+          order => normalize(order.paymentMethod) === normalize(method)
+        );
+
+        return {
+          metodo: method,
+          cantidad: filtered.length,
+          total: filtered.reduce((sum, order) => sum + Number(order.total || 0), 0)
+        };
+      })
+    : [
+        {
+          metodo: 'Sin pagos',
+          cantidad: 0,
+          total: 0
+        }
+      ];
+
+  const ventasFechaMap = new Map<
+    string,
+    {
+      pedidos: number;
+      confirmados: number;
+      pendientes: number;
+      enviados: number;
+      cancelados: number;
+      total: number;
+    }
+  >();
+
+  orders.forEach(order => {
+    const fecha = this.formatDate(order.createdAt);
+    const current =
+      ventasFechaMap.get(fecha) || {
+        pedidos: 0,
+        confirmados: 0,
+        pendientes: 0,
+        enviados: 0,
+        cancelados: 0,
+        total: 0
+      };
+
+    current.pedidos += 1;
+    current.total += Number(order.total || 0);
+
+    if (isConfirmed(order)) current.confirmados += 1;
+    if (isPending(order)) current.pendientes += 1;
+    if (isSent(order)) current.enviados += 1;
+    if (isCancelled(order)) current.cancelados += 1;
+
+    ventasFechaMap.set(fecha, current);
+  });
+
+  const ventasPorFecha = Array.from(ventasFechaMap.entries()).map(
+    ([fecha, data]) => ({
+      fecha,
+      pedidos: data.pedidos,
+      confirmados: data.confirmados,
+      pendientes: data.pendientes,
+      enviados: data.enviados,
+      cancelados: data.cancelados,
+      total: data.total
+    })
+  );
+
+  const setBorder = (cell: ExcelJS.Cell): void => {
+    cell.border = {
+      top: { style: 'thin', color: { argb: colors.lightGray } },
+      left: { style: 'thin', color: { argb: colors.lightGray } },
+      bottom: { style: 'thin', color: { argb: colors.lightGray } },
+      right: { style: 'thin', color: { argb: colors.lightGray } }
+    };
+  };
+
+  const styleTitle = (
+    worksheet: ExcelJS.Worksheet,
+    title: string,
+    subtitle: string,
+    lastColumn: number
+  ): void => {
+    worksheet.mergeCells(1, 1, 1, lastColumn);
+
+    const titleCell = worksheet.getCell(1, 1);
+    titleCell.value = title;
+    titleCell.font = {
+      bold: true,
+      size: 20,
+      color: { argb: colors.white }
+    };
+    titleCell.alignment = {
+      vertical: 'middle',
+      horizontal: 'center'
+    };
+    titleCell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: colors.black }
+    };
+
+    worksheet.mergeCells(2, 1, 2, lastColumn);
+
+    const subtitleCell = worksheet.getCell(2, 1);
+    subtitleCell.value = subtitle;
+    subtitleCell.font = {
+      italic: true,
+      size: 11,
+      color: { argb: colors.dark }
+    };
+    subtitleCell.alignment = {
+      vertical: 'middle',
+      horizontal: 'center'
+    };
+    subtitleCell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: colors.softGold }
+    };
+
+    worksheet.getRow(1).height = 34;
+    worksheet.getRow(2).height = 24;
+  };
+
+  const applyMoneyFormatToColumns = (
+    worksheet: ExcelJS.Worksheet,
+    headers: string[]
+  ): void => {
+    headers.forEach((header, index) => {
+      const column = worksheet.getColumn(index + 1);
+      const headerLower = normalize(header);
+
+      if (
+        headerLower.includes('total') ||
+        headerLower.includes('precio') ||
+        headerLower.includes('subtotal') ||
+        headerLower.includes('igv') ||
+        headerLower.includes('delivery') ||
+        headerLower.includes('monto') ||
+        headerLower.includes('venta') ||
+        headerLower.includes('ticket')
+      ) {
+        column.numFmt = moneyFormat;
+      }
+
+      if (
+        headerLower.includes('cantidad') ||
+        headerLower.includes('stock') ||
+        headerLower.includes('pedidos') ||
+        headerLower.includes('confirmados') ||
+        headerLower.includes('pendientes') ||
+        headerLower.includes('cancelados') ||
+        headerLower.includes('enviados')
+      ) {
+        column.numFmt = numberFormat;
+      }
+    });
+  };
+
+  const autoWidth = (
+    worksheet: ExcelJS.Worksheet,
+    headers: string[]
+  ): void => {
+    headers.forEach((header, index) => {
+      const column = worksheet.getColumn(index + 1);
+      let maxLength = header.length;
+
+      column.eachCell({ includeEmpty: true }, cell => {
+        const value = cell.value ? String(cell.value) : '';
+        maxLength = Math.max(maxLength, value.length);
+      });
+
+      column.width = Math.min(Math.max(maxLength + 3, 12), 38);
+    });
+  };
+
+  const addTableSheet = (
+    sheetName: string,
+    title: string,
+    headers: string[],
+    rows: any[][]
+  ): ExcelJS.Worksheet => {
+    const worksheet = workbook.addWorksheet(sheetName);
+
+    worksheet.views = [{ showGridLines: false, state: 'frozen', ySplit: 4 }];
+    worksheet.properties.defaultRowHeight = 20;
+
+    styleTitle(
+      worksheet,
+      title,
+      `Generado el ${now.toLocaleString('es-PE')} | JONZKO SPORT`,
+      headers.length
+    );
+
+    const headerRow = worksheet.getRow(4);
+    headerRow.values = headers;
+    headerRow.height = 28;
+
+    headerRow.eachCell(cell => {
+      cell.font = {
+        bold: true,
+        color: { argb: colors.white }
+      };
+      cell.alignment = {
+        vertical: 'middle',
+        horizontal: 'center',
+        wrapText: true
+      };
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: colors.dark }
+      };
+      setBorder(cell);
+    });
+
+    rows.forEach(row => {
+      worksheet.addRow(row);
+    });
+
+    worksheet.eachRow((row, rowNumber) => {
+      if (rowNumber >= 5) {
+        row.eachCell(cell => {
+          cell.alignment = {
+            vertical: 'middle',
+            horizontal: 'left',
+            wrapText: true
+          };
+          setBorder(cell);
+        });
+
+        if (rowNumber % 2 === 0) {
+          row.eachCell(cell => {
+            cell.fill = {
+              type: 'pattern',
+              pattern: 'solid',
+              fgColor: { argb: 'FFFAFAFA' }
+            };
+          });
+        }
+      }
+    });
+
+    worksheet.autoFilter = {
+      from: { row: 4, column: 1 },
+      to: { row: Math.max(4, rows.length + 4), column: headers.length }
+    };
+
+    applyMoneyFormatToColumns(worksheet, headers);
+    autoWidth(worksheet, headers);
+
+    return worksheet;
+  };
+
+  // ==========================
+  // DASHBOARD EJECUTIVO
+  // ==========================
+
+  const dashboard = workbook.addWorksheet('Dashboard Ejecutivo');
+
+  dashboard.views = [{ showGridLines: false }];
+  dashboard.properties.defaultRowHeight = 22;
+
+  dashboard.columns = [
+    { width: 18 },
+    { width: 18 },
+    { width: 18 },
+    { width: 18 },
+    { width: 18 },
+    { width: 18 },
+    { width: 18 },
+    { width: 18 }
+  ];
+
+  styleTitle(
+    dashboard,
+    'REPORTE EJECUTIVO CONTABLE - JONZKO SPORT',
+    `Periodo filtrado desde el administrador | Generado: ${now.toLocaleString('es-PE')}`,
+    8
+  );
+
+  const card = (
+    row: number,
+    col: number,
+    title: string,
+    value: number | string,
+    format?: string,
+    color: string = colors.black
+  ): void => {
+    dashboard.mergeCells(row, col, row, col + 1);
+
+    const titleCell = dashboard.getCell(row, col);
+    titleCell.value = title;
+    titleCell.font = {
+      bold: true,
+      size: 10,
+      color: { argb: colors.white }
+    };
+    titleCell.alignment = {
+      horizontal: 'center',
+      vertical: 'middle'
+    };
+    titleCell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: color }
+    };
+
+    dashboard.mergeCells(row + 1, col, row + 2, col + 1);
+
+    const valueCell = dashboard.getCell(row + 1, col);
+    valueCell.value = value;
+    valueCell.font = {
+      bold: true,
+      size: 18,
+      color: { argb: colors.black }
+    };
+    valueCell.alignment = {
+      horizontal: 'center',
+      vertical: 'middle'
+    };
+    valueCell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: colors.gray }
+    };
+
+    if (format) {
+      valueCell.numFmt = format;
+    }
+
+    for (let r = row; r <= row + 2; r++) {
+      for (let c = col; c <= col + 1; c++) {
+        setBorder(dashboard.getCell(r, c));
+      }
+    }
+  };
+
+  card(5, 1, 'VENTAS CONFIRMADAS', totalConfirmado, moneyFormat, colors.green);
+  card(5, 3, 'VENTAS BRUTAS', totalBruto, moneyFormat, colors.blue);
+  card(5, 5, 'TICKET PROMEDIO', ticketPromedio, moneyFormat, colors.gold);
+  card(5, 7, 'CLIENTES REGISTRADOS', users.length, numberFormat, colors.dark);
+
+  card(9, 1, 'PEDIDOS ANALIZADOS', orders.length, numberFormat, colors.black);
+  card(9, 3, 'PENDIENTES', pedidosPendientes, numberFormat, colors.orange);
+  card(9, 5, 'CONFIRMADOS / ENTREGADOS', pedidosConfirmados, numberFormat, colors.green);
+  card(9, 7, 'CANCELADOS', pedidosCancelados, numberFormat, colors.red);
+
+  dashboard.mergeCells('A13:D13');
+  dashboard.getCell('A13').value = 'Top productos vendidos';
+  dashboard.getCell('A13').font = {
+    bold: true,
+    size: 14,
+    color: { argb: colors.white }
+  };
+  dashboard.getCell('A13').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: colors.black }
+  };
+  dashboard.getCell('A13').alignment = {
+    horizontal: 'center',
+    vertical: 'middle'
+  };
+
+  dashboard.mergeCells('F13:H13');
+  dashboard.getCell('F13').value = 'Métodos de pago';
+  dashboard.getCell('F13').font = {
+    bold: true,
+    size: 14,
+    color: { argb: colors.white }
+  };
+  dashboard.getCell('F13').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: colors.black }
+  };
+  dashboard.getCell('F13').alignment = {
+    horizontal: 'center',
+    vertical: 'middle'
+  };
+
+  const topHeaders = [
+    { col: 1, text: 'Producto' },
+    { col: 2, text: 'Cant.' },
+    { col: 3, text: 'Total' },
+    { col: 4, text: 'Gráfico' },
+    { col: 6, text: 'Método' },
+    { col: 7, text: 'Pedidos' },
+    { col: 8, text: 'Total' }
+  ];
+
+  topHeaders.forEach(item => {
+    const cell = dashboard.getCell(14, item.col);
+    cell.value = item.text;
+    cell.font = { bold: true, color: { argb: colors.white } };
+    cell.alignment = { horizontal: 'center', vertical: 'middle' };
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: colors.dark }
+    };
+    setBorder(cell);
+  });
+
+  const maxProductQty = Math.max(...topProductos.map(p => p.cantidad), 1);
+
+  if (topProductos.length === 0) {
+    dashboard.getCell(15, 1).value = 'Sin productos vendidos';
+    dashboard.getCell(15, 2).value = 0;
+    dashboard.getCell(15, 3).value = 0;
+    dashboard.getCell(15, 4).value = '';
+    dashboard.getCell(15, 3).numFmt = moneyFormat;
+
+    for (let col = 1; col <= 4; col++) {
+      setBorder(dashboard.getCell(15, col));
+    }
+  }
+
+  topProductos.forEach((item, index) => {
+    const row = 15 + index;
+    const barLength = Math.round((item.cantidad / maxProductQty) * 16);
+
+    dashboard.getCell(row, 1).value = item.producto;
+    dashboard.getCell(row, 2).value = item.cantidad;
+    dashboard.getCell(row, 3).value = item.total;
+    dashboard.getCell(row, 4).value = '█'.repeat(Math.max(barLength, 1));
+
+    dashboard.getCell(row, 3).numFmt = moneyFormat;
+    dashboard.getCell(row, 4).font = {
+      bold: true,
+      color: { argb: colors.gold }
+    };
+
+    for (let col = 1; col <= 4; col++) {
+      setBorder(dashboard.getCell(row, col));
+    }
+  });
+
+  metodosPago.forEach((item, index) => {
+    const row = 15 + index;
+
+    dashboard.getCell(row, 6).value = item.metodo;
+    dashboard.getCell(row, 7).value = item.cantidad;
+    dashboard.getCell(row, 8).value = item.total;
+    dashboard.getCell(row, 8).numFmt = moneyFormat;
+
+    for (let col = 6; col <= 8; col++) {
+      setBorder(dashboard.getCell(row, col));
+    }
+  });
+
+  dashboard.mergeCells('A28:H28');
+  dashboard.getCell('A28').value = 'Ventas por fecha';
+  dashboard.getCell('A28').font = {
+    bold: true,
+    size: 14,
+    color: { argb: colors.white }
+  };
+  dashboard.getCell('A28').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: colors.black }
+  };
+  dashboard.getCell('A28').alignment = {
+    horizontal: 'center',
+    vertical: 'middle'
+  };
+
+  const dateHeaders = [
+    'Fecha',
+    'Pedidos',
+    'Confirmados',
+    'Pendientes',
+    'Enviados',
+    'Cancelados',
+    'Total vendido',
+    'Gráfico'
+  ];
+
+  dateHeaders.forEach((header, index) => {
+    const cell = dashboard.getCell(29, index + 1);
+    cell.value = header;
+    cell.font = { bold: true, color: { argb: colors.white } };
+    cell.alignment = { horizontal: 'center', vertical: 'middle' };
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: colors.dark }
+    };
+    setBorder(cell);
+  });
+
+  const maxDateTotal = Math.max(...ventasPorFecha.map(v => v.total), 1);
+
+  if (ventasPorFecha.length === 0) {
+    const row = 30;
+
+    dashboard.getCell(row, 1).value = 'Sin ventas';
+    dashboard.getCell(row, 2).value = 0;
+    dashboard.getCell(row, 3).value = 0;
+    dashboard.getCell(row, 4).value = 0;
+    dashboard.getCell(row, 5).value = 0;
+    dashboard.getCell(row, 6).value = 0;
+    dashboard.getCell(row, 7).value = 0;
+    dashboard.getCell(row, 8).value = '';
+
+    dashboard.getCell(row, 7).numFmt = moneyFormat;
+
+    for (let col = 1; col <= 8; col++) {
+      setBorder(dashboard.getCell(row, col));
+    }
+  }
+
+  ventasPorFecha.forEach((item, index) => {
+    const row = 30 + index;
+    const barLength = Math.round((item.total / maxDateTotal) * 24);
+
+    dashboard.getCell(row, 1).value = item.fecha;
+    dashboard.getCell(row, 2).value = item.pedidos;
+    dashboard.getCell(row, 3).value = item.confirmados;
+    dashboard.getCell(row, 4).value = item.pendientes;
+    dashboard.getCell(row, 5).value = item.enviados;
+    dashboard.getCell(row, 6).value = item.cancelados;
+    dashboard.getCell(row, 7).value = item.total;
+    dashboard.getCell(row, 8).value = '█'.repeat(Math.max(barLength, 1));
+
+    dashboard.getCell(row, 7).numFmt = moneyFormat;
+    dashboard.getCell(row, 8).font = {
+      bold: true,
+      color: { argb: colors.blue }
+    };
+
+    for (let col = 1; col <= 8; col++) {
+      setBorder(dashboard.getCell(row, col));
+    }
+  });
+
+  // ==========================
+  // RESUMEN CONTABLE
+  // ==========================
+
+  const resumenRows = [
+    ['Tienda', 'JONZKO SPORT'],
+    ['Fecha de descarga', now.toLocaleString('es-PE')],
+    ['Pedidos analizados', orders.length],
+    ['Clientes registrados', users.length],
+    ['Productos registrados', products.length],
+    ['Productos activos', this.activeProducts()],
+    ['Ventas brutas', totalBruto],
+    ['Ventas confirmadas', totalConfirmado],
+    ['Subtotal confirmado estimado', Number(subtotalConfirmado.toFixed(2))],
+    ['IGV 18% estimado', Number(igvConfirmado.toFixed(2))],
+    ['Monto pendiente por validar/cobrar', totalPendiente],
+    ['Monto cancelado', totalCancelado],
+    ['Ticket promedio confirmado', Number(ticketPromedio.toFixed(2))],
+    ['Pedidos pendientes', pedidosPendientes],
+    ['Pedidos confirmados/entregados', pedidosConfirmados],
+    ['Pedidos enviados', pedidosEnviados],
+    ['Pedidos cancelados', pedidosCancelados]
+  ];
+
+  const resumenSheet = addTableSheet(
+    'Resumen Contable',
+    'Resumen Contable',
+    ['Métrica', 'Valor'],
+    resumenRows
+  );
+
+  // ==========================
+  // PEDIDOS DETALLE
+  // ==========================
+
+  const pedidosRows = orders.map(order => {
+    const total = Number(order.total || 0);
+    const subtotal = total / 1.18;
+    const igv = total - subtotal;
+
+    return [
+      order.id,
+      this.getOrderCode(order),
+      order.customerName || '',
+      order.customerEmail || '',
+      order.customerPhone || '',
+      order.documentType || 'Boleta',
+      order.documentNumber || 'No registrado',
+      order.department || '',
+      order.province || '',
+      order.district || '',
+      order.address || '',
+      order.referenceText || '',
+      order.paymentMethod || '',
+      order.orderStatus || '',
+      this.getUserType(order),
+      Number(subtotal.toFixed(2)),
+      Number(igv.toFixed(2)),
+      total,
+      this.formatDate(order.createdAt),
+      this.formatTime(order.createdAt),
+      `${this.formatDate(order.updatedAt || order.createdAt)} ${this.formatTime(order.updatedAt || order.createdAt)}`
+    ];
+  });
+
+  addTableSheet(
+    'Pedidos Detalle',
+    'Detalle de Pedidos',
+    [
+      'ID Pedido',
+      'Código',
+      'Cliente',
+      'Correo',
+      'Teléfono',
+      'Tipo documento',
+      'Número documento',
+      'Departamento',
+      'Provincia',
+      'Distrito',
+      'Dirección',
+      'Referencia',
+      'Método de pago',
+      'Estado',
+      'Tipo usuario',
+      'Subtotal estimado',
+      'IGV estimado',
+      'Total',
+      'Fecha',
+      'Hora',
+      'Última actualización'
+    ],
+    pedidosRows
+  );
+
+  // ==========================
+  // PRODUCTOS VENDIDOS
+  // ==========================
+
+  addTableSheet(
+    'Productos Vendidos',
+    'Detalle de Productos Vendidos',
+    [
+      'ID Pedido',
+      'Código',
+      'Cliente',
+      'Correo',
+      'Producto',
+      'Categoría',
+      'Talla',
+      'Color',
+      'Cantidad',
+      'Precio unitario',
+      'Total producto',
+      'Método de pago',
+      'Estado pedido',
+      'Fecha',
+      'Hora'
+    ],
+    productosVendidos.map(item => [
+      item.idPedido,
+      item.codigo,
+      item.cliente,
+      item.correo,
+      item.producto,
+      item.categoria,
+      item.talla,
+      item.color,
+      item.cantidad,
+      item.precio,
+      item.total,
+      item.metodoPago,
+      item.estado,
+      item.fecha,
+      item.hora
+    ])
+  );
+
+  // ==========================
+  // CLIENTES
+  // ==========================
+
+  addTableSheet(
+    'Clientes',
+    'Clientes Registrados',
+    [
+      'ID Cliente',
+      'Nombre',
+      'Correo',
+      'Teléfono',
+      'Estado',
+      'Fecha registro'
+    ],
+    users.map(user => [
+      user.id,
+      user.fullName,
+      user.email,
+      user.phone,
+      user.active ? 'Activo' : 'Inactivo',
+      user.createdAt || 'Sin fecha'
+    ])
+  );
+
+  // ==========================
+  // CATÁLOGO
+  // ==========================
+
+  addTableSheet(
+    'Catálogo',
+    'Catálogo de Productos',
+    [
+      'ID Producto',
+      'Nombre',
+      'Categoría',
+      'Descripción',
+      'Precio actual',
+      'Precio anterior',
+      'Color',
+      'Tallas',
+      'Stock',
+      'Tipo de venta',
+      'Imagen',
+      'Activo',
+      'Fecha creación',
+      'Última actualización'
+    ],
+    products.map(product => [
+      product.id,
+      product.name,
+      product.category,
+      product.description || '',
+      product.price,
+      product.oldPrice || '',
+      product.color || '',
+      product.sizes || '',
+      product.stock,
+      product.saleType || '',
+      product.imageUrl,
+      product.active ? 'Sí' : 'No',
+      product.createdAt || '',
+      product.updatedAt || ''
+    ])
+  );
+
+  // ==========================
+  // MÉTODOS DE PAGO
+  // ==========================
+
+  addTableSheet(
+    'Métodos de Pago',
+    'Arqueo por Método de Pago',
+    [
+      'Método de pago',
+      'Cantidad pedidos',
+      'Total vendido'
+    ],
+    metodosPago.map(item => [
+      item.metodo,
+      item.cantidad,
+      item.total
+    ])
+  );
+
+  // ==========================
+  // VENTAS POR FECHA
+  // ==========================
+
+  addTableSheet(
+    'Ventas por Fecha',
+    'Pedidos y Ventas por Fecha',
+    [
+      'Fecha',
+      'Pedidos',
+      'Confirmados',
+      'Pendientes',
+      'Enviados',
+      'Cancelados',
+      'Total vendido'
+    ],
+    ventasPorFecha.map(item => [
+      item.fecha,
+      item.pedidos,
+      item.confirmados,
+      item.pendientes,
+      item.enviados,
+      item.cancelados,
+      item.total
+    ])
+  );
+
+  // ==========================
+  // TOP PRODUCTOS
+  // ==========================
+
+  addTableSheet(
+    'Top Productos',
+    'Ranking de Productos Vendidos',
+    [
+      'Producto',
+      'Cantidad vendida',
+      'Total vendido'
+    ],
+    topProductos.map(item => [
+      item.producto,
+      item.cantidad,
+      item.total
+    ])
+  );
+
+  workbook.views = [
+    {
+      x: 0,
+      y: 0,
+      width: 16000,
+      height: 9000,
+      firstSheet: 0,
+      activeTab: 0,
+      visibility: 'visible'
+    }
+  ];
+
+  const buffer = await workbook.xlsx.writeBuffer();
+
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  });
+
+  saveAs(blob, `Reporte_JONZKO_PRO_${now.getTime()}.xlsx`);
 }
+
 viewVoucher(order: OrderResponse): void {
   this.currentReceiptOrder = order;
   this.currentReceiptType = 'Voucher';
