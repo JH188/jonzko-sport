@@ -9854,3 +9854,6 @@ header.navbar,
     display: none;
   }
 }
+.product-description-hidden {
+  display: none;
+}

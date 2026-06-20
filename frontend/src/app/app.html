@@ -250,9 +250,11 @@
 
                     <h2>{{ cleanProductName(product.name) }}</h2>
 
-                    <p class="product-description">
-                      {{ product.description }}
-                    </p>
+                    @if (product.description) {
+                      <p class="product-description product-description-hidden">
+                        {{ product.description }}
+                      </p>
+                    }
 
                     <div class="product-price">
                       @if (product.oldPrice) {

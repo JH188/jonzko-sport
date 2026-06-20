@@ -140,9 +140,9 @@ currentRoute = signal('');
   logoUrl = signal('assets/logo.png');
   heroImageUrl = signal('assets/polera.jpg');
 
-  collectionTag = signal('ROPA URBANA');
-  collectionTitle = signal('Nuestro Producto');
-  collectionDescription = signal('Productos oficiales disponibles para compra online.');
+  collectionTag = signal('EDICIÓN LIMITADA');
+collectionTitle = signal('EXCLUSIVOS');
+collectionDescription = signal('');
 
   aboutTitle = signal('Sobre Nosotros');
   aboutDescription = signal(
@@ -266,11 +266,9 @@ loadWebConfig(): void {
       this.logoUrl.set('assets/logo.png');
       this.heroImageUrl.set(config.heroImageUrl || 'assets/polera.jpg');
 
-      this.collectionTag.set('ROPA URBANA');
-      this.collectionTitle.set(config.collectionTitle || 'Nuestro Producto');
-      this.collectionDescription.set(
-        config.collectionDescription || 'Productos oficiales disponibles para compra online.'
-      );
+      this.collectionTag.set(config.collectionTag || 'EDICIÓN LIMITADA');
+this.collectionTitle.set(config.collectionTitle || 'EXCLUSIVOS');
+this.collectionDescription.set(config.collectionDescription || '');
 
       this.aboutTitle.set('Sobre Nosotros');
       this.aboutDescription.set(
