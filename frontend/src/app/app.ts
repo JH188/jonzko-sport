@@ -4,6 +4,7 @@ import { Router, NavigationEnd, RouterLink, RouterOutlet } from '@angular/router
 import { filter } from 'rxjs';
 import { ApiService, Product } from './services/api.service';
 import { AuthService, AuthUser } from './services/auth.service';
+import { ElementRef, ViewChild } from '@angular/core';
 
 interface CartItem extends Product {
   quantity: number;
@@ -19,6 +20,20 @@ interface CartItem extends Product {
   styleUrl: './app.css'
 })
 export class App implements OnInit, OnDestroy {
+  @ViewChild('productsCarousel') productsCarousel?: ElementRef<HTMLDivElement>;
+
+scrollProducts(direction: 'left' | 'right'): void {
+  const carousel = this.productsCarousel?.nativeElement;
+
+  if (!carousel) return;
+
+  const scrollAmount = carousel.clientWidth * 0.8;
+
+  carousel.scrollBy({
+    left: direction === 'right' ? scrollAmount : -scrollAmount,
+    behavior: 'smooth'
+  });
+}
   openCustomerLogin(): void {
   alert('Aquí irá el inicio de sesión del cliente. El administrador entra aparte por /admin-login.');
 }

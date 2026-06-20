@@ -211,54 +211,72 @@
             <h3>Cargando productos...</h3>
           </div>
         } @else {
-          <div class="products-grid">
-            @for (product of products(); track product.id) {
-              <article class="product-card">
-                <a class="product-image-box" [routerLink]="['/producto', product.id]">
-                  @if (discountPercent(product) > 0) {
-                    <span class="discount-badge">-{{ discountPercent(product) }}% OFF</span>
-                  }
+          <div class="products-carousel-shell">
+            <button
+              type="button"
+              class="products-arrow products-arrow-left"
+              (click)="scrollProducts('left')"
+            >
+              ‹
+            </button>
 
-                  <img
-                    [src]="product.imageUrl"
-                    [alt]="product.name"
-                    class="product-image product-main-image"
-                  />
-
-                  <img
-                    [src]="hoverImageFor(product)"
-                    [alt]="product.name"
-                    class="product-image product-hover-image"
-                  />
-
-                  <span class="new-badge">NUEVO</span>
-                </a>
-
-                <div class="product-info">
-                  <p class="product-category">
-                    {{ product.category || 'ROPA URBANA' }}
-                  </p>
-
-                  <h2>{{ cleanProductName(product.name) }}</h2>
-
-                  <p class="product-description">
-                    {{ product.description }}
-                  </p>
-
-                  <div class="product-price">
-                    @if (product.oldPrice) {
-                      <span class="old-price"> S/ {{ product.oldPrice }} </span>
+            <div class="products-grid products-carousel" #productsCarousel>
+              @for (product of products(); track product.id) {
+                <article class="product-card">
+                  <a class="product-image-box" [routerLink]="['/producto', product.id]">
+                    @if (discountPercent(product) > 0) {
+                      <span class="discount-badge">-{{ discountPercent(product) }}% OFF</span>
                     }
 
-                    <span class="current-price"> S/ {{ product.price }} </span>
-                  </div>
+                    <img
+                      [src]="product.imageUrl"
+                      [alt]="product.name"
+                      class="product-image product-main-image"
+                    />
 
-                  <a class="product-button" [routerLink]="['/producto', product.id]">
-                    VER PRODUCTO
+                    <img
+                      [src]="hoverImageFor(product)"
+                      [alt]="product.name"
+                      class="product-image product-hover-image"
+                    />
+
+                    <span class="new-badge">NUEVO</span>
                   </a>
-                </div>
-              </article>
-            }
+
+                  <div class="product-info">
+                    <p class="product-category">
+                      {{ product.category || 'ROPA URBANA' }}
+                    </p>
+
+                    <h2>{{ cleanProductName(product.name) }}</h2>
+
+                    <p class="product-description">
+                      {{ product.description }}
+                    </p>
+
+                    <div class="product-price">
+                      @if (product.oldPrice) {
+                        <span class="old-price"> S/ {{ product.oldPrice }} </span>
+                      }
+
+                      <span class="current-price"> S/ {{ product.price }} </span>
+                    </div>
+
+                    <a class="product-button" [routerLink]="['/producto', product.id]">
+                      VER PRODUCTO
+                    </a>
+                  </div>
+                </article>
+              }
+            </div>
+
+            <button
+              type="button"
+              class="products-arrow products-arrow-right"
+              (click)="scrollProducts('right')"
+            >
+              ›
+            </button>
           </div>
         }
       </section>

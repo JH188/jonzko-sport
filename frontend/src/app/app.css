@@ -9731,3 +9731,126 @@ header.navbar,
     height: 33px;
   }
 }
+/* ==============================
+   CARRUSEL DE PRODUCTOS JONZKO
+============================== */
+
+.products-carousel-shell {
+  position: relative;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.products-carousel {
+  display: flex !important;
+  grid-template-columns: none !important;
+  gap: 28px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 10px 6px 24px;
+}
+
+.products-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.products-carousel::-webkit-scrollbar-track {
+  background: #eee8dd;
+  border-radius: 999px;
+}
+
+.products-carousel::-webkit-scrollbar-thumb {
+  background: #c49a4a;
+  border-radius: 999px;
+}
+
+.products-carousel .product-card {
+  flex: 0 0 300px;
+  scroll-snap-align: start;
+}
+
+.products-arrow {
+  position: absolute;
+  top: 42%;
+  z-index: 5;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.85);
+  color: #ffffff;
+  font-size: 38px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.products-arrow-left {
+  left: -18px;
+}
+
+.products-arrow-right {
+  right: -18px;
+}
+
+.products-arrow:hover {
+  background: #c49a4a;
+  color: #000000;
+}
+
+/* PC grande: tarjetas más grandes y bien llenas */
+@media (min-width: 1400px) {
+  .products-carousel .product-card {
+    flex-basis: 320px;
+  }
+}
+
+/* Laptop */
+@media (max-width: 1200px) {
+  .products-carousel .product-card {
+    flex-basis: 280px;
+  }
+
+  .products-arrow-left {
+    left: 4px;
+  }
+
+  .products-arrow-right {
+    right: 4px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .products-carousel {
+    gap: 18px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .products-carousel .product-card {
+    flex-basis: 240px;
+  }
+
+  .products-arrow {
+    width: 44px;
+    height: 44px;
+    font-size: 32px;
+  }
+}
+
+/* Celular */
+@media (max-width: 480px) {
+  .products-carousel .product-card {
+    flex-basis: 82vw;
+  }
+
+  .products-arrow {
+    display: none;
+  }
+}
