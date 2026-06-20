@@ -5,7 +5,7 @@
       <img src="assets/logo.jpg" alt="Logo JONZKO" />
       <div>
         <h2>JONZKO</h2>
-        <p>Panel administrador</p>
+        <p>Panel</p>
       </div>
     </div>
 
@@ -25,7 +25,7 @@
         [class.active]="activeSection() === 'products'"
         (click)="setSection('products')"
       >
-        👕 Productos / Precios
+        👕 Productos exclusivos
       </button>
 
       <button
@@ -388,13 +388,24 @@
 
             <label>
               Imagen del producto
-              <input
-                type="text"
-                name="imageUrl"
-                [(ngModel)]="productForm.imageUrl"
-                placeholder="assets/polo blanco.jpg"
-              />
+              <input type="file" accept="image/*" (change)="uploadProductImage($event)" />
             </label>
+
+            @if (productForm.imageUrl) {
+              <div class="image-preview-box">
+                <img [src]="productForm.imageUrl" alt="Vista previa del producto" />
+
+                <div>
+                  <small>Imagen cargada correctamente</small>
+
+                  <input type="text" name="imageUrl" [(ngModel)]="productForm.imageUrl" readonly />
+
+                  <button type="button" class="delete-btn" (click)="removeProductImage()">
+                    Quitar imagen
+                  </button>
+                </div>
+              </div>
+            }
 
             <label class="check-label">
               <input type="checkbox" name="active" [(ngModel)]="productForm.active" />

@@ -252,6 +252,13 @@ deleteProduct(productId: number): Observable<any> {
     this.getAdminHeaders()
   );
 }
+uploadProductImage(formData: FormData): Observable<any> {
+  return this.http.post<any>(
+    `${this.apiUrl}/products/admin/upload-image`,
+    formData,
+    this.getAdminHeaders()
+  );
+}
   // ==========================
   // VARIANTES DE PRODUCTO PARA ADMIN
   // Tallas, colores, stock y precio por producto

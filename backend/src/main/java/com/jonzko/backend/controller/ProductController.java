@@ -15,28 +15,38 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jonzko.backend.entity.Product;
 import com.jonzko.backend.repository.ProductRepository;
+import com.jonzko.backend.service.CloudinaryService;
 
 @RestController
 @RequestMapping("/api/products")
 @CrossOrigin(originPatterns = {
         "http://localhost:*",
-        "https://*.vercel.app"
+        "https://*.vercel.app",
+        "https://jonzko.lat",
+        "https://www.jonzko.lat"
 })
 public class ProductController {
 
     private final ProductRepository productRepository;
+    private final CloudinaryService cloudinaryService;
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(
+            ProductRepository productRepository,
+            CloudinaryService cloudinaryService
+    ) {
         this.productRepository = productRepository;
+        this.cloudinaryService = cloudinaryService;
     }
 
     // ============================================================
     // TIENDA - SOLO PRODUCTOS ACTIVOS
-    // GET: http://localhost:8080/api/products
+    // GET: /api/products
     // ============================================================
     @GetMapping
     public List<Product> getProducts() {
@@ -45,7 +55,7 @@ public class ProductController {
 
     // ============================================================
     // ADMIN - TODOS LOS PRODUCTOS, ACTIVOS E INACTIVOS
-    // GET: http://localhost:8080/api/products/admin/all
+    // GET: /api/products/admin/all
     // ============================================================
     @GetMapping("/admin/all")
     public List<Product> getAllProductsForAdmin() {
@@ -53,8 +63,24 @@ public class ProductController {
     }
 
     // ============================================================
+    // ADMIN - SUBIR IMAGEN A CLOUDINARY
+    // POST: /api/products/admin/upload-image
+    // ============================================================
+    @PostMapping("/admin/upload-image")
+    public ResponseEntity<?> uploadProductImage(@RequestParam("file") MultipartFile file) {
+        String imageUrl = cloudinaryService.uploadProductImage(file);
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "message", "Imagen subida correctamente",
+                        "imageUrl", imageUrl
+                )
+        );
+    }
+
+    // ============================================================
     // BUSCAR PRODUCTO POR ID
-    // GET: http://localhost:8080/api/products/1
+    // GET: /api/products/1
     // ============================================================
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductById(@PathVariable Long id) {
@@ -62,7 +88,7 @@ public class ProductController {
 
         if (product == null) {
             return ResponseEntity.badRequest().body(
-                Map.of("message", "Producto no encontrado")
+                    Map.of("message", "Producto no encontrado")
             );
         }
 
@@ -71,41 +97,65 @@ public class ProductController {
 
     // ============================================================
     // ADMIN - CREAR PRODUCTO NUEVO
-    // POST: http://localhost:8080/api/products/admin
+    // POST: /api/products/admin
     // ============================================================
- @PostMapping("/admin")
-public ResponseEntity<?> createProduct(@RequestBody Product request) {
+    @PostMapping("/admin")
+    public ResponseEntity<?> createProduct(@RequestBody Product request) {
 
-    Product product = new Product();
+        if (request.getName() == null || request.getName().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("message", "El nombre del producto es obligatorio")
+            );
+        }
 
-    product.setName(request.getName());
-    product.setCategory(request.getCategory());
-    product.setDescription(request.getDescription());
-    product.setPrice(request.getPrice());
-    product.setOldPrice(request.getOldPrice());
-    product.setColor(request.getColor());
-    product.setSizes(request.getSizes());
-    product.setSaleType(request.getSaleType());
-    product.setStock(request.getStock());
-    product.setImageUrl(request.getImageUrl());
+        if (request.getCategory() == null || request.getCategory().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("message", "La categoría del producto es obligatoria")
+            );
+        }
 
-    if (request.getActive() == null) {
-        product.setActive(true);
-    } else {
-        product.setActive(request.getActive());
+        if (request.getPrice() == null || request.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("message", "El precio debe ser mayor a 0")
+            );
+        }
+
+        if (request.getImageUrl() == null || request.getImageUrl().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("message", "La imagen del producto es obligatoria")
+            );
+        }
+
+        Product product = new Product();
+
+        product.setName(request.getName().trim());
+        product.setCategory(request.getCategory().trim());
+        product.setDescription(request.getDescription() != null ? request.getDescription().trim() : "");
+        product.setPrice(request.getPrice());
+        product.setOldPrice(request.getOldPrice());
+        product.setColor(request.getColor());
+        product.setSizes(request.getSizes());
+        product.setSaleType(request.getSaleType());
+        product.setStock(request.getStock() != null ? request.getStock() : 0);
+        product.setImageUrl(request.getImageUrl().trim());
+
+        if (request.getActive() == null) {
+            product.setActive(true);
+        } else {
+            product.setActive(request.getActive());
+        }
+
+        product.setCreatedAt(LocalDateTime.now());
+        product.setUpdatedAt(LocalDateTime.now());
+
+        Product savedProduct = productRepository.save(product);
+
+        return ResponseEntity.ok(savedProduct);
     }
-
-    product.setCreatedAt(LocalDateTime.now());
-    product.setUpdatedAt(LocalDateTime.now());
-
-    Product savedProduct = productRepository.save(product);
-
-    return ResponseEntity.ok(savedProduct);
-}
 
     // ============================================================
     // ADMIN - EDITAR PRODUCTO
-    // PUT: http://localhost:8080/api/products/admin/1
+    // PUT: /api/products/admin/1
     // ============================================================
     @PutMapping("/admin/{id}")
     public ResponseEntity<?> updateProduct(
@@ -116,20 +166,44 @@ public ResponseEntity<?> createProduct(@RequestBody Product request) {
 
         if (product == null) {
             return ResponseEntity.badRequest().body(
-                Map.of("message", "Producto no encontrado")
+                    Map.of("message", "Producto no encontrado")
             );
         }
 
-        product.setName(request.getName());
-product.setCategory(request.getCategory());
-product.setDescription(request.getDescription());
-product.setPrice(request.getPrice());
-product.setOldPrice(request.getOldPrice());
-product.setColor(request.getColor());
-product.setSizes(request.getSizes());
-product.setSaleType(request.getSaleType());
-product.setStock(request.getStock());
-product.setImageUrl(request.getImageUrl());
+        if (request.getName() == null || request.getName().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("message", "El nombre del producto es obligatorio")
+            );
+        }
+
+        if (request.getCategory() == null || request.getCategory().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("message", "La categoría del producto es obligatoria")
+            );
+        }
+
+        if (request.getPrice() == null || request.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("message", "El precio debe ser mayor a 0")
+            );
+        }
+
+        if (request.getImageUrl() == null || request.getImageUrl().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("message", "La imagen del producto es obligatoria")
+            );
+        }
+
+        product.setName(request.getName().trim());
+        product.setCategory(request.getCategory().trim());
+        product.setDescription(request.getDescription() != null ? request.getDescription().trim() : "");
+        product.setPrice(request.getPrice());
+        product.setOldPrice(request.getOldPrice());
+        product.setColor(request.getColor());
+        product.setSizes(request.getSizes());
+        product.setSaleType(request.getSaleType());
+        product.setStock(request.getStock() != null ? request.getStock() : 0);
+        product.setImageUrl(request.getImageUrl().trim());
 
         if (request.getActive() != null) {
             product.setActive(request.getActive());
@@ -144,7 +218,7 @@ product.setImageUrl(request.getImageUrl());
 
     // ============================================================
     // ADMIN - CAMBIAR SOLO PRECIO Y STOCK
-    // PATCH: http://localhost:8080/api/products/admin/1/price-stock
+    // PATCH: /api/products/admin/1/price-stock
     // ============================================================
     @PatchMapping("/admin/{id}/price-stock")
     public ResponseEntity<?> updatePriceAndStock(
@@ -155,7 +229,7 @@ product.setImageUrl(request.getImageUrl());
 
         if (product == null) {
             return ResponseEntity.badRequest().body(
-                Map.of("message", "Producto no encontrado")
+                    Map.of("message", "Producto no encontrado")
             );
         }
 
@@ -178,7 +252,7 @@ product.setImageUrl(request.getImageUrl());
 
     // ============================================================
     // ADMIN - ACTIVAR / DESACTIVAR PRODUCTO
-    // PATCH: http://localhost:8080/api/products/admin/1/status
+    // PATCH: /api/products/admin/1/status
     // ============================================================
     @PatchMapping("/admin/{id}/status")
     public ResponseEntity<?> updateProductStatus(
@@ -189,7 +263,7 @@ product.setImageUrl(request.getImageUrl());
 
         if (product == null) {
             return ResponseEntity.badRequest().body(
-                Map.of("message", "Producto no encontrado")
+                    Map.of("message", "Producto no encontrado")
             );
         }
 
@@ -197,7 +271,7 @@ product.setImageUrl(request.getImageUrl());
 
         if (active == null) {
             return ResponseEntity.badRequest().body(
-                Map.of("message", "Debes enviar el estado active")
+                    Map.of("message", "Debes enviar el estado active")
             );
         }
 
@@ -211,7 +285,7 @@ product.setImageUrl(request.getImageUrl());
 
     // ============================================================
     // ADMIN - ELIMINAR REALMENTE PRODUCTO
-    // DELETE: http://localhost:8080/api/products/admin/1
+    // DELETE: /api/products/admin/1
     // ============================================================
     @DeleteMapping("/admin/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
@@ -219,14 +293,14 @@ product.setImageUrl(request.getImageUrl());
 
         if (product == null) {
             return ResponseEntity.badRequest().body(
-                Map.of("message", "Producto no encontrado")
+                    Map.of("message", "Producto no encontrado")
             );
         }
 
         productRepository.delete(product);
 
         return ResponseEntity.ok(
-            Map.of("message", "Producto eliminado correctamente")
+                Map.of("message", "Producto eliminado correctamente")
         );
     }
 }

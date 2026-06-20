@@ -310,6 +310,58 @@ if (!data.name || !data.category || !data.imageUrl) {
       active: true
     };
   }
+  uploadProductImage(event: Event): void {
+  const input = event.target as HTMLInputElement;
+
+  if (!input.files || input.files.length === 0) {
+    return;
+  }
+
+  const file = input.files[0];
+
+  if (!file.type.startsWith('image/')) {
+    alert('Selecciona una imagen válida.');
+    input.value = '';
+    return;
+  }
+
+  const maxSizeMb = 8;
+  const maxSizeBytes = maxSizeMb * 1024 * 1024;
+
+  if (file.size > maxSizeBytes) {
+    alert(`La imagen es muy pesada. Máximo ${maxSizeMb} MB.`);
+    input.value = '';
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  this.loading.set(true);
+
+  this.apiService.uploadProductImage(formData).subscribe({
+    next: (response: any) => {
+      this.loading.set(false);
+      this.productForm.imageUrl = response.imageUrl;
+      alert('Imagen subida correctamente.');
+    },
+    error: (error) => {
+      this.loading.set(false);
+      console.error('Error subiendo imagen:', error);
+      alert('No se pudo subir la imagen. Revisa Cloudinary o Railway.');
+    }
+  });
+}
+
+removeProductImage(): void {
+  const confirmRemove = confirm('¿Deseas quitar la imagen del formulario?');
+
+  if (!confirmRemove) {
+    return;
+  }
+
+  this.productForm.imageUrl = '';
+}
 
   // ==========================
 // PEDIDOS PROFESIONAL
