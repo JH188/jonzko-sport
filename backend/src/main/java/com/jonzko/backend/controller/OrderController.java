@@ -1,4 +1,5 @@
 package com.jonzko.backend.controller;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import com.jonzko.backend.repository.OrderRepository;
 import com.jonzko.backend.repository.PaymentRepository;
 import com.jonzko.backend.repository.ProductRepository;
 import com.jonzko.backend.repository.UserRepository;
+import com.jonzko.backend.service.AdminNotificationEmailService;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -36,17 +38,20 @@ public class OrderController {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final PaymentRepository paymentRepository;
+    private final AdminNotificationEmailService adminNotificationEmailService;
 
     public OrderController(
             OrderRepository orderRepository,
             UserRepository userRepository,
             ProductRepository productRepository,
-            PaymentRepository paymentRepository
+            PaymentRepository paymentRepository,
+            AdminNotificationEmailService adminNotificationEmailService
     ) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.paymentRepository = paymentRepository;
+        this.adminNotificationEmailService = adminNotificationEmailService;
     }
 
     @PostMapping
@@ -118,6 +123,9 @@ public class OrderController {
 
         paymentRepository.save(payment);
 
+        // Enviar correo automático al administrador
+        adminNotificationEmailService.enviarNuevoPedido(savedOrder);
+
         return ResponseEntity.ok(OrderResponse.fromEntity(savedOrder));
     }
 
@@ -140,70 +148,72 @@ public class OrderController {
                         .toList()
         );
     }
-@GetMapping("/{id}")
-public ResponseEntity<?> getOrderById(@PathVariable Long id) {
-    Order order = orderRepository.findById(id).orElse(null);
 
-    if (order == null) {
-        return ResponseEntity.badRequest().body(Map.of("message", "Pedido no encontrado"));
-    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable Long id) {
+        Order order = orderRepository.findById(id).orElse(null);
 
-    return ResponseEntity.ok(OrderResponse.fromEntity(order));
-}
-
-@PutMapping("/{id}/status")
-public ResponseEntity<?> updateOrderStatus(
-        @PathVariable Long id,
-        @RequestBody UpdateOrderStatusRequest request
-) {
-    Order order = orderRepository.findById(id).orElse(null);
-
-    if (order == null) {
-        return ResponseEntity.badRequest().body(Map.of("message", "Pedido no encontrado"));
-    }
-
-    if (request.getOrderStatus() == null || request.getOrderStatus().isBlank()) {
-        return ResponseEntity.badRequest().body(Map.of("message", "El estado del pedido es obligatorio"));
-    }
-
-    order.setOrderStatus(request.getOrderStatus());
-    Order updatedOrder = orderRepository.save(order);
-
-    return ResponseEntity.ok(OrderResponse.fromEntity(updatedOrder));
-}
-
-@PutMapping("/{id}/payment-status")
-public ResponseEntity<?> updatePaymentStatus(
-        @PathVariable Long id,
-        @RequestBody UpdatePaymentStatusRequest request
-) {
-    Order order = orderRepository.findById(id).orElse(null);
-
-    if (order == null) {
-        return ResponseEntity.badRequest().body(Map.of("message", "Pedido no encontrado"));
-    }
-
-    if (request.getPaymentStatus() == null || request.getPaymentStatus().isBlank()) {
-        return ResponseEntity.badRequest().body(Map.of("message", "El estado del pago es obligatorio"));
-    }
-
-    order.setPaymentStatus(request.getPaymentStatus());
-    Order updatedOrder = orderRepository.save(order);
-
-    Payment payment = paymentRepository.findByOrderId(id).orElse(null);
-
-    if (payment != null) {
-        payment.setStatus(request.getPaymentStatus());
-
-        if ("CONFIRMADO".equalsIgnoreCase(request.getPaymentStatus())) {
-            payment.setConfirmedAt(java.time.LocalDateTime.now());
+        if (order == null) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Pedido no encontrado"));
         }
 
-        paymentRepository.save(payment);
+        return ResponseEntity.ok(OrderResponse.fromEntity(order));
     }
 
-    return ResponseEntity.ok(OrderResponse.fromEntity(updatedOrder));
-}
+    @PutMapping("/{id}/status")
+    public ResponseEntity<?> updateOrderStatus(
+            @PathVariable Long id,
+            @RequestBody UpdateOrderStatusRequest request
+    ) {
+        Order order = orderRepository.findById(id).orElse(null);
+
+        if (order == null) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Pedido no encontrado"));
+        }
+
+        if (request.getOrderStatus() == null || request.getOrderStatus().isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("message", "El estado del pedido es obligatorio"));
+        }
+
+        order.setOrderStatus(request.getOrderStatus());
+        Order updatedOrder = orderRepository.save(order);
+
+        return ResponseEntity.ok(OrderResponse.fromEntity(updatedOrder));
+    }
+
+    @PutMapping("/{id}/payment-status")
+    public ResponseEntity<?> updatePaymentStatus(
+            @PathVariable Long id,
+            @RequestBody UpdatePaymentStatusRequest request
+    ) {
+        Order order = orderRepository.findById(id).orElse(null);
+
+        if (order == null) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Pedido no encontrado"));
+        }
+
+        if (request.getPaymentStatus() == null || request.getPaymentStatus().isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("message", "El estado del pago es obligatorio"));
+        }
+
+        order.setPaymentStatus(request.getPaymentStatus());
+        Order updatedOrder = orderRepository.save(order);
+
+        Payment payment = paymentRepository.findByOrderId(id).orElse(null);
+
+        if (payment != null) {
+            payment.setStatus(request.getPaymentStatus());
+
+            if ("CONFIRMADO".equalsIgnoreCase(request.getPaymentStatus())) {
+                payment.setConfirmedAt(java.time.LocalDateTime.now());
+            }
+
+            paymentRepository.save(payment);
+        }
+
+        return ResponseEntity.ok(OrderResponse.fromEntity(updatedOrder));
+    }
+
     private String generateOrderCode() {
         long count = orderRepository.count() + 1;
         return String.format("JZK-%04d", count);
