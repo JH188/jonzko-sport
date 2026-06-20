@@ -1,5 +1,6 @@
 package com.jonzko.backend.service;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -44,8 +45,14 @@ public class AdminNotificationEmailService {
         String htmlContent = """
                 <div style="font-family: Arial, sans-serif; background:#f6f6f6; padding:24px;">
                   <div style="max-width:650px; margin:auto; background:#ffffff; border-radius:14px; padding:24px; border:1px solid #e5e5e5;">
-                    <h2 style="margin:0 0 12px; color:#111;">Nuevo pedido en JONZKO</h2>
-                    <p style="color:#444;">Hola Jonathan, tienes un nuevo pedido registrado en tu tienda.</p>
+
+                    <h2 style="margin:0 0 12px; color:#111; font-size:28px;">
+                      Nuevo pedido en JONZKO
+                    </h2>
+
+                    <p style="color:#444; font-size:16px;">
+                      Hola Jonathan, tienes un nuevo pedido registrado en tu tienda.
+                    </p>
 
                     <div style="background:#fafafa; border:1px solid #eee; border-radius:12px; padding:16px; margin:18px 0;">
                       <p><b>Pedido:</b> #%s</p>
@@ -61,9 +68,9 @@ public class AdminNotificationEmailService {
                       <p><b>Total:</b> S/ %s</p>
                     </div>
 
-                    <div style="background:#fff; border:1px solid #eee; border-radius:12px; padding:16px; margin:18px 0;">
-                      <p><b>Productos:</b></p>
-                      <pre style="white-space:pre-wrap; font-family:Arial, sans-serif; color:#333;">%s</pre>
+                    <div style="background:#ffffff; border:1px solid #eee; border-radius:12px; padding:16px; margin:18px 0;">
+                      <p style="margin-top:0;"><b>Productos:</b></p>
+                      <pre style="white-space:pre-wrap; font-family:Arial, sans-serif; color:#333; line-height:1.6; font-size:15px; margin:0;">%s</pre>
                     </div>
 
                     <a href="%s"
@@ -74,6 +81,7 @@ public class AdminNotificationEmailService {
                     <p style="font-size:12px; color:#777; margin-top:22px;">
                       JONZKO SPORT - Notificación automática.
                     </p>
+
                   </div>
                 </div>
                 """.formatted(
@@ -91,7 +99,7 @@ public class AdminNotificationEmailService {
                 safe(order.getPaymentMethod()),
                 safe(order.getOrderStatus()),
                 safe(order.getTotal()),
-                safe(order.getItemsJson()),
+                formatearProductos(order.getItemsJson()),
                 adminUrl
         );
 
@@ -108,8 +116,14 @@ public class AdminNotificationEmailService {
         String htmlContent = """
                 <div style="font-family: Arial, sans-serif; background:#f6f6f6; padding:24px;">
                   <div style="max-width:650px; margin:auto; background:#ffffff; border-radius:14px; padding:24px; border:1px solid #e5e5e5;">
-                    <h2 style="margin:0 0 12px; color:#111;">Nuevo pedido en JONZKO</h2>
-                    <p style="color:#444;">Hola Jonathan, tienes un nuevo pedido en tu tienda.</p>
+
+                    <h2 style="margin:0 0 12px; color:#111; font-size:28px;">
+                      Nuevo pedido en JONZKO
+                    </h2>
+
+                    <p style="color:#444; font-size:16px;">
+                      Hola Jonathan, tienes un nuevo pedido en tu tienda.
+                    </p>
 
                     <div style="background:#fafafa; border:1px solid #eee; border-radius:12px; padding:16px; margin:18px 0;">
                       <p><b>Código:</b> %s</p>
@@ -130,6 +144,7 @@ public class AdminNotificationEmailService {
                     <p style="font-size:12px; color:#777; margin-top:22px;">
                       JONZKO SPORT - Notificación automática.
                     </p>
+
                   </div>
                 </div>
                 """.formatted(
@@ -194,6 +209,82 @@ public class AdminNotificationEmailService {
         } catch (Exception e) {
             System.out.println("No se pudo enviar correo de nuevo pedido: " + e.getMessage());
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private String formatearProductos(String itemsJson) {
+        if (itemsJson == null || itemsJson.isBlank()) {
+            return "Sin productos";
+        }
+
+        try {
+            List<Map<String, Object>> items = objectMapper.readValue(itemsJson, List.class);
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < items.size(); i++) {
+                Map<String, Object> item = items.get(i);
+
+                String nombre = valor(item, "name");
+                String talla = valor(item, "selectedSize");
+                String color = valor(item, "selectedColor");
+
+                if ("-".equals(color)) {
+                    color = valor(item, "color");
+                }
+
+                String cantidadTexto = valor(item, "quantity");
+                String precioTexto = valor(item, "price");
+
+                int cantidad = 1;
+                BigDecimal precio = BigDecimal.ZERO;
+
+                try {
+                    cantidad = Integer.parseInt(cantidadTexto);
+                } catch (Exception ignored) {
+                }
+
+                try {
+                    precio = new BigDecimal(precioTexto);
+                } catch (Exception ignored) {
+                }
+
+                BigDecimal subtotal = precio.multiply(BigDecimal.valueOf(cantidad));
+
+                sb.append(i + 1).append(". ").append(nombre).append("\n");
+                sb.append("Talla: ").append(talla).append("\n");
+                sb.append("Color: ").append(color).append("\n");
+                sb.append("Cantidad: ").append(cantidad).append("\n");
+                sb.append("Precio unitario: S/ ").append(precio).append("\n");
+                sb.append("Subtotal: S/ ").append(subtotal).append("\n");
+
+                if (i < items.size() - 1) {
+                    sb.append("\n--------------------------\n\n");
+                }
+            }
+
+            return safe(sb.toString());
+
+        } catch (Exception e) {
+            System.out.println("No se pudo formatear productos: " + e.getMessage());
+            return "No se pudo leer el detalle de productos.";
+        }
+    }
+
+    private String valor(Map<String, Object> item, String key) {
+        Object value = item.get(key);
+
+        if (value == null) {
+            return "-";
+        }
+
+        String text = value.toString();
+
+        if (text.isBlank() || "null".equalsIgnoreCase(text)) {
+            return "-";
+        }
+
+        return text;
     }
 
     private String safe(Object value) {
