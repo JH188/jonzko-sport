@@ -346,10 +346,16 @@ if (!data.name || !data.category || !data.imageUrl) {
       alert('Imagen subida correctamente.');
     },
     error: (error) => {
-      this.loading.set(false);
-      console.error('Error subiendo imagen:', error);
-      alert('No se pudo subir la imagen. Revisa Cloudinary o Railway.');
-    }
+  this.loading.set(false);
+  console.error('Error subiendo imagen:', error);
+
+  const message =
+    error?.error?.message ||
+    error?.message ||
+    'No se pudo subir la imagen. Revisa Cloudinary o Railway.';
+
+  alert(message);
+}
   });
 }
 

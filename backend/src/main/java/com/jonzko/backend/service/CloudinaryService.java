@@ -13,12 +13,19 @@ import com.cloudinary.utils.ObjectUtils;
 public class CloudinaryService {
 
     private final Cloudinary cloudinary;
+    private final String cloudName;
+    private final String apiKey;
+    private final String apiSecret;
 
     public CloudinaryService(
-            @Value("${cloudinary.cloud-name}") String cloudName,
-            @Value("${cloudinary.api-key}") String apiKey,
-            @Value("${cloudinary.api-secret}") String apiSecret
+            @Value("${cloudinary.cloud-name:}") String cloudName,
+            @Value("${cloudinary.api-key:}") String apiKey,
+            @Value("${cloudinary.api-secret:}") String apiSecret
     ) {
+        this.cloudName = cloudName;
+        this.apiKey = apiKey;
+        this.apiSecret = apiSecret;
+
         this.cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", cloudName,
                 "api_key", apiKey,
@@ -29,6 +36,18 @@ public class CloudinaryService {
 
     public String uploadProductImage(MultipartFile file) {
         try {
+            if (cloudName == null || cloudName.isBlank()) {
+                throw new RuntimeException("CLOUDINARY_CLOUD_NAME no está configurado");
+            }
+
+            if (apiKey == null || apiKey.isBlank()) {
+                throw new RuntimeException("CLOUDINARY_API_KEY no está configurado");
+            }
+
+            if (apiSecret == null || apiSecret.isBlank()) {
+                throw new RuntimeException("CLOUDINARY_API_SECRET no está configurado");
+            }
+
             if (file == null || file.isEmpty()) {
                 throw new RuntimeException("La imagen está vacía");
             }
@@ -37,14 +56,21 @@ public class CloudinaryService {
                     file.getBytes(),
                     ObjectUtils.asMap(
                             "folder", "jonzko/productos",
-                            "resource_type", "image",
-                            "transformation", "c_fill,w_900,h_1100,q_auto,f_auto"
+                            "resource_type", "image"
                     )
             );
 
-            return uploadResult.get("secure_url").toString();
+            Object secureUrl = uploadResult.get("secure_url");
+
+            if (secureUrl == null) {
+                throw new RuntimeException("Cloudinary no devolvió secure_url");
+            }
+
+            return secureUrl.toString();
 
         } catch (Exception e) {
+            System.out.println("ERROR CLOUDINARY: " + e.getMessage());
+            e.printStackTrace();
             throw new RuntimeException("No se pudo subir la imagen: " + e.getMessage());
         }
     }

@@ -67,7 +67,8 @@ public class ProductController {
     // POST: /api/products/admin/upload-image
     // ============================================================
     @PostMapping("/admin/upload-image")
-    public ResponseEntity<?> uploadProductImage(@RequestParam("file") MultipartFile file) {
+public ResponseEntity<?> uploadProductImage(@RequestParam("file") MultipartFile file) {
+    try {
         String imageUrl = cloudinaryService.uploadProductImage(file);
 
         return ResponseEntity.ok(
@@ -76,7 +77,15 @@ public class ProductController {
                         "imageUrl", imageUrl
                 )
         );
+
+    } catch (Exception e) {
+        return ResponseEntity.status(500).body(
+                Map.of(
+                        "message", e.getMessage()
+                )
+        );
     }
+}
 
     // ============================================================
     // BUSCAR PRODUCTO POR ID
