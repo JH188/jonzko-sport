@@ -141,8 +141,8 @@ currentRoute = signal('');
   heroImageUrl = signal('assets/polera.jpg');
 
   collectionTag = signal('EDICIÓN LIMITADA');
-collectionTitle = signal('EXCLUSIVOS');
-collectionDescription = signal('');
+collectionTitle = signal('Exclusivo');
+collectionDescription = signal('Poleras urbanas exclusivas de JONZKO.');
 
   aboutTitle = signal('Sobre Nosotros');
   aboutDescription = signal(
@@ -215,7 +215,8 @@ isStandalonePageRoute(): boolean {
     this.currentRoute().startsWith('/registro') ||
     this.currentRoute().startsWith('/reset-password') ||
     this.currentRoute().startsWith('/checkout') ||
-    this.currentRoute().startsWith('/mis-pedidos')
+    this.currentRoute().startsWith('/mis-pedidos') ||
+    this.currentRoute().startsWith('/tienda')
   );
 }
 
@@ -267,8 +268,19 @@ loadWebConfig(): void {
       this.heroImageUrl.set(config.heroImageUrl || 'assets/polera.jpg');
 
       this.collectionTag.set(config.collectionTag || 'EDICIÓN LIMITADA');
-this.collectionTitle.set(config.collectionTitle || 'EXCLUSIVOS');
-this.collectionDescription.set(config.collectionDescription || '');
+
+      const savedCollectionTitle = String(config.collectionTitle || '').trim();
+      const fixedCollectionTitle =
+        !savedCollectionTitle ||
+        savedCollectionTitle.toLowerCase() === 'producto' ||
+        savedCollectionTitle.toLowerCase() === 'productos'
+          ? 'Exclusivo'
+          : savedCollectionTitle;
+
+      this.collectionTitle.set(fixedCollectionTitle);
+      this.collectionDescription.set(
+        config.collectionDescription || 'Poleras urbanas exclusivas de JONZKO.'
+      );
 
       this.aboutTitle.set('Sobre Nosotros');
       this.aboutDescription.set(
