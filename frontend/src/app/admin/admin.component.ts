@@ -297,6 +297,45 @@ if (!data.name || !data.category || !data.imageUrl) {
       }
     });
   }
+  toggleProductVisibility(product: Product): void {
+  const newActiveState = !product.active;
+
+  const actionText = newActiveState ? 'mostrar' : 'ocultar';
+
+  const confirmAction = confirm(
+    `¿Deseas ${actionText} este producto para los usuarios?`
+  );
+
+  if (!confirmAction) {
+    return;
+  }
+
+  const data: ProductRequest = {
+    name: product.name,
+    category: product.category,
+    description: product.description || '',
+    price: Number(product.price),
+    stock: Number(product.stock),
+    imageUrl: product.imageUrl,
+    active: newActiveState
+  };
+
+  this.apiService.updateProduct(product.id, data).subscribe({
+    next: () => {
+      alert(
+        newActiveState
+          ? 'Producto visible para los usuarios.'
+          : 'Producto ocultado para los usuarios.'
+      );
+
+      this.loadAdminData();
+    },
+    error: (error) => {
+      console.error('Error cambiando visibilidad del producto:', error);
+      alert('No se pudo cambiar la visibilidad del producto.');
+    }
+  });
+}
 
   resetProductForm(): void {
     this.editingProductId.set(null);

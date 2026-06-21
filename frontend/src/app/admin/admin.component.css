@@ -2283,3 +2283,28 @@ td p {
     height: 220px;
   }
 }
+.hide-product-btn {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.show-product-btn {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.hide-product-btn:hover,
+.show-product-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}

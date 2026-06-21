@@ -464,6 +464,24 @@
                   Editar
                 </button>
 
+                <button
+                  type="button"
+                  class="hide-product-btn"
+                  *ngIf="product.active"
+                  (click)="toggleProductVisibility(product)"
+                >
+                  Ocultar producto
+                </button>
+
+                <button
+                  type="button"
+                  class="show-product-btn"
+                  *ngIf="!product.active"
+                  (click)="toggleProductVisibility(product)"
+                >
+                  Mostrar producto
+                </button>
+
                 <button type="button" class="delete-btn" (click)="deleteProduct(product.id)">
                   Eliminar
                 </button>
