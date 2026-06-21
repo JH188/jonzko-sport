@@ -98,14 +98,18 @@ receiptModalContent = '';
 currentReceiptOrder: OrderResponse | null = null;
 currentReceiptType: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante' = 'Comprobante';
   productForm: ProductRequest = {
-    name: '',
-    category: '',
-    description: '',
-    price: 0,
-    stock: 0,
-    imageUrl: '',
-    active: true
-  };
+  name: '',
+  category: '',
+  description: '',
+  price: 0,
+  oldPrice: 0,
+  color: '',
+  sizes: 'S,M,L,XL',
+  stock: 0,
+  saleType: 'NUEVO',
+  imageUrl: '',
+  active: true
+};
 
   webConfig: WebConfig = {
     storeName: 'JONZKO',
@@ -211,12 +215,20 @@ currentReceiptType: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante' = 'Comproba
   // ==========================
 
   saveProduct(): void {
-    const data: ProductRequest = {
+   const data: ProductRequest = {
   name: (this.productForm.name || '').trim(),
   category: (this.productForm.category || '').trim(),
   description: (this.productForm.description || '').trim(),
+
   price: Number(this.productForm.price),
+  oldPrice: Number(this.productForm.oldPrice || 0),
+
+  color: (this.productForm.color || '').trim(),
+  sizes: (this.productForm.sizes || 'S,M,L,XL').trim(),
+
   stock: Number(this.productForm.stock),
+  saleType: (this.productForm.saleType || 'NUEVO').trim(),
+
   imageUrl: (this.productForm.imageUrl || '').trim(),
   active: this.productForm.active
 };
@@ -264,14 +276,22 @@ if (!data.name || !data.category || !data.imageUrl) {
     this.editingProductId.set(product.id);
 
     this.productForm = {
-      name: product.name,
-      category: product.category,
-      description: product.description || '',
-      price: Number(product.price),
-      stock: Number(product.stock),
-      imageUrl: product.imageUrl,
-      active: product.active
-    };
+  name: product.name,
+  category: product.category,
+  description: product.description || '',
+
+  price: Number(product.price),
+  oldPrice: Number(product.oldPrice || 0),
+
+  color: product.color || '',
+  sizes: product.sizes || 'S,M,L,XL',
+
+  stock: Number(product.stock),
+  saleType: product.saleType || 'NUEVO',
+
+  imageUrl: product.imageUrl,
+  active: product.active
+};
 
     window.scrollTo({
       top: 0,
@@ -298,44 +318,51 @@ if (!data.name || !data.category || !data.imageUrl) {
     });
   }
   toggleProductVisibility(product: Product): void {
-  const newActiveState = !product.active;
+    const newActiveState = !product.active;
+    const actionText = newActiveState ? 'mostrar' : 'ocultar';
 
-  const actionText = newActiveState ? 'mostrar' : 'ocultar';
+    const confirmAction = confirm(
+      `¿Deseas ${actionText} este producto para los usuarios?`
+    );
 
-  const confirmAction = confirm(
-    `¿Deseas ${actionText} este producto para los usuarios?`
-  );
-
-  if (!confirmAction) {
-    return;
-  }
-
-  const data: ProductRequest = {
-    name: product.name,
-    category: product.category,
-    description: product.description || '',
-    price: Number(product.price),
-    stock: Number(product.stock),
-    imageUrl: product.imageUrl,
-    active: newActiveState
-  };
-
-  this.apiService.updateProduct(product.id, data).subscribe({
-    next: () => {
-      alert(
-        newActiveState
-          ? 'Producto visible para los usuarios.'
-          : 'Producto ocultado para los usuarios.'
-      );
-
-      this.loadAdminData();
-    },
-    error: (error) => {
-      console.error('Error cambiando visibilidad del producto:', error);
-      alert('No se pudo cambiar la visibilidad del producto.');
+    if (!confirmAction) {
+      return;
     }
-  });
-}
+
+    const data: ProductRequest = {
+      name: product.name,
+      category: product.category,
+      description: product.description || '',
+
+      price: Number(product.price),
+      oldPrice: Number(product.oldPrice || 0),
+
+      color: product.color || '',
+      sizes: product.sizes || 'S,M,L,XL',
+
+      stock: Number(product.stock),
+      saleType: product.saleType || 'NUEVO',
+
+      imageUrl: product.imageUrl,
+      active: newActiveState
+    };
+
+    this.apiService.updateProduct(product.id, data).subscribe({
+      next: () => {
+        alert(
+          newActiveState
+            ? 'Producto visible para los usuarios.'
+            : 'Producto ocultado para los usuarios.'
+        );
+
+        this.loadAdminData();
+      },
+      error: (error) => {
+        console.error('Error cambiando visibilidad del producto:', error);
+        alert('No se pudo cambiar la visibilidad del producto.');
+      }
+    });
+  }
 
   resetProductForm(): void {
     this.editingProductId.set(null);
@@ -344,8 +371,16 @@ if (!data.name || !data.category || !data.imageUrl) {
       name: '',
       category: '',
       description: '',
+
       price: 0,
+      oldPrice: 0,
+
+      color: '',
+      sizes: 'S,M,L,XL',
+
       stock: 0,
+      saleType: 'NUEVO',
+
       imageUrl: '',
       active: true
     };
@@ -692,6 +727,17 @@ recentProducts(): Product[] {
   money(value: number | string | null | undefined): string {
     const amount = Number(value || 0);
     return `S/ ${amount.toFixed(2)}`;
+  }
+
+  discountPercent(product: Product | ProductRequest): number {
+    const oldPrice = Number(product.oldPrice || 0);
+    const price = Number(product.price || 0);
+
+    if (oldPrice <= 0 || price <= 0 || oldPrice <= price) {
+      return 0;
+    }
+
+    return Math.round(((oldPrice - price) / oldPrice) * 100);
   }
 
 statusText(status: string | null | undefined): string {

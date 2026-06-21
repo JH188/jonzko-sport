@@ -385,6 +385,56 @@
                 <input type="number" name="stock" [(ngModel)]="productForm.stock" min="0" />
               </label>
             </div>
+            <div class="form-two">
+              <label>
+                Precio anterior
+                <input
+                  type="number"
+                  name="oldPrice"
+                  [(ngModel)]="productForm.oldPrice"
+                  min="0"
+                  step="0.10"
+                  placeholder="Ejemplo: 79"
+                />
+              </label>
+
+              <label>
+                Color de prenda
+                <input
+                  type="text"
+                  name="color"
+                  [(ngModel)]="productForm.color"
+                  placeholder="Ejemplo: Negro, Verde, Plomo"
+                />
+              </label>
+            </div>
+
+            <div class="form-two">
+              <label>
+                Tallas disponibles
+                <input
+                  type="text"
+                  name="sizes"
+                  [(ngModel)]="productForm.sizes"
+                  placeholder="Ejemplo: S,M,L,XL"
+                />
+              </label>
+
+              <label>
+                Etiqueta / oferta
+                <input
+                  type="text"
+                  name="saleType"
+                  [(ngModel)]="productForm.saleType"
+                  placeholder="Ejemplo: NUEVO, OFERTA, EDICIÓN LIMITADA"
+                />
+              </label>
+            </div>
+
+            <div class="discount-preview" *ngIf="discountPercent(productForm) > 0">
+              Descuento automático:
+              <strong>-{{ discountPercent(productForm) }}% OFF</strong>
+            </div>
 
             <label>
               Imagen del producto
@@ -453,6 +503,17 @@
 
                 <div class="product-meta">
                   <strong>{{ money(product.price) }}</strong>
+
+                  <small *ngIf="product.oldPrice && product.oldPrice > product.price">
+                    Antes: {{ money(product.oldPrice) }} · -{{ discountPercent(product) }}% OFF
+                  </small>
+
+                  <small *ngIf="product.color"> Color: {{ product.color }} </small>
+
+                  <small *ngIf="product.sizes"> Tallas: {{ product.sizes }} </small>
+
+                  <small *ngIf="product.saleType"> Etiqueta: {{ product.saleType }} </small>
+
                   <span>Stock: {{ product.stock }}</span>
                   <span class="status confirmed" *ngIf="product.active">Activo</span>
                   <span class="status rejected" *ngIf="!product.active">Inactivo</span>
