@@ -1,0 +1,54 @@
+<section class="store-page">
+  <header class="store-hero">
+    <span>JONZKO STORE</span>
+    <h1>Tienda</h1>
+    <p>Prendas urbanas, poleras, polos, joggers y próximos lanzamientos de JONZKO.</p>
+  </header>
+
+  <div class="store-loading" *ngIf="loading()">Cargando productos...</div>
+
+  <div class="store-error" *ngIf="error()">
+    {{ error() }}
+  </div>
+
+  <div class="store-empty" *ngIf="!loading() && products().length === 0">
+    Todavía no hay productos disponibles.
+  </div>
+
+  <div class="store-grid" *ngIf="!loading() && products().length > 0">
+    <article class="store-card" *ngFor="let product of products()">
+      <a class="store-image" [routerLink]="['/producto', product.id]">
+        <span class="store-discount" *ngIf="discountPercent(product) > 0">
+          -{{ discountPercent(product) }}% OFF
+        </span>
+
+        <span class="store-label" *ngIf="product.saleType">
+          {{ product.saleType }}
+        </span>
+
+        <img [src]="product.imageUrl" [alt]="product.name" />
+      </a>
+
+      <div class="store-info">
+        <p>{{ product.category || 'ROPA URBANA' }}</p>
+
+        <h2>{{ cleanProductName(product.name) }}</h2>
+
+        <div class="store-meta">
+          <span *ngIf="product.color">Color: {{ product.color }}</span>
+          <span>Stock: {{ product.stock }}</span>
+        </div>
+
+        <div class="store-price">
+          <span class="old-price" *ngIf="product.oldPrice && product.oldPrice > product.price">
+            {{ money(product.oldPrice) }}
+          </span>
+
+          <strong>{{ money(product.price) }}</strong>
+        </div>
+
+        <a class="store-button" [routerLink]="['/producto', product.id]"> Ver producto </a>
+      </div>
+    </article>
+  </div>
+</section>

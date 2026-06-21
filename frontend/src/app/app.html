@@ -35,7 +35,8 @@
 
     <nav class="premium-nav">
       <a href="/#inicio">Inicio</a>
-      <a href="/#producto">Producto</a>
+      <a routerLink="/tienda">Tienda</a>
+      <a href="/#producto">Exclusivo</a>
       <a href="/#nosotros">Nosotros</a>
       <a href="/#contacto">Contacto</a>
     </nav>
@@ -124,7 +125,8 @@
 
         <div class="mobile-menu-grid">
           <a href="/#inicio" (click)="closeMobileMenu()">Inicio</a>
-          <a href="/#producto" (click)="closeMobileMenu()">Producto</a>
+          <a routerLink="/tienda" (click)="closeMobileMenu()">Tienda</a>
+          <a href="/#producto" (click)="closeMobileMenu()">Exclusivo</a>
           <a href="/#nosotros" (click)="closeMobileMenu()">Nosotros</a>
           <a href="/#contacto" (click)="closeMobileMenu()">Contacto</a>
 
@@ -197,7 +199,7 @@
         </div>
       </section>
 
-      <!-- PRODUCTO -->
+      <!-- EXCLUSIVO -->
       <section id="producto" class="collection-section">
         <div class="collection-header">
           <span class="tag">{{ collectionTag() }}</span>
@@ -437,9 +439,10 @@
         </div>
 
         <div class="footer-premium-column">
-          <h4>TIENDA</h4>
+          <h4>JONZKO</h4>
           <a href="/#inicio">Inicio</a>
-          <a href="/#producto">Productos</a>
+          <a routerLink="/tienda">Tienda</a>
+          <a href="/#producto">Exclusivo</a>
           <a href="/#nosotros">Nosotros</a>
           <a href="/#contacto">Contacto</a>
         </div>
