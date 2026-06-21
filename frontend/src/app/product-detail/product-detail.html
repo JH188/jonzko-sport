@@ -15,7 +15,7 @@
 
   <div *ngIf="product() as p" class="detail-container">
     <!-- GALERÍA DE PRODUCTO -->
-    <div class="gallery-wrapper">
+    <div class="gallery-wrapper" [class.with-thumbs]="productMedia().length > 1">
       <div class="image-box product-gallery">
         @if (activeMedia(); as media) {
           @if (media.type === 'image') {
