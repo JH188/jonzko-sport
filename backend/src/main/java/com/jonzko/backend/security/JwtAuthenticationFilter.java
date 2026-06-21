@@ -1,11 +1,13 @@
 package com.jonzko.backend.security;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -31,6 +33,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
+        // Dejar pasar OPTIONS para CORS
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -40,30 +48,52 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7);
 
-        if (!jwtService.isTokenValid(token)) {
-            filterChain.doFilter(request, response);
-            return;
+        try {
+            if (!jwtService.isTokenValid(token)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            Claims claims = jwtService.extractClaims(token);
+
+            String email = claims.getSubject();
+            String role = claims.get("role", String.class);
+
+            if (email == null || email.isBlank()) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            if (role == null || role.isBlank()) {
+                role = "USER";
+            }
+
+            role = role.trim().toUpperCase();
+
+            if (role.startsWith("ROLE_")) {
+                role = role.replace("ROLE_", "");
+            }
+
+            List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority(role));          // ADMIN
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role)); // ROLE_ADMIN
+
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(
+                            email,
+                            null,
+                            authorities
+                    );
+
+            authentication.setDetails(
+                    new WebAuthenticationDetailsSource().buildDetails(request)
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext();
         }
-
-        Claims claims = jwtService.extractClaims(token);
-
-        String email = claims.getSubject();
-        String role = claims.get("role", String.class);
-
-        if (role == null || role.isBlank()) {
-            role = "USER";
-        }
-
-        role = role.toUpperCase();
-
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(
-                        email,
-                        null,
-                        List.of(new SimpleGrantedAuthority("ROLE_" + role))
-                );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);
     }
