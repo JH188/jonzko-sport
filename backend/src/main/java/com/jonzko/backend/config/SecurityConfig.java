@@ -81,21 +81,22 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders/user/**").authenticated()
 
                         // ==========================
-                        // ADMIN PROTEGIDO CON JWT
-                        // ==========================
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/products/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/admin/product-variants/**").hasRole("ADMIN")
+// ADMIN PROTEGIDO CON JWT
+// ==========================
+.requestMatchers("/api/admin/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+.requestMatchers("/api/products/admin/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+.requestMatchers("/api/admin/product-variants/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
 
                         // ==========================
                         // CONFIGURACION ADMIN
                         // ==========================
-                        .requestMatchers(HttpMethod.PUT, "/api/settings").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+
 
                         // ==========================
                         // PAGOS ADMIN
                         // ==========================
-                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/payment-status").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/payment-status").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
 
                         // ==========================
                         // BLOQUEOS PUBLICOS DE ORDERS ANTIGUO
