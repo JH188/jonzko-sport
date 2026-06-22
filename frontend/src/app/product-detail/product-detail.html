@@ -32,6 +32,8 @@
               playsinline
               controls
               preload="auto"
+              (loadeddata)="playVideo($event)"
+              (canplay)="playVideo($event)"
             ></video>
           }
         } @else {

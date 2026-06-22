@@ -111,6 +111,19 @@ export class ProductDetail implements OnInit {
   activeMedia(): ProductMedia | undefined {
     return this.productMedia()[this.activeMediaIndex()];
   }
+  playVideo(event: Event): void {
+  const video = event.target as HTMLVideoElement;
+
+  if (!video) {
+    return;
+  }
+
+  video.muted = true;
+
+  video.play().catch(() => {
+    console.log('El navegador bloqueó la reproducción automática. Dale play manual.');
+  });
+}
 
   nextMedia(): void {
     const total = this.productMedia().length;
