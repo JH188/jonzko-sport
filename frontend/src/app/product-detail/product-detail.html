@@ -16,24 +16,20 @@
   <div *ngIf="product() as p" class="detail-container">
     <!-- GALERÍA DE PRODUCTO -->
     <div class="gallery-wrapper" [class.with-thumbs]="productMedia().length > 1">
-      <div class="image-box product-gallery">
+      <div class="image-box product-gallery" [class.video-active]="activeMedia()?.type === 'video'">
         @if (activeMedia(); as media) {
           @if (media.type === 'image') {
             <img [src]="media.src" [alt]="p.name" />
           }
-
           @if (media.type === 'video') {
             <video
+              class="product-video-player"
               [src]="media.src"
-              autoplay
               muted
               loop
               playsinline
               controls
               preload="auto"
-              (loadedmetadata)="playVideo($event)"
-              (canplay)="playVideo($event)"
-              (click)="playVideo($event)"
             ></video>
           }
         } @else {

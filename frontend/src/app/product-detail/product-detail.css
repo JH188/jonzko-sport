@@ -2146,3 +2146,34 @@
 .gallery-thumbnails button {
   pointer-events: auto !important;
 }
+/* =========================================================
+   VIDEO PRODUCT DETAIL - ARREGLO FINAL
+   ========================================================= */
+
+.product-gallery.video-active {
+  position: relative !important;
+  overflow: hidden !important;
+  background: #000 !important;
+}
+
+.product-gallery.video-active .product-video-player {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  background: #000 !important;
+  position: relative !important;
+  z-index: 50 !important;
+  pointer-events: auto !important;
+}
+
+.product-gallery.video-active .gallery-arrow,
+.product-gallery.video-active .gallery-dots {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.gallery-thumbnails {
+  position: relative !important;
+  z-index: 60 !important;
+}
