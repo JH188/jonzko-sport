@@ -24,13 +24,14 @@
 
           @if (media.type === 'video') {
             <video
-              [src]="media.src"
+              [src]="media.src + '#t=1'"
+              [poster]="p.imageUrl3 || p.imageUrl2 || p.imageUrl"
               autoplay
               muted
               loop
               playsinline
               controls
-              preload="metadata"
+              preload="auto"
             ></video>
           }
         } @else {

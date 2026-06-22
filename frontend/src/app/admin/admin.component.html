@@ -553,11 +553,12 @@
             @if (productForm.videoUrl) {
               <div class="image-preview-box media-video-preview">
                 <video
-                  [src]="productForm.videoUrl"
+                  [src]="productForm.videoUrl + '#t=1'"
+                  [poster]="productForm.imageUrl3 || productForm.imageUrl2 || productForm.imageUrl"
                   controls
                   muted
                   playsinline
-                  preload="metadata"
+                  preload="auto"
                 ></video>
 
                 <div class="media-preview-info">
