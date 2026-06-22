@@ -89,15 +89,23 @@ export class ProductDetail implements OnInit {
     };
 
     const addVideo = (src?: string | null): void => {
-      const cleanSrc = String(src || '').trim();
+  let cleanSrc = String(src || '').trim();
 
-      if (cleanSrc) {
-        media.push({
-          type: 'video',
-          src: cleanSrc,
-        });
-      }
-    };
+  if (!cleanSrc) {
+    return;
+  }
+
+  if (cleanSrc.includes('/video/upload/') && cleanSrc.toLowerCase().endsWith('.mov')) {
+    cleanSrc = cleanSrc
+      .replace('/video/upload/', '/video/upload/f_mp4,q_auto/')
+      .replace(/\.mov$/i, '.mp4');
+  }
+
+  media.push({
+    type: 'video',
+    src: cleanSrc,
+  });
+};
 
     addImage(product.imageUrl);
     addImage(product.imageUrl2);

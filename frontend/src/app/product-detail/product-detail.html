@@ -23,9 +23,15 @@
           }
 
           @if (media.type === 'video') {
-            <video autoplay muted loop playsinline controls>
-              <source [src]="media.src" type="video/mp4" />
-            </video>
+            <video
+              [src]="media.src"
+              autoplay
+              muted
+              loop
+              playsinline
+              controls
+              preload="metadata"
+            ></video>
           }
         } @else {
           <div class="empty-state">Imagen no disponible</div>
