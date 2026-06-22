@@ -67,6 +67,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
+                        // ==========================
+// INICIO PUBLICO
+// ==========================
+.requestMatchers(HttpMethod.GET, "/api/home/settings").permitAll()
+.requestMatchers(HttpMethod.GET, "/api/home/slides").permitAll()
 
                         // ==========================
                         // CREAR PEDIDO PUBLICO
