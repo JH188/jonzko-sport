@@ -11658,3 +11658,129 @@ video {
     flex: 0 0 auto;
   }
 }
+/* =========================================================
+   JONZKO HERO - CORRECCIÓN SOLO MÓVIL
+   PC NO SE TOCA
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* Alto correcto del hero en celular */
+  .hero-slider,
+  .hero-slide,
+  .hero-banner,
+  .hero-main {
+    height: 76vh !important;
+    min-height: 620px !important;
+    max-height: 760px !important;
+    overflow: hidden !important;
+  }
+
+  /* Imagen base móvil */
+  .hero-slide img,
+  .hero-bg,
+  .hero-image,
+  .hero-banner img,
+  .hero-main img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* Texto bien acomodado en móvil */
+  .hero-content,
+  .hero-info,
+  .hero-text {
+    position: absolute !important;
+    left: 28px !important;
+    right: 24px !important;
+    top: 36% !important;
+    transform: translateY(-50%) !important;
+    max-width: 88% !important;
+    z-index: 5 !important;
+  }
+
+  .hero-content .tag,
+  .hero-info .tag,
+  .hero-text .tag {
+    font-size: 13px !important;
+    letter-spacing: 6px !important;
+    line-height: 1.2 !important;
+  }
+
+  .hero-content h1,
+  .hero-info h1,
+  .hero-text h1 {
+    font-size: clamp(48px, 14vw, 72px) !important;
+    line-height: 0.92 !important;
+    letter-spacing: 1px !important;
+  }
+
+  .hero-btn,
+  .hero-content button,
+  .hero-info button,
+  .hero-text button {
+    margin-top: 22px !important;
+    height: 58px !important;
+    padding: 0 34px !important;
+    font-size: 14px !important;
+    border-radius: 999px !important;
+  }
+
+  /* Flechas más limpias */
+  .hero-arrow,
+  .slider-arrow {
+    width: 48px !important;
+    height: 48px !important;
+    z-index: 8 !important;
+  }
+
+  .hero-arrow.left,
+  .slider-arrow.left {
+    left: 16px !important;
+  }
+
+  .hero-arrow.right,
+  .slider-arrow.right {
+    right: 16px !important;
+  }
+
+  /* Dots abajo */
+  .hero-dots,
+  .slider-dots {
+    bottom: 26px !important;
+    z-index: 9 !important;
+  }
+}
+/* =========================================================
+   POSICIÓN DE CADA SLIDE SOLO EN MÓVIL
+   Ajusta cada imagen sin afectar PC
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* Slide 1: imagen del centro comercial / oversize */
+  .hero-slide:nth-child(1) img,
+  .hero-slide:nth-child(1) .hero-bg {
+    object-position: 38% center !important;
+  }
+
+  /* Slide 2: imagen blanca BLACK & WHITE */
+  .hero-slide:nth-child(2) img,
+  .hero-slide:nth-child(2) .hero-bg {
+    object-position: center center !important;
+  }
+
+  /* Slide 3: cancha de básquet */
+  .hero-slide:nth-child(3) img,
+  .hero-slide:nth-child(3) .hero-bg {
+    object-position: 68% center !important;
+  }
+
+  /* Slide 4: parque nocturno */
+  .hero-slide:nth-child(4) img,
+  .hero-slide:nth-child(4) .hero-bg {
+    object-position: 72% center !important;
+  }
+}
