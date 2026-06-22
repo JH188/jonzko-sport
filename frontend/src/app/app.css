@@ -11972,3 +11972,226 @@ video {
     padding: 0 14px 48px;
   }
 }
+/* =========================================================
+   JONZKO - GALERÍA ESTILO / VIDEO + FOTOS
+   PC + MÓVIL
+   Pegar al FINAL de app.css
+   ========================================================= */
+
+.jonzko-gallery-section {
+  width: 100%;
+  background: #ffffff;
+  padding: 80px 7% 90px;
+}
+
+.jonzko-gallery-header {
+  max-width: 1320px;
+  margin: 0 auto 34px;
+}
+
+.jonzko-gallery-header span {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 7px;
+  color: #b98b45;
+  text-transform: uppercase;
+}
+
+.jonzko-gallery-header h2 {
+  margin: 0 0 14px;
+  font-size: clamp(46px, 5vw, 76px);
+  line-height: 0.92;
+  font-weight: 950;
+  color: #111111;
+}
+
+.jonzko-gallery-header p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333333;
+}
+
+/* =========================
+   PC / LAPTOP
+   ========================= */
+
+.jonzko-gallery-grid {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  grid-template-rows: 300px 300px;
+  gap: 18px;
+}
+
+.gallery-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #eee7dc;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
+}
+
+.gallery-video-card {
+  grid-row: 1 / 3;
+  background: #e8dfd2;
+}
+
+.gallery-wide {
+  grid-column: 2 / 4;
+}
+
+.gallery-card img,
+.gallery-card video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Video: que se vea completo y elegante */
+.gallery-video-card video {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Imagen derecha arriba 1 */
+.jonzko-gallery-grid .gallery-card:nth-child(2) img {
+  object-position: center center;
+}
+
+/* Imagen derecha arriba 2 */
+.jonzko-gallery-grid .gallery-card:nth-child(3) img {
+  object-position: center center;
+}
+
+/* Imagen ancha de abajo */
+.jonzko-gallery-grid .gallery-wide img {
+  object-position: center center;
+}
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 1000px) {
+  .jonzko-gallery-section {
+    padding: 70px 28px 80px;
+  }
+
+  .jonzko-gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 440px 260px 300px;
+    gap: 14px;
+  }
+
+  .gallery-video-card {
+    grid-column: 1 / 3;
+    grid-row: auto;
+  }
+
+  .gallery-wide {
+    grid-column: 1 / 3;
+  }
+}
+
+/* =========================
+   MÓVIL
+   ========================= */
+
+@media (max-width: 768px) {
+  .jonzko-gallery-section {
+    padding: 56px 16px 64px;
+  }
+
+  .jonzko-gallery-header {
+    margin-bottom: 26px;
+  }
+
+  .jonzko-gallery-header span {
+    font-size: 11px;
+    letter-spacing: 5px;
+  }
+
+  .jonzko-gallery-header h2 {
+    font-size: clamp(40px, 12vw, 56px);
+    line-height: 0.95;
+  }
+
+  .jonzko-gallery-header p {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .jonzko-gallery-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 100%;
+  }
+
+  .gallery-card,
+  .gallery-video-card,
+  .gallery-wide {
+    width: 100%;
+    grid-column: auto;
+    grid-row: auto;
+    border-radius: 18px;
+  }
+
+  /* Video grande en móvil */
+  .gallery-video-card {
+    height: 560px;
+  }
+
+  .gallery-video-card video {
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  /* Fotos normales */
+  .gallery-card {
+    height: 340px;
+  }
+
+  .gallery-card img {
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  /* Imagen ancha abajo en móvil */
+  .gallery-wide {
+    height: 360px;
+  }
+
+  .gallery-wide img {
+    object-fit: cover;
+    object-position: center center;
+  }
+}
+
+/* =========================
+   MÓVIL PEQUEÑO
+   ========================= */
+
+@media (max-width: 430px) {
+  .jonzko-gallery-section {
+    padding: 48px 14px 56px;
+  }
+
+  .gallery-video-card {
+    height: 500px;
+  }
+
+  .gallery-card {
+    height: 310px;
+  }
+
+  .gallery-wide {
+    height: 320px;
+  }
+}
