@@ -1,5 +1,6 @@
 package com.jonzko.backend.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 
 @Service
@@ -55,27 +57,11 @@ public class CloudinaryService {
             String contentType = file.getContentType() == null ? "" : file.getContentType();
             boolean isVideo = contentType.startsWith("video/");
 
-            Map uploadResult = cloudinary.uploader().upload(
-                    file.getBytes(),
-                    ObjectUtils.asMap(
-                            "folder", "jonzko/productos",
-                            "resource_type", isVideo ? "video" : "image"
-                    )
-            );
-
-            Object secureUrl = uploadResult.get("secure_url");
-
-            if (secureUrl == null) {
-                throw new RuntimeException("Cloudinary no devolvió secure_url");
-            }
-
-            String url = secureUrl.toString();
-
             if (isVideo) {
-                return buildCompatibleVideoUrl(url);
+                return uploadVideo(file);
             }
 
-            return url;
+            return uploadImage(file);
 
         } catch (Exception e) {
             System.out.println("ERROR CLOUDINARY: " + e.getMessage());
@@ -84,22 +70,58 @@ public class CloudinaryService {
         }
     }
 
-    private String buildCompatibleVideoUrl(String url) {
-        if (url == null || url.trim().isEmpty()) {
-            return "";
+    private String uploadImage(MultipartFile file) throws Exception {
+        Map uploadResult = cloudinary.uploader().upload(
+                file.getBytes(),
+                ObjectUtils.asMap(
+                        "folder", "jonzko/productos",
+                        "resource_type", "image"
+                )
+        );
+
+        Object secureUrl = uploadResult.get("secure_url");
+
+        if (secureUrl == null) {
+            throw new RuntimeException("Cloudinary no devolvió secure_url de la imagen");
         }
 
-        String cleanUrl = url.trim();
+        return secureUrl.toString();
+    }
 
-        if (cleanUrl.contains("/video/upload/") && !cleanUrl.contains("/video/upload/f_mp4")) {
-            cleanUrl = cleanUrl.replace(
-                    "/video/upload/",
-                    "/video/upload/f_mp4,vc_h264,ac_aac,q_auto:good/"
-            );
+    private String uploadVideo(MultipartFile file) throws Exception {
+        Transformation mp4Transformation = new Transformation()
+                .rawTransformation("f_mp4,vc_h264,ac_aac,q_auto:good");
+
+        Map uploadResult = cloudinary.uploader().upload(
+                file.getBytes(),
+                ObjectUtils.asMap(
+                        "folder", "jonzko/productos",
+                        "resource_type", "video",
+                        "eager", List.of(mp4Transformation),
+                        "eager_async", false
+                )
+        );
+
+        Object eagerObject = uploadResult.get("eager");
+
+        if (eagerObject instanceof List<?> eagerList && !eagerList.isEmpty()) {
+            Object firstItem = eagerList.get(0);
+
+            if (firstItem instanceof Map<?, ?> firstMap) {
+                Object convertedUrl = firstMap.get("secure_url");
+
+                if (convertedUrl != null) {
+                    return convertedUrl.toString();
+                }
+            }
         }
 
-        cleanUrl = cleanUrl.replaceAll("(?i)\\.mov$", ".mp4");
+        Object secureUrl = uploadResult.get("secure_url");
 
-        return cleanUrl;
+        if (secureUrl == null) {
+            throw new RuntimeException("Cloudinary no devolvió secure_url del video");
+        }
+
+        return secureUrl.toString();
     }
 }
