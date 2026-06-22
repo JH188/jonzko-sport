@@ -2123,3 +2123,26 @@
     overflow-x: auto !important;
   }
 }
+/* =========================================================
+   ARREGLO VIDEO PRODUCT DETAIL
+   ========================================================= */
+
+.product-gallery video {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  background: #000 !important;
+  position: relative !important;
+  z-index: 5 !important;
+  pointer-events: auto !important;
+}
+
+.product-gallery .gallery-arrow,
+.product-gallery .gallery-dots {
+  z-index: 6 !important;
+}
+
+.gallery-thumbnails button {
+  pointer-events: auto !important;
+}
