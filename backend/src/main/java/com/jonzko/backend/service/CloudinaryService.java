@@ -69,12 +69,37 @@ public class CloudinaryService {
                 throw new RuntimeException("Cloudinary no devolvió secure_url");
             }
 
-            return secureUrl.toString();
+            String url = secureUrl.toString();
+
+            if (isVideo) {
+                return buildCompatibleVideoUrl(url);
+            }
+
+            return url;
 
         } catch (Exception e) {
             System.out.println("ERROR CLOUDINARY: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException("No se pudo subir el archivo: " + e.getMessage());
         }
+    }
+
+    private String buildCompatibleVideoUrl(String url) {
+        if (url == null || url.trim().isEmpty()) {
+            return "";
+        }
+
+        String cleanUrl = url.trim();
+
+        if (cleanUrl.contains("/video/upload/") && !cleanUrl.contains("/video/upload/f_mp4")) {
+            cleanUrl = cleanUrl.replace(
+                    "/video/upload/",
+                    "/video/upload/f_mp4,vc_h264,ac_aac,q_auto:good/"
+            );
+        }
+
+        cleanUrl = cleanUrl.replaceAll("(?i)\\.mov$", ".mp4");
+
+        return cleanUrl;
     }
 }

@@ -553,7 +553,7 @@
             @if (productForm.videoUrl) {
               <div class="image-preview-box media-video-preview">
                 <video
-                  [src]="videoDisplayUrl(productForm.videoUrl)"
+                  [src]="productForm.videoUrl"
                   controls
                   muted
                   playsinline
