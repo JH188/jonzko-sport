@@ -268,9 +268,12 @@ this.loadAdminData();
 }
 
   setSection(section: AdminSection): void {
-    this.activeSection.set(section);
-  }
+  this.activeSection.set(section);
 
+  if (section === 'customization') {
+    this.customizationTab.set('inicio');
+  }
+}
   loadAdminData(): void {
     this.loading.set(true);
 

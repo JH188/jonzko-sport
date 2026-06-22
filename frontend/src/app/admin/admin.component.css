@@ -2527,3 +2527,45 @@ td p {
     width: 100%;
   }
 }
+/* =========================================================
+   SIDEBAR - SUBMENÚ PERSONALIZACIÓN WEB
+   ========================================================= */
+
+.submenu-web {
+  display: grid;
+  gap: 7px;
+  margin: -4px 0 8px 18px;
+  padding: 8px 0 8px 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.submenu-web button {
+  width: 100%;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  text-align: left !important;
+}
+
+.submenu-web button:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+.submenu-web button.active {
+  background: #ffffff !important;
+  color: #0b0b0b !important;
+}
+
+.menu-parent-btn.active {
+  background: #ffffff !important;
+  color: #0b0b0b !important;
+}
+
+/* Ya no necesitamos los botones grandes dentro del contenido */
+.custom-tabs {
+  display: none !important;
+}
