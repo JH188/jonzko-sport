@@ -2177,3 +2177,16 @@
   position: relative !important;
   z-index: 60 !important;
 }
+.product-gallery.video-active .product-video-player {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  background: #000 !important;
+  pointer-events: auto !important;
+}
+
+.product-gallery.video-active .gallery-arrow,
+.product-gallery.video-active .gallery-dots {
+  display: none !important;
+}
