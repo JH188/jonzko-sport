@@ -55,6 +55,60 @@ interface WebConfig {
   cartText: string;
   loginText: string;
 }
+type CustomizationTab =
+  | 'inicio'
+  | 'tienda'
+  | 'exclusivo'
+  | 'nosotros'
+  | 'carrito'
+  | 'pagos'
+  | 'contacto'
+  | 'footer'
+  | 'soporte'
+  | 'avisos';
+
+type HomeMediaField = 'logoUrl' | 'desktopImageUrl' | 'mobileImageUrl' | 'videoUrl';
+
+interface HomeSettings {
+  id: number;
+  storeName: string;
+  logoUrl: string;
+  topBarText: string;
+
+  menuInicio: string;
+  menuTienda: string;
+  menuExclusivo: string;
+  menuNosotros: string;
+  menuContacto: string;
+  menuMisPedidos: string;
+
+  heroTag: string;
+  heroTitle: string;
+  heroButtonText: string;
+  heroButtonLink: string;
+
+  whatsappNumber: string;
+  whatsappEnabled: boolean;
+  active: boolean;
+}
+
+interface HomeSlide {
+  id?: number;
+  tagText: string;
+  title: string;
+  buttonText: string;
+  buttonLink: string;
+
+  desktopImageUrl: string;
+  mobileImageUrl: string;
+  videoUrl: string;
+
+  desktopPosition: string;
+  mobilePosition: string;
+
+  displayOrder: number;
+  active: boolean;
+}
 
 @Component({
   selector: 'app-admin',
@@ -66,6 +120,49 @@ interface WebConfig {
 })
 
 export class AdminComponent implements OnInit {
+  customizationTab = signal<CustomizationTab>('inicio');
+editingHomeSlideId = signal<number | null>(null);
+homeSlides = signal<HomeSlide[]>([]);
+
+homeSettings: HomeSettings = {
+  id: 1,
+  storeName: 'JONZKO',
+  logoUrl: 'assets/logo.jpg',
+  topBarText: 'ENVÍOS A TODO EL PERÚ • COMPRA SEGURA • CAMBIOS DISPONIBLES • JONZKO SPORT',
+
+  menuInicio: 'INICIO',
+  menuTienda: 'TIENDA',
+  menuExclusivo: 'EXCLUSIVO',
+  menuNosotros: 'NOSOTROS',
+  menuContacto: 'CONTACTO',
+  menuMisPedidos: 'MIS PEDIDOS',
+
+  heroTag: 'MODA PERUANA',
+  heroTitle: 'BLACK & WHITE',
+  heroButtonText: 'DESCUBRIR PRENDAS',
+  heroButtonLink: '#tienda',
+
+  whatsappNumber: '51998989599',
+  whatsappEnabled: true,
+  active: true
+};
+
+homeSlideForm: HomeSlide = {
+  tagText: 'MODA PERUANA',
+  title: 'BLACK & WHITE',
+  buttonText: 'DESCUBRIR PRENDAS',
+  buttonLink: '#tienda',
+
+  desktopImageUrl: '',
+  mobileImageUrl: '',
+  videoUrl: '',
+
+  desktopPosition: 'center center',
+  mobilePosition: 'center center',
+
+  displayOrder: 1,
+  active: true
+};
   private companyName = 'JONZKO SPORT';
 private companyRuc = '10708448601';
 private companyAddress = 'Lima, Perú';
@@ -158,8 +255,10 @@ currentReceiptType: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante' = 'Comproba
   }
 
   this.loadWebConfig();
-  this.applyWebConfig();
-  this.loadAdminData();
+this.loadHomeAdminConfig();
+this.loadHomeSlides();
+this.applyWebConfig();
+this.loadAdminData();
 
   setInterval(() => {
     if (this.soundEnabled) {
@@ -712,6 +811,273 @@ formatTime(value: string | null | undefined): string {
     this.applyWebConfig();
     alert('Configuración restaurada.');
   }
+  // ==========================
+// PERSONALIZACIÓN WEB - INICIO
+// ==========================
+
+setCustomizationTab(tab: CustomizationTab): void {
+  this.customizationTab.set(tab);
+}
+
+loadHomeAdminConfig(): void {
+  this.apiService.getAdminHomeSettings().subscribe({
+    next: (response: any) => {
+      this.homeSettings = {
+        ...this.homeSettings,
+        ...response
+      };
+    },
+    error: (error) => {
+      console.error('Error cargando configuración de inicio:', error);
+    }
+  });
+}
+
+saveHomeSettings(): void {
+  this.apiService.updateAdminHomeSettings(this.homeSettings).subscribe({
+    next: (response: any) => {
+      this.homeSettings = {
+        ...this.homeSettings,
+        ...response
+      };
+
+      alert('Inicio actualizado correctamente para todos los usuarios.');
+    },
+    error: (error) => {
+      console.error('Error guardando inicio:', error);
+      alert('No se pudo guardar el inicio. Revisa Railway o token admin.');
+    }
+  });
+}
+
+loadHomeSlides(): void {
+  this.apiService.getAdminHomeSlides().subscribe({
+    next: (slides: HomeSlide[]) => {
+      this.homeSlides.set(slides || []);
+    },
+    error: (error) => {
+      console.error('Error cargando slides de inicio:', error);
+    }
+  });
+}
+
+saveHomeSlide(): void {
+  const data: HomeSlide = {
+    ...this.homeSlideForm,
+    tagText: (this.homeSlideForm.tagText || '').trim(),
+    title: (this.homeSlideForm.title || '').trim(),
+    buttonText: (this.homeSlideForm.buttonText || '').trim(),
+    buttonLink: (this.homeSlideForm.buttonLink || '').trim(),
+    desktopImageUrl: (this.homeSlideForm.desktopImageUrl || '').trim(),
+    mobileImageUrl: (this.homeSlideForm.mobileImageUrl || '').trim(),
+    videoUrl: (this.homeSlideForm.videoUrl || '').trim(),
+    desktopPosition: (this.homeSlideForm.desktopPosition || 'center center').trim(),
+    mobilePosition: (this.homeSlideForm.mobilePosition || 'center center').trim(),
+    displayOrder: Number(this.homeSlideForm.displayOrder || 1),
+    active: this.homeSlideForm.active
+  };
+
+  if (!data.title) {
+    alert('El título del slide es obligatorio.');
+    return;
+  }
+
+  if (!data.desktopImageUrl && !data.videoUrl) {
+    alert('Sube una imagen PC o video para el slide.');
+    return;
+  }
+
+  const slideId = this.editingHomeSlideId();
+
+  if (slideId) {
+    this.apiService.updateAdminHomeSlide(slideId, data).subscribe({
+      next: () => {
+        alert('Slide actualizado correctamente.');
+        this.resetHomeSlideForm();
+        this.loadHomeSlides();
+      },
+      error: (error) => {
+        console.error('Error actualizando slide:', error);
+        alert('No se pudo actualizar el slide.');
+      }
+    });
+  } else {
+    this.apiService.createAdminHomeSlide(data).subscribe({
+      next: () => {
+        alert('Slide creado correctamente.');
+        this.resetHomeSlideForm();
+        this.loadHomeSlides();
+      },
+      error: (error) => {
+        console.error('Error creando slide:', error);
+        alert('No se pudo crear el slide.');
+      }
+    });
+  }
+}
+
+editHomeSlide(slide: HomeSlide): void {
+  this.editingHomeSlideId.set(slide.id || null);
+
+  this.homeSlideForm = {
+    id: slide.id,
+    tagText: slide.tagText || '',
+    title: slide.title || '',
+    buttonText: slide.buttonText || '',
+    buttonLink: slide.buttonLink || '',
+
+    desktopImageUrl: slide.desktopImageUrl || '',
+    mobileImageUrl: slide.mobileImageUrl || '',
+    videoUrl: slide.videoUrl || '',
+
+    desktopPosition: slide.desktopPosition || 'center center',
+    mobilePosition: slide.mobilePosition || 'center center',
+
+    displayOrder: Number(slide.displayOrder || 1),
+    active: slide.active
+  };
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+deleteHomeSlide(slideId: number | undefined): void {
+  if (!slideId) {
+    return;
+  }
+
+  const confirmDelete = confirm('¿Deseas eliminar este slide del inicio?');
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  this.apiService.deleteAdminHomeSlide(slideId).subscribe({
+    next: () => {
+      alert('Slide eliminado correctamente.');
+      this.loadHomeSlides();
+    },
+    error: (error) => {
+      console.error('Error eliminando slide:', error);
+      alert('No se pudo eliminar el slide.');
+    }
+  });
+}
+
+toggleHomeSlideStatus(slide: HomeSlide): void {
+  if (!slide.id) {
+    return;
+  }
+
+  const newStatus = !slide.active;
+
+  this.apiService.updateAdminHomeSlideStatus(slide.id, newStatus).subscribe({
+    next: () => {
+      this.loadHomeSlides();
+    },
+    error: (error) => {
+      console.error('Error cambiando estado del slide:', error);
+      alert('No se pudo cambiar el estado del slide.');
+    }
+  });
+}
+
+resetHomeSlideForm(): void {
+  this.editingHomeSlideId.set(null);
+
+  this.homeSlideForm = {
+    tagText: 'MODA PERUANA',
+    title: 'BLACK & WHITE',
+    buttonText: 'DESCUBRIR PRENDAS',
+    buttonLink: '#tienda',
+
+    desktopImageUrl: '',
+    mobileImageUrl: '',
+    videoUrl: '',
+
+    desktopPosition: 'center center',
+    mobilePosition: 'center center',
+
+    displayOrder: this.homeSlides().length + 1,
+    active: true
+  };
+}
+
+uploadHomeMedia(event: Event, field: HomeMediaField): void {
+  const input = event.target as HTMLInputElement;
+
+  if (!input.files || input.files.length === 0) {
+    return;
+  }
+
+  const file = input.files[0];
+  const isVideo = file.type.startsWith('video/');
+
+  if (!file.type.startsWith('image/') && !isVideo) {
+    alert('Selecciona una imagen o video válido.');
+    input.value = '';
+    return;
+  }
+
+  const maxSizeMb = isVideo ? 50 : 10;
+  const maxSizeBytes = maxSizeMb * 1024 * 1024;
+
+  if (file.size > maxSizeBytes) {
+    alert(`El archivo es muy pesado. Máximo ${maxSizeMb} MB.`);
+    input.value = '';
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  this.loading.set(true);
+
+  this.apiService.uploadHomeMedia(formData).subscribe({
+    next: (response: any) => {
+      this.loading.set(false);
+
+      const url = response.mediaUrl || response.imageUrl;
+
+      if (!url) {
+        alert('Cloudinary no devolvió URL.');
+        input.value = '';
+        return;
+      }
+
+      if (field === 'logoUrl') {
+        this.homeSettings.logoUrl = url;
+      } else {
+        this.homeSlideForm[field] = url;
+      }
+
+      input.value = '';
+      alert(isVideo ? 'Video subido correctamente.' : 'Imagen subida correctamente.');
+    },
+    error: (error) => {
+      this.loading.set(false);
+      console.error('Error subiendo archivo de inicio:', error);
+      alert('No se pudo subir el archivo.');
+      input.value = '';
+    }
+  });
+}
+
+removeHomeMedia(field: HomeMediaField): void {
+  const confirmRemove = confirm('¿Deseas quitar este archivo?');
+
+  if (!confirmRemove) {
+    return;
+  }
+
+  if (field === 'logoUrl') {
+    this.homeSettings.logoUrl = '';
+  } else {
+    this.homeSlideForm[field] = '';
+  }
+}
 
   // ==========================
   // NAVEGACIÓN

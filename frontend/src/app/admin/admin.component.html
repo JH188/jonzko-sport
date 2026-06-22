@@ -1159,215 +1159,510 @@
           <span class="eyebrow">Control total de la página</span>
           <h2>Personalización web</h2>
           <p>
-            Aquí podrás modificar textos, colores, imágenes, enlaces, redes sociales y contenido
-            general de la tienda.
+            Cambia textos, imágenes, videos, menú, inicio, carrito, pagos, contacto y demás partes
+            visibles de JONZKO desde el administrador.
           </p>
         </div>
 
         <div class="heading-actions">
-          <button type="button" class="secondary-action" (click)="resetWebConfig()">
-            Restaurar
+          <button
+            type="button"
+            class="secondary-action"
+            (click)="loadHomeAdminConfig(); loadHomeSlides()"
+          >
+            Recargar inicio
           </button>
 
-          <button type="button" class="primary-action" (click)="saveWebConfig()">
-            Guardar configuración
+          <button type="button" class="primary-action" (click)="saveHomeSettings()">
+            Guardar inicio
           </button>
         </div>
       </div>
 
-      <div class="custom-grid">
-        <!-- IDENTIDAD -->
-        <article class="panel-card">
-          <h3>Identidad de marca</h3>
-          <p>Nombre, slogan, logo e imagen principal.</p>
+      <div class="custom-tabs">
+        <button
+          type="button"
+          [class.active]="customizationTab() === 'inicio'"
+          (click)="setCustomizationTab('inicio')"
+        >
+          🏠 Inicio
+        </button>
+
+        <button
+          type="button"
+          [class.active]="customizationTab() === 'tienda'"
+          (click)="setCustomizationTab('tienda')"
+        >
+          🛍️ Tienda
+        </button>
+
+        <button
+          type="button"
+          [class.active]="customizationTab() === 'exclusivo'"
+          (click)="setCustomizationTab('exclusivo')"
+        >
+          ⭐ Exclusivo
+        </button>
+
+        <button
+          type="button"
+          [class.active]="customizationTab() === 'nosotros'"
+          (click)="setCustomizationTab('nosotros')"
+        >
+          🖼️ Nosotros / Galería
+        </button>
+
+        <button
+          type="button"
+          [class.active]="customizationTab() === 'carrito'"
+          (click)="setCustomizationTab('carrito')"
+        >
+          🛒 Carrito
+        </button>
+
+        <button
+          type="button"
+          [class.active]="customizationTab() === 'pagos'"
+          (click)="setCustomizationTab('pagos')"
+        >
+          💳 Pagos
+        </button>
+
+        <button
+          type="button"
+          [class.active]="customizationTab() === 'contacto'"
+          (click)="setCustomizationTab('contacto')"
+        >
+          📞 Contacto
+        </button>
+
+        <button
+          type="button"
+          [class.active]="customizationTab() === 'footer'"
+          (click)="setCustomizationTab('footer')"
+        >
+          🧾 Footer
+        </button>
+
+        <button
+          type="button"
+          [class.active]="customizationTab() === 'soporte'"
+          (click)="setCustomizationTab('soporte')"
+        >
+          🆘 Soporte
+        </button>
+
+        <button
+          type="button"
+          [class.active]="customizationTab() === 'avisos'"
+          (click)="setCustomizationTab('avisos')"
+        >
+          🔥 Avisos recientes
+        </button>
+      </div>
+
+      <!-- INICIO -->
+      <div class="home-admin-wrap" *ngIf="customizationTab() === 'inicio'">
+        <div class="home-admin-grid">
+          <article class="panel-card">
+            <h3>Marca y barra superior</h3>
+            <p>Controla el logo, nombre y barra negra superior del inicio.</p>
+
+            <form class="admin-form">
+              <label>
+                Nombre de tienda
+                <input type="text" name="homeStoreName" [(ngModel)]="homeSettings.storeName" />
+              </label>
+
+              <label>
+                Logo
+                <input type="file" accept="image/*" (change)="uploadHomeMedia($event, 'logoUrl')" />
+              </label>
+
+              <div class="image-preview-box" *ngIf="homeSettings.logoUrl">
+                <img [src]="homeSettings.logoUrl" alt="Logo JONZKO" />
+
+                <div>
+                  <small>Logo actual</small>
+                  <input
+                    type="text"
+                    name="homeLogoUrl"
+                    [(ngModel)]="homeSettings.logoUrl"
+                    readonly
+                  />
+                  <button type="button" class="delete-btn" (click)="removeHomeMedia('logoUrl')">
+                    Quitar logo
+                  </button>
+                </div>
+              </div>
+
+              <label>
+                Texto barra superior
+                <textarea
+                  name="homeTopBarText"
+                  rows="3"
+                  [(ngModel)]="homeSettings.topBarText"
+                  placeholder="ENVÍOS A TODO EL PERÚ • COMPRA SEGURA..."
+                ></textarea>
+              </label>
+            </form>
+          </article>
+
+          <article class="panel-card">
+            <h3>Menú del inicio</h3>
+            <p>Cambia los textos de navegación que ve el cliente.</p>
+
+            <form class="admin-form form-two">
+              <label>
+                Inicio
+                <input type="text" name="menuInicio" [(ngModel)]="homeSettings.menuInicio" />
+              </label>
+
+              <label>
+                Tienda
+                <input type="text" name="menuTienda" [(ngModel)]="homeSettings.menuTienda" />
+              </label>
+
+              <label>
+                Exclusivo
+                <input type="text" name="menuExclusivo" [(ngModel)]="homeSettings.menuExclusivo" />
+              </label>
+
+              <label>
+                Nosotros
+                <input type="text" name="menuNosotros" [(ngModel)]="homeSettings.menuNosotros" />
+              </label>
+
+              <label>
+                Contacto
+                <input type="text" name="menuContacto" [(ngModel)]="homeSettings.menuContacto" />
+              </label>
+
+              <label>
+                Mis pedidos
+                <input
+                  type="text"
+                  name="menuMisPedidos"
+                  [(ngModel)]="homeSettings.menuMisPedidos"
+                />
+              </label>
+            </form>
+          </article>
+
+          <article class="panel-card">
+            <h3>Textos principales del hero</h3>
+            <p>Estos textos se usarán como respaldo si un slide no tiene texto propio.</p>
+
+            <form class="admin-form">
+              <label>
+                Texto pequeño
+                <input type="text" name="heroTag" [(ngModel)]="homeSettings.heroTag" />
+              </label>
+
+              <label>
+                Título principal
+                <input type="text" name="heroTitle" [(ngModel)]="homeSettings.heroTitle" />
+              </label>
+
+              <label>
+                Texto del botón
+                <input
+                  type="text"
+                  name="heroButtonText"
+                  [(ngModel)]="homeSettings.heroButtonText"
+                />
+              </label>
+
+              <label>
+                Link del botón
+                <input
+                  type="text"
+                  name="heroButtonLink"
+                  [(ngModel)]="homeSettings.heroButtonLink"
+                />
+              </label>
+
+              <button type="button" class="primary-action" (click)="saveHomeSettings()">
+                Guardar textos del inicio
+              </button>
+            </form>
+          </article>
+
+          <article class="panel-card">
+            <h3>WhatsApp flotante</h3>
+            <p>Controla el botón verde que aparece en PC y móvil.</p>
+
+            <form class="admin-form">
+              <label>
+                Número WhatsApp
+                <input
+                  type="text"
+                  name="whatsappNumber"
+                  [(ngModel)]="homeSettings.whatsappNumber"
+                />
+              </label>
+
+              <label class="check-label">
+                <input
+                  type="checkbox"
+                  name="whatsappEnabled"
+                  [(ngModel)]="homeSettings.whatsappEnabled"
+                />
+                Mostrar botón WhatsApp
+              </label>
+
+              <button type="button" class="primary-action" (click)="saveHomeSettings()">
+                Guardar WhatsApp
+              </button>
+            </form>
+          </article>
+        </div>
+
+        <article class="panel-card home-slide-panel">
+          <div class="panel-title">
+            <div>
+              <h3>
+                {{
+                  editingHomeSlideId() ? 'Editar slide del carrusel' : 'Crear slide del carrusel'
+                }}
+              </h3>
+              <p>
+                Sube imagen PC, imagen móvil o video. Cada cambio se verá para todos los usuarios.
+              </p>
+            </div>
+
+            <span>{{ homeSlides().length }} slide(s)</span>
+          </div>
 
           <form class="admin-form">
-            <label>
-              Nombre de tienda
-              <input type="text" name="storeName" [(ngModel)]="webConfig.storeName" />
-            </label>
+            <div class="form-two">
+              <label>
+                Texto pequeño
+                <input type="text" name="slideTagText" [(ngModel)]="homeSlideForm.tagText" />
+              </label>
+
+              <label>
+                Orden
+                <input
+                  type="number"
+                  name="slideDisplayOrder"
+                  [(ngModel)]="homeSlideForm.displayOrder"
+                  min="1"
+                />
+              </label>
+            </div>
 
             <label>
-              Slogan
-              <input type="text" name="slogan" [(ngModel)]="webConfig.slogan" />
+              Título grande
+              <input type="text" name="slideTitle" [(ngModel)]="homeSlideForm.title" />
             </label>
 
-            <label>
-              Logo
-              <input type="text" name="logoUrl" [(ngModel)]="webConfig.logoUrl" />
-            </label>
+            <div class="form-two">
+              <label>
+                Texto botón
+                <input type="text" name="slideButtonText" [(ngModel)]="homeSlideForm.buttonText" />
+              </label>
+
+              <label>
+                Link botón
+                <input type="text" name="slideButtonLink" [(ngModel)]="homeSlideForm.buttonLink" />
+              </label>
+            </div>
+
+            <div class="form-two">
+              <label>
+                Imagen PC
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="uploadHomeMedia($event, 'desktopImageUrl')"
+                />
+              </label>
+
+              <label>
+                Imagen móvil
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="uploadHomeMedia($event, 'mobileImageUrl')"
+                />
+              </label>
+            </div>
 
             <label>
-              Imagen principal
-              <input type="text" name="heroImageUrl" [(ngModel)]="webConfig.heroImageUrl" />
+              Video opcional
+              <input type="file" accept="video/*" (change)="uploadHomeMedia($event, 'videoUrl')" />
             </label>
+
+            <div class="form-two">
+              <label>
+                Posición PC
+                <select name="desktopPosition" [(ngModel)]="homeSlideForm.desktopPosition">
+                  <option value="center center">Centro</option>
+                  <option value="left center">Izquierda</option>
+                  <option value="right center">Derecha</option>
+                  <option value="center top">Arriba</option>
+                  <option value="center bottom">Abajo</option>
+                </select>
+              </label>
+
+              <label>
+                Posición móvil
+                <select name="mobilePosition" [(ngModel)]="homeSlideForm.mobilePosition">
+                  <option value="center center">Centro</option>
+                  <option value="35% center">Mover un poco izquierda</option>
+                  <option value="45% center">Casi centro</option>
+                  <option value="60% center">Mover derecha</option>
+                  <option value="70% center">Más derecha</option>
+                  <option value="center top">Arriba</option>
+                  <option value="center bottom">Abajo</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="check-label">
+              <input type="checkbox" name="slideActive" [(ngModel)]="homeSlideForm.active" />
+              Slide activo en la portada
+            </label>
+
+            <div class="home-media-previews">
+              <div class="image-preview-box" *ngIf="homeSlideForm.desktopImageUrl">
+                <img [src]="homeSlideForm.desktopImageUrl" alt="Imagen PC" />
+                <div>
+                  <small>Imagen PC cargada</small>
+                  <input
+                    type="text"
+                    name="desktopImageUrl"
+                    [(ngModel)]="homeSlideForm.desktopImageUrl"
+                    readonly
+                  />
+                  <button
+                    type="button"
+                    class="delete-btn"
+                    (click)="removeHomeMedia('desktopImageUrl')"
+                  >
+                    Quitar imagen PC
+                  </button>
+                </div>
+              </div>
+
+              <div class="image-preview-box" *ngIf="homeSlideForm.mobileImageUrl">
+                <img [src]="homeSlideForm.mobileImageUrl" alt="Imagen móvil" />
+                <div>
+                  <small>Imagen móvil cargada</small>
+                  <input
+                    type="text"
+                    name="mobileImageUrl"
+                    [(ngModel)]="homeSlideForm.mobileImageUrl"
+                    readonly
+                  />
+                  <button
+                    type="button"
+                    class="delete-btn"
+                    (click)="removeHomeMedia('mobileImageUrl')"
+                  >
+                    Quitar imagen móvil
+                  </button>
+                </div>
+              </div>
+
+              <div class="image-preview-box media-video-preview" *ngIf="homeSlideForm.videoUrl">
+                <video
+                  [src]="homeSlideForm.videoUrl"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  controls
+                ></video>
+                <div>
+                  <small>Video cargado</small>
+                  <input
+                    type="text"
+                    name="videoUrl"
+                    [(ngModel)]="homeSlideForm.videoUrl"
+                    readonly
+                  />
+                  <button type="button" class="delete-btn" (click)="removeHomeMedia('videoUrl')">
+                    Quitar video
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="primary-action" (click)="saveHomeSlide()">
+                {{ editingHomeSlideId() ? 'Guardar slide' : 'Crear slide' }}
+              </button>
+
+              <button type="button" class="secondary-action" (click)="resetHomeSlideForm()">
+                Limpiar formulario
+              </button>
+            </div>
           </form>
         </article>
 
-        <!-- INICIO -->
         <article class="panel-card">
-          <h3>Inicio de la tienda</h3>
-          <p>Textos principales que ve el cliente al entrar.</p>
+          <div class="panel-title">
+            <div>
+              <h3>Slides registrados</h3>
+              <p>Estos slides alimentarán el carrusel del inicio.</p>
+            </div>
 
-          <form class="admin-form">
-            <label>
-              Título principal
-              <input type="text" name="heroTitle" [(ngModel)]="webConfig.heroTitle" />
-            </label>
+            <span>{{ homeSlides().length }} total</span>
+          </div>
 
-            <label>
-              Descripción principal
-              <textarea
-                rows="4"
-                name="heroDescription"
-                [(ngModel)]="webConfig.heroDescription"
-              ></textarea>
-            </label>
+          <div class="empty-state" *ngIf="homeSlides().length === 0">
+            Todavía no hay slides registrados. Crea el primero para que aparezca en el inicio.
+          </div>
 
-            <label>
-              Botón principal
-              <input
-                type="text"
-                name="primaryButtonText"
-                [(ngModel)]="webConfig.primaryButtonText"
+          <div class="home-slide-list" *ngIf="homeSlides().length > 0">
+            <div class="home-slide-item" *ngFor="let slide of homeSlides()">
+              <img
+                [src]="slide.mobileImageUrl || slide.desktopImageUrl"
+                [alt]="slide.title"
+                *ngIf="slide.mobileImageUrl || slide.desktopImageUrl"
               />
-            </label>
 
-            <label>
-              Botón secundario
-              <input
-                type="text"
-                name="secondaryButtonText"
-                [(ngModel)]="webConfig.secondaryButtonText"
-              />
-            </label>
-          </form>
-        </article>
+              <div class="home-slide-info">
+                <h4>{{ slide.title }}</h4>
+                <p>{{ slide.tagText }} · Orden {{ slide.displayOrder }}</p>
+                <small>Botón: {{ slide.buttonText }} → {{ slide.buttonLink }}</small>
+                <small>PC: {{ slide.desktopPosition }} | Móvil: {{ slide.mobilePosition }}</small>
+                <span class="status confirmed" *ngIf="slide.active">Activo</span>
+                <span class="status rejected" *ngIf="!slide.active">Inactivo</span>
+              </div>
 
-        <!-- COLORES -->
-        <article class="panel-card">
-          <h3>Colores</h3>
-          <p>Personaliza los colores visuales de la marca.</p>
+              <div class="product-actions">
+                <button type="button" class="edit-btn" (click)="editHomeSlide(slide)">
+                  Editar
+                </button>
 
-          <form class="admin-form">
-            <label>
-              Color principal
-              <input
-                type="color"
-                name="primaryColor"
-                [(ngModel)]="webConfig.primaryColor"
-                (change)="applyWebConfig()"
-              />
-            </label>
+                <button
+                  type="button"
+                  class="secondary-action"
+                  (click)="toggleHomeSlideStatus(slide)"
+                >
+                  {{ slide.active ? 'Ocultar' : 'Mostrar' }}
+                </button>
 
-            <label>
-              Color secundario
-              <input
-                type="color"
-                name="secondaryColor"
-                [(ngModel)]="webConfig.secondaryColor"
-                (change)="applyWebConfig()"
-              />
-            </label>
-
-            <label>
-              Color de acento
-              <input
-                type="color"
-                name="accentColor"
-                [(ngModel)]="webConfig.accentColor"
-                (change)="applyWebConfig()"
-              />
-            </label>
-
-            <label>
-              Fondo
-              <input
-                type="color"
-                name="backgroundColor"
-                [(ngModel)]="webConfig.backgroundColor"
-                (change)="applyWebConfig()"
-              />
-            </label>
-
-            <label>
-              Texto
-              <input
-                type="color"
-                name="textColor"
-                [(ngModel)]="webConfig.textColor"
-                (change)="applyWebConfig()"
-              />
-            </label>
-          </form>
-        </article>
-
-        <!-- REDES -->
-        <article class="panel-card">
-          <h3>Redes y enlaces</h3>
-          <p>Modifica redes sociales y contacto.</p>
-
-          <form class="admin-form">
-            <label>
-              Instagram
-              <input type="text" name="instagramUrl" [(ngModel)]="webConfig.instagramUrl" />
-            </label>
-
-            <label>
-              Facebook
-              <input type="text" name="facebookUrl" [(ngModel)]="webConfig.facebookUrl" />
-            </label>
-
-            <label>
-              TikTok
-              <input type="text" name="tiktokUrl" [(ngModel)]="webConfig.tiktokUrl" />
-            </label>
-
-            <label>
-              WhatsApp
-              <input type="text" name="whatsappNumber" [(ngModel)]="webConfig.whatsappNumber" />
-            </label>
-          </form>
-        </article>
-
-        <!-- NAVEGACIÓN -->
-        <article class="panel-card full-card">
-          <h3>Menú y palabras de la página</h3>
-          <p>Cambia los nombres del menú, carrito, login y textos visibles para clientes.</p>
-
-          <form class="admin-form menu-config-grid">
-            <label>
-              Inicio
-              <input type="text" name="navInicio" [(ngModel)]="webConfig.navInicio" />
-            </label>
-
-            <label>
-              Colección
-              <input type="text" name="navColeccion" [(ngModel)]="webConfig.navColeccion" />
-            </label>
-
-            <label>
-              Nosotros
-              <input type="text" name="navNosotros" [(ngModel)]="webConfig.navNosotros" />
-            </label>
-
-            <label>
-              Contacto
-              <input type="text" name="navContacto" [(ngModel)]="webConfig.navContacto" />
-            </label>
-
-            <label>
-              Texto carrito
-              <input type="text" name="cartText" [(ngModel)]="webConfig.cartText" />
-            </label>
-
-            <label>
-              Texto login
-              <input type="text" name="loginText" [(ngModel)]="webConfig.loginText" />
-            </label>
-          </form>
+                <button type="button" class="delete-btn" (click)="deleteHomeSlide(slide.id)">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
         </article>
       </div>
+
+      <!-- MÓDULOS QUE HAREMOS DESPUÉS -->
+      <article class="panel-card" *ngIf="customizationTab() !== 'inicio'">
+        <h3>Módulo en preparación</h3>
+        <p>
+          Este módulo se hará después. Empezamos por Inicio y luego seguimos uno por uno para evitar
+          romper la tienda.
+        </p>
+      </article>
     </section>
 
     <!-- REPORTES -->

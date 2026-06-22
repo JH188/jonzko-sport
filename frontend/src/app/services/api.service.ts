@@ -382,7 +382,7 @@ export class ApiService {
     );
   }
 
-  // ==========================
+    // ==========================
   // PERSONALIZACIÓN WEB
   // ==========================
   getSettings(): Observable<SiteSetting> {
@@ -393,6 +393,78 @@ export class ApiService {
     return this.http.put<SiteSetting>(
       `${this.apiUrl}/settings`,
       data,
+      this.getAdminHeaders()
+    );
+  }
+
+  // ==========================
+  // INICIO / HOME ADMIN
+  // ==========================
+  getHomeSettings(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/home/settings`);
+  }
+
+  getHomeSlides(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/home/slides`);
+  }
+
+  getAdminHomeSettings(): Observable<any> {
+    return this.http.get<any>(
+      `${this.apiUrl}/admin/home/settings`,
+      this.getAdminHeaders()
+    );
+  }
+
+  updateAdminHomeSettings(data: any): Observable<any> {
+    return this.http.put<any>(
+      `${this.apiUrl}/admin/home/settings`,
+      data,
+      this.getAdminHeaders()
+    );
+  }
+
+  getAdminHomeSlides(): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.apiUrl}/admin/home/slides`,
+      this.getAdminHeaders()
+    );
+  }
+
+  createAdminHomeSlide(data: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}/admin/home/slides`,
+      data,
+      this.getAdminHeaders()
+    );
+  }
+
+  updateAdminHomeSlide(id: number, data: any): Observable<any> {
+    return this.http.put<any>(
+      `${this.apiUrl}/admin/home/slides/${id}`,
+      data,
+      this.getAdminHeaders()
+    );
+  }
+
+  deleteAdminHomeSlide(id: number): Observable<any> {
+    return this.http.delete<any>(
+      `${this.apiUrl}/admin/home/slides/${id}`,
+      this.getAdminHeaders()
+    );
+  }
+
+  updateAdminHomeSlideStatus(id: number, active: boolean): Observable<any> {
+    return this.http.patch<any>(
+      `${this.apiUrl}/admin/home/slides/${id}/status`,
+      { active },
+      this.getAdminHeaders()
+    );
+  }
+
+  uploadHomeMedia(formData: FormData): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}/admin/home/upload`,
+      formData,
       this.getAdminHeaders()
     );
   }

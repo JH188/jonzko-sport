@@ -2348,3 +2348,182 @@ td p {
   opacity: 1 !important;
   margin-top: 4px !important;
 }
+/* =========================================================
+   ADMIN - PERSONALIZACIÓN WEB / INICIO
+   ========================================================= */
+
+.custom-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+  background: #ffffff;
+  border: 1px solid #dedede;
+  border-radius: 20px;
+  padding: 14px;
+}
+
+.custom-tabs button {
+  border: 1px solid #dedede;
+  background: #ffffff;
+  color: #111111;
+  border-radius: 999px;
+  padding: 11px 16px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.custom-tabs button.active {
+  background: #0b0b0b;
+  color: #ffffff;
+  border-color: #0b0b0b;
+}
+
+.home-admin-wrap {
+  display: grid;
+  gap: 20px;
+}
+
+.home-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.home-slide-panel {
+  border: 2px solid #0b0b0b;
+}
+
+.home-media-previews {
+  display: grid;
+  gap: 14px;
+}
+
+.image-preview-box {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 14px;
+  align-items: center;
+  border: 1px solid #eeeeee;
+  border-radius: 18px;
+  padding: 14px;
+  background: #fafafa;
+}
+
+.image-preview-box img,
+.image-preview-box video {
+  width: 130px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 14px;
+  background: #eeeeee;
+  display: block;
+}
+
+.image-preview-box small {
+  display: block;
+  font-weight: 900;
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+.image-preview-box input {
+  margin-bottom: 10px;
+}
+
+.media-video-preview video {
+  background: #000000;
+}
+
+.home-slide-list {
+  display: grid;
+  gap: 14px;
+}
+
+.home-slide-item {
+  display: grid;
+  grid-template-columns: 150px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  background: #fafafa;
+  border: 1px solid #eeeeee;
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.home-slide-item img {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 14px;
+  background: #eeeeee;
+}
+
+.home-slide-info h4 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.home-slide-info p,
+.home-slide-info small {
+  display: block;
+  margin: 0 0 5px;
+  color: #555555;
+  font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+  .home-admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-slide-item {
+    grid-template-columns: 120px 1fr;
+  }
+
+  .home-slide-item .product-actions {
+    grid-column: 1 / -1;
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 700px) {
+  .custom-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 12px;
+  }
+
+  .custom-tabs button {
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+
+  .image-preview-box {
+    grid-template-columns: 1fr;
+  }
+
+  .image-preview-box img,
+  .image-preview-box video {
+    width: 100%;
+    height: 220px;
+  }
+
+  .home-slide-item {
+    grid-template-columns: 1fr;
+  }
+
+  .home-slide-item img {
+    width: 100%;
+    height: 220px;
+  }
+
+  .home-slide-item .product-actions {
+    flex-direction: column;
+  }
+
+  .home-slide-item .product-actions button {
+    width: 100%;
+  }
+}
