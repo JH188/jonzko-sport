@@ -12195,3 +12195,99 @@ video {
     height: 320px;
   }
 }
+/* =========================================================
+   FIX MÓVIL - EVITAR QUE IMÁGENES / SLIDER ATRAPEN EL SCROLL
+   ========================================================= */
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  touch-action: pan-y !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Que las secciones no bloqueen el scroll */
+.hero-slider,
+.hero-slide,
+.hero-banner,
+.hero-main,
+.jonzko-gallery-section,
+.jonzko-gallery-grid,
+.featured-urban,
+.featured-urban-content,
+.featured-urban-gallery {
+  touch-action: pan-y !important;
+}
+
+/* Imágenes y videos no deben capturar el gesto de bajar */
+.hero-slider img,
+.hero-slide img,
+.hero-banner img,
+.hero-main img,
+.jonzko-gallery-grid img,
+.jonzko-gallery-grid video,
+.featured-urban-gallery img {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+/* En móvil, nada debe quedar como pantalla fija que atrape */
+@media (max-width: 768px) {
+  .hero-slider,
+  .hero-slide,
+  .hero-banner,
+  .hero-main {
+    overflow: hidden !important;
+    touch-action: pan-y !important;
+  }
+
+  .jonzko-gallery-section,
+  .featured-urban {
+    overflow: visible !important;
+  }
+
+  .jonzko-gallery-grid,
+  .featured-urban-gallery {
+    overflow: visible !important;
+    touch-action: pan-y !important;
+  }
+
+  .gallery-card,
+  .gallery-video-card,
+  .gallery-wide,
+  .featured-img,
+  .featured-img-large {
+    touch-action: pan-y !important;
+  }
+}
+/* =========================================================
+   FIX EXTRA - FLECHAS Y DOTS NO BLOQUEAN SCROLL
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .hero-arrow,
+  .slider-arrow,
+  .hero-dots,
+  .slider-dots {
+    touch-action: manipulation !important;
+  }
+
+  .hero-content,
+  .hero-info,
+  .hero-text {
+    pointer-events: none !important;
+  }
+
+  .hero-content a,
+  .hero-content button,
+  .hero-info a,
+  .hero-info button,
+  .hero-text a,
+  .hero-text button {
+    pointer-events: auto !important;
+  }
+}
