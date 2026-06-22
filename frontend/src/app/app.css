@@ -11784,3 +11784,191 @@ video {
     object-position: 72% center !important;
   }
 }
+/* =========================================================
+   JONZKO - SECCIÓN MÁS QUE ROPA / RESPONSIVE PC Y MÓVIL
+   Pegar al FINAL del CSS
+   ========================================================= */
+
+.featured-urban {
+  width: 100%;
+  background: #f7f3ec;
+  padding: 0;
+}
+
+.featured-urban-content {
+  width: min(100%, 1500px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr 0.85fr;
+  gap: 6px;
+  align-items: stretch;
+  background: #f7f3ec;
+}
+
+.featured-urban-text {
+  padding: 90px 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.featured-urban-gallery {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 6px;
+  min-height: 760px;
+}
+
+.featured-img {
+  overflow: hidden;
+  background: #111;
+}
+
+.featured-img-large {
+  grid-row: span 2;
+}
+
+.featured-img img,
+.featured-img-large img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Imagen grande centro: foto tuya con hoodie */
+.featured-img-large img {
+  object-position: center center;
+}
+
+/* Derecha arriba: hoodie doblado / etiqueta */
+.featured-urban-gallery .featured-img:nth-child(2) img {
+  object-position: center center;
+}
+
+/* Derecha abajo: ilustración */
+.featured-urban-gallery .featured-img:nth-child(3) img {
+  object-position: center center;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .featured-urban-content {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-urban-text {
+    padding: 70px 36px 40px;
+  }
+
+  .featured-urban-gallery {
+    grid-template-columns: 1.2fr 1fr;
+    min-height: 680px;
+    padding: 0 36px 70px;
+  }
+}
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .featured-urban {
+    background: #f7f3ec;
+  }
+
+  .featured-urban-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .featured-urban-text {
+    padding: 54px 24px 34px;
+    text-align: left;
+  }
+
+  .featured-urban-text span,
+  .featured-urban-text .tag {
+    font-size: 11px;
+    letter-spacing: 5px;
+  }
+
+  .featured-urban-text h2,
+  .featured-urban-text h1 {
+    font-size: clamp(42px, 12vw, 58px);
+    line-height: 0.95;
+  }
+
+  .featured-urban-text p {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .featured-urban-gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    min-height: auto;
+    padding: 0 16px 56px;
+  }
+
+  .featured-img-large,
+  .featured-img {
+    width: 100%;
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  /* Imagen grande en móvil */
+  .featured-img-large {
+    height: 640px;
+  }
+
+  .featured-img-large img {
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  /* Cuadradas en móvil */
+  .featured-img {
+    height: 360px;
+  }
+
+  .featured-img img {
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  /* Botón */
+  .featured-btn,
+  .featured-urban-text a {
+    margin-top: 24px;
+  }
+}
+
+/* =========================================================
+   MÓVIL PEQUEÑO
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .featured-urban-text {
+    padding: 46px 20px 28px;
+  }
+
+  .featured-img-large {
+    height: 560px;
+  }
+
+  .featured-img {
+    height: 320px;
+  }
+
+  .featured-urban-gallery {
+    padding: 0 14px 48px;
+  }
+}
