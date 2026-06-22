@@ -10252,119 +10252,90 @@ video {
   }
 }
 /* =========================================================
-   JONZKO - ARREGLO GLOBAL MÓVIL 100%
-   Quita sobras izquierda/derecha en toda la web
-   ========================================================= */
-
-html,
-body {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow-x: hidden !important;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box !important;
-}
-
-img,
-video,
-iframe {
-  max-width: 100% !important;
-}
-
-app-root {
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-}
-
-/* =========================================================
-   MÓVIL GENERAL
+   JONZKO - BLOQUEO REAL DE MOVIMIENTO LATERAL MÓVIL
+   Pegar al FINAL de app.css
    ========================================================= */
 
 @media (max-width: 768px) {
-  body {
-    position: relative !important;
+  html,
+  body,
+  app-root,
+  main {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     overflow-x: hidden !important;
   }
 
-  app-root,
-  main,
+  body {
+    position: relative !important;
+  }
+
   section,
   header,
   footer,
-  nav {
-    width: 100% !important;
+  nav,
+  div {
     max-width: 100% !important;
-    min-width: 0 !important;
-    overflow-x: hidden !important;
+    box-sizing: border-box !important;
   }
 
-  /* HEADER / NAVBAR */
-  .top-bar,
-  .main-header,
-  .navbar,
-  .nav-content,
-  .header-content,
-  .mobile-header,
-  .desktop-header {
+  /* ESTE ES EL PRINCIPAL PROBLEMA */
+  .hero-slider {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    padding-left: 14px !important;
-    padding-right: 14px !important;
-    box-sizing: border-box !important;
-    overflow-x: hidden !important;
+    left: auto !important;
+    right: auto !important;
+    overflow: hidden !important;
   }
 
-  /* PÁGINA PRINCIPAL / HOME */
-  .home-page,
-  .hero-section,
-  .hero,
-  .hero-content,
-  .collection-section,
-  .exclusive-section,
-  .products-section,
-  .about-section,
-  .contact-section,
-  .footer,
-  .site-footer {
+  .hero-track,
+  .hero-slide,
+  .hero-slide img,
+  .hero-slide video {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    box-sizing: border-box !important;
-    overflow-x: hidden !important;
+    margin: 0 !important;
+    overflow: hidden !important;
   }
 
-  .hero-section,
-  .hero,
-  .collection-section,
-  .exclusive-section,
-  .products-section,
-  .about-section,
-  .contact-section {
-    padding-left: 14px !important;
-    padding-right: 14px !important;
+  /* Flechas que se salen */
+  .products-arrow-left,
+  .products-arrow-right,
+  .gallery-arrow,
+  .hero-arrow,
+  .slider-arrow {
+    max-width: 48px !important;
   }
 
-  /* GRIDS Y CARDS */
-  .collection-grid,
+  .products-arrow-left {
+    left: 6px !important;
+  }
+
+  .products-arrow-right {
+    right: 6px !important;
+  }
+
+  /* Carrusel: que se mueva solo dentro, no toda la página */
+  .products-carousel-shell,
+  .products-carousel,
   .products-grid,
-  .exclusive-grid,
-  .product-grid,
-  .featured-grid,
-  .related-grid {
+  .collection-section,
+  .store-preview-section,
+  .store-preview-card,
+  .featured-urban-section,
+  .jonzko-gallery-section,
+  .contact-premium-section,
+  .footer-premium,
+  .footer,
+  .footer-mini {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
@@ -10374,77 +10345,46 @@ app-root {
     overflow-x: hidden !important;
   }
 
-  .product-card,
-  .exclusive-card,
-  .collection-card,
-  .related-card,
-  .featured-product {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    box-sizing: border-box !important;
+  .products-carousel {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
-  /* DETALLE PRODUCTO */
-  .detail-page,
-  .detail-container,
-  .gallery-wrapper,
-  .info-box,
-  .product-breadcrumb {
+  .products-carousel .product-card {
+    flex: 0 0 calc(100vw - 32px) !important;
+    max-width: calc(100vw - 32px) !important;
+  }
+
+  /* Navbar móvil */
+  .premium-navbar,
+  .navbar,
+  .mobile-navbar,
+  .top-marquee {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    box-sizing: border-box !important;
     overflow-x: hidden !important;
   }
 
-  .detail-container {
-    padding-left: 14px !important;
-    padding-right: 14px !important;
-  }
-
-  .product-breadcrumb {
-    padding-left: 14px !important;
-    padding-right: 14px !important;
-    white-space: nowrap !important;
-    text-overflow: ellipsis !important;
-  }
-
-  /* Evita que botones o textos largos empujen la pantalla */
-  h1,
-  h2,
-  h3,
-  p,
-  span,
-  a,
-  button,
-  input,
-  textarea,
-  select {
+  /* Carrito */
+  .cart-panel,
+  .cart-preview,
+  .cart-premium-panel {
+    width: 100% !important;
     max-width: 100% !important;
-    box-sizing: border-box !important;
+    right: 0 !important;
+    left: auto !important;
+    overflow-x: hidden !important;
   }
 
-  /* WHATSAPP FLOTANTE */
-  .whatsapp-float,
-  .floating-whatsapp,
-  .whatsapp-button,
-  .whatsapp-fixed {
-    right: 16px !important;
+  /* WhatsApp flotante */
+  .whatsapp-float {
+    right: 14px !important;
     left: auto !important;
     max-width: 64px !important;
-  }
-
-  /* FOOTER */
-  footer,
-  .footer,
-  .site-footer {
-    padding-left: 14px !important;
-    padding-right: 14px !important;
-    text-align: center !important;
   }
 }
