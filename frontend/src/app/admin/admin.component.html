@@ -552,7 +552,13 @@
 
             @if (productForm.videoUrl) {
               <div class="image-preview-box">
-                <video [src]="productForm.videoUrl" controls muted playsinline></video>
+                <video
+                  [src]="videoDisplayUrl(productForm.videoUrl)"
+                  controls
+                  muted
+                  playsinline
+                  preload="metadata"
+                ></video>
 
                 <div>
                   <small>Video cargado correctamente</small>
