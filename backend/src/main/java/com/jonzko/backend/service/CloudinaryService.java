@@ -49,14 +49,14 @@ public class CloudinaryService {
             }
 
             if (file == null || file.isEmpty()) {
-                throw new RuntimeException("La imagen está vacía");
+                throw new RuntimeException("El archivo está vacío");
             }
 
             Map uploadResult = cloudinary.uploader().upload(
                     file.getBytes(),
                     ObjectUtils.asMap(
                             "folder", "jonzko/productos",
-                            "resource_type", "image"
+                            "resource_type", "auto"
                     )
             );
 
@@ -71,7 +71,7 @@ public class CloudinaryService {
         } catch (Exception e) {
             System.out.println("ERROR CLOUDINARY: " + e.getMessage());
             e.printStackTrace();
-            throw new RuntimeException("No se pudo subir la imagen: " + e.getMessage());
+            throw new RuntimeException("No se pudo subir el archivo: " + e.getMessage());
         }
     }
 }

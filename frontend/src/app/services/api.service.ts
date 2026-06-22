@@ -12,7 +12,12 @@ export interface Product {
   description: string;
   price: number;
   stock: number;
+
   imageUrl: string;
+  imageUrl2?: string;
+  imageUrl3?: string;
+  videoUrl?: string;
+
   active: boolean;
 
   oldPrice?: number;
@@ -38,8 +43,13 @@ export interface ProductRequest {
   saleType?: string;
 
   imageUrl: string;
+  imageUrl2?: string;
+  imageUrl3?: string;
+  videoUrl?: string;
+
   active: boolean;
 }
+
 // ==========================
 // VARIANTES DE PRODUCTO
 // Tallas, colores, precio y stock por producto
@@ -56,6 +66,7 @@ export interface ProductVariant {
   createdAt?: string;
   updatedAt?: string;
 }
+
 // ==========================
 // USUARIOS
 // ==========================
@@ -185,119 +196,124 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   private getUserHeaders(): { headers: HttpHeaders } {
-  const token =
-    localStorage.getItem('jonzko_user_token') ||
-    localStorage.getItem('token') ||
-    '';
+    const token =
+      localStorage.getItem('jonzko_user_token') ||
+      localStorage.getItem('token') ||
+      '';
 
-  return {
-    headers: new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    })
-  };
-}
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    };
+  }
+
   private getAdminHeaders(): { headers: HttpHeaders } {
-  const token = localStorage.getItem('jonzko_admin_token') || '';
+    const token = localStorage.getItem('jonzko_admin_token') || '';
 
-  return {
-    headers: new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    })
-  };
-}
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    };
+  }
 
   // ==========================
   // PRODUCTOS PARA TIENDA
   // Solo productos activos
-  // GET: https://jonzko-sport-production.up.railway.app/api/products
   // ==========================
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/products`);
   }
+
   getProductById(productId: number): Observable<Product> {
-  return this.http.get<Product>(`${this.apiUrl}/products/${productId}`);
-}
+    return this.http.get<Product>(`${this.apiUrl}/products/${productId}`);
+  }
 
   // ==========================
   // PRODUCTOS PARA ADMIN
   // Todos los productos: activos e inactivos
-  // GET: http://localhost:8080/api/products/admin/all
   // ==========================
- getAdminProducts(): Observable<Product[]> {
-  return this.http.get<Product[]>(
-    `${this.apiUrl}/products/admin/all`,
-    this.getAdminHeaders()
-  );
-}
+  getAdminProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(
+      `${this.apiUrl}/products/admin/all`,
+      this.getAdminHeaders()
+    );
+  }
 
-createProduct(data: ProductRequest): Observable<Product> {
-  return this.http.post<Product>(
-    `${this.apiUrl}/products/admin`,
-    data,
-    this.getAdminHeaders()
-  );
-}
+  createProduct(data: ProductRequest): Observable<Product> {
+    return this.http.post<Product>(
+      `${this.apiUrl}/products/admin`,
+      data,
+      this.getAdminHeaders()
+    );
+  }
 
-updateProduct(productId: number, data: ProductRequest): Observable<Product> {
-  return this.http.put<Product>(
-    `${this.apiUrl}/products/admin/${productId}`,
-    data,
-    this.getAdminHeaders()
-  );
-}
+  updateProduct(productId: number, data: ProductRequest): Observable<Product> {
+    return this.http.put<Product>(
+      `${this.apiUrl}/products/admin/${productId}`,
+      data,
+      this.getAdminHeaders()
+    );
+  }
 
-deleteProduct(productId: number): Observable<any> {
-  return this.http.delete<any>(
-    `${this.apiUrl}/products/admin/${productId}`,
-    this.getAdminHeaders()
-  );
-}
-uploadProductImage(formData: FormData): Observable<any> {
-  return this.http.post<any>(
-    `${this.apiUrl}/products/admin/upload-image`,
-    formData,
-    this.getAdminHeaders()
-  );
-}
+  deleteProduct(productId: number): Observable<any> {
+    return this.http.delete<any>(
+      `${this.apiUrl}/products/admin/${productId}`,
+      this.getAdminHeaders()
+    );
+  }
+
+  // Sirve para subir imagen o video.
+  // El backend sigue usando /upload-image, pero Cloudinary ya acepta resource_type: auto.
+  uploadProductImage(formData: FormData): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}/products/admin/upload-image`,
+      formData,
+      this.getAdminHeaders()
+    );
+  }
+
   // ==========================
   // VARIANTES DE PRODUCTO PARA ADMIN
   // Tallas, colores, stock y precio por producto
   // ==========================
-getAdminProductVariants(): Observable<ProductVariant[]> {
-  return this.http.get<ProductVariant[]>(
-    `${this.apiUrl}/admin/product-variants`,
-    this.getAdminHeaders()
-  );
-}
+  getAdminProductVariants(): Observable<ProductVariant[]> {
+    return this.http.get<ProductVariant[]>(
+      `${this.apiUrl}/admin/product-variants`,
+      this.getAdminHeaders()
+    );
+  }
 
-getAdminProductVariantsByProduct(productId: number): Observable<ProductVariant[]> {
-  return this.http.get<ProductVariant[]>(
-    `${this.apiUrl}/admin/product-variants/product/${productId}`,
-    this.getAdminHeaders()
-  );
-}
+  getAdminProductVariantsByProduct(productId: number): Observable<ProductVariant[]> {
+    return this.http.get<ProductVariant[]>(
+      `${this.apiUrl}/admin/product-variants/product/${productId}`,
+      this.getAdminHeaders()
+    );
+  }
 
-updateAdminProductVariant(
-  variantId: number,
-  data: ProductVariant
-): Observable<ProductVariant> {
-  return this.http.put<ProductVariant>(
-    `${this.apiUrl}/admin/product-variants/${variantId}`,
-    data,
-    this.getAdminHeaders()
-  );
-}
+  updateAdminProductVariant(
+    variantId: number,
+    data: ProductVariant
+  ): Observable<ProductVariant> {
+    return this.http.put<ProductVariant>(
+      `${this.apiUrl}/admin/product-variants/${variantId}`,
+      data,
+      this.getAdminHeaders()
+    );
+  }
 
-updateAdminProductVariantStock(
-  variantId: number,
-  stock: number
-): Observable<ProductVariant> {
-  return this.http.put<ProductVariant>(
-    `${this.apiUrl}/admin/product-variants/${variantId}/stock?stock=${stock}`,
-    {},
-    this.getAdminHeaders()
-  );
-}
+  updateAdminProductVariantStock(
+    variantId: number,
+    stock: number
+  ): Observable<ProductVariant> {
+    return this.http.put<ProductVariant>(
+      `${this.apiUrl}/admin/product-variants/${variantId}/stock?stock=${stock}`,
+      {},
+      this.getAdminHeaders()
+    );
+  }
+
   // ==========================
   // USUARIOS
   // ==========================
@@ -310,15 +326,15 @@ updateAdminProductVariantStock(
   }
 
   // ==========================
-// USUARIOS PARA ADMIN
-// GET: https://jonzko-sport-production.up.railway.app/api/admin/users
-// ==========================
-getUsers(): Observable<UserResponse[]> {
-  return this.http.get<UserResponse[]>(
-    `${this.apiUrl}/admin/users`,
-    this.getAdminHeaders()
-  );
-}
+  // USUARIOS PARA ADMIN
+  // ==========================
+  getUsers(): Observable<UserResponse[]> {
+    return this.http.get<UserResponse[]>(
+      `${this.apiUrl}/admin/users`,
+      this.getAdminHeaders()
+    );
+  }
+
   // ==========================
   // PEDIDOS
   // ==========================
@@ -326,60 +342,58 @@ getUsers(): Observable<UserResponse[]> {
     return this.http.post<OrderResponse>(`${this.apiUrl}/orders`, data);
   }
 
-getOrders(): Observable<OrderResponse[]> {
-  return this.http.get<OrderResponse[]>(`${this.apiUrl}/orders`);
-}
-getOrdersByUser(userId: number): Observable<OrderResponse[]> {
-  return this.http.get<OrderResponse[]>(
-    `${this.apiUrl}/customer-orders/user/${userId}`,
-    this.getUserHeaders()
-  );
-}
+  getOrders(): Observable<OrderResponse[]> {
+    return this.http.get<OrderResponse[]>(`${this.apiUrl}/orders`);
+  }
 
-// ==========================
-// PEDIDOS PARA ADMIN
-// GET: http://localhost:8080/api/admin/orders
-// ==========================
-getAdminOrders(): Observable<OrderResponse[]> {
-  return this.http.get<OrderResponse[]>(
-    `${this.apiUrl}/admin/orders`,
-    this.getAdminHeaders()
-  );
-}
-// ==========================
-// CAMBIAR ESTADO DEL PEDIDO DESDE ADMIN
-// PUT: http://localhost:8080/api/admin/orders/1/status
-// ==========================
-updateOrderStatus(orderId: number, orderStatus: string): Observable<OrderResponse> {
-  return this.http.put<OrderResponse>(
-    `${this.apiUrl}/admin/orders/${orderId}/status`,
-    { orderStatus },
-    this.getAdminHeaders()
-  );
-}
+  getOrdersByUser(userId: number): Observable<OrderResponse[]> {
+    return this.http.get<OrderResponse[]>(
+      `${this.apiUrl}/customer-orders/user/${userId}`,
+      this.getUserHeaders()
+    );
+  }
 
-updatePaymentStatus(orderId: number, paymentStatus: string): Observable<OrderResponse> {
-  return this.http.put<OrderResponse>(
-    `${this.apiUrl}/orders/${orderId}/payment-status`,
-    { paymentStatus },
-    this.getAdminHeaders()
-  );
-}
+  // ==========================
+  // PEDIDOS PARA ADMIN
+  // ==========================
+  getAdminOrders(): Observable<OrderResponse[]> {
+    return this.http.get<OrderResponse[]>(
+      `${this.apiUrl}/admin/orders`,
+      this.getAdminHeaders()
+    );
+  }
+
+  // ==========================
+  // CAMBIAR ESTADO DEL PEDIDO DESDE ADMIN
+  // ==========================
+  updateOrderStatus(orderId: number, orderStatus: string): Observable<OrderResponse> {
+    return this.http.put<OrderResponse>(
+      `${this.apiUrl}/admin/orders/${orderId}/status`,
+      { orderStatus },
+      this.getAdminHeaders()
+    );
+  }
+
+  updatePaymentStatus(orderId: number, paymentStatus: string): Observable<OrderResponse> {
+    return this.http.put<OrderResponse>(
+      `${this.apiUrl}/orders/${orderId}/payment-status`,
+      { paymentStatus },
+      this.getAdminHeaders()
+    );
+  }
 
   // ==========================
   // PERSONALIZACIÓN WEB
-  // GET: http://localhost:8080/api/settings
-  // PUT: http://localhost:8080/api/settings
   // ==========================
   getSettings(): Observable<SiteSetting> {
     return this.http.get<SiteSetting>(`${this.apiUrl}/settings`);
   }
 
   updateSettings(data: SiteSettingRequest): Observable<SiteSetting> {
-  return this.http.put<SiteSetting>(
-    `${this.apiUrl}/settings`,
-    data,
-    this.getAdminHeaders()
-  );
-}
+    return this.http.put<SiteSetting>(
+      `${this.apiUrl}/settings`,
+      data,
+      this.getAdminHeaders()
+    );
+  }
 }

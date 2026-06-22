@@ -436,22 +436,131 @@
               <strong>-{{ discountPercent(productForm) }}% OFF</strong>
             </div>
 
-            <label>
-              Imagen del producto
-              <input type="file" accept="image/*" (change)="uploadProductImage($event)" />
-            </label>
+            <div class="media-admin-block">
+              <h4>Galería del producto</h4>
+              <p>
+                Sube la imagen principal, 2 fotos adicionales y un video. La imagen principal se usa
+                también en la tarjeta de la tienda.
+              </p>
+
+              <div class="form-two">
+                <label>
+                  Imagen principal
+                  <input
+                    type="file"
+                    accept="image/*"
+                    (change)="uploadProductMedia($event, 'imageUrl')"
+                  />
+                </label>
+
+                <label>
+                  Imagen 2
+                  <input
+                    type="file"
+                    accept="image/*"
+                    (change)="uploadProductMedia($event, 'imageUrl2')"
+                  />
+                </label>
+              </div>
+
+              <div class="form-two">
+                <label>
+                  Imagen 3
+                  <input
+                    type="file"
+                    accept="image/*"
+                    (change)="uploadProductMedia($event, 'imageUrl3')"
+                  />
+                </label>
+
+                <label>
+                  Video del producto
+                  <input
+                    type="file"
+                    accept="video/*"
+                    (change)="uploadProductMedia($event, 'videoUrl')"
+                  />
+                </label>
+              </div>
+            </div>
 
             @if (productForm.imageUrl) {
               <div class="image-preview-box">
-                <img [src]="productForm.imageUrl" alt="Vista previa del producto" />
+                <img [src]="productForm.imageUrl" alt="Imagen principal del producto" />
 
                 <div>
-                  <small>Imagen cargada correctamente</small>
+                  <small>Imagen principal cargada correctamente</small>
 
                   <input type="text" name="imageUrl" [(ngModel)]="productForm.imageUrl" readonly />
 
-                  <button type="button" class="delete-btn" (click)="removeProductImage()">
-                    Quitar imagen
+                  <button type="button" class="delete-btn" (click)="removeProductMedia('imageUrl')">
+                    Quitar imagen principal
+                  </button>
+                </div>
+              </div>
+            }
+
+            @if (productForm.imageUrl2) {
+              <div class="image-preview-box">
+                <img [src]="productForm.imageUrl2" alt="Imagen 2 del producto" />
+
+                <div>
+                  <small>Imagen 2 cargada correctamente</small>
+
+                  <input
+                    type="text"
+                    name="imageUrl2"
+                    [(ngModel)]="productForm.imageUrl2"
+                    readonly
+                  />
+
+                  <button
+                    type="button"
+                    class="delete-btn"
+                    (click)="removeProductMedia('imageUrl2')"
+                  >
+                    Quitar imagen 2
+                  </button>
+                </div>
+              </div>
+            }
+
+            @if (productForm.imageUrl3) {
+              <div class="image-preview-box">
+                <img [src]="productForm.imageUrl3" alt="Imagen 3 del producto" />
+
+                <div>
+                  <small>Imagen 3 cargada correctamente</small>
+
+                  <input
+                    type="text"
+                    name="imageUrl3"
+                    [(ngModel)]="productForm.imageUrl3"
+                    readonly
+                  />
+
+                  <button
+                    type="button"
+                    class="delete-btn"
+                    (click)="removeProductMedia('imageUrl3')"
+                  >
+                    Quitar imagen 3
+                  </button>
+                </div>
+              </div>
+            }
+
+            @if (productForm.videoUrl) {
+              <div class="image-preview-box">
+                <video [src]="productForm.videoUrl" controls muted playsinline></video>
+
+                <div>
+                  <small>Video cargado correctamente</small>
+
+                  <input type="text" name="videoUrl" [(ngModel)]="productForm.videoUrl" readonly />
+
+                  <button type="button" class="delete-btn" (click)="removeProductMedia('videoUrl')">
+                    Quitar video
                   </button>
                 </div>
               </div>
@@ -513,6 +622,10 @@
                   <small *ngIf="product.sizes"> Tallas: {{ product.sizes }} </small>
 
                   <small *ngIf="product.saleType"> Etiqueta: {{ product.saleType }} </small>
+
+                  <small *ngIf="product.imageUrl2"> Imagen 2: cargada </small>
+                  <small *ngIf="product.imageUrl3"> Imagen 3: cargada </small>
+                  <small *ngIf="product.videoUrl"> Video: cargado </small>
 
                   <span>Stock: {{ product.stock }}</span>
                   <span class="status confirmed" *ngIf="product.active">Activo</span>

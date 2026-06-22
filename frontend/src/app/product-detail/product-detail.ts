@@ -5,6 +5,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { ApiService, Product } from '../services/api.service';
 
+type ProductMedia = {
+  type: 'image' | 'video';
+  src: string;
+};
+
 @Component({
   selector: 'app-product-detail',
   standalone: true,
@@ -20,7 +25,7 @@ export class ProductDetail implements OnInit {
   selectedSize = signal('');
   quantity = signal(1);
 
-  productMedia = signal<{ type: 'image' | 'video'; src: string }[]>([]);
+  productMedia = signal<ProductMedia[]>([]);
   activeMediaIndex = signal(0);
 
   sizeGuideOpen = signal(false);
@@ -33,105 +38,77 @@ export class ProductDetail implements OnInit {
     private apiService: ApiService
   ) {}
 
- ngOnInit(): void {
-  this.route.paramMap.subscribe(params => {
-    const id = Number(params.get('id'));
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
 
-    if (!id) {
-      this.error.set('Producto no válido.');
-      this.loading.set(false);
-      return;
-    }
-
-    this.loading.set(true);
-    this.error.set('');
-    this.selectedSize.set('');
-    this.quantity.set(1);
-    this.activeMediaIndex.set(0);
-
-    this.apiService.getProductById(id).subscribe({
-      next: (product) => {
-        this.product.set(product);
-        this.loadProductMedia(product);
-        this.loadRelatedProducts(product.id);
+      if (!id) {
+        this.error.set('Producto no válido.');
         this.loading.set(false);
+        return;
+      }
 
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-      },
-      error: () => {
-        this.error.set('No se pudo cargar el producto.');
-        this.loading.set(false);
-      },
+      this.loading.set(true);
+      this.error.set('');
+      this.selectedSize.set('');
+      this.quantity.set(1);
+      this.activeMediaIndex.set(0);
+
+      this.apiService.getProductById(id).subscribe({
+        next: (product) => {
+          this.product.set(product);
+          this.loadProductMedia(product);
+          this.loadRelatedProducts(product.id);
+          this.loading.set(false);
+
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        },
+        error: () => {
+          this.error.set('No se pudo cargar el producto.');
+          this.loading.set(false);
+        },
+      });
     });
-  });
-}
+  }
 
   loadProductMedia(product: Product): void {
-    const name = (product.name || '').toLowerCase();
+    const media: ProductMedia[] = [];
 
-    let media: { type: 'image' | 'video'; src: string }[] = [];
+    const addImage = (src?: string | null): void => {
+      const cleanSrc = String(src || '').trim();
 
-    if (name.includes('blanca')) {
-      media = [
-        { type: 'image', src: 'assets/polera-blanca.jpeg' },
-        { type: 'image', src: 'assets/polera-blanca-2.jpeg' },
-        { type: 'image', src: 'assets/polera-blanca-3.jpeg' },
-        { type: 'video', src: 'assets/polera-blanca-video.mp4' },
-      ];
-    } else if (name.includes('morada')) {
-      media = [
-        { type: 'image', src: 'assets/polera-morada-1.jpeg' },
-        { type: 'image', src: 'assets/polera-morada-2.jpeg' },
-        { type: 'image', src: 'assets/polera-morada-3.jpeg' },
-        { type: 'video', src: 'assets/polera-morada-video.mp4' },
-      ];
-    } else if (name.includes('plomo') || name.includes('oscuro')) {
-      media = [
-        { type: 'image', src: 'assets/polera-plomo-1.jpeg' },
-        { type: 'image', src: 'assets/polera-plomo-2.jpeg' },
-        { type: 'image', src: 'assets/polera-plomo-3.jpeg' },
-        { type: 'video', src: 'assets/polera-plomo-video.mp4' },
-      ];
-    } else if (name.includes('negra') && name.includes('polera')) {
-      media = [
-        { type: 'image', src: 'assets/polera-negra-1.jpeg' },
-        { type: 'image', src: 'assets/polera-negra-2.jpeg' },
-        { type: 'image', src: 'assets/polera-negra-3.jpeg' },
-        { type: 'video', src: 'assets/polera-negra-video.mp4' },
-      ];
-    } else if (name.includes('verde')) {
-      media = [
-        { type: 'image', src: 'assets/polera-verde-1.jpeg' },
-        { type: 'image', src: 'assets/polera-verde-2.jpeg' },
-        { type: 'image', src: 'assets/polera-verde-3.jpeg' },
-        { type: 'video', src: 'assets/polera-verde-video.mp4' },
-      ];
-    } else if (
-      name.includes('polo') &&
-      name.includes('manga') &&
-      name.includes('larga') &&
-      name.includes('negro')
-    ) {
-      media = [
-        { type: 'image', src: 'assets/polo-manga-larga-negro-1.jpeg' },
-        { type: 'image', src: 'assets/polo-manga-larga-negro-2.jpeg' },
-        { type: 'image', src: 'assets/polo-manga-larga-negro-3.jpeg' },
-        { type: 'video', src: 'assets/polo-manga-larga-negro-video.mp4' },
-      ];
-    }
+      if (cleanSrc) {
+        media.push({
+          type: 'image',
+          src: cleanSrc,
+        });
+      }
+    };
 
-    if (media.length === 0) {
-      media = [{ type: 'image', src: product.imageUrl }];
-    }
+    const addVideo = (src?: string | null): void => {
+      const cleanSrc = String(src || '').trim();
+
+      if (cleanSrc) {
+        media.push({
+          type: 'video',
+          src: cleanSrc,
+        });
+      }
+    };
+
+    addImage(product.imageUrl);
+    addImage(product.imageUrl2);
+    addImage(product.imageUrl3);
+    addVideo(product.videoUrl);
 
     this.productMedia.set(media);
     this.activeMediaIndex.set(0);
   }
 
-  activeMedia() {
+  activeMedia(): ProductMedia | undefined {
     return this.productMedia()[this.activeMediaIndex()];
   }
 
@@ -181,40 +158,10 @@ export class ProductDetail implements OnInit {
       },
     });
   }
+
   relatedHoverImageFor(product: Product): string {
-  const name = (product.name || '').toLowerCase();
-
-  if (name.includes('blanca')) {
-    return 'assets/polera-blanca-2.jpeg';
+    return product.imageUrl2 || product.imageUrl3 || product.imageUrl;
   }
-
-  if (name.includes('morada')) {
-    return 'assets/polera-morada-2.jpeg';
-  }
-
-  if (name.includes('plomo') || name.includes('oscuro')) {
-    return 'assets/polera-plomo-2.jpeg';
-  }
-
-  if (name.includes('negra') && name.includes('polera')) {
-    return 'assets/polera-negra-2.jpeg';
-  }
-
-  if (name.includes('verde')) {
-    return 'assets/polera-verde-2.jpeg';
-  }
-
-  if (
-    name.includes('polo') &&
-    name.includes('manga') &&
-    name.includes('larga') &&
-    name.includes('negro')
-  ) {
-    return 'assets/polo-manga-larga-negro-2.jpeg';
-  }
-
-  return product.imageUrl;
-}
 
   sizesList(): string[] {
     const product = this.product();

@@ -27,6 +27,8 @@
               <source [src]="media.src" type="video/mp4" />
             </video>
           }
+        } @else {
+          <div class="empty-state">Imagen no disponible</div>
         }
 
         @if (productMedia().length > 1) {
@@ -179,6 +181,7 @@
           <a class="related-card" [routerLink]="['/producto', item.id]">
             <div class="related-image-box">
               <img [src]="item.imageUrl" [alt]="item.name" class="related-main-image" />
+
               <img
                 [src]="relatedHoverImageFor(item)"
                 [alt]="item.name"
@@ -218,16 +221,19 @@
               <td>52 cm</td>
               <td>68 cm</td>
             </tr>
+
             <tr>
               <td>M</td>
               <td>55 cm</td>
               <td>70 cm</td>
             </tr>
+
             <tr>
               <td>L</td>
               <td>58 cm</td>
               <td>72 cm</td>
             </tr>
+
             <tr>
               <td>XL</td>
               <td>61 cm</td>

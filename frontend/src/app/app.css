@@ -10020,3 +10020,141 @@ header.navbar,
     justify-content: center;
   }
 }
+/* =========================================================
+   ARREGLO FINAL MÓVIL - MOSTRAR LETRAS EN EXCLUSIVO
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .collection-section .product-card {
+    display: grid !important;
+    grid-template-columns: 130px minmax(0, 1fr) !important;
+    background: #ffffff !important;
+    border: 1px solid #e5e5e5 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08) !important;
+    overflow: hidden !important;
+  }
+
+  .collection-section .product-image-box {
+    width: 130px !important;
+    height: 230px !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    background: #f3f3f3 !important;
+  }
+
+  .collection-section .product-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    padding: 0 !important;
+  }
+
+  .collection-section .product-info {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 14px 14px 14px 16px !important;
+    text-align: left !important;
+    overflow: visible !important;
+  }
+
+  .collection-section .product-category {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #9b6b20 !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    letter-spacing: 4px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    margin: 0 0 8px !important;
+    white-space: normal !important;
+  }
+
+  .collection-section .product-info h2,
+  .collection-section .product-card h2 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #000000 !important;
+    font-size: 20px !important;
+    line-height: 1.05 !important;
+    font-weight: 900 !important;
+    margin: 0 0 10px !important;
+    text-align: left !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
+  .collection-section .product-description {
+    display: none !important;
+  }
+
+  .collection-section .product-price {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    margin: 0 0 12px !important;
+  }
+
+  .collection-section .old-price {
+    display: inline-block !important;
+    font-size: 11px !important;
+    color: #777777 !important;
+    text-decoration: line-through !important;
+  }
+
+  .collection-section .current-price {
+    display: inline-block !important;
+    font-size: 14px !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+  }
+
+  .collection-section .product-button {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: 38px !important;
+    border-radius: 999px !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    text-align: center !important;
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .collection-section .product-card {
+    grid-template-columns: 118px minmax(0, 1fr) !important;
+  }
+
+  .collection-section .product-image-box {
+    width: 118px !important;
+    height: 220px !important;
+  }
+
+  .collection-section .product-category {
+    font-size: 8px !important;
+    letter-spacing: 3px !important;
+  }
+
+  .collection-section .product-info h2,
+  .collection-section .product-card h2 {
+    font-size: 18px !important;
+  }
+
+  .collection-section .product-button {
+    font-size: 9.5px !important;
+    min-height: 36px !important;
+  }
+}

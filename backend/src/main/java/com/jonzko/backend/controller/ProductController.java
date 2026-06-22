@@ -63,29 +63,30 @@ public class ProductController {
     }
 
     // ============================================================
-    // ADMIN - SUBIR IMAGEN A CLOUDINARY
+    // ADMIN - SUBIR IMAGEN O VIDEO A CLOUDINARY
     // POST: /api/products/admin/upload-image
     // ============================================================
     @PostMapping("/admin/upload-image")
-public ResponseEntity<?> uploadProductImage(@RequestParam("file") MultipartFile file) {
-    try {
-        String imageUrl = cloudinaryService.uploadProductImage(file);
+    public ResponseEntity<?> uploadProductImage(@RequestParam("file") MultipartFile file) {
+        try {
+            String mediaUrl = cloudinaryService.uploadProductImage(file);
 
-        return ResponseEntity.ok(
-                Map.of(
-                        "message", "Imagen subida correctamente",
-                        "imageUrl", imageUrl
-                )
-        );
+            return ResponseEntity.ok(
+                    Map.of(
+                            "message", "Archivo subido correctamente",
+                            "imageUrl", mediaUrl,
+                            "mediaUrl", mediaUrl
+                    )
+            );
 
-    } catch (Exception e) {
-        return ResponseEntity.status(500).body(
-                Map.of(
-                        "message", e.getMessage()
-                )
-        );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    Map.of(
+                            "message", e.getMessage()
+                    )
+            );
+        }
     }
-}
 
     // ============================================================
     // BUSCAR PRODUCTO POR ID
@@ -131,7 +132,7 @@ public ResponseEntity<?> uploadProductImage(@RequestParam("file") MultipartFile 
 
         if (request.getImageUrl() == null || request.getImageUrl().trim().isEmpty()) {
             return ResponseEntity.badRequest().body(
-                    Map.of("message", "La imagen del producto es obligatoria")
+                    Map.of("message", "La imagen principal del producto es obligatoria")
             );
         }
 
@@ -146,7 +147,11 @@ public ResponseEntity<?> uploadProductImage(@RequestParam("file") MultipartFile 
         product.setSizes(request.getSizes());
         product.setSaleType(request.getSaleType());
         product.setStock(request.getStock() != null ? request.getStock() : 0);
+
         product.setImageUrl(request.getImageUrl().trim());
+        product.setImageUrl2(cleanUrl(request.getImageUrl2()));
+        product.setImageUrl3(cleanUrl(request.getImageUrl3()));
+        product.setVideoUrl(cleanUrl(request.getVideoUrl()));
 
         if (request.getActive() == null) {
             product.setActive(true);
@@ -199,7 +204,7 @@ public ResponseEntity<?> uploadProductImage(@RequestParam("file") MultipartFile 
 
         if (request.getImageUrl() == null || request.getImageUrl().trim().isEmpty()) {
             return ResponseEntity.badRequest().body(
-                    Map.of("message", "La imagen del producto es obligatoria")
+                    Map.of("message", "La imagen principal del producto es obligatoria")
             );
         }
 
@@ -212,7 +217,11 @@ public ResponseEntity<?> uploadProductImage(@RequestParam("file") MultipartFile 
         product.setSizes(request.getSizes());
         product.setSaleType(request.getSaleType());
         product.setStock(request.getStock() != null ? request.getStock() : 0);
+
         product.setImageUrl(request.getImageUrl().trim());
+        product.setImageUrl2(cleanUrl(request.getImageUrl2()));
+        product.setImageUrl3(cleanUrl(request.getImageUrl3()));
+        product.setVideoUrl(cleanUrl(request.getVideoUrl()));
 
         if (request.getActive() != null) {
             product.setActive(request.getActive());
@@ -311,5 +320,16 @@ public ResponseEntity<?> uploadProductImage(@RequestParam("file") MultipartFile 
         return ResponseEntity.ok(
                 Map.of("message", "Producto eliminado correctamente")
         );
+    }
+
+    // ============================================================
+    // LIMPIAR URLS OPCIONALES
+    // ============================================================
+    private String cleanUrl(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
+
+        return value.trim();
     }
 }

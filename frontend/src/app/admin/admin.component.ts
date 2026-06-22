@@ -16,7 +16,7 @@ import {
   OrderResponse,
   UserResponse
 } from '../services/api.service';
-
+type ProductMediaField = 'imageUrl' | 'imageUrl2' | 'imageUrl3' | 'videoUrl';
 type AdminSection =
   | 'dashboard'
   | 'products'
@@ -108,6 +108,9 @@ currentReceiptType: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante' = 'Comproba
   stock: 0,
   saleType: 'NUEVO',
   imageUrl: '',
+  imageUrl2: '',
+  imageUrl3: '',
+  videoUrl: '',
   active: true
 };
 
@@ -230,6 +233,10 @@ currentReceiptType: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante' = 'Comproba
   saleType: (this.productForm.saleType || 'NUEVO').trim(),
 
   imageUrl: (this.productForm.imageUrl || '').trim(),
+  imageUrl2: (this.productForm.imageUrl2 || '').trim(),
+  imageUrl3: (this.productForm.imageUrl3 || '').trim(),
+  videoUrl: (this.productForm.videoUrl || '').trim(),
+
   active: this.productForm.active
 };
 
@@ -290,6 +297,10 @@ if (!data.name || !data.category || !data.imageUrl) {
   saleType: product.saleType || 'NUEVO',
 
   imageUrl: product.imageUrl,
+  imageUrl2: product.imageUrl2 || '',
+  imageUrl3: product.imageUrl3 || '',
+  videoUrl: product.videoUrl || '',
+
   active: product.active
 };
 
@@ -344,6 +355,10 @@ if (!data.name || !data.category || !data.imageUrl) {
       saleType: product.saleType || 'NUEVO',
 
       imageUrl: product.imageUrl,
+      imageUrl2: product.imageUrl2 || '',
+      imageUrl3: product.imageUrl3 || '',
+      videoUrl: product.videoUrl || '',
+
       active: newActiveState
     };
 
@@ -382,10 +397,14 @@ if (!data.name || !data.category || !data.imageUrl) {
       saleType: 'NUEVO',
 
       imageUrl: '',
+      imageUrl2: '',
+      imageUrl3: '',
+      videoUrl: '',
+
       active: true
     };
   }
-  uploadProductImage(event: Event): void {
+  uploadProductMedia(event: Event, field: ProductMediaField): void {
   const input = event.target as HTMLInputElement;
 
   if (!input.files || input.files.length === 0) {
@@ -393,18 +412,25 @@ if (!data.name || !data.category || !data.imageUrl) {
   }
 
   const file = input.files[0];
+  const isVideo = field === 'videoUrl';
 
-  if (!file.type.startsWith('image/')) {
+  if (!isVideo && !file.type.startsWith('image/')) {
     alert('Selecciona una imagen válida.');
     input.value = '';
     return;
   }
 
-  const maxSizeMb = 8;
+  if (isVideo && !file.type.startsWith('video/')) {
+    alert('Selecciona un video válido.');
+    input.value = '';
+    return;
+  }
+
+  const maxSizeMb = isVideo ? 50 : 8;
   const maxSizeBytes = maxSizeMb * 1024 * 1024;
 
   if (file.size > maxSizeBytes) {
-    alert(`La imagen es muy pesada. Máximo ${maxSizeMb} MB.`);
+    alert(`El archivo es muy pesado. Máximo ${maxSizeMb} MB.`);
     input.value = '';
     return;
   }
@@ -417,31 +443,43 @@ if (!data.name || !data.category || !data.imageUrl) {
   this.apiService.uploadProductImage(formData).subscribe({
     next: (response: any) => {
       this.loading.set(false);
-      this.productForm.imageUrl = response.imageUrl;
-      alert('Imagen subida correctamente.');
+
+      const url = response.imageUrl || response.mediaUrl;
+
+      if (!url) {
+        alert('Cloudinary no devolvió URL.');
+        input.value = '';
+        return;
+      }
+
+      this.productForm[field] = url;
+      input.value = '';
+
+      alert(isVideo ? 'Video subido correctamente.' : 'Imagen subida correctamente.');
     },
     error: (error) => {
-  this.loading.set(false);
-  console.error('Error subiendo imagen:', error);
+      this.loading.set(false);
+      console.error('Error subiendo archivo:', error);
 
-  const message =
-    error?.error?.message ||
-    error?.message ||
-    'No se pudo subir la imagen. Revisa Cloudinary o Railway.';
+      const message =
+        error?.error?.message ||
+        error?.message ||
+        'No se pudo subir el archivo. Revisa Cloudinary o Railway.';
 
-  alert(message);
-}
+      alert(message);
+      input.value = '';
+    }
   });
 }
 
-removeProductImage(): void {
-  const confirmRemove = confirm('¿Deseas quitar la imagen del formulario?');
+removeProductMedia(field: ProductMediaField): void {
+  const confirmRemove = confirm('¿Deseas quitar este archivo del formulario?');
 
   if (!confirmRemove) {
     return;
   }
 
-  this.productForm.imageUrl = '';
+  this.productForm[field] = '';
 }
 
   // ==========================
@@ -1694,7 +1732,10 @@ async exportFullExcelReport(): Promise<void> {
       'Tallas',
       'Stock',
       'Tipo de venta',
-      'Imagen',
+      'Imagen principal',
+      'Imagen 2',
+      'Imagen 3',
+      'Video',
       'Activo',
       'Fecha creación',
       'Última actualización'
@@ -1711,6 +1752,9 @@ async exportFullExcelReport(): Promise<void> {
       product.stock,
       product.saleType || '',
       product.imageUrl,
+      product.imageUrl2 || '',
+      product.imageUrl3 || '',
+      product.videoUrl || '',
       product.active ? 'Sí' : 'No',
       product.createdAt || '',
       product.updatedAt || ''

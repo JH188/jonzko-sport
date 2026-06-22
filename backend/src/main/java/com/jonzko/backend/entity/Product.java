@@ -55,9 +55,18 @@ public class Product {
     private Integer stock;
 
     @Column(name = "image_url")
-    private String imageUrl;
+private String imageUrl;
 
-    private Boolean active;
+@Column(name = "image_url_2")
+private String imageUrl2;
+
+@Column(name = "image_url_3")
+private String imageUrl3;
+
+@Column(name = "video_url")
+private String videoUrl;
+
+private Boolean active;
 
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
