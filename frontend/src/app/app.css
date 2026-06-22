@@ -11434,3 +11434,82 @@ video {
     z-index: 5 !important;
   }
 }
+/* =========================================================
+   SEÑALIZACIÓN EXCLUSIVO MÓVIL - FLECHAS + DESLIZA
+   Pegar al FINAL de app.css
+   ========================================================= */
+
+@media (max-width: 600px) {
+  #producto .products-carousel-shell {
+    position: relative !important;
+    padding-bottom: 42px !important;
+    overflow: visible !important;
+  }
+
+  /* Flechas laterales visibles en móvil */
+  #producto .products-arrow {
+    display: flex !important;
+    position: absolute !important;
+    top: 42% !important;
+    transform: translateY(-50%) !important;
+
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+
+    background: rgba(0, 0, 0, 0.78) !important;
+    color: #ffffff !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 28px !important;
+    font-weight: 900 !important;
+    z-index: 20 !important;
+
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  #producto .products-arrow-left {
+    left: 4px !important;
+  }
+
+  #producto .products-arrow-right {
+    right: 4px !important;
+  }
+
+  /* Mensaje debajo de la tarjeta */
+  #producto .products-carousel-shell::after {
+    content: "← Desliza para ver más prendas →" !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 4px !important;
+    transform: translateX(-50%) !important;
+
+    width: calc(100% - 28px) !important;
+    max-width: 310px !important;
+
+    padding: 10px 14px !important;
+    border-radius: 999px !important;
+
+    background: #f5efe7 !important;
+    color: #111111 !important;
+    border: 1px solid #e1d4c5 !important;
+
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    letter-spacing: 1.4px !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Que el carrusel se pueda mover suave */
+  #producto .products-carousel,
+  #producto .products-grid {
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 8px !important;
+  }
+}
