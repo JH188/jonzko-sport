@@ -10489,3 +10489,79 @@ video {
     display: none !important;
   }
 }
+/* =========================================================
+   FIX MENÚ MÓVIL JONZKO - NO MEZCLAR USUARIO + HAMBURGUESA
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* El panel hamburguesa debe verse limpio y encima */
+  .mobile-menu-panel {
+    position: fixed !important;
+    top: 105px !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 34px) !important;
+    max-width: 330px !important;
+    padding: 14px !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    z-index: 99999 !important;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22) !important;
+  }
+
+  .mobile-menu-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .mobile-menu-grid a,
+  .mobile-menu-grid button {
+    width: 100% !important;
+    min-height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 11px 14px !important;
+    border-radius: 11px !important;
+    background: #f4f0eb !important;
+    color: #111111 !important;
+    font-weight: 900 !important;
+    text-decoration: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .mobile-menu-grid button,
+  .mobile-menu-grid .logout-btn {
+    justify-content: center !important;
+    background: #c90000 !important;
+    color: #ffffff !important;
+    border-color: #c90000 !important;
+  }
+
+  /* Oculta el cuadrito pequeño de usuario cuando está abierto el menú hamburguesa */
+  body:has(.mobile-menu-panel) .user-dropdown,
+  body:has(.mobile-menu-panel) .account-dropdown,
+  body:has(.mobile-menu-panel) .profile-dropdown,
+  body:has(.mobile-menu-panel) .user-menu,
+  body:has(.mobile-menu-panel) .user-popover {
+    display: none !important;
+  }
+
+  /* Botones flotantes más ordenados en móvil */
+  .floating-user,
+  .floating-cart,
+  .user-floating,
+  .cart-floating {
+    z-index: 9999 !important;
+  }
+
+  body:has(.mobile-menu-panel) .floating-user,
+  body:has(.mobile-menu-panel) .floating-cart,
+  body:has(.mobile-menu-panel) .user-floating,
+  body:has(.mobile-menu-panel) .cart-floating {
+    display: none !important;
+  }
+}
