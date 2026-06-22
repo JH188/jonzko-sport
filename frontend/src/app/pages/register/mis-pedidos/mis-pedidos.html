@@ -105,7 +105,7 @@
               <div class="products-mini">
                 <h4>Productos comprados</h4>
 
-                @for (item of pedido.productos; track item.id) {
+                @for (item of pedido.productos; track $index) {
                   <div class="product-mini">
                     <img [src]="item.imageUrl" [alt]="item.name" />
 
@@ -113,7 +113,7 @@
                       <strong>{{ item.name }}</strong>
                       <p>Talla: {{ item.selectedSize || 'No especificada' }}</p>
                       <p>Cantidad: {{ item.quantity }}</p>
-                      <p>Subtotal: S/ {{ (item.price * item.quantity).toFixed(2) }}</p>
+                      <p>Subtotal: S/ {{ subtotal(item) }}</p>
                     </div>
                   </div>
                 }
@@ -180,9 +180,9 @@
         </div>
 
         <div class="modal-products">
-          <h3>Productos comprados</h3>
+          <h3>Prendas compradas</h3>
 
-          @for (item of selectedPedido.productos; track item.id) {
+          @for (item of selectedPedido.productos; track $index) {
             <div class="modal-product">
               <img [src]="item.imageUrl" [alt]="item.name" />
 
@@ -192,7 +192,7 @@
                 <p><strong>Color:</strong> {{ item.color || 'No especificado' }}</p>
                 <p><strong>Cantidad:</strong> {{ item.quantity }}</p>
                 <p><strong>Precio unitario:</strong> S/ {{ item.price }}</p>
-                <p><strong>Subtotal:</strong> S/ {{ (item.price * item.quantity).toFixed(2) }}</p>
+                <p><strong>Subtotal:</strong> S/ {{ subtotal(item) }}</p>
               </div>
             </div>
           }

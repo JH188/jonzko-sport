@@ -10465,3 +10465,27 @@ video {
     top: 68px !important;
   }
 }
+@media (max-width: 768px) {
+  .mobile-menu-panel,
+  .mobile-menu,
+  .mobile-menu-grid {
+    position: relative !important;
+    z-index: 99999 !important;
+  }
+
+  .user-dropdown,
+  .account-dropdown,
+  .profile-dropdown,
+  .user-menu,
+  .user-popover {
+    z-index: 10 !important;
+  }
+
+  .mobile-menu-open .user-dropdown,
+  .mobile-menu-open .account-dropdown,
+  .mobile-menu-open .profile-dropdown,
+  .mobile-menu-open .user-menu,
+  .mobile-menu-open .user-popover {
+    display: none !important;
+  }
+}
