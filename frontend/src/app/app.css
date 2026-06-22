@@ -10565,3 +10565,565 @@ video {
     display: none !important;
   }
 }
+/* =========================================================
+   FIX CARRITO Y EXCLUSIVO EN MÓVIL - JONZKO
+   ========================================================= */
+
+@media (max-width: 520px) {
+  /* =========================
+     CARRITO MÓVIL
+     ========================= */
+
+  .cart-panel,
+  .cart-sidebar,
+  .cart-drawer,
+  .shopping-cart,
+  .cart-modal {
+    position: fixed !important;
+    top: 104px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: calc(100vh - 104px) !important;
+    padding: 14px !important;
+    background: #ffffff !important;
+    border-radius: 0 0 18px 18px !important;
+    z-index: 99998 !important;
+    overflow-y: auto !important;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .cart-panel .empty-cart,
+  .cart-sidebar .empty-cart,
+  .cart-drawer .empty-cart,
+  .shopping-cart .empty-cart,
+  .cart-modal .empty-cart {
+    width: 100% !important;
+    min-height: 120px !important;
+    margin: 0 !important;
+    padding: 28px 16px !important;
+    border-radius: 16px !important;
+    background: #f7f1e8 !important;
+    border: 1px solid #dfd1bf !important;
+    text-align: center !important;
+  }
+
+  .cart-panel h2,
+  .cart-panel h3,
+  .cart-sidebar h2,
+  .cart-sidebar h3,
+  .cart-drawer h2,
+  .cart-drawer h3,
+  .shopping-cart h2,
+  .shopping-cart h3 {
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    margin: 0 0 12px !important;
+  }
+
+  .cart-panel p,
+  .cart-sidebar p,
+  .cart-drawer p,
+  .shopping-cart p {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    text-align: center !important;
+  }
+
+  /* Oscurece el fondo cuando el carrito está abierto */
+  .cart-backdrop,
+  .cart-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0, 0, 0, 0.55) !important;
+    z-index: 99990 !important;
+  }
+
+  /* =========================
+     EXCLUSIVO / TARJETAS MÓVIL
+     ========================= */
+
+  .exclusive-section,
+  .exclusivo-section,
+  .exclusivo,
+  .exclusive,
+  #exclusivo {
+    padding: 26px 14px 40px !important;
+    overflow-x: hidden !important;
+  }
+
+  .exclusive-section h2,
+  .exclusivo-section h2,
+  .exclusivo h2,
+  .exclusive h2,
+  #exclusivo h2 {
+    font-size: 34px !important;
+    line-height: 1.05 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .exclusive-section .product-card,
+  .exclusivo-section .product-card,
+  .exclusivo .product-card,
+  .exclusive .product-card,
+  #exclusivo .product-card,
+  .exclusive-card,
+  .exclusivo-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .exclusive-section .product-card img,
+  .exclusivo-section .product-card img,
+  .exclusivo .product-card img,
+  .exclusive .product-card img,
+  #exclusivo .product-card img,
+  .exclusive-card img,
+  .exclusivo-card img {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 260px !important;
+    max-height: 360px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+    background: #f2f2f2 !important;
+  }
+
+  .exclusive-section .product-info,
+  .exclusivo-section .product-info,
+  .exclusivo .product-info,
+  .exclusive .product-info,
+  #exclusivo .product-info,
+  .exclusive-card .product-info,
+  .exclusivo-card .product-info {
+    width: 100% !important;
+    padding: 18px 16px 20px !important;
+    text-align: left !important;
+  }
+
+  .exclusive-section .product-info h3,
+  .exclusivo-section .product-info h3,
+  .exclusivo .product-info h3,
+  .exclusive .product-info h3,
+  #exclusivo .product-info h3,
+  .exclusive-card h3,
+  .exclusivo-card h3 {
+    font-size: 22px !important;
+    line-height: 1.1 !important;
+    margin: 6px 0 10px !important;
+  }
+
+  .exclusive-section .product-info p,
+  .exclusivo-section .product-info p,
+  .exclusivo .product-info p,
+  .exclusive .product-info p,
+  #exclusivo .product-info p {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    margin: 0 0 8px !important;
+  }
+
+  .exclusive-section .price-row,
+  .exclusivo-section .price-row,
+  .exclusivo .price-row,
+  .exclusive .price-row,
+  #exclusivo .price-row,
+  .exclusive-card .price-row,
+  .exclusivo-card .price-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 10px 0 16px !important;
+  }
+
+  .exclusive-section a,
+  .exclusive-section button,
+  .exclusivo-section a,
+  .exclusivo-section button,
+  .exclusivo a,
+  .exclusivo button,
+  .exclusive a,
+  .exclusive button,
+  #exclusivo a,
+  #exclusivo button {
+    width: 100% !important;
+    min-height: 46px !important;
+    border-radius: 999px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    text-decoration: none !important;
+  }
+}
+/* =========================================================
+   JONZKO FIX FINAL - CARRITO + EXCLUSIVO MÓVIL
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+/* =========================
+   CARRITO MÓVIL ORDENADO
+   ========================= */
+
+@media (max-width: 600px) {
+  .cart-premium-overlay,
+  .cart-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0, 0, 0, 0.62) !important;
+    z-index: 99990 !important;
+  }
+
+  .cart-premium-panel,
+  .cart-panel {
+    position: fixed !important;
+    top: 86px !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: calc(100vh - 105px) !important;
+    padding: 18px 14px 18px !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    z-index: 99999 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  .cart-premium-close,
+  .close-cart {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 50% !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    z-index: 2 !important;
+  }
+
+  .cart-premium-brand {
+    font-size: 9px !important;
+    letter-spacing: 5px !important;
+    margin: 0 0 14px !important;
+    color: #a97932 !important;
+  }
+
+  .cart-premium-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 0 40px 14px 0 !important;
+    margin: 0 !important;
+  }
+
+  .cart-premium-icon {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    border-radius: 50% !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    display: grid !important;
+    place-items: center !important;
+    font-size: 18px !important;
+    position: relative !important;
+  }
+
+  .cart-premium-icon span {
+    position: absolute !important;
+    top: -5px !important;
+    right: -5px !important;
+    width: 19px !important;
+    height: 19px !important;
+    border-radius: 50% !important;
+    background: #c90000 !important;
+    color: #ffffff !important;
+    display: grid !important;
+    place-items: center !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+  }
+
+  .cart-premium-header h2 {
+    margin: 0 !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+    color: #000000 !important;
+  }
+
+  .cart-premium-header p {
+    margin: 4px 0 0 !important;
+    font-size: 12px !important;
+    color: #555555 !important;
+  }
+
+  .cart-premium-empty,
+  .empty-cart {
+    width: 100% !important;
+    margin: 8px 0 0 !important;
+    padding: 24px 14px !important;
+    border-radius: 18px !important;
+    background: #f7f1e8 !important;
+    border: 1px solid #dfd1bf !important;
+    text-align: center !important;
+  }
+
+  .cart-premium-empty h3,
+  .empty-cart h3 {
+    margin: 0 0 8px !important;
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+    color: #000000 !important;
+  }
+
+  .cart-premium-empty p,
+  .empty-cart p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    color: #222222 !important;
+  }
+
+  .cart-premium-item,
+  .cart-item {
+    grid-template-columns: 82px 1fr !important;
+    gap: 10px !important;
+    padding: 10px !important;
+    border-radius: 16px !important;
+  }
+
+  .cart-premium-item img,
+  .cart-item img {
+    width: 82px !important;
+    height: 102px !important;
+    border-radius: 13px !important;
+    object-fit: cover !important;
+  }
+}
+
+/* =========================
+   EXCLUSIVO MÓVIL COMO CARD PREMIUM
+   ========================= */
+
+@media (max-width: 600px) {
+  #producto.collection-section,
+  .collection-section#producto {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 34px 14px 54px !important;
+    background: #ffffff !important;
+    overflow-x: hidden !important;
+  }
+
+  #producto .collection-header {
+    margin-bottom: 22px !important;
+  }
+
+  #producto .collection-header .tag {
+    font-size: 10px !important;
+    letter-spacing: 4px !important;
+    padding: 8px 18px !important;
+    border-radius: 999px !important;
+  }
+
+  #producto .collection-header h1 {
+    font-size: 40px !important;
+    line-height: 1 !important;
+    letter-spacing: -1px !important;
+    margin: 16px 0 8px !important;
+  }
+
+  #producto .collection-header p {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+  }
+
+  #producto .products-carousel-shell {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+
+  #producto .products-carousel,
+  #producto .products-grid {
+    display: flex !important;
+    grid-template-columns: none !important;
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    padding: 0 2px 8px !important;
+    margin: 0 !important;
+  }
+
+  #producto .products-carousel::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  #producto .product-card {
+    flex: 0 0 calc(100vw - 34px) !important;
+    width: calc(100vw - 34px) !important;
+    max-width: calc(100vw - 34px) !important;
+    min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    border: 1px solid #e8e1d8 !important;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.10) !important;
+    scroll-snap-align: center !important;
+  }
+
+  #producto .product-image-box {
+    width: 100% !important;
+    height: 285px !important;
+    display: block !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: #f2f2f2 !important;
+  }
+
+  #producto .product-image,
+  #producto .product-card img {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+  }
+
+  #producto .product-hover-image {
+    display: none !important;
+  }
+
+  #producto .discount-badge {
+    position: absolute !important;
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 2 !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    padding: 7px 10px !important;
+    border-radius: 999px !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+  }
+
+  #producto .new-badge {
+    position: absolute !important;
+    left: 12px !important;
+    bottom: 12px !important;
+    z-index: 2 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 7px 10px !important;
+    border-radius: 8px !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+  }
+
+  #producto .product-info {
+    width: 100% !important;
+    padding: 18px 16px 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  #producto .product-category {
+    margin: 0 0 8px !important;
+    font-size: 10px !important;
+    letter-spacing: 5px !important;
+    color: #a97932 !important;
+    font-weight: 900 !important;
+  }
+
+  #producto .product-info h2 {
+    margin: 0 0 10px !important;
+    font-size: 25px !important;
+    line-height: 1.05 !important;
+    color: #000000 !important;
+  }
+
+  #producto .product-description {
+    display: none !important;
+  }
+
+  #producto .product-price {
+    margin: 0 0 16px !important;
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 12px !important;
+  }
+
+  #producto .old-price {
+    font-size: 13px !important;
+    color: #777777 !important;
+    text-decoration: line-through !important;
+  }
+
+  #producto .current-price {
+    font-size: 19px !important;
+    font-weight: 900 !important;
+    color: #000000 !important;
+  }
+
+  #producto .product-button {
+    width: 100% !important;
+    min-height: 48px !important;
+    border-radius: 999px !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  #producto .products-arrow {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+    background: rgba(0, 0, 0, 0.72) !important;
+    color: #ffffff !important;
+    z-index: 3 !important;
+  }
+
+  #producto .products-arrow-left {
+    left: 6px !important;
+  }
+
+  #producto .products-arrow-right {
+    right: 6px !important;
+  }
+}
