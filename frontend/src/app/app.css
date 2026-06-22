@@ -11389,3 +11389,48 @@ video {
     font-weight: 900 !important;
   }
 }
+/* =========================================================
+   AJUSTE FINAL - EXCLUSIVO MÓVIL MÁS COMPLETO
+   ========================================================= */
+
+@media (max-width: 600px) {
+  #producto .product-image-box {
+    width: 100% !important;
+    height: 430px !important;   /* antes estaba más justo */
+    background: #000000 !important;
+    padding: 16px !important;   /* más aire alrededor */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  #producto .product-main-image,
+  #producto .product-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    display: block !important;
+    padding: 0 !important;
+    background: #000000 !important;
+    transform: scale(0.94) !important; /* se aleja un poco para verse más completa */
+  }
+
+  #producto .product-hover-image {
+    display: none !important;
+  }
+
+  #producto .discount-badge {
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 5 !important;
+  }
+
+  #producto .new-badge {
+    left: 12px !important;
+    bottom: 12px !important;
+    z-index: 5 !important;
+  }
+}
