@@ -10158,3 +10158,293 @@ header.navbar,
     min-height: 36px !important;
   }
 }
+/* =========================================================
+   ARREGLO GLOBAL MÓVIL JONZKO - SIN SOBRAS LATERALES
+   ========================================================= */
+
+html,
+body {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
+}
+
+* {
+  box-sizing: border-box !important;
+}
+
+img,
+video {
+  max-width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  app-root,
+  .app-shell,
+  .home-page,
+  .store-page,
+  .detail-page,
+  main,
+  section {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .top-bar,
+  .navbar,
+  .main-header,
+  .nav-content,
+  .header-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .product-breadcrumb {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px 14px !important;
+    margin: 0 !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+  }
+
+  .collection-section,
+  .exclusive-section,
+  .products-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .collection-grid,
+  .products-grid,
+  .exclusive-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .product-card {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .floating-whatsapp,
+  .whatsapp-float,
+  .whatsapp-button {
+    right: 16px !important;
+    left: auto !important;
+  }
+}
+/* =========================================================
+   JONZKO - ARREGLO GLOBAL MÓVIL 100%
+   Quita sobras izquierda/derecha en toda la web
+   ========================================================= */
+
+html,
+body {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box !important;
+}
+
+img,
+video,
+iframe {
+  max-width: 100% !important;
+}
+
+app-root {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* =========================================================
+   MÓVIL GENERAL
+   ========================================================= */
+
+@media (max-width: 768px) {
+  body {
+    position: relative !important;
+    overflow-x: hidden !important;
+  }
+
+  app-root,
+  main,
+  section,
+  header,
+  footer,
+  nav {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  /* HEADER / NAVBAR */
+  .top-bar,
+  .main-header,
+  .navbar,
+  .nav-content,
+  .header-content,
+  .mobile-header,
+  .desktop-header {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* PÁGINA PRINCIPAL / HOME */
+  .home-page,
+  .hero-section,
+  .hero,
+  .hero-content,
+  .collection-section,
+  .exclusive-section,
+  .products-section,
+  .about-section,
+  .contact-section,
+  .footer,
+  .site-footer {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .hero-section,
+  .hero,
+  .collection-section,
+  .exclusive-section,
+  .products-section,
+  .about-section,
+  .contact-section {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  /* GRIDS Y CARDS */
+  .collection-grid,
+  .products-grid,
+  .exclusive-grid,
+  .product-grid,
+  .featured-grid,
+  .related-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .product-card,
+  .exclusive-card,
+  .collection-card,
+  .related-card,
+  .featured-product {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* DETALLE PRODUCTO */
+  .detail-page,
+  .detail-container,
+  .gallery-wrapper,
+  .info-box,
+  .product-breadcrumb {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .detail-container {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .product-breadcrumb {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Evita que botones o textos largos empujen la pantalla */
+  h1,
+  h2,
+  h3,
+  p,
+  span,
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* WHATSAPP FLOTANTE */
+  .whatsapp-float,
+  .floating-whatsapp,
+  .whatsapp-button,
+  .whatsapp-fixed {
+    right: 16px !important;
+    left: auto !important;
+    max-width: 64px !important;
+  }
+
+  /* FOOTER */
+  footer,
+  .footer,
+  .site-footer {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    text-align: center !important;
+  }
+}
