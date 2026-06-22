@@ -2190,3 +2190,136 @@
 .product-gallery.video-active .gallery-dots {
   display: none !important;
 }
+/* =========================================================
+   ARREGLO FINAL MÓVIL PRODUCT DETAIL - JONZKO
+   ========================================================= */
+
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .detail-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .product-breadcrumb {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 14px 16px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .detail-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 22px !important;
+    padding: 0 14px 24px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .gallery-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .product-gallery,
+  .image-box.product-gallery {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1.18 !important;
+    margin: 0 auto !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .product-gallery img,
+  .product-gallery video,
+  .product-video-player {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  .gallery-thumbnails {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .gallery-thumbnails button {
+    width: 100% !important;
+    height: 92px !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+
+  .gallery-thumbnails img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .info-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 26px 20px !important;
+    box-sizing: border-box !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+  }
+
+  .actions,
+  .qty-row,
+  .purchase-benefits,
+  .detail-payment-icons {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .cart-btn,
+  .whatsapp-detail-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .whatsapp-float,
+  .whatsapp-button,
+  .floating-whatsapp {
+    right: 18px !important;
+    left: auto !important;
+  }
+}
