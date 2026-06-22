@@ -1,5 +1,6 @@
 package com.jonzko.backend.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -52,11 +53,50 @@ public class CloudinaryService {
                 throw new RuntimeException("El archivo está vacío");
             }
 
-            Map uploadResult = cloudinary.uploader().upload(
+            String contentType = file.getContentType() == null ? "" : file.getContentType();
+            boolean isVideo = contentType.startsWith("video/");
+
+            Map uploadResult;
+
+            if (isVideo) {
+                uploadResult = cloudinary.uploader().upload(
+                        file.getBytes(),
+                        ObjectUtils.asMap(
+                                "folder", "jonzko/productos",
+                                "resource_type", "video",
+                                "eager", List.of("f_mp4,vc_h264,ac_aac,q_auto:good"),
+                                "eager_async", false
+                        )
+                );
+
+                Object eagerObject = uploadResult.get("eager");
+
+                if (eagerObject instanceof List<?> eagerList && !eagerList.isEmpty()) {
+                    Object firstItem = eagerList.get(0);
+
+                    if (firstItem instanceof Map<?, ?> firstMap) {
+                        Object eagerSecureUrl = firstMap.get("secure_url");
+
+                        if (eagerSecureUrl != null) {
+                            return eagerSecureUrl.toString();
+                        }
+                    }
+                }
+
+                Object secureUrl = uploadResult.get("secure_url");
+
+                if (secureUrl == null) {
+                    throw new RuntimeException("Cloudinary no devolvió secure_url del video");
+                }
+
+                return buildCompatibleVideoUrl(secureUrl.toString());
+            }
+
+            uploadResult = cloudinary.uploader().upload(
                     file.getBytes(),
                     ObjectUtils.asMap(
                             "folder", "jonzko/productos",
-                            "resource_type", "auto"
+                            "resource_type", "image"
                     )
             );
 
@@ -73,5 +113,24 @@ public class CloudinaryService {
             e.printStackTrace();
             throw new RuntimeException("No se pudo subir el archivo: " + e.getMessage());
         }
+    }
+
+    private String buildCompatibleVideoUrl(String url) {
+        if (url == null || url.trim().isEmpty()) {
+            return "";
+        }
+
+        String cleanUrl = url.trim();
+
+        if (cleanUrl.contains("/video/upload/") && !cleanUrl.contains("/video/upload/f_mp4")) {
+            cleanUrl = cleanUrl.replace(
+                    "/video/upload/",
+                    "/video/upload/f_mp4,vc_h264,ac_aac,q_auto:good/"
+            );
+        }
+
+        cleanUrl = cleanUrl.replaceAll("(?i)\\.mov$", ".mp4");
+
+        return cleanUrl;
     }
 }
