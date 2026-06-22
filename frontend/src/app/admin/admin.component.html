@@ -551,7 +551,7 @@
             }
 
             @if (productForm.videoUrl) {
-              <div class="image-preview-box">
+              <div class="image-preview-box media-video-preview">
                 <video
                   [src]="videoDisplayUrl(productForm.videoUrl)"
                   controls
@@ -560,12 +560,16 @@
                   preload="metadata"
                 ></video>
 
-                <div>
+                <div class="media-preview-info">
                   <small>Video cargado correctamente</small>
 
                   <input type="text" name="videoUrl" [(ngModel)]="productForm.videoUrl" readonly />
 
-                  <button type="button" class="delete-btn" (click)="removeProductMedia('videoUrl')">
+                  <button
+                    type="button"
+                    class="delete-btn remove-video-btn"
+                    (click)="removeProductMedia('videoUrl')"
+                  >
                     Quitar video
                   </button>
                 </div>

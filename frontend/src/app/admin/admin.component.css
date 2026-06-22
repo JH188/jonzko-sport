@@ -2308,3 +2308,43 @@ td p {
   opacity: 0.9;
   transform: translateY(-1px);
 }
+/* =========================================================
+   ARREGLO PREVIEW VIDEO ADMIN
+   ========================================================= */
+
+.image-preview-box.media-video-preview {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 18px !important;
+  overflow: visible !important;
+}
+
+.image-preview-box.media-video-preview video {
+  width: 320px !important;
+  max-width: 100% !important;
+  height: 180px !important;
+  object-fit: contain !important;
+  background: #111111 !important;
+  border-radius: 14px !important;
+  display: block !important;
+}
+
+.media-preview-info {
+  flex: 1 !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.media-preview-info input {
+  width: 100% !important;
+}
+
+.remove-video-btn {
+  display: inline-flex !important;
+  width: fit-content !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 4px !important;
+}
