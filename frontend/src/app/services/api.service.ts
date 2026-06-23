@@ -429,13 +429,13 @@ export class ApiService {
 // ==========================
 // PERSONALIZACIÓN WEB
 // ==========================
-getSettings(): Observable<SiteSetting> {
-  return this.http.get<SiteSetting>(`${this.apiUrl}/settings`);
+getSettings(): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/settings`);
 }
 
-updateSettings(data: SiteSettingRequest): Observable<SiteSetting> {
-  return this.http.put<SiteSetting>(
-    `${this.apiUrl}/settings`,
+updateSettings(data: any): Observable<any> {
+  return this.http.put<any>(
+    `${this.apiUrl}/admin/settings`,
     data,
     this.getAdminHeaders()
   );

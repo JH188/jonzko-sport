@@ -43,22 +43,22 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // ==========================
-                        // CONFIGURACIÓN WEB PÚBLICA
-                        // Leer configuración sin login
+                        // SETTINGS PÚBLICO
+                        // La web pública lee configuración sin login
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
 
                         // ==========================
-                        // CONFIGURACIÓN WEB ADMIN
-                        // Guardar cambios desde admin con token
-                        // IMPORTANTE: el controller real es /api/settings
+                        // SETTINGS ADMIN
+                        // Solo admin puede guardar
                         // ==========================
-                        .requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/admin/settings").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/admin/settings/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+
+                        // Soporte por si el frontend antiguo aún llama PUT /api/settings
+                        .requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/settings/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
                         // ==========================
                         // LOGIN ADMIN JWT
@@ -110,14 +110,14 @@ public class SecurityConfig {
                         // ==========================
                         // ADMIN PROTEGIDO CON JWT
                         // ==========================
-                        .requestMatchers("/api/admin/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-                        .requestMatchers("/api/products/admin/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-                        .requestMatchers("/api/admin/product-variants/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers("/api/admin/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                        .requestMatchers("/api/products/admin/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                        .requestMatchers("/api/admin/product-variants/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
                         // ==========================
                         // PAGOS ADMIN
                         // ==========================
-                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/payment-status").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/payment-status").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
                         // ==========================
                         // BLOQUEOS PÚBLICOS DE ORDERS ANTIGUO

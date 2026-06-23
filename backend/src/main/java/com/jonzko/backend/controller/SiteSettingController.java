@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jonzko.backend.dto.SiteSettingRequest;
@@ -12,8 +13,8 @@ import com.jonzko.backend.entity.SiteSetting;
 import com.jonzko.backend.repository.SiteSettingRepository;
 
 @RestController
+@RequestMapping("/api")
 @CrossOrigin(origins = {
-        "http://localhost:4200",
         "https://jonzko.lat",
         "https://www.jonzko.lat",
         "https://jonzko-sport.vercel.app"
@@ -27,9 +28,9 @@ public class SiteSettingController {
     }
 
     // ==========================
-    // PUBLICO: la web lee configuración
+    // PÚBLICO: LA WEB LEE CONFIGURACIÓN
     // ==========================
-    @GetMapping("/api/settings")
+    @GetMapping("/settings")
     public ResponseEntity<SiteSetting> getSettings() {
         SiteSetting settings = siteSettingRepository
                 .findFirstByActiveTrueOrderByIdAsc()
@@ -39,96 +40,100 @@ public class SiteSettingController {
     }
 
     // ==========================
-    // ADMIN: el panel guarda configuración
+    // ADMIN: GUARDA CONFIGURACIÓN
+    // También acepta /api/settings por compatibilidad
     // ==========================
-    @PutMapping("/api/admin/settings")
+    @PutMapping({"/admin/settings", "/settings"})
     public ResponseEntity<SiteSetting> updateSettings(@RequestBody SiteSettingRequest request) {
         SiteSetting settings = siteSettingRepository
                 .findFirstByActiveTrueOrderByIdAsc()
                 .orElseGet(this::createDefaultSettings);
 
-        // Identidad
-        settings.setStoreName(request.getStoreName());
-        settings.setSlogan(request.getSlogan());
-        settings.setLogoUrl(request.getLogoUrl());
-        settings.setHeroImageUrl(request.getHeroImageUrl());
+        // Marca / general
+        if (request.getStoreName() != null) settings.setStoreName(request.getStoreName());
+        if (request.getSlogan() != null) settings.setSlogan(request.getSlogan());
+        if (request.getLogoUrl() != null) settings.setLogoUrl(request.getLogoUrl());
+        if (request.getHeroImageUrl() != null) settings.setHeroImageUrl(request.getHeroImageUrl());
 
-        // Hero / inicio antiguo
-        settings.setHeroTitle(request.getHeroTitle());
-        settings.setHeroDescription(request.getHeroDescription());
-        settings.setPrimaryButtonText(request.getPrimaryButtonText());
-        settings.setSecondaryButtonText(request.getSecondaryButtonText());
+        // Hero antiguo
+        if (request.getHeroTitle() != null) settings.setHeroTitle(request.getHeroTitle());
+        if (request.getHeroDescription() != null) settings.setHeroDescription(request.getHeroDescription());
+        if (request.getPrimaryButtonText() != null) settings.setPrimaryButtonText(request.getPrimaryButtonText());
+        if (request.getSecondaryButtonText() != null) settings.setSecondaryButtonText(request.getSecondaryButtonText());
 
         // Colores
-        settings.setPrimaryColor(request.getPrimaryColor());
-        settings.setSecondaryColor(request.getSecondaryColor());
-        settings.setAccentColor(request.getAccentColor());
-        settings.setBackgroundColor(request.getBackgroundColor());
-        settings.setTextColor(request.getTextColor());
+        if (request.getPrimaryColor() != null) settings.setPrimaryColor(request.getPrimaryColor());
+        if (request.getSecondaryColor() != null) settings.setSecondaryColor(request.getSecondaryColor());
+        if (request.getAccentColor() != null) settings.setAccentColor(request.getAccentColor());
+        if (request.getBackgroundColor() != null) settings.setBackgroundColor(request.getBackgroundColor());
+        if (request.getTextColor() != null) settings.setTextColor(request.getTextColor());
 
         // Redes
-        settings.setInstagramUrl(request.getInstagramUrl());
-        settings.setFacebookUrl(request.getFacebookUrl());
-        settings.setTiktokUrl(request.getTiktokUrl());
-        settings.setWhatsappNumber(request.getWhatsappNumber());
-        settings.setWhatsappMessage(request.getWhatsappMessage());
+        if (request.getInstagramUrl() != null) settings.setInstagramUrl(request.getInstagramUrl());
+        if (request.getFacebookUrl() != null) settings.setFacebookUrl(request.getFacebookUrl());
+        if (request.getTiktokUrl() != null) settings.setTiktokUrl(request.getTiktokUrl());
+        if (request.getWhatsappNumber() != null) settings.setWhatsappNumber(request.getWhatsappNumber());
+        if (request.getWhatsappMessage() != null) settings.setWhatsappMessage(request.getWhatsappMessage());
 
         // Colección / contacto
-        settings.setCollectionTitle(request.getCollectionTitle());
-        settings.setCollectionDescription(request.getCollectionDescription());
-        settings.setContactTitle(request.getContactTitle());
-        settings.setContactDescription(request.getContactDescription());
+        if (request.getCollectionTitle() != null) settings.setCollectionTitle(request.getCollectionTitle());
+        if (request.getCollectionDescription() != null) settings.setCollectionDescription(request.getCollectionDescription());
+        if (request.getContactTitle() != null) settings.setContactTitle(request.getContactTitle());
+        if (request.getContactDescription() != null) settings.setContactDescription(request.getContactDescription());
 
-        // Navegación
-        settings.setNavInicio(request.getNavInicio());
-        settings.setNavProducto(request.getNavProducto());
-        settings.setNavNosotros(request.getNavNosotros());
-        settings.setNavContacto(request.getNavContacto());
-        settings.setCartText(request.getCartText());
-        settings.setLoginText(request.getLoginText());
+        // Header
+        if (request.getNavInicio() != null) settings.setNavInicio(request.getNavInicio());
+        if (request.getNavProducto() != null) settings.setNavProducto(request.getNavProducto());
+        if (request.getNavNosotros() != null) settings.setNavNosotros(request.getNavNosotros());
+        if (request.getNavContacto() != null) settings.setNavContacto(request.getNavContacto());
+        if (request.getCartText() != null) settings.setCartText(request.getCartText());
+        if (request.getLoginText() != null) settings.setLoginText(request.getLoginText());
 
         // Nosotros
-        settings.setAboutTag(request.getAboutTag());
-        settings.setAboutTitle(request.getAboutTitle());
-        settings.setAboutText(request.getAboutText());
-        settings.setAboutButtonText(request.getAboutButtonText());
-        settings.setAboutButtonLink(request.getAboutButtonLink());
+        if (request.getAboutTag() != null) settings.setAboutTag(request.getAboutTag());
+        if (request.getAboutTitle() != null) settings.setAboutTitle(request.getAboutTitle());
+        if (request.getAboutText() != null) settings.setAboutText(request.getAboutText());
+        if (request.getAboutButtonText() != null) settings.setAboutButtonText(request.getAboutButtonText());
+        if (request.getAboutButtonLink() != null) settings.setAboutButtonLink(request.getAboutButtonLink());
 
-        settings.setAboutFeature1Icon(request.getAboutFeature1Icon());
-        settings.setAboutFeature1Title(request.getAboutFeature1Title());
-        settings.setAboutFeature1Text(request.getAboutFeature1Text());
+        // Iconos / beneficios
+        if (request.getAboutFeature1Icon() != null) settings.setAboutFeature1Icon(request.getAboutFeature1Icon());
+        if (request.getAboutFeature1Title() != null) settings.setAboutFeature1Title(request.getAboutFeature1Title());
+        if (request.getAboutFeature1Text() != null) settings.setAboutFeature1Text(request.getAboutFeature1Text());
 
-        settings.setAboutFeature2Icon(request.getAboutFeature2Icon());
-        settings.setAboutFeature2Title(request.getAboutFeature2Title());
-        settings.setAboutFeature2Text(request.getAboutFeature2Text());
+        if (request.getAboutFeature2Icon() != null) settings.setAboutFeature2Icon(request.getAboutFeature2Icon());
+        if (request.getAboutFeature2Title() != null) settings.setAboutFeature2Title(request.getAboutFeature2Title());
+        if (request.getAboutFeature2Text() != null) settings.setAboutFeature2Text(request.getAboutFeature2Text());
 
-        settings.setAboutFeature3Icon(request.getAboutFeature3Icon());
-        settings.setAboutFeature3Title(request.getAboutFeature3Title());
-        settings.setAboutFeature3Text(request.getAboutFeature3Text());
+        if (request.getAboutFeature3Icon() != null) settings.setAboutFeature3Icon(request.getAboutFeature3Icon());
+        if (request.getAboutFeature3Title() != null) settings.setAboutFeature3Title(request.getAboutFeature3Title());
+        if (request.getAboutFeature3Text() != null) settings.setAboutFeature3Text(request.getAboutFeature3Text());
 
-        settings.setAboutFeature4Icon(request.getAboutFeature4Icon());
-        settings.setAboutFeature4Title(request.getAboutFeature4Title());
-        settings.setAboutFeature4Text(request.getAboutFeature4Text());
+        if (request.getAboutFeature4Icon() != null) settings.setAboutFeature4Icon(request.getAboutFeature4Icon());
+        if (request.getAboutFeature4Title() != null) settings.setAboutFeature4Title(request.getAboutFeature4Title());
+        if (request.getAboutFeature4Text() != null) settings.setAboutFeature4Text(request.getAboutFeature4Text());
 
-        settings.setAboutImage1Url(request.getAboutImage1Url());
-        settings.setAboutImage2Url(request.getAboutImage2Url());
-        settings.setAboutImage3Url(request.getAboutImage3Url());
+        // Imágenes Nosotros
+        if (request.getAboutImage1Url() != null) settings.setAboutImage1Url(request.getAboutImage1Url());
+        if (request.getAboutImage2Url() != null) settings.setAboutImage2Url(request.getAboutImage2Url());
+        if (request.getAboutImage3Url() != null) settings.setAboutImage3Url(request.getAboutImage3Url());
 
         // Galería
-        settings.setGalleryTag(request.getGalleryTag());
-        settings.setGalleryTitle(request.getGalleryTitle());
-        settings.setGalleryText(request.getGalleryText());
+        if (request.getGalleryTag() != null) settings.setGalleryTag(request.getGalleryTag());
+        if (request.getGalleryTitle() != null) settings.setGalleryTitle(request.getGalleryTitle());
+        if (request.getGalleryText() != null) settings.setGalleryText(request.getGalleryText());
 
-        settings.setGalleryImage1Url(request.getGalleryImage1Url());
-        settings.setGalleryImage2Url(request.getGalleryImage2Url());
-        settings.setGalleryImage3Url(request.getGalleryImage3Url());
-        settings.setGalleryImage4Url(request.getGalleryImage4Url());
-        settings.setGalleryVideoUrl(request.getGalleryVideoUrl());
+        if (request.getGalleryImage1Url() != null) settings.setGalleryImage1Url(request.getGalleryImage1Url());
+        if (request.getGalleryImage2Url() != null) settings.setGalleryImage2Url(request.getGalleryImage2Url());
+        if (request.getGalleryImage3Url() != null) settings.setGalleryImage3Url(request.getGalleryImage3Url());
+        if (request.getGalleryImage4Url() != null) settings.setGalleryImage4Url(request.getGalleryImage4Url());
+        if (request.getGalleryVideoUrl() != null) settings.setGalleryVideoUrl(request.getGalleryVideoUrl());
 
-        settings.setAboutGalleryEnabled(request.getAboutGalleryEnabled());
+        if (request.getAboutGalleryEnabled() != null) {
+            settings.setAboutGalleryEnabled(request.getAboutGalleryEnabled());
+        }
 
         SiteSetting savedSettings = siteSettingRepository.save(settings);
-
         return ResponseEntity.ok(savedSettings);
     }
 
@@ -136,7 +141,7 @@ public class SiteSettingController {
         SiteSetting defaultSettings = SiteSetting.builder()
                 .storeName("JONZKO")
                 .slogan("Ropa urbana peruana")
-                .logoUrl("assets/logo.png")
+                .logoUrl("assets/logo.jpg")
                 .heroImageUrl("assets/polera.jpg")
 
                 .heroTitle("JONZKO")
@@ -144,16 +149,16 @@ public class SiteSettingController {
                 .primaryButtonText("Comprar ahora")
                 .secondaryButtonText("Ver colección")
 
-                .primaryColor("#000000")
+                .primaryColor("#0b0b0b")
                 .secondaryColor("#ffffff")
-                .accentColor("#d6b14a")
+                .accentColor("#c8a45d")
                 .backgroundColor("#f4f4f4")
                 .textColor("#111111")
 
                 .instagramUrl("https://www.instagram.com/jonzko.o/")
                 .facebookUrl("https://www.facebook.com/profile.php?id=61563952841904")
                 .tiktokUrl("https://www.tiktok.com/@jonzko1")
-                .whatsappNumber("")
+                .whatsappNumber("51998989599")
                 .whatsappMessage("Hola, quiero información sobre JONZKO.")
 
                 .collectionTitle("Nuestro Producto")
