@@ -44,20 +44,21 @@ public class SecurityConfig {
 
                         // ==========================
                         // CONFIGURACIÓN WEB PÚBLICA
-                        // El home público necesita leer estos datos sin login
+                        // Leer configuración sin login
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
 
                         // ==========================
                         // CONFIGURACIÓN WEB ADMIN
-                        // Guardar cambios solo con token admin
+                        // Guardar cambios desde admin con token
+                        // IMPORTANTE: el controller real es /api/settings
                         // ==========================
-.requestMatchers(HttpMethod.PUT, "/api/admin/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-.requestMatchers(HttpMethod.PUT, "/api/admin/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-.requestMatchers(HttpMethod.POST, "/api/admin/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-.requestMatchers(HttpMethod.POST, "/api/admin/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-.requestMatchers(HttpMethod.DELETE, "/api/admin/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
 
                         // ==========================
                         // LOGIN ADMIN JWT
