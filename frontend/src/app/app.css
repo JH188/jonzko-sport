@@ -5785,7 +5785,7 @@ body {
   opacity: 1 !important;
 
   /* Convierte logo claro a negro si el PNG tiene fondo transparente */
-  filter: brightness(0) saturate(100%) !important;
+  filter: none !important;
 }
 
 /* Celular */
@@ -5825,7 +5825,7 @@ body {
   object-fit: contain !important;
   border: none !important;
   border-radius: 0 !important;
-  filter: brightness(0) saturate(100%) !important;
+  filter: none !important;
 }
 
 /* Menú centrado pero más compacto */
@@ -7237,7 +7237,7 @@ body {
   width: 48px !important;
   height: 48px !important;
   object-fit: contain !important;
-  filter: brightness(0) saturate(100%) !important;
+  filter: none !important;
 }
 
 .footer-premium-logo h3 {
@@ -12361,4 +12361,37 @@ body {
   object-fit: contain !important;
   border-radius: 0 !important;
   background: #ffffff !important;
+}
+/* =========================================================
+   FIX REAL LOGO JONZKO NAVBAR
+   ========================================================= */
+
+.premium-navbar .brand {
+  width: 92px !important;
+  min-width: 92px !important;
+  height: 76px !important;
+  background: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+.premium-navbar .brand img,
+.navbar .brand img,
+header .brand img {
+  width: 64px !important;
+  height: 64px !important;
+  max-width: 64px !important;
+  max-height: 64px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: block !important;
+  filter: none !important;
+  opacity: 1 !important;
 }
