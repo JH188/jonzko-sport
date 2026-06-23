@@ -31,6 +31,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        System.out.println("========== JONZKO SECURITY CONFIG ACTUALIZADO SETTINGS PUBLIC ==========");
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
