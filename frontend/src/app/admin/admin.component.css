@@ -2569,3 +2569,58 @@ td p {
 .custom-tabs {
   display: none !important;
 }
+/* =========================================================
+   FIX SIDEBAR ADMIN - SUBMENÚ LARGO CON SCROLL
+   ========================================================= */
+
+.admin-sidebar {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-width: thin;
+}
+
+.admin-menu {
+  padding-bottom: 120px;
+}
+
+.submenu-web {
+  max-height: 360px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+}
+
+.submenu-web::-webkit-scrollbar,
+.admin-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.submenu-web::-webkit-scrollbar-thumb,
+.admin-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+}
+
+.submenu-web::-webkit-scrollbar-track,
+.admin-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* En pantallas pequeñas, que no se atasque el panel */
+@media (max-height: 760px) {
+  .admin-brand {
+    margin-bottom: 30px !important;
+  }
+
+  .admin-menu {
+    gap: 8px !important;
+  }
+
+  .admin-menu button {
+    padding: 11px 14px !important;
+  }
+
+  .submenu-web {
+    max-height: 300px;
+  }
+}

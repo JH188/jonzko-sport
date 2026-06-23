@@ -267,7 +267,12 @@ this.loadAdminData();
   }, 10000);
 }
 
-  setSection(section: AdminSection): void {
+setSection(section: AdminSection): void {
+  if (section === 'customization' && this.activeSection() === 'customization') {
+    this.activeSection.set('dashboard');
+    return;
+  }
+
   this.activeSection.set(section);
 
   if (section === 'customization') {
@@ -879,11 +884,6 @@ saveHomeSlide(): void {
     displayOrder: Number(this.homeSlideForm.displayOrder || 1),
     active: this.homeSlideForm.active
   };
-
-  if (!data.title) {
-    alert('El título del slide es obligatorio.');
-    return;
-  }
 
   if (!data.desktopImageUrl && !data.videoUrl) {
     alert('Sube una imagen PC o video para el slide.');
