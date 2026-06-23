@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,9 +30,41 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
+    // =========================================================
+    // CADENA 1: SOLO /api/settings
+    // Esto fuerza que GET sea público y PUT sea admin.
+    // =========================================================
     @Bean
+    @Order(1)
+    public SecurityFilterChain settingsSecurityFilterChain(HttpSecurity http) throws Exception {
+
+        http
+                .securityMatcher("/api/settings", "/api/settings/**")
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/settings", "/api/settings/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/settings", "/api/settings/**")
+                        .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                        .anyRequest().denyAll()
+                )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+
+    // =========================================================
+    // CADENA 2: RESTO DEL BACKEND
+    // =========================================================
+    @Bean
+    @Order(2)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        System.out.println("========== JONZKO SECURITY CONFIG ACTUALIZADO SETTINGS PUBLIC ==========");
+
+        System.out.println("========== JONZKO SECURITY CONFIG ACTIVO ==========");
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -42,32 +75,13 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // ==========================
-                        // PREFLIGHT CORS
-                        // ==========================
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // ==========================
-                        // SETTINGS PÚBLICO
-                        // ==========================
-                        .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
-
-                        // ==========================
-                        // SETTINGS ADMIN
-                        // ==========================
-                        .requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/settings/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
-
-                        // ==========================
-                        // LOGIN ADMIN JWT
-                        // ==========================
+                        // LOGIN ADMIN
                         .requestMatchers(HttpMethod.POST, "/api/auth/admin-login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/admin-login/verify-code").permitAll()
 
-                        // ==========================
-                        // LOGIN, REGISTRO Y RECUPERACIÓN USUARIO
-                        // ==========================
+                        // LOGIN / REGISTRO USUARIO
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/verify-email").permitAll()
@@ -80,62 +94,43 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users/verify-email").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/resend-verification-code").permitAll()
 
-                        // ==========================
                         // TIENDA PÚBLICA
-                        // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
-                        // ==========================
-                        // INICIO PÚBLICO
-                        // ==========================
+                        // HOME PÚBLICO
                         .requestMatchers(HttpMethod.GET, "/api/home/settings").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/home/slides").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/home/**").permitAll()
 
-                        // ==========================
-                        // CREAR PEDIDO PÚBLICO
-                        // ==========================
+                        // CREAR PEDIDOS PÚBLICOS
                         .requestMatchers(HttpMethod.POST, "/api/customer-orders").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
 
-                        // ==========================
-                        // MIS PEDIDOS PROTEGIDO CON JWT
-                        // ==========================
+                        // MIS PEDIDOS
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders/my-orders").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders/user/**").authenticated()
 
-                        // ==========================
-                        // ADMIN PROTEGIDO CON JWT
-                        // ==========================
+                        // ADMIN
                         .requestMatchers("/api/admin/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
                         .requestMatchers("/api/products/admin/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
                         .requestMatchers("/api/admin/product-variants/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
-                        // ==========================
                         // PAGOS ADMIN
-                        // ==========================
-                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/payment-status").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/*/payment-status")
+                        .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
-                        // ==========================
-                        // BLOQUEOS PÚBLICOS DE ORDERS ANTIGUO
-                        // ==========================
+                        // BLOQUEOS
                         .requestMatchers(HttpMethod.GET, "/api/orders").denyAll()
                         .requestMatchers(HttpMethod.GET, "/api/orders/**").denyAll()
                         .requestMatchers(HttpMethod.PUT, "/api/orders/**").denyAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/orders/**").denyAll()
 
-                        // ==========================
-                        // BLOQUEOS PÚBLICOS DE CUSTOMER ORDERS
-                        // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders").denyAll()
                         .requestMatchers(HttpMethod.PUT, "/api/customer-orders/**").denyAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/customer-orders/**").denyAll()
 
-                        // ==========================
-                        // TODO LO DEMÁS BLOQUEADO
-                        // ==========================
                         .anyRequest().denyAll()
                 )
 
@@ -172,10 +167,7 @@ public class SecurityConfig {
                 "X-Requested-With"
         ));
 
-        config.setExposedHeaders(List.of(
-                "Authorization"
-        ));
-
+        config.setExposedHeaders(List.of("Authorization"));
         config.setAllowCredentials(false);
         config.setMaxAge(3600L);
 
