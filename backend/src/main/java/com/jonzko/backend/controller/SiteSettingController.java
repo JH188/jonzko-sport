@@ -48,8 +48,8 @@ public class SiteSettingController {
     // ==========================
     // PÚBLICO: LA WEB LEE CONFIGURACIÓN
     // ==========================
-    @GetMapping("/settings")
-    public ResponseEntity<SiteSetting> getSettings() {
+    @GetMapping({"/settings", "/products/settings-web"})
+public ResponseEntity<SiteSetting> getSettings() {
         SiteSetting settings = siteSettingRepository
                 .findFirstByActiveTrueOrderByIdAsc()
                 .orElseGet(this::createDefaultSettings);
