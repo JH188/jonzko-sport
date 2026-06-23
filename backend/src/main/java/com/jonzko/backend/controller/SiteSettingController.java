@@ -1,25 +1,16 @@
 package com.jonzko.backend.controller;
 
-import java.util.Map;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jonzko.backend.dto.SiteSettingRequest;
 import com.jonzko.backend.entity.SiteSetting;
-import com.jonzko.backend.entity.User;
 import com.jonzko.backend.repository.SiteSettingRepository;
-import com.jonzko.backend.repository.UserRepository;
-import com.jonzko.backend.security.JwtService;
-
-import io.jsonwebtoken.Claims;
 
 @RestController
 @RequestMapping("/api")
@@ -32,24 +23,20 @@ import io.jsonwebtoken.Claims;
 public class SiteSettingController {
 
     private final SiteSettingRepository siteSettingRepository;
-    private final JwtService jwtService;
-    private final UserRepository userRepository;
 
-    public SiteSettingController(
-            SiteSettingRepository siteSettingRepository,
-            JwtService jwtService,
-            UserRepository userRepository
-    ) {
+    public SiteSettingController(SiteSettingRepository siteSettingRepository) {
         this.siteSettingRepository = siteSettingRepository;
-        this.jwtService = jwtService;
-        this.userRepository = userRepository;
     }
 
     // ==========================
     // PÚBLICO: LA WEB LEE CONFIGURACIÓN
     // ==========================
-    @GetMapping({"/settings", "/products/settings-web", "/public/settings-web"})
-public ResponseEntity<SiteSetting> getSettings() {
+    @GetMapping({
+            "/settings",
+            "/products/settings-web",
+            "/public/settings-web"
+    })
+    public ResponseEntity<SiteSetting> getSettings() {
         SiteSetting settings = siteSettingRepository
                 .findFirstByActiveTrueOrderByIdAsc()
                 .orElseGet(this::createDefaultSettings);
@@ -59,18 +46,10 @@ public ResponseEntity<SiteSetting> getSettings() {
 
     // ==========================
     // ADMIN: GUARDA CONFIGURACIÓN
-    // /api/settings se salta Spring Security, por eso validamos el token aquí.
+    // La seguridad la maneja SecurityConfig con /api/admin/**
     // ==========================
     @PutMapping({"/admin/settings", "/settings"})
-    public ResponseEntity<?> updateSettings(
-            @RequestHeader(value = "Authorization", required = false) String authHeader,
-            @RequestBody SiteSettingRequest request
-    ) {
-        if (!isValidAdminToken(authHeader)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("message", "No autorizado. Inicia sesión como administrador."));
-        }
-
+    public ResponseEntity<SiteSetting> updateSettings(@RequestBody SiteSettingRequest request) {
         SiteSetting settings = siteSettingRepository
                 .findFirstByActiveTrueOrderByIdAsc()
                 .orElseGet(this::createDefaultSettings);
@@ -162,66 +141,6 @@ public ResponseEntity<SiteSetting> getSettings() {
         SiteSetting savedSettings = siteSettingRepository.save(settings);
         return ResponseEntity.ok(savedSettings);
     }
-
-private boolean isValidAdminToken(String authHeader) {
-    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-        System.out.println("SETTINGS ADMIN: No llegó Authorization Bearer");
-        return false;
-    }
-
-    String token = authHeader.substring(7);
-
-    try {
-        if (!jwtService.isTokenValid(token)) {
-            System.out.println("SETTINGS ADMIN: Token inválido");
-            return false;
-        }
-
-        Claims claims = jwtService.extractClaims(token);
-
-        String email = claims.getSubject();
-        String role = claims.get("role", String.class);
-
-        System.out.println("SETTINGS ADMIN TOKEN EMAIL: " + email);
-        System.out.println("SETTINGS ADMIN TOKEN ROLE: " + role);
-
-        if (email == null || email.isBlank()) {
-            return false;
-        }
-
-        if (role == null || role.isBlank()) {
-            return false;
-        }
-
-        role = role.trim().toUpperCase();
-
-        if (role.startsWith("ROLE_")) {
-            role = role.replace("ROLE_", "");
-        }
-
-        if (!"ADMIN".equals(role)) {
-            return false;
-        }
-
-        User user = userRepository.findByEmail(email).orElse(null);
-
-        if (user == null) {
-            System.out.println("SETTINGS ADMIN: Usuario no existe en BD");
-            return false;
-        }
-
-        if (Boolean.FALSE.equals(user.getActive())) {
-            System.out.println("SETTINGS ADMIN: Usuario inactivo");
-            return false;
-        }
-
-        return true;
-
-    } catch (Exception e) {
-        System.out.println("SETTINGS ADMIN ERROR TOKEN: " + e.getMessage());
-        return false;
-    }
-}
 
     private SiteSetting createDefaultSettings() {
         SiteSetting defaultSettings = SiteSetting.builder()

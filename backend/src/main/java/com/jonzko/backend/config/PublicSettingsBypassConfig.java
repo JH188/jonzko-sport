@@ -10,10 +10,7 @@ public class PublicSettingsBypassConfig {
     @Bean
     public WebSecurityCustomizer publicSettingsWebSecurityCustomizer() {
         return web -> web.ignoring().requestMatchers(
-                "/api/public/**",
-                "/api/settings",
-                "/api/settings/**",
-                "/api/admin/settings"
+                "/api/public/**"
         );
     }
 }
