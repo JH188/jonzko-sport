@@ -56,11 +56,12 @@
 
       <button
         type="button"
-        class="menu-parent-btn"
+        class="menu-parent-btn menu-parent-web"
         [class.active]="activeSection() === 'customization'"
         (click)="setSection('customization')"
       >
-        🎨 Personalización web
+        <span>🎨 Personalización web</span>
+        <strong>▾</strong>
       </button>
 
       <div class="submenu-web" *ngIf="activeSection() === 'customization'">

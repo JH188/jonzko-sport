@@ -12326,3 +12326,39 @@ body {
     height: 58px !important;
   }
 }
+/* =========================================================
+   FIX FINAL LOGO NAVBAR PÚBLICO
+   ========================================================= */
+
+.premium-navbar .brand {
+  width: 86px !important;
+  min-width: 86px !important;
+  height: 76px !important;
+  background: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+
+.premium-navbar .brand img {
+  width: 64px !important;
+  height: 64px !important;
+  max-width: 64px !important;
+  max-height: 64px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: #ffffff !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+/* Por si alguna regla anterior lo vuelve circular o negro */
+.navbar .brand img,
+.brand img {
+  object-fit: contain !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+}

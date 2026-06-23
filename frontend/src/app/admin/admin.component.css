@@ -2624,3 +2624,25 @@ td p {
     max-height: 300px;
   }
 }
+/* =========================================================
+   FIX BOTÓN PERSONALIZACIÓN WEB CON FLECHA
+   ========================================================= */
+
+.menu-parent-web {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+}
+
+.menu-parent-web span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.menu-parent-web strong {
+  font-size: 14px;
+  line-height: 1;
+  margin-left: auto;
+}
