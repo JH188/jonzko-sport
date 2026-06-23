@@ -12395,3 +12395,189 @@ header .brand img {
   filter: none !important;
   opacity: 1 !important;
 }
+/* =========================================================
+   FIX MÓVIL HEADER + HERO JONZKO
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .top-marquee {
+    height: 30px !important;
+    overflow: hidden !important;
+  }
+
+  .premium-navbar {
+    height: 82px !important;
+    min-height: 82px !important;
+    padding: 0 18px !important;
+    display: grid !important;
+    grid-template-columns: 48px 1fr auto !important;
+    align-items: center !important;
+    gap: 12px !important;
+    background: #ffffff !important;
+  }
+
+  .mobile-menu-btn {
+    display: flex !important;
+    width: 44px !important;
+    height: 44px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 30px !important;
+    color: #0b0b0b !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  .premium-navbar .brand {
+    width: 76px !important;
+    min-width: 76px !important;
+    height: 76px !important;
+    margin: 0 auto !important;
+    background: transparent !important;
+  }
+
+  .premium-navbar .brand img {
+    width: 62px !important;
+    height: 62px !important;
+    object-fit: contain !important;
+    background: transparent !important;
+    filter: none !important;
+  }
+
+  .premium-nav {
+    display: none !important;
+  }
+
+  .premium-actions {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+  }
+
+  .premium-orders-btn {
+    display: none !important;
+  }
+
+  .user-icon-btn,
+  .cart-icon-btn {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+  }
+
+  .cart-icon-btn span {
+    font-size: 12px !important;
+  }
+
+  .hero-slider {
+    height: calc(100vh - 112px) !important;
+    min-height: 640px !important;
+    margin-top: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hero-track,
+  .hero-slide {
+    height: 100% !important;
+  }
+
+  .hero-slide picture,
+  .hero-slide picture img,
+  .hero-slide video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .hero-slider-content {
+    left: 22px !important;
+    right: 22px !important;
+    top: 33% !important;
+    transform: translateY(-50%) !important;
+    max-width: 92% !important;
+    z-index: 5 !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 13px !important;
+    letter-spacing: 6px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: clamp(42px, 15vw, 68px) !important;
+    line-height: 0.92 !important;
+    letter-spacing: 1px !important;
+    max-width: 92% !important;
+  }
+
+  .hero-slider-content a {
+    margin-top: 22px !important;
+    width: 210px !important;
+    height: 58px !important;
+    font-size: 13px !important;
+    justify-content: center !important;
+  }
+
+  .hero-arrow {
+    width: 50px !important;
+    height: 50px !important;
+    top: 52% !important;
+    z-index: 8 !important;
+  }
+
+  .hero-arrow-left {
+    left: 12px !important;
+  }
+
+  .hero-arrow-right {
+    right: 12px !important;
+  }
+
+  .hero-dots {
+    bottom: 28px !important;
+    z-index: 9 !important;
+  }
+
+  .whatsapp-float {
+    right: 18px !important;
+    bottom: 22px !important;
+    z-index: 20 !important;
+  }
+
+  .whatsapp-icon {
+    width: 66px !important;
+    height: 66px !important;
+  }
+
+  .whatsapp-bubble {
+    display: none !important;
+  }
+}
+
+/* Celulares más pequeños */
+@media (max-width: 430px) {
+  .hero-slider {
+    min-height: 610px !important;
+  }
+
+  .hero-slider-content {
+    top: 34% !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: clamp(40px, 16vw, 60px) !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 12px !important;
+    letter-spacing: 5px !important;
+  }
+
+  .hero-slider-content a {
+    width: 195px !important;
+    height: 56px !important;
+  }
+}
