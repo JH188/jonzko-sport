@@ -163,61 +163,65 @@ public ResponseEntity<SiteSetting> getSettings() {
         return ResponseEntity.ok(savedSettings);
     }
 
-    private boolean isValidAdminToken(String authHeader) {
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return false;
-        }
-
-        String token = authHeader.substring(7);
-
-        try {
-            if (!jwtService.isTokenValid(token)) {
-                return false;
-            }
-
-            Claims claims = jwtService.extractClaims(token);
-
-            String email = claims.getSubject();
-            String role = claims.get("role", String.class);
-            Integer tokenAdminSessionVersion = claims.get("adminSessionVersion", Integer.class);
-
-            if (email == null || email.isBlank()) {
-                return false;
-            }
-
-            if (role == null || role.isBlank()) {
-                return false;
-            }
-
-            role = role.trim().toUpperCase();
-
-            if (role.startsWith("ROLE_")) {
-                role = role.replace("ROLE_", "");
-            }
-
-            if (!"ADMIN".equals(role)) {
-                return false;
-            }
-
-            User user = userRepository.findByEmail(email).orElse(null);
-
-            if (user == null || Boolean.FALSE.equals(user.getActive())) {
-                return false;
-            }
-
-            Integer currentVersion = user.getAdminSessionVersion();
-
-            if (currentVersion == null) {
-                currentVersion = 0;
-            }
-
-            return tokenAdminSessionVersion != null
-                    && tokenAdminSessionVersion.equals(currentVersion);
-
-        } catch (Exception e) {
-            return false;
-        }
+private boolean isValidAdminToken(String authHeader) {
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        System.out.println("SETTINGS ADMIN: No llegó Authorization Bearer");
+        return false;
     }
+
+    String token = authHeader.substring(7);
+
+    try {
+        if (!jwtService.isTokenValid(token)) {
+            System.out.println("SETTINGS ADMIN: Token inválido");
+            return false;
+        }
+
+        Claims claims = jwtService.extractClaims(token);
+
+        String email = claims.getSubject();
+        String role = claims.get("role", String.class);
+
+        System.out.println("SETTINGS ADMIN TOKEN EMAIL: " + email);
+        System.out.println("SETTINGS ADMIN TOKEN ROLE: " + role);
+
+        if (email == null || email.isBlank()) {
+            return false;
+        }
+
+        if (role == null || role.isBlank()) {
+            return false;
+        }
+
+        role = role.trim().toUpperCase();
+
+        if (role.startsWith("ROLE_")) {
+            role = role.replace("ROLE_", "");
+        }
+
+        if (!"ADMIN".equals(role)) {
+            return false;
+        }
+
+        User user = userRepository.findByEmail(email).orElse(null);
+
+        if (user == null) {
+            System.out.println("SETTINGS ADMIN: Usuario no existe en BD");
+            return false;
+        }
+
+        if (Boolean.FALSE.equals(user.getActive())) {
+            System.out.println("SETTINGS ADMIN: Usuario inactivo");
+            return false;
+        }
+
+        return true;
+
+    } catch (Exception e) {
+        System.out.println("SETTINGS ADMIN ERROR TOKEN: " + e.getMessage());
+        return false;
+    }
+}
 
     private SiteSetting createDefaultSettings() {
         SiteSetting defaultSettings = SiteSetting.builder()

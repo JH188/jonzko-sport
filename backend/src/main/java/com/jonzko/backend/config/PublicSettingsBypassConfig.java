@@ -12,7 +12,8 @@ public class PublicSettingsBypassConfig {
         return web -> web.ignoring().requestMatchers(
                 "/api/public/**",
                 "/api/settings",
-                "/api/settings/**"
+                "/api/settings/**",
+                "/api/admin/settings"
         );
     }
 }
