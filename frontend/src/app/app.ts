@@ -266,10 +266,10 @@ loadHomeSlidesWithSettings(settings: PublicHomeSettings | null): void {
             mobileSrc: slide.mobileImageUrl || slide.desktopImageUrl,
 
             // AHORA MANDA LO DEL ADMIN GENERAL
-            subtitle: generalTag,
-            title: generalTitle,
-            buttonText: generalButton,
-            buttonLink: generalButtonLink,
+           subtitle: slide.tagText || generalTag,
+title: slide.title || generalTitle,
+buttonText: slide.buttonText || generalButton,
+buttonLink: slide.buttonLink || generalButtonLink,
 
             desktopPosition: slide.desktopPosition || 'center center',
             mobilePosition: slide.mobilePosition || 'center center'

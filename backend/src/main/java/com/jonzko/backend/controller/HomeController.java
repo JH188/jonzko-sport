@@ -8,15 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.PatchMapping;
 
 import com.jonzko.backend.entity.HomeSetting;
 import com.jonzko.backend.entity.HomeSlide;
@@ -60,11 +59,11 @@ public class HomeController {
     // PÚBLICO - SLIDES ACTIVOS DEL INICIO
     // GET: /api/home/slides
     // ============================================================
-    @GetMapping("/api/home/slides")
-    public List<HomeSlide> getPublicHomeSlides() {
-        return homeSlideRepository.findByActiveTrueOrderByDisplayOrderAsc();
-    }
-
+  @GetMapping("/api/home/slides")
+public List<HomeSlide> getPublicHomeSlides() {
+    ensureDefaultHomeSlides();
+    return homeSlideRepository.findByActiveTrueOrderByDisplayOrderAsc();
+}
     // ============================================================
     // ADMIN - VER CONFIGURACIÓN DEL INICIO
     // GET: /api/admin/home/settings
@@ -121,10 +120,11 @@ public class HomeController {
     // ADMIN - LISTAR TODOS LOS SLIDES
     // GET: /api/admin/home/slides
     // ============================================================
-    @GetMapping("/api/admin/home/slides")
-    public List<HomeSlide> getAdminHomeSlides() {
-        return homeSlideRepository.findAllByOrderByDisplayOrderAsc();
-    }
+   @GetMapping("/api/admin/home/slides")
+public List<HomeSlide> getAdminHomeSlides() {
+    ensureDefaultHomeSlides();
+    return homeSlideRepository.findAllByOrderByDisplayOrderAsc();
+}
 
     // ============================================================
     // ADMIN - CREAR SLIDE
@@ -331,6 +331,60 @@ public class HomeController {
             return homeSettingRepository.save(settings);
         });
     }
+    private void ensureDefaultHomeSlides() {
+    if (!homeSlideRepository.findAll().isEmpty()) {
+        return;
+    }
+
+    HomeSlide slide1 = new HomeSlide();
+    slide1.setTagText("NUEVA COLECCIÓN");
+    slide1.setTitle("OVERSIZE");
+    slide1.setButtonText("COMPRAR AHORA");
+    slide1.setButtonLink("#tienda");
+    slide1.setDesktopImageUrl("assets/principal1.jpg");
+    slide1.setMobileImageUrl("assets/principal1.jpg");
+    slide1.setVideoUrl(null);
+    slide1.setDesktopPosition("center center");
+    slide1.setMobilePosition("center center");
+    slide1.setDisplayOrder(1);
+    slide1.setActive(true);
+    slide1.setCreatedAt(LocalDateTime.now());
+    slide1.setUpdatedAt(LocalDateTime.now());
+
+    HomeSlide slide2 = new HomeSlide();
+    slide2.setTagText("JONZKO SPORT");
+    slide2.setTitle("ESTILO URBANO");
+    slide2.setButtonText("VER PRODUCTOS");
+    slide2.setButtonLink("#producto");
+    slide2.setDesktopImageUrl("assets/principal2.jpeg");
+    slide2.setMobileImageUrl("assets/principal2.jpeg");
+    slide2.setVideoUrl(null);
+    slide2.setDesktopPosition("center center");
+    slide2.setMobilePosition("center center");
+    slide2.setDisplayOrder(2);
+    slide2.setActive(true);
+    slide2.setCreatedAt(LocalDateTime.now());
+    slide2.setUpdatedAt(LocalDateTime.now());
+
+    HomeSlide slide3 = new HomeSlide();
+    slide3.setTagText("MODA PERUANA");
+    slide3.setTitle("BLACK & WHITE");
+    slide3.setButtonText("DESCUBRIR PRENDAS");
+    slide3.setButtonLink("#producto");
+    slide3.setDesktopImageUrl("assets/principal3.jpeg");
+    slide3.setMobileImageUrl("assets/principal3.jpeg");
+    slide3.setVideoUrl(null);
+    slide3.setDesktopPosition("center center");
+    slide3.setMobilePosition("center center");
+    slide3.setDisplayOrder(3);
+    slide3.setActive(true);
+    slide3.setCreatedAt(LocalDateTime.now());
+    slide3.setUpdatedAt(LocalDateTime.now());
+
+    homeSlideRepository.save(slide1);
+    homeSlideRepository.save(slide2);
+    homeSlideRepository.save(slide3);
+}
 
     private String clean(String value) {
         if (value == null || value.trim().isEmpty()) {

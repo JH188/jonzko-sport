@@ -12291,3 +12291,38 @@ body {
     pointer-events: auto !important;
   }
 }
+/* =========================================================
+   FIX LOGO PÚBLICO DESDE ADMIN
+   ========================================================= */
+
+.premium-navbar .brand {
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.premium-navbar .brand img {
+  width: 62px !important;
+  height: 62px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .premium-navbar .brand {
+    width: 70px;
+    height: 70px;
+  }
+
+  .premium-navbar .brand img {
+    width: 58px !important;
+    height: 58px !important;
+  }
+}
