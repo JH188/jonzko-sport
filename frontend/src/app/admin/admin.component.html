@@ -1256,7 +1256,7 @@
           </p>
         </div>
 
-        <div class="heading-actions">
+        <div class="heading-actions" *ngIf="customizationTab() === 'inicio'">
           <button
             type="button"
             class="secondary-action"
@@ -1267,6 +1267,16 @@
 
           <button type="button" class="primary-action" (click)="saveHomeSettings()">
             Guardar inicio
+          </button>
+        </div>
+
+        <div class="heading-actions" *ngIf="customizationTab() === 'nosotros'">
+          <button type="button" class="secondary-action" (click)="loadAboutGallerySettings()">
+            Recargar Nosotros
+          </button>
+
+          <button type="button" class="primary-action" (click)="saveAboutGallerySettings()">
+            Guardar Nosotros
           </button>
         </div>
       </div>
@@ -1747,12 +1757,523 @@
         </article>
       </div>
 
+      <!-- NOSOTROS / GALERÍA -->
+      <div class="about-admin-wrap" *ngIf="customizationTab() === 'nosotros'">
+        <div class="home-admin-grid">
+          <article class="panel-card">
+            <h3>Sobre nosotros</h3>
+            <p>Edita el bloque “Más que ropa, es actitud”.</p>
+
+            <form class="admin-form">
+              <label>
+                Texto pequeño
+                <input type="text" name="aboutTag" [(ngModel)]="aboutSettings.aboutTag" />
+              </label>
+
+              <label>
+                Título principal
+                <input type="text" name="aboutTitle" [(ngModel)]="aboutSettings.aboutTitle" />
+              </label>
+
+              <label>
+                Texto descriptivo
+                <textarea
+                  name="aboutText"
+                  rows="4"
+                  [(ngModel)]="aboutSettings.aboutText"
+                ></textarea>
+              </label>
+
+              <div class="form-two">
+                <label>
+                  Texto del botón
+                  <input
+                    type="text"
+                    name="aboutButtonText"
+                    [(ngModel)]="aboutSettings.aboutButtonText"
+                  />
+                </label>
+
+                <label>
+                  Link del botón
+                  <input
+                    type="text"
+                    name="aboutButtonLink"
+                    [(ngModel)]="aboutSettings.aboutButtonLink"
+                  />
+                </label>
+              </div>
+
+              <label class="check-label">
+                <input
+                  type="checkbox"
+                  name="aboutGalleryEnabled"
+                  [(ngModel)]="aboutSettings.aboutGalleryEnabled"
+                />
+                Mostrar sección Nosotros / Galería en la web
+              </label>
+
+              <button type="button" class="primary-action" (click)="saveAboutGallerySettings()">
+                Guardar textos
+              </button>
+            </form>
+          </article>
+
+          <article class="panel-card">
+            <h3>Galería principal</h3>
+            <p>Edita el bloque “Diseños que hablan por ti”.</p>
+
+            <form class="admin-form">
+              <label>
+                Texto pequeño
+                <input type="text" name="galleryTag" [(ngModel)]="aboutSettings.galleryTag" />
+              </label>
+
+              <label>
+                Título de galería
+                <input type="text" name="galleryTitle" [(ngModel)]="aboutSettings.galleryTitle" />
+              </label>
+
+              <label>
+                Descripción
+                <textarea
+                  name="galleryText"
+                  rows="4"
+                  [(ngModel)]="aboutSettings.galleryText"
+                ></textarea>
+              </label>
+
+              <button type="button" class="primary-action" (click)="saveAboutGallerySettings()">
+                Guardar galería
+              </button>
+            </form>
+          </article>
+        </div>
+
+        <article class="panel-card">
+          <div class="panel-title">
+            <div>
+              <h3>Iconos de marca</h3>
+              <p>Estos son los 4 iconos pequeños: calidad, diseños, oversize y comunidad.</p>
+            </div>
+          </div>
+
+          <form class="admin-form about-feature-grid">
+            <div class="about-feature-editor">
+              <label>
+                Icono 1
+                <input
+                  type="text"
+                  name="aboutFeature1Icon"
+                  [(ngModel)]="aboutSettings.aboutFeature1Icon"
+                />
+              </label>
+
+              <label>
+                Título 1
+                <input
+                  type="text"
+                  name="aboutFeature1Title"
+                  [(ngModel)]="aboutSettings.aboutFeature1Title"
+                />
+              </label>
+
+              <label>
+                Texto 1
+                <input
+                  type="text"
+                  name="aboutFeature1Text"
+                  [(ngModel)]="aboutSettings.aboutFeature1Text"
+                />
+              </label>
+            </div>
+
+            <div class="about-feature-editor">
+              <label>
+                Icono 2
+                <input
+                  type="text"
+                  name="aboutFeature2Icon"
+                  [(ngModel)]="aboutSettings.aboutFeature2Icon"
+                />
+              </label>
+
+              <label>
+                Título 2
+                <input
+                  type="text"
+                  name="aboutFeature2Title"
+                  [(ngModel)]="aboutSettings.aboutFeature2Title"
+                />
+              </label>
+
+              <label>
+                Texto 2
+                <input
+                  type="text"
+                  name="aboutFeature2Text"
+                  [(ngModel)]="aboutSettings.aboutFeature2Text"
+                />
+              </label>
+            </div>
+
+            <div class="about-feature-editor">
+              <label>
+                Icono 3
+                <input
+                  type="text"
+                  name="aboutFeature3Icon"
+                  [(ngModel)]="aboutSettings.aboutFeature3Icon"
+                />
+              </label>
+
+              <label>
+                Título 3
+                <input
+                  type="text"
+                  name="aboutFeature3Title"
+                  [(ngModel)]="aboutSettings.aboutFeature3Title"
+                />
+              </label>
+
+              <label>
+                Texto 3
+                <input
+                  type="text"
+                  name="aboutFeature3Text"
+                  [(ngModel)]="aboutSettings.aboutFeature3Text"
+                />
+              </label>
+            </div>
+
+            <div class="about-feature-editor">
+              <label>
+                Icono 4
+                <input
+                  type="text"
+                  name="aboutFeature4Icon"
+                  [(ngModel)]="aboutSettings.aboutFeature4Icon"
+                />
+              </label>
+
+              <label>
+                Título 4
+                <input
+                  type="text"
+                  name="aboutFeature4Title"
+                  [(ngModel)]="aboutSettings.aboutFeature4Title"
+                />
+              </label>
+
+              <label>
+                Texto 4
+                <input
+                  type="text"
+                  name="aboutFeature4Text"
+                  [(ngModel)]="aboutSettings.aboutFeature4Text"
+                />
+              </label>
+            </div>
+          </form>
+
+          <button type="button" class="primary-action" (click)="saveAboutGallerySettings()">
+            Guardar iconos
+          </button>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-title">
+            <div>
+              <h3>Imágenes de Sobre nosotros</h3>
+              <p>Son las imágenes grandes debajo del texto “Más que ropa, es actitud”.</p>
+            </div>
+          </div>
+
+          <form class="admin-form">
+            <div class="form-two">
+              <label>
+                Imagen Nosotros 1
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="uploadAboutMedia($event, 'aboutImage1Url')"
+                />
+              </label>
+
+              <label>
+                Imagen Nosotros 2
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="uploadAboutMedia($event, 'aboutImage2Url')"
+                />
+              </label>
+            </div>
+
+            <label>
+              Imagen Nosotros 3 opcional
+              <input
+                type="file"
+                accept="image/*"
+                (change)="uploadAboutMedia($event, 'aboutImage3Url')"
+              />
+            </label>
+          </form>
+
+          <div class="about-media-grid">
+            <div class="image-preview-box" *ngIf="aboutSettings.aboutImage1Url">
+              <img [src]="aboutSettings.aboutImage1Url" alt="Nosotros 1" />
+              <div>
+                <small>Imagen Nosotros 1</small>
+                <input
+                  type="text"
+                  name="aboutImage1Url"
+                  [(ngModel)]="aboutSettings.aboutImage1Url"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="removeAboutMedia('aboutImage1Url')"
+                >
+                  Quitar imagen
+                </button>
+              </div>
+            </div>
+
+            <div class="image-preview-box" *ngIf="aboutSettings.aboutImage2Url">
+              <img [src]="aboutSettings.aboutImage2Url" alt="Nosotros 2" />
+              <div>
+                <small>Imagen Nosotros 2</small>
+                <input
+                  type="text"
+                  name="aboutImage2Url"
+                  [(ngModel)]="aboutSettings.aboutImage2Url"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="removeAboutMedia('aboutImage2Url')"
+                >
+                  Quitar imagen
+                </button>
+              </div>
+            </div>
+
+            <div class="image-preview-box" *ngIf="aboutSettings.aboutImage3Url">
+              <img [src]="aboutSettings.aboutImage3Url" alt="Nosotros 3" />
+              <div>
+                <small>Imagen Nosotros 3</small>
+                <input
+                  type="text"
+                  name="aboutImage3Url"
+                  [(ngModel)]="aboutSettings.aboutImage3Url"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="removeAboutMedia('aboutImage3Url')"
+                >
+                  Quitar imagen
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="primary-action" (click)="saveAboutGallerySettings()">
+            Guardar imágenes Nosotros
+          </button>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-title">
+            <div>
+              <h3>Fotos de Galería</h3>
+              <p>Son las fotos del bloque “Diseños que hablan por ti”.</p>
+            </div>
+          </div>
+
+          <form class="admin-form">
+            <div class="form-two">
+              <label>
+                Galería foto 1
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="uploadAboutMedia($event, 'galleryImage1Url')"
+                />
+              </label>
+
+              <label>
+                Galería foto 2
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="uploadAboutMedia($event, 'galleryImage2Url')"
+                />
+              </label>
+            </div>
+
+            <div class="form-two">
+              <label>
+                Galería foto 3
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="uploadAboutMedia($event, 'galleryImage3Url')"
+                />
+              </label>
+
+              <label>
+                Galería foto 4
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="uploadAboutMedia($event, 'galleryImage4Url')"
+                />
+              </label>
+            </div>
+
+            <label>
+              Video opcional de galería
+              <input
+                type="file"
+                accept="video/*"
+                (change)="uploadAboutMedia($event, 'galleryVideoUrl')"
+              />
+            </label>
+          </form>
+
+          <div class="about-media-grid">
+            <div class="image-preview-box" *ngIf="aboutSettings.galleryImage1Url">
+              <img [src]="aboutSettings.galleryImage1Url" alt="Galería 1" />
+              <div>
+                <small>Galería 1</small>
+                <input
+                  type="text"
+                  name="galleryImage1Url"
+                  [(ngModel)]="aboutSettings.galleryImage1Url"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="removeAboutMedia('galleryImage1Url')"
+                >
+                  Quitar imagen
+                </button>
+              </div>
+            </div>
+
+            <div class="image-preview-box" *ngIf="aboutSettings.galleryImage2Url">
+              <img [src]="aboutSettings.galleryImage2Url" alt="Galería 2" />
+              <div>
+                <small>Galería 2</small>
+                <input
+                  type="text"
+                  name="galleryImage2Url"
+                  [(ngModel)]="aboutSettings.galleryImage2Url"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="removeAboutMedia('galleryImage2Url')"
+                >
+                  Quitar imagen
+                </button>
+              </div>
+            </div>
+
+            <div class="image-preview-box" *ngIf="aboutSettings.galleryImage3Url">
+              <img [src]="aboutSettings.galleryImage3Url" alt="Galería 3" />
+              <div>
+                <small>Galería 3</small>
+                <input
+                  type="text"
+                  name="galleryImage3Url"
+                  [(ngModel)]="aboutSettings.galleryImage3Url"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="removeAboutMedia('galleryImage3Url')"
+                >
+                  Quitar imagen
+                </button>
+              </div>
+            </div>
+
+            <div class="image-preview-box" *ngIf="aboutSettings.galleryImage4Url">
+              <img [src]="aboutSettings.galleryImage4Url" alt="Galería 4" />
+              <div>
+                <small>Galería 4</small>
+                <input
+                  type="text"
+                  name="galleryImage4Url"
+                  [(ngModel)]="aboutSettings.galleryImage4Url"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="removeAboutMedia('galleryImage4Url')"
+                >
+                  Quitar imagen
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="image-preview-box media-video-preview"
+              *ngIf="aboutSettings.galleryVideoUrl"
+            >
+              <video
+                [src]="aboutSettings.galleryVideoUrl"
+                autoplay
+                muted
+                loop
+                playsinline
+                controls
+              ></video>
+
+              <div>
+                <small>Video de galería</small>
+                <input
+                  type="text"
+                  name="galleryVideoUrl"
+                  [(ngModel)]="aboutSettings.galleryVideoUrl"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="removeAboutMedia('galleryVideoUrl')"
+                >
+                  Quitar video
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="primary-action" (click)="saveAboutGallerySettings()">
+            Guardar fotos de galería
+          </button>
+        </article>
+      </div>
+
       <!-- MÓDULOS QUE HAREMOS DESPUÉS -->
-      <article class="panel-card" *ngIf="customizationTab() !== 'inicio'">
+      <article
+        class="panel-card"
+        *ngIf="customizationTab() !== 'inicio' && customizationTab() !== 'nosotros'"
+      >
         <h3>Módulo en preparación</h3>
         <p>
-          Este módulo se hará después. Empezamos por Inicio y luego seguimos uno por uno para evitar
-          romper la tienda.
+          Este módulo se hará después. Empezamos por Inicio y Nosotros / Galería, luego seguimos uno
+          por uno para evitar romper la tienda.
         </p>
       </article>
     </section>

@@ -3118,3 +3118,71 @@ td p {
     height: 170px !important;
   }
 }
+/* =========================================================
+   ADMIN - NOSOTROS / GALERÍA
+   ========================================================= */
+
+.about-admin-wrap {
+  display: grid;
+  gap: 20px;
+}
+
+.about-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.about-feature-editor {
+  border: 1px solid #eeeeee;
+  border-radius: 18px;
+  padding: 16px;
+  background: #fafafa;
+  display: grid;
+  gap: 12px;
+}
+
+.about-media-grid {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.about-admin-wrap .panel-card h3 {
+  font-size: 23px;
+  font-weight: 950;
+}
+
+.about-admin-wrap .panel-card > p {
+  color: #555555;
+  line-height: 1.5;
+  margin-top: -4px;
+  margin-bottom: 18px;
+}
+
+.about-admin-wrap .image-preview-box img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.about-admin-wrap .media-video-preview video {
+  background: #000000;
+  object-fit: contain !important;
+}
+
+@media (max-width: 1200px) {
+  .about-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .about-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-admin-wrap .panel-card h3 {
+    font-size: 21px;
+  }
+}

@@ -68,6 +68,55 @@ type CustomizationTab =
   | 'avisos';
 
 type HomeMediaField = 'logoUrl' | 'desktopImageUrl' | 'mobileImageUrl' | 'videoUrl';
+type AboutMediaField =
+  | 'aboutImage1Url'
+  | 'aboutImage2Url'
+  | 'aboutImage3Url'
+  | 'galleryImage1Url'
+  | 'galleryImage2Url'
+  | 'galleryImage3Url'
+  | 'galleryImage4Url'
+  | 'galleryVideoUrl';
+
+interface AboutGallerySettings {
+  aboutTag: string;
+  aboutTitle: string;
+  aboutText: string;
+  aboutButtonText: string;
+  aboutButtonLink: string;
+
+  aboutFeature1Icon: string;
+  aboutFeature1Title: string;
+  aboutFeature1Text: string;
+
+  aboutFeature2Icon: string;
+  aboutFeature2Title: string;
+  aboutFeature2Text: string;
+
+  aboutFeature3Icon: string;
+  aboutFeature3Title: string;
+  aboutFeature3Text: string;
+
+  aboutFeature4Icon: string;
+  aboutFeature4Title: string;
+  aboutFeature4Text: string;
+
+  aboutImage1Url: string;
+  aboutImage2Url: string;
+  aboutImage3Url: string;
+
+  galleryTag: string;
+  galleryTitle: string;
+  galleryText: string;
+
+  galleryImage1Url: string;
+  galleryImage2Url: string;
+  galleryImage3Url: string;
+  galleryImage4Url: string;
+  galleryVideoUrl: string;
+
+  aboutGalleryEnabled: boolean;
+}
 
 interface HomeSettings {
   id: number;
@@ -120,7 +169,8 @@ interface HomeSlide {
 })
 
 export class AdminComponent implements OnInit, OnDestroy {
-  private adminSessionInterval: any = null;
+private adminSessionInterval: any = null;
+private adminDataInterval: any = null;
 private adminSessionExpiredHandled = false;
   adminCurrentPassword = '';
 adminNewPassword = '';
@@ -170,6 +220,45 @@ homeSlideForm: HomeSlide = {
 
   displayOrder: 1,
   active: true
+};
+aboutSettings: AboutGallerySettings = {
+  aboutTag: 'SOBRE NOSOTROS',
+  aboutTitle: 'Más que ropa, es actitud.',
+  aboutText: 'JONZKO creado con la idea de que todos podemos vestirnos con estilo y actitud.',
+  aboutButtonText: 'CONÓCENOS MÁS',
+  aboutButtonLink: '#nosotros',
+
+  aboutFeature1Icon: '◇',
+  aboutFeature1Title: 'CALIDAD',
+  aboutFeature1Text: 'A1',
+
+  aboutFeature2Icon: '♛',
+  aboutFeature2Title: 'DISEÑOS',
+  aboutFeature2Text: 'EXCLUSIVO Y BÁSICOS',
+
+  aboutFeature3Icon: '▣',
+  aboutFeature3Title: 'OVERSIZE',
+  aboutFeature3Text: 'A1',
+
+  aboutFeature4Icon: '⊙',
+  aboutFeature4Title: 'COMUNIDAD',
+  aboutFeature4Text: 'JONZKO',
+
+  aboutImage1Url: '',
+  aboutImage2Url: '',
+  aboutImage3Url: '',
+
+  galleryTag: 'ESTILO JONZKO',
+  galleryTitle: 'Diseños que hablan por ti.',
+  galleryText: 'Mira más detalles de nuestras prendas, estilo urbano y contenido de la marca.',
+
+  galleryImage1Url: '',
+  galleryImage2Url: '',
+  galleryImage3Url: '',
+  galleryImage4Url: '',
+  galleryVideoUrl: '',
+
+  aboutGalleryEnabled: true
 };
   private companyName = 'JONZKO SPORT';
 private companyRuc = '10708448601';
@@ -265,15 +354,16 @@ currentReceiptType: 'Voucher' | 'Boleta' | 'Factura' | 'Comprobante' = 'Comproba
   this.loadWebConfig();
 this.loadHomeAdminConfig();
 this.loadHomeSlides();
+this.loadAboutGallerySettings();
 this.applyWebConfig();
 this.loadAdminData();
 this.startAdminSessionWatcher();
 
-  setInterval(() => {
-    if (this.soundEnabled) {
-      this.loadAdminData();
-    }
-  }, 10000);
+this.adminDataInterval = setInterval(() => {
+  if (this.soundEnabled) {
+    this.loadAdminData();
+  }
+}, 10000);
 }
 
 setSection(section: AdminSection): void {
@@ -834,6 +924,10 @@ formatTime(value: string | null | undefined): string {
 
 setCustomizationTab(tab: CustomizationTab): void {
   this.customizationTab.set(tab);
+
+  if (tab === 'nosotros') {
+    this.loadAboutGallerySettings();
+  }
 }
 
 loadHomeAdminConfig(): void {
@@ -1023,12 +1117,17 @@ uploadHomeMedia(event: Event, field: HomeMediaField): void {
   if (!input.files || input.files.length === 0) {
     return;
   }
-
   const file = input.files[0];
-  const isVideo = file.type.startsWith('video/');
+  const isVideo = field === 'videoUrl';
 
-  if (!file.type.startsWith('image/') && !isVideo) {
-    alert('Selecciona una imagen o video válido.');
+  if (!isVideo && !file.type.startsWith('image/')) {
+    alert('Selecciona una imagen válida.');
+    input.value = '';
+    return;
+  }
+
+  if (isVideo && !file.type.startsWith('video/')) {
+    alert('Selecciona un video válido.');
     input.value = '';
     return;
   }
@@ -1090,7 +1189,118 @@ removeHomeMedia(field: HomeMediaField): void {
     this.homeSlideForm[field] = '';
   }
 }
+// ==========================
+// PERSONALIZACIÓN WEB - NOSOTROS / GALERÍA
+// ==========================
 
+loadAboutGallerySettings(): void {
+  this.apiService.getSettings().subscribe({
+    next: (response: any) => {
+      this.aboutSettings = {
+        ...this.aboutSettings,
+        ...response
+      };
+    },
+    error: (error) => {
+      console.error('Error cargando Nosotros / Galería:', error);
+    }
+  });
+}
+
+saveAboutGallerySettings(): void {
+  const data = {
+    ...(this.webConfig as any),
+    ...this.aboutSettings
+  };
+
+  this.apiService.updateSettings(data).subscribe({
+    next: (response: any) => {
+      this.aboutSettings = {
+        ...this.aboutSettings,
+        ...response
+      };
+
+      alert('Nosotros / Galería guardado correctamente.');
+    },
+    error: (error) => {
+      console.error('Error guardando Nosotros / Galería:', error);
+      alert('No se pudo guardar Nosotros / Galería. Si no se mantiene al recargar, falta agregar estos campos en backend/MySQL.');
+    }
+  });
+}
+
+uploadAboutMedia(event: Event, field: AboutMediaField): void {
+  const input = event.target as HTMLInputElement;
+
+  if (!input.files || input.files.length === 0) {
+    return;
+  }
+
+  const file = input.files[0];
+  const isVideoField = field === 'galleryVideoUrl';
+  const isVideo = file.type.startsWith('video/');
+
+  if (!isVideoField && !file.type.startsWith('image/')) {
+    alert('Selecciona una imagen válida.');
+    input.value = '';
+    return;
+  }
+
+  if (isVideoField && !file.type.startsWith('video/')) {
+    alert('Selecciona un video válido.');
+    input.value = '';
+    return;
+  }
+
+  const maxSizeMb = isVideoField ? 50 : 10;
+  const maxSizeBytes = maxSizeMb * 1024 * 1024;
+
+  if (file.size > maxSizeBytes) {
+    alert(`El archivo es muy pesado. Máximo ${maxSizeMb} MB.`);
+    input.value = '';
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  this.loading.set(true);
+
+  this.apiService.uploadHomeMedia(formData).subscribe({
+    next: (response: any) => {
+      this.loading.set(false);
+
+      const url = response.mediaUrl || response.imageUrl;
+
+      if (!url) {
+        alert('Cloudinary no devolvió URL.');
+        input.value = '';
+        return;
+      }
+
+      this.aboutSettings[field] = url;
+      input.value = '';
+
+      alert(isVideoField ? 'Video subido correctamente.' : 'Imagen subida correctamente.');
+    },
+    error: (error) => {
+      this.loading.set(false);
+      console.error('Error subiendo archivo de Nosotros / Galería:', error);
+      alert('No se pudo subir el archivo.');
+      input.value = '';
+    }
+  });
+}
+
+removeAboutMedia(field: AboutMediaField): void {
+  const confirmRemove = confirm('¿Deseas quitar este archivo?');
+
+  if (!confirmRemove) {
+    return;
+  }
+
+  this.aboutSettings[field] = '';
+}
 requestAdminPasswordCode(): void {
   this.adminPasswordMessage = '';
 
@@ -1177,6 +1387,10 @@ ngOnDestroy(): void {
   if (this.adminSessionInterval) {
     clearInterval(this.adminSessionInterval);
   }
+
+  if (this.adminDataInterval) {
+    clearInterval(this.adminDataInterval);
+  }
 }
 
 startAdminSessionWatcher(): void {
@@ -1234,11 +1448,15 @@ forceAdminLogout(message: string): void {
   // ==========================
   // NAVEGACIÓN
   // ==========================
+logoutAdmin(): void {
+  localStorage.removeItem('jonzko_admin_logged');
+  localStorage.removeItem('jonzko_admin_token');
+  localStorage.removeItem('jonzko_admin_role');
+  localStorage.removeItem('jonzko_admin_name');
+  localStorage.removeItem('jonzko_admin_email');
 
-  logoutAdmin(): void {
-    localStorage.removeItem('jonzko_admin_logged');
-    this.router.navigate(['/admin-login']);
-  }
+  this.router.navigate(['/admin-login']);
+}
 
   goToStore(): void {
     this.router.navigate(['/']);
@@ -2095,7 +2313,7 @@ async exportFullExcelReport(): Promise<void> {
     ['Pedidos cancelados', pedidosCancelados]
   ];
 
-  const resumenSheet = addTableSheet(
+  addTableSheet(
     'Resumen Contable',
     'Resumen Contable',
     ['Métrica', 'Valor'],
