@@ -1,13 +1,10 @@
 package com.jonzko.backend.controller;
 
-import java.util.function.Consumer;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jonzko.backend.dto.SiteSettingRequest;
@@ -15,7 +12,6 @@ import com.jonzko.backend.entity.SiteSetting;
 import com.jonzko.backend.repository.SiteSettingRepository;
 
 @RestController
-@RequestMapping("/api/settings")
 @CrossOrigin(origins = {
         "http://localhost:4200",
         "https://jonzko.lat",
@@ -30,8 +26,10 @@ public class SiteSettingController {
         this.siteSettingRepository = siteSettingRepository;
     }
 
-    // Obtener configuración actual de la tienda
-    @GetMapping
+    // ==========================
+    // PUBLICO: la web lee configuración
+    // ==========================
+    @GetMapping("/api/settings")
     public ResponseEntity<SiteSetting> getSettings() {
         SiteSetting settings = siteSettingRepository
                 .findFirstByActiveTrueOrderByIdAsc()
@@ -40,108 +38,98 @@ public class SiteSettingController {
         return ResponseEntity.ok(settings);
     }
 
-    // Actualizar configuración desde el administrador
-    @PutMapping
+    // ==========================
+    // ADMIN: el panel guarda configuración
+    // ==========================
+    @PutMapping("/api/admin/settings")
     public ResponseEntity<SiteSetting> updateSettings(@RequestBody SiteSettingRequest request) {
         SiteSetting settings = siteSettingRepository
                 .findFirstByActiveTrueOrderByIdAsc()
                 .orElseGet(this::createDefaultSettings);
 
-        // Identidad de marca
-        setIfNotNull(request.getStoreName(), settings::setStoreName);
-        setIfNotNull(request.getSlogan(), settings::setSlogan);
-        setIfNotNull(request.getLogoUrl(), settings::setLogoUrl);
-        setIfNotNull(request.getHeroImageUrl(), settings::setHeroImageUrl);
+        // Identidad
+        settings.setStoreName(request.getStoreName());
+        settings.setSlogan(request.getSlogan());
+        settings.setLogoUrl(request.getLogoUrl());
+        settings.setHeroImageUrl(request.getHeroImageUrl());
 
-        // Inicio / hero antiguo
-        setIfNotNull(request.getHeroTitle(), settings::setHeroTitle);
-        setIfNotNull(request.getHeroDescription(), settings::setHeroDescription);
-        setIfNotNull(request.getPrimaryButtonText(), settings::setPrimaryButtonText);
-        setIfNotNull(request.getSecondaryButtonText(), settings::setSecondaryButtonText);
+        // Hero / inicio antiguo
+        settings.setHeroTitle(request.getHeroTitle());
+        settings.setHeroDescription(request.getHeroDescription());
+        settings.setPrimaryButtonText(request.getPrimaryButtonText());
+        settings.setSecondaryButtonText(request.getSecondaryButtonText());
 
         // Colores
-        setIfNotNull(request.getPrimaryColor(), settings::setPrimaryColor);
-        setIfNotNull(request.getSecondaryColor(), settings::setSecondaryColor);
-        setIfNotNull(request.getAccentColor(), settings::setAccentColor);
-        setIfNotNull(request.getBackgroundColor(), settings::setBackgroundColor);
-        setIfNotNull(request.getTextColor(), settings::setTextColor);
+        settings.setPrimaryColor(request.getPrimaryColor());
+        settings.setSecondaryColor(request.getSecondaryColor());
+        settings.setAccentColor(request.getAccentColor());
+        settings.setBackgroundColor(request.getBackgroundColor());
+        settings.setTextColor(request.getTextColor());
 
         // Redes
-        setIfNotNull(request.getInstagramUrl(), settings::setInstagramUrl);
-        setIfNotNull(request.getFacebookUrl(), settings::setFacebookUrl);
-        setIfNotNull(request.getTiktokUrl(), settings::setTiktokUrl);
-        setIfNotNull(request.getWhatsappNumber(), settings::setWhatsappNumber);
-        setIfNotNull(request.getWhatsappMessage(), settings::setWhatsappMessage);
+        settings.setInstagramUrl(request.getInstagramUrl());
+        settings.setFacebookUrl(request.getFacebookUrl());
+        settings.setTiktokUrl(request.getTiktokUrl());
+        settings.setWhatsappNumber(request.getWhatsappNumber());
+        settings.setWhatsappMessage(request.getWhatsappMessage());
 
-        // Textos generales
-        setIfNotNull(request.getCollectionTitle(), settings::setCollectionTitle);
-        setIfNotNull(request.getCollectionDescription(), settings::setCollectionDescription);
-        setIfNotNull(request.getContactTitle(), settings::setContactTitle);
-        setIfNotNull(request.getContactDescription(), settings::setContactDescription);
+        // Colección / contacto
+        settings.setCollectionTitle(request.getCollectionTitle());
+        settings.setCollectionDescription(request.getCollectionDescription());
+        settings.setContactTitle(request.getContactTitle());
+        settings.setContactDescription(request.getContactDescription());
 
         // Navegación
-        setIfNotNull(request.getNavInicio(), settings::setNavInicio);
-        setIfNotNull(request.getNavProducto(), settings::setNavProducto);
-        setIfNotNull(request.getNavNosotros(), settings::setNavNosotros);
-        setIfNotNull(request.getNavContacto(), settings::setNavContacto);
-        setIfNotNull(request.getCartText(), settings::setCartText);
-        setIfNotNull(request.getLoginText(), settings::setLoginText);
+        settings.setNavInicio(request.getNavInicio());
+        settings.setNavProducto(request.getNavProducto());
+        settings.setNavNosotros(request.getNavNosotros());
+        settings.setNavContacto(request.getNavContacto());
+        settings.setCartText(request.getCartText());
+        settings.setLoginText(request.getLoginText());
 
-        // Nosotros / Galería
-        setIfNotNull(request.getAboutTag(), settings::setAboutTag);
-        setIfNotNull(request.getAboutTitle(), settings::setAboutTitle);
-        setIfNotNull(request.getAboutText(), settings::setAboutText);
-        setIfNotNull(request.getAboutButtonText(), settings::setAboutButtonText);
-        setIfNotNull(request.getAboutButtonLink(), settings::setAboutButtonLink);
+        // Nosotros
+        settings.setAboutTag(request.getAboutTag());
+        settings.setAboutTitle(request.getAboutTitle());
+        settings.setAboutText(request.getAboutText());
+        settings.setAboutButtonText(request.getAboutButtonText());
+        settings.setAboutButtonLink(request.getAboutButtonLink());
 
-        setIfNotNull(request.getAboutFeature1Icon(), settings::setAboutFeature1Icon);
-        setIfNotNull(request.getAboutFeature1Title(), settings::setAboutFeature1Title);
-        setIfNotNull(request.getAboutFeature1Text(), settings::setAboutFeature1Text);
+        settings.setAboutFeature1Icon(request.getAboutFeature1Icon());
+        settings.setAboutFeature1Title(request.getAboutFeature1Title());
+        settings.setAboutFeature1Text(request.getAboutFeature1Text());
 
-        setIfNotNull(request.getAboutFeature2Icon(), settings::setAboutFeature2Icon);
-        setIfNotNull(request.getAboutFeature2Title(), settings::setAboutFeature2Title);
-        setIfNotNull(request.getAboutFeature2Text(), settings::setAboutFeature2Text);
+        settings.setAboutFeature2Icon(request.getAboutFeature2Icon());
+        settings.setAboutFeature2Title(request.getAboutFeature2Title());
+        settings.setAboutFeature2Text(request.getAboutFeature2Text());
 
-        setIfNotNull(request.getAboutFeature3Icon(), settings::setAboutFeature3Icon);
-        setIfNotNull(request.getAboutFeature3Title(), settings::setAboutFeature3Title);
-        setIfNotNull(request.getAboutFeature3Text(), settings::setAboutFeature3Text);
+        settings.setAboutFeature3Icon(request.getAboutFeature3Icon());
+        settings.setAboutFeature3Title(request.getAboutFeature3Title());
+        settings.setAboutFeature3Text(request.getAboutFeature3Text());
 
-        setIfNotNull(request.getAboutFeature4Icon(), settings::setAboutFeature4Icon);
-        setIfNotNull(request.getAboutFeature4Title(), settings::setAboutFeature4Title);
-        setIfNotNull(request.getAboutFeature4Text(), settings::setAboutFeature4Text);
+        settings.setAboutFeature4Icon(request.getAboutFeature4Icon());
+        settings.setAboutFeature4Title(request.getAboutFeature4Title());
+        settings.setAboutFeature4Text(request.getAboutFeature4Text());
 
-        setIfNotNull(request.getAboutImage1Url(), settings::setAboutImage1Url);
-        setIfNotNull(request.getAboutImage2Url(), settings::setAboutImage2Url);
-        setIfNotNull(request.getAboutImage3Url(), settings::setAboutImage3Url);
+        settings.setAboutImage1Url(request.getAboutImage1Url());
+        settings.setAboutImage2Url(request.getAboutImage2Url());
+        settings.setAboutImage3Url(request.getAboutImage3Url());
 
-        setIfNotNull(request.getGalleryTag(), settings::setGalleryTag);
-        setIfNotNull(request.getGalleryTitle(), settings::setGalleryTitle);
-        setIfNotNull(request.getGalleryText(), settings::setGalleryText);
+        // Galería
+        settings.setGalleryTag(request.getGalleryTag());
+        settings.setGalleryTitle(request.getGalleryTitle());
+        settings.setGalleryText(request.getGalleryText());
 
-        setIfNotNull(request.getGalleryImage1Url(), settings::setGalleryImage1Url);
-        setIfNotNull(request.getGalleryImage2Url(), settings::setGalleryImage2Url);
-        setIfNotNull(request.getGalleryImage3Url(), settings::setGalleryImage3Url);
-        setIfNotNull(request.getGalleryImage4Url(), settings::setGalleryImage4Url);
-        setIfNotNull(request.getGalleryVideoUrl(), settings::setGalleryVideoUrl);
+        settings.setGalleryImage1Url(request.getGalleryImage1Url());
+        settings.setGalleryImage2Url(request.getGalleryImage2Url());
+        settings.setGalleryImage3Url(request.getGalleryImage3Url());
+        settings.setGalleryImage4Url(request.getGalleryImage4Url());
+        settings.setGalleryVideoUrl(request.getGalleryVideoUrl());
 
-        setBooleanIfNotNull(request.getAboutGalleryEnabled(), settings::setAboutGalleryEnabled);
-        setBooleanIfNotNull(request.getActive(), settings::setActive);
+        settings.setAboutGalleryEnabled(request.getAboutGalleryEnabled());
 
         SiteSetting savedSettings = siteSettingRepository.save(settings);
 
         return ResponseEntity.ok(savedSettings);
-    }
-
-    private void setIfNotNull(String value, Consumer<String> setter) {
-        if (value != null) {
-            setter.accept(value);
-        }
-    }
-
-    private void setBooleanIfNotNull(Boolean value, Consumer<Boolean> setter) {
-        if (value != null) {
-            setter.accept(value);
-        }
     }
 
     private SiteSetting createDefaultSettings() {
@@ -217,6 +205,7 @@ public class SiteSettingController {
                 .galleryVideoUrl("")
 
                 .aboutGalleryEnabled(true)
+
                 .active(true)
                 .build();
 

@@ -53,11 +53,11 @@ public class SecurityConfig {
                         // CONFIGURACIÓN WEB ADMIN
                         // Guardar cambios solo con token admin
                         // ==========================
-                        .requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+.requestMatchers(HttpMethod.PUT, "/api/admin/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+.requestMatchers(HttpMethod.PUT, "/api/admin/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+.requestMatchers(HttpMethod.POST, "/api/admin/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+.requestMatchers(HttpMethod.POST, "/api/admin/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+.requestMatchers(HttpMethod.DELETE, "/api/admin/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
 
                         // ==========================
                         // LOGIN ADMIN JWT
