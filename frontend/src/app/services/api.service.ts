@@ -430,7 +430,7 @@ export class ApiService {
 // PERSONALIZACIÓN WEB
 // ==========================
 getSettings(): Observable<any> {
-  return this.http.get<any>(`${this.apiUrl}/products/settings-web`);
+  return this.http.get<any>(`${this.apiUrl}/public/settings-web`);
 }
 
 updateSettings(data: any): Observable<any> {
