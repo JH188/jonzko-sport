@@ -491,4 +491,13 @@ changeAdminPassword(data: {
     this.getAdminHeaders()
   );
 }
+// ==========================
+// VALIDAR SESIÓN ADMIN
+// ==========================
+checkAdminSession(): Observable<any> {
+  return this.http.get<any>(
+    `${this.apiUrl}/admin/home/settings`,
+    this.getAdminHeaders()
+  );
+}
 }

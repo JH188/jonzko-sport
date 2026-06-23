@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -119,7 +119,9 @@ interface HomeSlide {
   encapsulation: ViewEncapsulation.None
 })
 
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
+  private adminSessionInterval: any = null;
+private adminSessionExpiredHandled = false;
   adminCurrentPassword = '';
 adminNewPassword = '';
 adminConfirmPassword = '';
@@ -265,6 +267,7 @@ this.loadHomeAdminConfig();
 this.loadHomeSlides();
 this.applyWebConfig();
 this.loadAdminData();
+this.startAdminSessionWatcher();
 
   setInterval(() => {
     if (this.soundEnabled) {
@@ -1169,6 +1172,63 @@ changeAdminPassword(): void {
       alert(error?.error || 'No se pudo cambiar la contraseña.');
     }
   });
+}
+ngOnDestroy(): void {
+  if (this.adminSessionInterval) {
+    clearInterval(this.adminSessionInterval);
+  }
+}
+
+startAdminSessionWatcher(): void {
+  this.checkAdminSessionNow();
+
+  this.adminSessionInterval = setInterval(() => {
+    this.checkAdminSessionNow();
+  }, 10000);
+}
+
+checkAdminSessionNow(): void {
+  if (this.adminSessionExpiredHandled) {
+    return;
+  }
+
+  const token = localStorage.getItem('jonzko_admin_token');
+
+  if (!token) {
+    this.forceAdminLogout('Tu sesión venció. Ingresa nuevamente.');
+    return;
+  }
+
+  this.apiService.checkAdminSession().subscribe({
+    next: () => {
+      // Sesión válida
+    },
+    error: (error) => {
+      if (error?.status === 401 || error?.status === 403) {
+        this.forceAdminLogout(
+          error?.error?.message ||
+          'Tu sesión venció. Ingresa con la contraseña actualizada.'
+        );
+      }
+    }
+  });
+}
+
+forceAdminLogout(message: string): void {
+  if (this.adminSessionExpiredHandled) {
+    return;
+  }
+
+  this.adminSessionExpiredHandled = true;
+
+  localStorage.removeItem('jonzko_admin_logged');
+  localStorage.removeItem('jonzko_admin_token');
+  localStorage.removeItem('jonzko_admin_role');
+  localStorage.removeItem('jonzko_admin_name');
+  localStorage.removeItem('jonzko_admin_email');
+
+  alert(message);
+  this.router.navigate(['/admin-login']);
 }
 
   // ==========================
