@@ -12670,3 +12670,36 @@ header .brand img {
     overflow-x: hidden !important;
   }
 }
+/* =========================================================
+   NOSOTROS / GALERÍA DINÁMICO DESDE ADMIN
+   ========================================================= */
+
+.featured-urban-content h2 {
+  white-space: pre-line !important;
+}
+
+.featured-benefit strong {
+  white-space: pre-line !important;
+}
+
+.jonzko-gallery-grid video,
+.gallery-video-card video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+.gallery-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+}
+
+@media (max-width: 768px) {
+  .featured-urban-content h2 {
+    white-space: pre-line !important;
+  }
+}

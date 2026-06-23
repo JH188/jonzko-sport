@@ -48,6 +48,12 @@ interface HeroSlideView {
   mobilePosition: string;
 }
 
+interface AboutFeatureView {
+  icon: string;
+  title: string;
+  text: string;
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -146,7 +152,39 @@ export class App implements OnInit, OnDestroy {
   collectionTitle = signal('Exclusivo');
   collectionDescription = signal('Poleras urbanas exclusivas de JONZKO.');
 
-  aboutTitle = signal('Sobre Nosotros');
+  // ==========================
+  // NOSOTROS / GALERÍA DESDE ADMIN
+  // ==========================
+
+  aboutGalleryEnabled = signal(true);
+
+  aboutTag = signal('SOBRE NOSOTROS');
+  aboutTitle = signal('Más que ropa,\nes actitud.');
+  aboutText = signal('JONZKO creado con la idea de que todos podemos vestirnos con estilo y actitud.');
+  aboutButtonText = signal('CONÓCENOS MÁS');
+  aboutButtonLink = signal('#contacto');
+
+  aboutFeatures = signal<AboutFeatureView[]>([
+    { icon: '◇', title: 'CALIDAD', text: 'A1' },
+    { icon: '♛', title: 'DISEÑOS', text: 'EXCLUSIVO Y BÁSICOS' },
+    { icon: '▣', title: 'OVERSIZE', text: 'A1' },
+    { icon: '⊙', title: 'COMUNIDAD', text: 'JONZKO' }
+  ]);
+
+  aboutImage1Url = signal('assets/centro-grande.png');
+  aboutImage2Url = signal('assets/derecha-arriba.png');
+  aboutImage3Url = signal('assets/derecha-abajo.png');
+
+  galleryTag = signal('ESTILO JONZKO');
+  galleryTitle = signal('Diseños que hablan por ti.');
+  galleryText = signal('Mira más detalles de nuestras prendas, estilo urbano y contenido de la marca.');
+
+  galleryVideoUrl = signal('assets/jonzko-video-1.mp4');
+  galleryImage1Url = signal('assets/polo-blanco11.jpeg');
+  galleryImage2Url = signal('assets/polo-blanco12.jpeg');
+  galleryImage3Url = signal('assets/polo-negro13.jpeg');
+  galleryImage4Url = signal('');
+
   aboutDescription = signal(
     'Marca urbana peruana creada con estilo propio, presencia moderna y esencia urbana.'
   );
@@ -535,7 +573,6 @@ buttonLink: slide.buttonLink || generalButtonLink,
         );
 
         this.secondaryButton.set(config.secondaryButtonText || 'Ver colección');
-
         this.heroImageUrl.set(config.heroImageUrl || 'assets/polera.jpg');
 
         this.collectionTag.set(config.collectionTag || 'EDICIÓN LIMITADA');
@@ -553,7 +590,60 @@ buttonLink: slide.buttonLink || generalButtonLink,
           config.collectionDescription || 'Poleras urbanas exclusivas de JONZKO.'
         );
 
-        this.aboutTitle.set('Sobre Nosotros');
+        // Nosotros / Galería público conectado al admin
+        this.aboutGalleryEnabled.set(config.aboutGalleryEnabled !== false);
+
+        this.aboutTag.set(config.aboutTag || 'SOBRE NOSOTROS');
+        this.aboutTitle.set(
+          String(config.aboutTitle || 'Más que ropa,\nes actitud.').replace(/<br\s*\/?\>/gi, '\n')
+        );
+        this.aboutText.set(
+          config.aboutText ||
+            'JONZKO creado con la idea de que todos podemos vestirnos con estilo y actitud.'
+        );
+        this.aboutButtonText.set(config.aboutButtonText || 'CONÓCENOS MÁS');
+        this.aboutButtonLink.set(config.aboutButtonLink || '#contacto');
+
+        this.aboutFeatures.set([
+          {
+            icon: config.aboutFeature1Icon || '◇',
+            title: config.aboutFeature1Title || 'CALIDAD',
+            text: config.aboutFeature1Text || 'A1'
+          },
+          {
+            icon: config.aboutFeature2Icon || '♛',
+            title: config.aboutFeature2Title || 'DISEÑOS',
+            text: config.aboutFeature2Text || 'EXCLUSIVO Y BÁSICOS'
+          },
+          {
+            icon: config.aboutFeature3Icon || '▣',
+            title: config.aboutFeature3Title || 'OVERSIZE',
+            text: config.aboutFeature3Text || 'A1'
+          },
+          {
+            icon: config.aboutFeature4Icon || '⊙',
+            title: config.aboutFeature4Title || 'COMUNIDAD',
+            text: config.aboutFeature4Text || 'JONZKO'
+          }
+        ]);
+
+        this.aboutImage1Url.set(config.aboutImage1Url || 'assets/centro-grande.png');
+        this.aboutImage2Url.set(config.aboutImage2Url || 'assets/derecha-arriba.png');
+        this.aboutImage3Url.set(config.aboutImage3Url || 'assets/derecha-abajo.png');
+
+        this.galleryTag.set(config.galleryTag || 'ESTILO JONZKO');
+        this.galleryTitle.set(config.galleryTitle || 'Diseños que hablan por ti.');
+        this.galleryText.set(
+          config.galleryText ||
+            'Mira más detalles de nuestras prendas, estilo urbano y contenido de la marca.'
+        );
+
+        this.galleryVideoUrl.set(config.galleryVideoUrl || 'assets/jonzko-video-1.mp4');
+        this.galleryImage1Url.set(config.galleryImage1Url || 'assets/polo-blanco11.jpeg');
+        this.galleryImage2Url.set(config.galleryImage2Url || 'assets/polo-blanco12.jpeg');
+        this.galleryImage3Url.set(config.galleryImage3Url || 'assets/polo-negro13.jpeg');
+        this.galleryImage4Url.set(config.galleryImage4Url || '');
+
         this.aboutDescription.set(
           config.contactDescription ||
             'Marca urbana peruana creada con estilo propio, presencia moderna y esencia urbana.'

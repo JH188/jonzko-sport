@@ -177,14 +177,58 @@ export interface SiteSetting {
   contactTitle: string;
   contactDescription: string;
 
+  navInicio?: string;
+  navProducto?: string;
+  navNosotros?: string;
+  navContacto?: string;
+  cartText?: string;
+  loginText?: string;
+
+  aboutTag?: string;
+  aboutTitle?: string;
+  aboutText?: string;
+  aboutButtonText?: string;
+  aboutButtonLink?: string;
+
+  aboutFeature1Icon?: string;
+  aboutFeature1Title?: string;
+  aboutFeature1Text?: string;
+
+  aboutFeature2Icon?: string;
+  aboutFeature2Title?: string;
+  aboutFeature2Text?: string;
+
+  aboutFeature3Icon?: string;
+  aboutFeature3Title?: string;
+  aboutFeature3Text?: string;
+
+  aboutFeature4Icon?: string;
+  aboutFeature4Title?: string;
+  aboutFeature4Text?: string;
+
+  aboutImage1Url?: string;
+  aboutImage2Url?: string;
+  aboutImage3Url?: string;
+
+  galleryTag?: string;
+  galleryTitle?: string;
+  galleryText?: string;
+
+  galleryImage1Url?: string;
+  galleryImage2Url?: string;
+  galleryImage3Url?: string;
+  galleryImage4Url?: string;
+  galleryVideoUrl?: string;
+
+  aboutGalleryEnabled?: boolean;
+
   active?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
 
-export type SiteSettingRequest = Omit<
-  SiteSetting,
-  'id' | 'active' | 'createdAt' | 'updatedAt'
+export type SiteSettingRequest = Partial<
+  Omit<SiteSetting, 'id' | 'createdAt' | 'updatedAt'>
 >;
 
 @Injectable({

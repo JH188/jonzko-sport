@@ -321,85 +321,84 @@
         }
       </section>
       <!-- DESTACADOS / BLOQUE VISUAL URBANO -->
-      <section id="nosotros" class="featured-urban-section">
-        <div class="featured-urban-content">
-          <span class="featured-tag">SOBRE NOSOTROS</span>
+      <!-- DESTACADOS / BLOQUE VISUAL URBANO DESDE ADMIN -->
+      @if (aboutGalleryEnabled()) {
+        <section id="nosotros" class="featured-urban-section">
+          <div class="featured-urban-content">
+            <span class="featured-tag">{{ aboutTag() }}</span>
 
-          <h2>Más que ropa,<br />es actitud.</h2>
+            <h2>{{ aboutTitle() }}</h2>
 
-          <p>JONZKO creado con la idea , de que todos podmeos vestirnos con estilo y actitud.</p>
+            <p>{{ aboutText() }}</p>
 
-          <div class="featured-benefits">
-            <div class="featured-benefit">
-              <span>◇</span>
-              <strong>CALIDAD<br />A1</strong>
+            <div class="featured-benefits">
+              @for (feature of aboutFeatures(); track feature.title) {
+                <div class="featured-benefit">
+                  <span>{{ feature.icon }}</span>
+                  <strong>
+                    {{ feature.title }}<br />
+                    {{ feature.text }}
+                  </strong>
+                </div>
+              }
             </div>
 
-            <div class="featured-benefit">
-              <span>♕</span>
-              <strong>DISEÑOS<br />EXCLUSIVO Y BASICOS</strong>
+            <a [href]="aboutButtonLink() || '#contacto'" class="featured-btn">
+              {{ aboutButtonText() }}
+              <span>→</span>
+            </a>
+          </div>
+
+          <div class="featured-urban-gallery">
+            <div class="featured-img featured-img-large">
+              <img [src]="aboutImage1Url()" alt="JONZKO destacado principal" />
             </div>
 
-            <div class="featured-benefit">
-              <span>▣</span>
-              <strong>OVERSIZE<br />A1</strong>
+            <div class="featured-img">
+              <img [src]="aboutImage2Url()" alt="JONZKO destacado secundario" />
             </div>
 
-            <div class="featured-benefit">
-              <span>◎</span>
-              <strong>COMUNIDAD<br />JONZKO</strong>
+            <div class="featured-img">
+              <img [src]="aboutImage3Url()" alt="Detalle prenda JONZKO" />
             </div>
           </div>
+        </section>
 
-          <a href="#contacto" class="featured-btn">
-            CONÓCENOS MÁS
-            <span>→</span>
-          </a>
-        </div>
-
-        <div class="featured-urban-gallery">
-          <div class="featured-img featured-img-large">
-            <img src="assets/centro-grande.png" alt="JONZKO destacado principal" />
+        <!-- GALERÍA / ESTILO JONZKO DESDE ADMIN -->
+        <section class="jonzko-gallery-section">
+          <div class="jonzko-gallery-header">
+            <span>{{ galleryTag() }}</span>
+            <h2>{{ galleryTitle() }}</h2>
+            <p>{{ galleryText() }}</p>
           </div>
 
-          <div class="featured-img">
-            <img src="assets/derecha-arriba.png" alt="JONZKO destacado secundario" />
-          </div>
+          <div class="jonzko-gallery-grid">
+            @if (galleryVideoUrl()) {
+              <div class="gallery-card gallery-video-card">
+                <video autoplay muted loop playsinline preload="metadata">
+                  <source [src]="galleryVideoUrl()" type="video/mp4" />
+                </video>
+              </div>
+            }
 
-          <div class="featured-img">
-            <img src="assets/derecha-abajo.png" alt="Detalle prenda JONZKO" />
-          </div>
-        </div>
-      </section>
+            <div class="gallery-card" *ngIf="galleryImage1Url()">
+              <img [src]="galleryImage1Url()" alt="Detalle urbano JONZKO" />
+            </div>
 
-      <!-- GALERÍA / ESTILO JONZKO -->
-      <section class="jonzko-gallery-section">
-        <div class="jonzko-gallery-header">
-          <span>ESTILO JONZKO</span>
-          <h2>Diseños que hablan por ti.</h2>
-          <p>Mira más detalles de nuestras prendas, estilo urbano y contenido de la marca.</p>
-        </div>
+            <div class="gallery-card" *ngIf="galleryImage2Url()">
+              <img [src]="galleryImage2Url()" alt="Prenda JONZKO" />
+            </div>
 
-        <div class="jonzko-gallery-grid">
-          <div class="gallery-card gallery-video-card">
-            <video autoplay muted loop playsinline preload="metadata">
-              <source src="assets/jonzko-video-1.mp4" type="video/mp4" />
-            </video>
-          </div>
+            <div class="gallery-card gallery-wide" *ngIf="galleryImage3Url()">
+              <img [src]="galleryImage3Url()" alt="Colección JONZKO" />
+            </div>
 
-          <div class="gallery-card">
-            <img src="assets/polo-blanco11.jpeg" alt="Detalle urbano JONZKO" />
+            <div class="gallery-card" *ngIf="galleryImage4Url()">
+              <img [src]="galleryImage4Url()" alt="Galería JONZKO" />
+            </div>
           </div>
-
-          <div class="gallery-card">
-            <img src="assets/polo-blanco12.jpeg" alt="Prenda JONZKO" />
-          </div>
-
-          <div class="gallery-card gallery-wide">
-            <img src="assets/polo-negro13.jpeg" alt="Colección JONZKO" />
-          </div>
-        </div>
-      </section>
+        </section>
+      }
 
       <!-- CONTACTO PREMIUM -->
       <section id="contacto" class="contact-premium-section">
