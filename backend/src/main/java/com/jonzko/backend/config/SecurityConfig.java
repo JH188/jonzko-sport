@@ -43,39 +43,59 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // ==========================
+                        // CONFIGURACIÓN WEB PÚBLICA
+                        // El home público necesita leer estos datos sin login
+                        // ==========================
+                        .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
+
+                        // ==========================
+                        // CONFIGURACIÓN WEB ADMIN
+                        // Guardar cambios solo con token admin
+                        // ==========================
+                        .requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/settings/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+
+                        // ==========================
                         // LOGIN ADMIN JWT
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/auth/admin-login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/admin-login/verify-code").permitAll()
 
                         // ==========================
-                        // LOGIN, REGISTRO Y RECUPERACION USUARIO
+                        // LOGIN, REGISTRO Y RECUPERACIÓN USUARIO
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-.requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-.requestMatchers(HttpMethod.POST, "/api/auth/verify-email").permitAll()
-.requestMatchers(HttpMethod.POST, "/api/auth/resend-verification-code").permitAll()
-.requestMatchers(HttpMethod.POST, "/api/auth/forgot-password").permitAll()
-.requestMatchers(HttpMethod.POST, "/api/auth/reset-password").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/verify-email").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/resend-verification-code").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/forgot-password").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/reset-password").permitAll()
 
-.requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-.requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
-.requestMatchers(HttpMethod.POST, "/api/users/verify-email").permitAll()
-.requestMatchers(HttpMethod.POST, "/api/users/resend-verification-code").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/verify-email").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/resend-verification-code").permitAll()
+
                         // ==========================
-                        // TIENDA PUBLICA
+                        // TIENDA PÚBLICA
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
-                        // ==========================
-// INICIO PUBLICO
-// ==========================
-.requestMatchers(HttpMethod.GET, "/api/home/settings").permitAll()
-.requestMatchers(HttpMethod.GET, "/api/home/slides").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
                         // ==========================
-                        // CREAR PEDIDO PUBLICO
+                        // INICIO PÚBLICO
+                        // ==========================
+                        .requestMatchers(HttpMethod.GET, "/api/home/settings").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/home/slides").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/home/**").permitAll()
+
+                        // ==========================
+                        // CREAR PEDIDO PÚBLICO
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/customer-orders").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
@@ -87,17 +107,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders/user/**").authenticated()
 
                         // ==========================
-// ADMIN PROTEGIDO CON JWT
-// ==========================
-.requestMatchers("/api/admin/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-.requestMatchers("/api/products/admin/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-.requestMatchers("/api/admin/product-variants/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-
+                        // ADMIN PROTEGIDO CON JWT
                         // ==========================
-                        // CONFIGURACION ADMIN
-                        // ==========================
-                        .requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
-
+                        .requestMatchers("/api/admin/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers("/api/products/admin/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
+                        .requestMatchers("/api/admin/product-variants/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
 
                         // ==========================
                         // PAGOS ADMIN
@@ -105,7 +119,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/orders/*/payment-status").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
 
                         // ==========================
-                        // BLOQUEOS PUBLICOS DE ORDERS ANTIGUO
+                        // BLOQUEOS PÚBLICOS DE ORDERS ANTIGUO
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/orders").denyAll()
                         .requestMatchers(HttpMethod.GET, "/api/orders/**").denyAll()
@@ -113,14 +127,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/orders/**").denyAll()
 
                         // ==========================
-                        // BLOQUEOS PUBLICOS DE CUSTOMER ORDERS
+                        // BLOQUEOS PÚBLICOS DE CUSTOMER ORDERS
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/customer-orders").denyAll()
                         .requestMatchers(HttpMethod.PUT, "/api/customer-orders/**").denyAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/customer-orders/**").denyAll()
 
                         // ==========================
-                        // TODO LO DEMAS BLOQUEADO
+                        // TODO LO DEMÁS BLOQUEADO
                         // ==========================
                         .anyRequest().denyAll()
                 )
