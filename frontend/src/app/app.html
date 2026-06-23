@@ -672,23 +672,23 @@
       </div>
     </div>
   }
- <!-- WhatsApp flotante JONZKO -->
-@if (whatsappEnabled()) {
-  <a
-    class="whatsapp-float"
-    [href]="whatsappUrl()"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Escríbenos por WhatsApp"
-  >
-    <span class="whatsapp-bubble">
-      ¿Necesitas ayuda?
-      <small>Escríbenos por WhatsApp</small>
-    </span>
+  <!-- WhatsApp flotante JONZKO -->
+  @if (whatsappEnabled()) {
+    <a
+      class="whatsapp-float"
+      [href]="whatsappUrl()"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Escríbenos por WhatsApp"
+    >
+      <span class="whatsapp-bubble">
+        ¿Necesitas ayuda?
+        <small>Escríbenos por WhatsApp</small>
+      </span>
 
-    <span class="whatsapp-icon">
-      <img src="assets/whatsapp..png" alt="WhatsApp JONZKO" />
-    </span>
-  </a>
-}
+      <span class="whatsapp-icon">
+        <img src="assets/whatsapp..png" alt="WhatsApp JONZKO" />
+      </span>
+    </a>
+  }
 }

@@ -4,6 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
+interface AdminLoginStepResponse {
+  message: string;
+  requiresCode: boolean;
+  email: string;
+}
+
 interface AdminLoginResponse {
   token: string;
   role: string;
@@ -21,7 +27,14 @@ interface AdminLoginResponse {
 export class AdminLoginComponent {
   email: string = '';
   password: string = '';
+  code: string = '';
+
   loading: boolean = false;
+  codeStep: boolean = false;
+  codeSentEmail: string = '';
+
+  message: string = '';
+  errorMessage: string = '';
 
   private readonly apiUrl = 'https://jonzko-sport-production.up.railway.app/api';
 
@@ -34,21 +47,67 @@ export class AdminLoginComponent {
     const email = this.email.trim();
     const password = this.password.trim();
 
+    this.message = '';
+    this.errorMessage = '';
+
     if (!email || !password) {
-      alert('Ingresa el correo y contraseña del administrador.');
+      this.errorMessage = 'Ingresa el correo y contraseña del administrador.';
       return;
     }
 
     this.loading = true;
 
-    this.http.post<AdminLoginResponse>(`${this.apiUrl}/auth/admin-login`, {
+    this.http.post<AdminLoginStepResponse>(`${this.apiUrl}/auth/admin-login`, {
       email,
       password
     }).subscribe({
       next: (response) => {
+        this.loading = false;
+
+        if (response.requiresCode) {
+          this.codeStep = true;
+          this.codeSentEmail = response.email || email;
+          this.message = response.message || 'Código enviado al correo administrador.';
+          return;
+        }
+
+        this.errorMessage = 'Respuesta inesperada del servidor.';
+      },
+      error: (error) => {
+        this.loading = false;
+        console.error('Error admin-login:', error);
+        this.errorMessage = 'Credenciales incorrectas o acceso no autorizado.';
+      }
+    });
+  }
+
+  verifyCode(): void {
+    const email = (this.codeSentEmail || this.email).trim();
+    const code = this.code.trim();
+
+    this.message = '';
+    this.errorMessage = '';
+
+    if (!email || !code) {
+      this.errorMessage = 'Ingresa el código de seguridad.';
+      return;
+    }
+
+    if (code.length < 6) {
+      this.errorMessage = 'El código debe tener 6 dígitos.';
+      return;
+    }
+
+    this.loading = true;
+
+    this.http.post<AdminLoginResponse>(`${this.apiUrl}/auth/admin-login/verify-code`, {
+      email,
+      code
+    }).subscribe({
+      next: (response) => {
         if (response.role !== 'ADMIN') {
-          alert('No tienes permisos de administrador.');
           this.loading = false;
+          this.errorMessage = 'No tienes permisos de administrador.';
           return;
         }
 
@@ -61,11 +120,25 @@ export class AdminLoginComponent {
         this.loading = false;
         this.router.navigate(['/admin']);
       },
-      error: () => {
+      error: (error) => {
         this.loading = false;
-        alert('Credenciales incorrectas o acceso no autorizado.');
+        console.error('Error verificando código admin:', error);
+        this.errorMessage = 'Código incorrecto o vencido. Solicita uno nuevo.';
       }
     });
+  }
+
+  resendCode(): void {
+    this.code = '';
+    this.codeStep = false;
+    this.loginAdmin();
+  }
+
+  backToCredentials(): void {
+    this.codeStep = false;
+    this.code = '';
+    this.message = '';
+    this.errorMessage = '';
   }
 
   goToStore(): void {

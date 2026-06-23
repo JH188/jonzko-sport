@@ -46,6 +46,7 @@ public class SecurityConfig {
                         // LOGIN ADMIN JWT
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/auth/admin-login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/admin-login/verify-code").permitAll()
 
                         // ==========================
                         // LOGIN, REGISTRO Y RECUPERACION USUARIO

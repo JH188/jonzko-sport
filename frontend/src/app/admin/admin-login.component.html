@@ -8,35 +8,99 @@
     </div>
 
     <p class="panel-label">Panel administrativo</p>
-    <h1>Acceso administrador</h1>
-    <p class="subtitle">
-      Ingresa con tus credenciales para controlar productos, pedidos, pagos y clientes.
-    </p>
 
-    <form class="login-form" (ngSubmit)="loginAdmin()">
-      <div class="form-group">
-        <label>Correo administrador</label>
-        <input
-          type="email"
-          name="email"
-          [(ngModel)]="email"
-          placeholder="Correo administrador"
-          autocomplete="email"
-        />
-      </div>
+    @if (!codeStep) {
+      <h1>Acceso administrador</h1>
 
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input
-          type="password"
-          name="password"
-          [(ngModel)]="password"
-          placeholder="Ingresa tu contraseña"
-          autocomplete="current-password"
-        />
-      </div>
+      <p class="subtitle">
+        Ingresa tus credenciales. Si son correctas, enviaremos un código de seguridad a tu correo.
+      </p>
 
-      <button class="login-btn" type="submit">Ingresar al panel</button>
-    </form>
+      <form class="login-form" (ngSubmit)="loginAdmin()">
+        <div class="form-group">
+          <label>Correo administrador</label>
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="Correo administrador"
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input
+            type="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Ingresa tu contraseña"
+            autocomplete="current-password"
+          />
+        </div>
+
+        @if (errorMessage) {
+          <div class="alert-box error">{{ errorMessage }}</div>
+        }
+
+        @if (message) {
+          <div class="alert-box success">{{ message }}</div>
+        }
+
+        <button class="login-btn" type="submit" [disabled]="loading">
+          {{ loading ? 'Enviando código...' : 'Enviar código de seguridad' }}
+        </button>
+      </form>
+    } @else {
+      <h1>Verificación de seguridad</h1>
+
+      <p class="subtitle">
+        Enviamos un código de 6 dígitos al correo:
+        <strong>{{ codeSentEmail }}</strong>
+      </p>
+
+      <form class="login-form" (ngSubmit)="verifyCode()">
+        <div class="security-box">
+          <span>🔐</span>
+          <div>
+            <strong>Código requerido</strong>
+            <p>Por seguridad, el código vence en 10 minutos.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Código de verificación</label>
+          <input
+            type="text"
+            name="code"
+            [(ngModel)]="code"
+            placeholder="Ejemplo: 123456"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="one-time-code"
+          />
+        </div>
+
+        @if (errorMessage) {
+          <div class="alert-box error">{{ errorMessage }}</div>
+        }
+
+        @if (message) {
+          <div class="alert-box success">{{ message }}</div>
+        }
+
+        <button class="login-btn" type="submit" [disabled]="loading">
+          {{ loading ? 'Verificando...' : 'Ingresar al panel' }}
+        </button>
+
+        <div class="code-actions">
+          <button type="button" (click)="resendCode()" [disabled]="loading">Reenviar código</button>
+
+          <button type="button" (click)="backToCredentials()" [disabled]="loading">
+            Cambiar correo o contraseña
+          </button>
+        </div>
+      </form>
+    }
   </div>
 </section>
