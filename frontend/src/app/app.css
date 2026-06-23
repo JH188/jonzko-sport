@@ -12581,3 +12581,92 @@ header .brand img {
     height: 56px !important;
   }
 }
+/* =========================================================
+   FIX FINAL MÓVIL - QUITAR FRANJA BLANCA IZQUIERDA
+   ========================================================= */
+
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    background: #000 !important;
+  }
+
+  app-root {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .top-marquee,
+  .premium-navbar,
+  main,
+  .hero-slider,
+  .hero-track,
+  .hero-slide {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: none;
+  }
+
+  .hero-slider {
+    position: relative !important;
+    display: block !important;
+    padding: 0 !important;
+    background: #000 !important;
+    overflow: hidden !important;
+  }
+
+  .hero-track {
+    position: relative !important;
+    inset: 0 !important;
+    padding: 0 !important;
+    background: #000 !important;
+    overflow: hidden !important;
+  }
+
+  .hero-slide {
+    position: absolute !important;
+    inset: 0 !important;
+    padding: 0 !important;
+    background: #000 !important;
+    overflow: hidden !important;
+  }
+
+  .hero-slide picture,
+  .hero-slide picture img,
+  .hero-slide video {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    object-fit: cover !important;
+  }
+
+  .store-preview-section,
+  .collection-section,
+  .featured-urban-section,
+  .jonzko-gallery-section,
+  .contact-premium-section,
+  .footer-premium {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    overflow-x: hidden !important;
+  }
+}
