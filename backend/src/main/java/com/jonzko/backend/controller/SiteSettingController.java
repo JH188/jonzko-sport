@@ -1,30 +1,48 @@
 package com.jonzko.backend.controller;
 
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jonzko.backend.dto.SiteSettingRequest;
 import com.jonzko.backend.entity.SiteSetting;
+import com.jonzko.backend.entity.User;
 import com.jonzko.backend.repository.SiteSettingRepository;
+import com.jonzko.backend.repository.UserRepository;
+import com.jonzko.backend.security.JwtService;
+
+import io.jsonwebtoken.Claims;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = {
         "https://jonzko.lat",
         "https://www.jonzko.lat",
-        "https://jonzko-sport.vercel.app"
+        "https://jonzko-sport.vercel.app",
+        "https://jonzko-sport-production.up.railway.app"
 })
 public class SiteSettingController {
 
     private final SiteSettingRepository siteSettingRepository;
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
 
-    public SiteSettingController(SiteSettingRepository siteSettingRepository) {
+    public SiteSettingController(
+            SiteSettingRepository siteSettingRepository,
+            JwtService jwtService,
+            UserRepository userRepository
+    ) {
         this.siteSettingRepository = siteSettingRepository;
+        this.jwtService = jwtService;
+        this.userRepository = userRepository;
     }
 
     // ==========================
@@ -41,10 +59,18 @@ public class SiteSettingController {
 
     // ==========================
     // ADMIN: GUARDA CONFIGURACIÓN
-    // También acepta /api/settings por compatibilidad
+    // /api/settings se salta Spring Security, por eso validamos el token aquí.
     // ==========================
     @PutMapping({"/admin/settings", "/settings"})
-    public ResponseEntity<SiteSetting> updateSettings(@RequestBody SiteSettingRequest request) {
+    public ResponseEntity<?> updateSettings(
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
+            @RequestBody SiteSettingRequest request
+    ) {
+        if (!isValidAdminToken(authHeader)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "No autorizado. Inicia sesión como administrador."));
+        }
+
         SiteSetting settings = siteSettingRepository
                 .findFirstByActiveTrueOrderByIdAsc()
                 .orElseGet(this::createDefaultSettings);
@@ -135,6 +161,62 @@ public class SiteSettingController {
 
         SiteSetting savedSettings = siteSettingRepository.save(settings);
         return ResponseEntity.ok(savedSettings);
+    }
+
+    private boolean isValidAdminToken(String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return false;
+        }
+
+        String token = authHeader.substring(7);
+
+        try {
+            if (!jwtService.isTokenValid(token)) {
+                return false;
+            }
+
+            Claims claims = jwtService.extractClaims(token);
+
+            String email = claims.getSubject();
+            String role = claims.get("role", String.class);
+            Integer tokenAdminSessionVersion = claims.get("adminSessionVersion", Integer.class);
+
+            if (email == null || email.isBlank()) {
+                return false;
+            }
+
+            if (role == null || role.isBlank()) {
+                return false;
+            }
+
+            role = role.trim().toUpperCase();
+
+            if (role.startsWith("ROLE_")) {
+                role = role.replace("ROLE_", "");
+            }
+
+            if (!"ADMIN".equals(role)) {
+                return false;
+            }
+
+            User user = userRepository.findByEmail(email).orElse(null);
+
+            if (user == null || Boolean.FALSE.equals(user.getActive())) {
+                return false;
+            }
+
+            Integer currentVersion = user.getAdminSessionVersion();
+
+            if (currentVersion == null) {
+                currentVersion = 0;
+            }
+
+            return tokenAdminSessionVersion != null
+                    && tokenAdminSessionVersion.equals(currentVersion);
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private SiteSetting createDefaultSettings() {
