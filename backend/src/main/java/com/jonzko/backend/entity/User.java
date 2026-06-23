@@ -68,6 +68,8 @@ private String password;
 
     @Column(name = "email_verified", nullable = false)
     private Boolean emailVerified = false;
+    @Column(name = "admin_session_version", nullable = false)
+private Integer adminSessionVersion = 1;
 
     @JsonIgnore
     @Column(name = "verification_code_hash", length = 255)
@@ -99,6 +101,9 @@ private String password;
         if (this.role == null || this.role.isBlank()) {
             this.role = "USER";
         }
+        if (this.adminSessionVersion == null) {
+    this.adminSessionVersion = 1;
+}
     }
 
     @PreUpdate

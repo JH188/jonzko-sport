@@ -36,6 +36,7 @@ public class JwtService {
                 .claim("userId", user.getId())
                 .claim("fullName", user.getFullName())
                 .claim("role", user.getRole())
+                .claim("adminSessionVersion", user.getAdminSessionVersion())
                 .issuedAt(now)
                 .expiration(expiration)
                 .signWith(getSigningKey())
@@ -57,6 +58,9 @@ public class JwtService {
     public String extractRole(String token) {
         return extractClaims(token).get("role", String.class);
     }
+    public Integer extractAdminSessionVersion(String token) {
+    return extractClaims(token).get("adminSessionVersion", Integer.class);
+}
 
     public boolean isTokenValid(String token) {
         try {

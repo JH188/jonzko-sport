@@ -149,7 +149,15 @@ public class AdminSecurityController {
         adminPasswordChangeCodeRepository.save(passwordCode);
 
         admin.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(admin);
+
+Integer currentVersion = admin.getAdminSessionVersion();
+if (currentVersion == null) {
+    currentVersion = 1;
+}
+
+admin.setAdminSessionVersion(currentVersion + 1);
+
+userRepository.save(admin);
 
         return ResponseEntity.ok(
                 Map.of("message", "Contraseña actualizada correctamente")
