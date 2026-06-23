@@ -145,8 +145,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 Integer currentVersion = user.getAdminSessionVersion();
 
                 if (currentVersion == null) {
-                    currentVersion = 1;
-                }
+    currentVersion = 0;
+}
 
                 if (tokenAdminSessionVersion == null || !tokenAdminSessionVersion.equals(currentVersion)) {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -182,23 +182,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void rejectInvalidAdminSession(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain
-    ) throws IOException, ServletException {
+private void rejectInvalidAdminSession(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        FilterChain filterChain
+) throws IOException, ServletException {
 
-        String path = request.getRequestURI();
+    String path = request.getRequestURI();
 
-        if (path != null && path.startsWith("/api/admin")) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(
-                    "{\"message\":\"Tu sesión venció. Ingresa nuevamente.\"}"
+    boolean protectedAdminPath =
+            path != null && (
+                    path.startsWith("/api/admin")
+                            || path.startsWith("/api/settings")
+                            || path.startsWith("/api/products/admin")
+                            || path.startsWith("/api/orders")
             );
-            return;
-        }
 
-        filterChain.doFilter(request, response);
+    if (protectedAdminPath) {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(
+                "{\"message\":\"Tu sesión venció. Ingresa nuevamente.\"}"
+        );
+        return;
     }
+
+    filterChain.doFilter(request, response);
+}
 }
