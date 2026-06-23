@@ -1,5 +1,7 @@
 package com.jonzko.backend.controller;
 
+import java.util.function.Consumer;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,42 +47,101 @@ public class SiteSettingController {
                 .findFirstByActiveTrueOrderByIdAsc()
                 .orElseGet(this::createDefaultSettings);
 
-        settings.setStoreName(request.getStoreName());
-        settings.setSlogan(request.getSlogan());
-        settings.setLogoUrl(request.getLogoUrl());
-        settings.setHeroImageUrl(request.getHeroImageUrl());
+        // Identidad de marca
+        setIfNotNull(request.getStoreName(), settings::setStoreName);
+        setIfNotNull(request.getSlogan(), settings::setSlogan);
+        setIfNotNull(request.getLogoUrl(), settings::setLogoUrl);
+        setIfNotNull(request.getHeroImageUrl(), settings::setHeroImageUrl);
 
-        settings.setHeroTitle(request.getHeroTitle());
-        settings.setHeroDescription(request.getHeroDescription());
-        settings.setPrimaryButtonText(request.getPrimaryButtonText());
-        settings.setSecondaryButtonText(request.getSecondaryButtonText());
+        // Inicio / hero antiguo
+        setIfNotNull(request.getHeroTitle(), settings::setHeroTitle);
+        setIfNotNull(request.getHeroDescription(), settings::setHeroDescription);
+        setIfNotNull(request.getPrimaryButtonText(), settings::setPrimaryButtonText);
+        setIfNotNull(request.getSecondaryButtonText(), settings::setSecondaryButtonText);
 
-        settings.setPrimaryColor(request.getPrimaryColor());
-        settings.setSecondaryColor(request.getSecondaryColor());
-        settings.setAccentColor(request.getAccentColor());
-        settings.setBackgroundColor(request.getBackgroundColor());
-        settings.setTextColor(request.getTextColor());
+        // Colores
+        setIfNotNull(request.getPrimaryColor(), settings::setPrimaryColor);
+        setIfNotNull(request.getSecondaryColor(), settings::setSecondaryColor);
+        setIfNotNull(request.getAccentColor(), settings::setAccentColor);
+        setIfNotNull(request.getBackgroundColor(), settings::setBackgroundColor);
+        setIfNotNull(request.getTextColor(), settings::setTextColor);
 
-        settings.setInstagramUrl(request.getInstagramUrl());
-        settings.setFacebookUrl(request.getFacebookUrl());
-        settings.setTiktokUrl(request.getTiktokUrl());
-        settings.setWhatsappNumber(request.getWhatsappNumber());
-        settings.setWhatsappMessage(request.getWhatsappMessage());
+        // Redes
+        setIfNotNull(request.getInstagramUrl(), settings::setInstagramUrl);
+        setIfNotNull(request.getFacebookUrl(), settings::setFacebookUrl);
+        setIfNotNull(request.getTiktokUrl(), settings::setTiktokUrl);
+        setIfNotNull(request.getWhatsappNumber(), settings::setWhatsappNumber);
+        setIfNotNull(request.getWhatsappMessage(), settings::setWhatsappMessage);
 
-        settings.setCollectionTitle(request.getCollectionTitle());
-        settings.setCollectionDescription(request.getCollectionDescription());
-        settings.setContactTitle(request.getContactTitle());
-        settings.setContactDescription(request.getContactDescription());
-        settings.setNavInicio(request.getNavInicio());
-settings.setNavProducto(request.getNavProducto());
-settings.setNavNosotros(request.getNavNosotros());
-settings.setNavContacto(request.getNavContacto());
-settings.setCartText(request.getCartText());
-settings.setLoginText(request.getLoginText());
+        // Textos generales
+        setIfNotNull(request.getCollectionTitle(), settings::setCollectionTitle);
+        setIfNotNull(request.getCollectionDescription(), settings::setCollectionDescription);
+        setIfNotNull(request.getContactTitle(), settings::setContactTitle);
+        setIfNotNull(request.getContactDescription(), settings::setContactDescription);
+
+        // Navegación
+        setIfNotNull(request.getNavInicio(), settings::setNavInicio);
+        setIfNotNull(request.getNavProducto(), settings::setNavProducto);
+        setIfNotNull(request.getNavNosotros(), settings::setNavNosotros);
+        setIfNotNull(request.getNavContacto(), settings::setNavContacto);
+        setIfNotNull(request.getCartText(), settings::setCartText);
+        setIfNotNull(request.getLoginText(), settings::setLoginText);
+
+        // Nosotros / Galería
+        setIfNotNull(request.getAboutTag(), settings::setAboutTag);
+        setIfNotNull(request.getAboutTitle(), settings::setAboutTitle);
+        setIfNotNull(request.getAboutText(), settings::setAboutText);
+        setIfNotNull(request.getAboutButtonText(), settings::setAboutButtonText);
+        setIfNotNull(request.getAboutButtonLink(), settings::setAboutButtonLink);
+
+        setIfNotNull(request.getAboutFeature1Icon(), settings::setAboutFeature1Icon);
+        setIfNotNull(request.getAboutFeature1Title(), settings::setAboutFeature1Title);
+        setIfNotNull(request.getAboutFeature1Text(), settings::setAboutFeature1Text);
+
+        setIfNotNull(request.getAboutFeature2Icon(), settings::setAboutFeature2Icon);
+        setIfNotNull(request.getAboutFeature2Title(), settings::setAboutFeature2Title);
+        setIfNotNull(request.getAboutFeature2Text(), settings::setAboutFeature2Text);
+
+        setIfNotNull(request.getAboutFeature3Icon(), settings::setAboutFeature3Icon);
+        setIfNotNull(request.getAboutFeature3Title(), settings::setAboutFeature3Title);
+        setIfNotNull(request.getAboutFeature3Text(), settings::setAboutFeature3Text);
+
+        setIfNotNull(request.getAboutFeature4Icon(), settings::setAboutFeature4Icon);
+        setIfNotNull(request.getAboutFeature4Title(), settings::setAboutFeature4Title);
+        setIfNotNull(request.getAboutFeature4Text(), settings::setAboutFeature4Text);
+
+        setIfNotNull(request.getAboutImage1Url(), settings::setAboutImage1Url);
+        setIfNotNull(request.getAboutImage2Url(), settings::setAboutImage2Url);
+        setIfNotNull(request.getAboutImage3Url(), settings::setAboutImage3Url);
+
+        setIfNotNull(request.getGalleryTag(), settings::setGalleryTag);
+        setIfNotNull(request.getGalleryTitle(), settings::setGalleryTitle);
+        setIfNotNull(request.getGalleryText(), settings::setGalleryText);
+
+        setIfNotNull(request.getGalleryImage1Url(), settings::setGalleryImage1Url);
+        setIfNotNull(request.getGalleryImage2Url(), settings::setGalleryImage2Url);
+        setIfNotNull(request.getGalleryImage3Url(), settings::setGalleryImage3Url);
+        setIfNotNull(request.getGalleryImage4Url(), settings::setGalleryImage4Url);
+        setIfNotNull(request.getGalleryVideoUrl(), settings::setGalleryVideoUrl);
+
+        setBooleanIfNotNull(request.getAboutGalleryEnabled(), settings::setAboutGalleryEnabled);
+        setBooleanIfNotNull(request.getActive(), settings::setActive);
 
         SiteSetting savedSettings = siteSettingRepository.save(settings);
 
         return ResponseEntity.ok(savedSettings);
+    }
+
+    private void setIfNotNull(String value, Consumer<String> setter) {
+        if (value != null) {
+            setter.accept(value);
+        }
+    }
+
+    private void setBooleanIfNotNull(Boolean value, Consumer<Boolean> setter) {
+        if (value != null) {
+            setter.accept(value);
+        }
     }
 
     private SiteSetting createDefaultSettings() {
@@ -111,13 +172,51 @@ settings.setLoginText(request.getLoginText());
                 .collectionDescription("Los primeros productos oficiales de JONZKO.")
                 .contactTitle("Contacto")
                 .contactDescription("Comunícate con nosotros para compras, consultas y pedidos.")
-                .navInicio("Inicio")
-.navProducto("Producto")
-.navNosotros("Nosotros")
-.navContacto("Contacto")
-.cartText("Carrito")
-.loginText("Iniciar sesión")
 
+                .navInicio("Inicio")
+                .navProducto("Producto")
+                .navNosotros("Nosotros")
+                .navContacto("Contacto")
+                .cartText("Carrito")
+                .loginText("Iniciar sesión")
+
+                .aboutTag("SOBRE NOSOTROS")
+                .aboutTitle("Más que ropa, es actitud.")
+                .aboutText("JONZKO creado con la idea de que todos podemos vestirnos con estilo y actitud.")
+                .aboutButtonText("CONÓCENOS MÁS")
+                .aboutButtonLink("#nosotros")
+
+                .aboutFeature1Icon("◇")
+                .aboutFeature1Title("CALIDAD")
+                .aboutFeature1Text("A1")
+
+                .aboutFeature2Icon("♛")
+                .aboutFeature2Title("DISEÑOS")
+                .aboutFeature2Text("EXCLUSIVO Y BÁSICOS")
+
+                .aboutFeature3Icon("▣")
+                .aboutFeature3Title("OVERSIZE")
+                .aboutFeature3Text("A1")
+
+                .aboutFeature4Icon("⊙")
+                .aboutFeature4Title("COMUNIDAD")
+                .aboutFeature4Text("JONZKO")
+
+                .aboutImage1Url("")
+                .aboutImage2Url("")
+                .aboutImage3Url("")
+
+                .galleryTag("ESTILO JONZKO")
+                .galleryTitle("Diseños que hablan por ti.")
+                .galleryText("Mira más detalles de nuestras prendas, estilo urbano y contenido de la marca.")
+
+                .galleryImage1Url("")
+                .galleryImage2Url("")
+                .galleryImage3Url("")
+                .galleryImage4Url("")
+                .galleryVideoUrl("")
+
+                .aboutGalleryEnabled(true)
                 .active(true)
                 .build();
 

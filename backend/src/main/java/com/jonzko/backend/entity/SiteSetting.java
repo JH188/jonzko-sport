@@ -29,68 +29,157 @@ public class SiteSetting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Identidad de marca
+    // ==========================
+    // IDENTIDAD DE MARCA
+    // ==========================
+
     @Column(nullable = false)
     private String storeName;
 
     private String slogan;
 
-    @Column(length = 500)
+    @Column(length = 800)
     private String logoUrl;
 
-    @Column(length = 500)
+    @Column(length = 800)
     private String heroImageUrl;
 
-    // Inicio
+    // ==========================
+    // INICIO / HERO ANTIGUO
+    // ==========================
+
     private String heroTitle;
 
-    @Column(length = 1000)
+    @Column(length = 1500)
     private String heroDescription;
 
     private String primaryButtonText;
     private String secondaryButtonText;
 
-    // Colores
+    // ==========================
+    // COLORES
+    // ==========================
+
     private String primaryColor;
     private String secondaryColor;
     private String accentColor;
     private String backgroundColor;
     private String textColor;
 
-    // Redes y enlaces
-    @Column(length = 500)
+    // ==========================
+    // REDES Y ENLACES
+    // ==========================
+
+    @Column(length = 800)
     private String instagramUrl;
 
-    @Column(length = 500)
+    @Column(length = 800)
     private String facebookUrl;
 
-    @Column(length = 500)
+    @Column(length = 800)
     private String tiktokUrl;
 
     @Column(length = 100)
     private String whatsappNumber;
 
-    @Column(length = 500)
+    @Column(length = 800)
     private String whatsappMessage;
 
-    // Textos generales
+    // ==========================
+    // TEXTOS GENERALES
+    // ==========================
+
     private String collectionTitle;
 
-    @Column(length = 1000)
+    @Column(length = 1500)
     private String collectionDescription;
 
     private String contactTitle;
 
-    @Column(length = 1000)
+    @Column(length = 1500)
     private String contactDescription;
-    
-    // Navegación y textos del header
-private String navInicio;
-private String navProducto;
-private String navNosotros;
-private String navContacto;
-private String cartText;
-private String loginText;
+
+    // ==========================
+    // NAVEGACIÓN Y HEADER
+    // ==========================
+
+    private String navInicio;
+    private String navProducto;
+    private String navNosotros;
+    private String navContacto;
+    private String cartText;
+    private String loginText;
+
+    // ==========================
+    // NOSOTROS / GALERÍA
+    // ==========================
+
+    private String aboutTag;
+
+    @Column(length = 500)
+    private String aboutTitle;
+
+    @Column(length = 2000)
+    private String aboutText;
+
+    private String aboutButtonText;
+
+    @Column(length = 500)
+    private String aboutButtonLink;
+
+    private String aboutFeature1Icon;
+    private String aboutFeature1Title;
+    private String aboutFeature1Text;
+
+    private String aboutFeature2Icon;
+    private String aboutFeature2Title;
+    private String aboutFeature2Text;
+
+    private String aboutFeature3Icon;
+    private String aboutFeature3Title;
+    private String aboutFeature3Text;
+
+    private String aboutFeature4Icon;
+    private String aboutFeature4Title;
+    private String aboutFeature4Text;
+
+    @Column(length = 800)
+    private String aboutImage1Url;
+
+    @Column(length = 800)
+    private String aboutImage2Url;
+
+    @Column(length = 800)
+    private String aboutImage3Url;
+
+    private String galleryTag;
+
+    @Column(length = 500)
+    private String galleryTitle;
+
+    @Column(length = 1500)
+    private String galleryText;
+
+    @Column(length = 800)
+    private String galleryImage1Url;
+
+    @Column(length = 800)
+    private String galleryImage2Url;
+
+    @Column(length = 800)
+    private String galleryImage3Url;
+
+    @Column(length = 800)
+    private String galleryImage4Url;
+
+    @Column(length = 800)
+    private String galleryVideoUrl;
+
+    private Boolean aboutGalleryEnabled;
+
+    // ==========================
+    // ESTADO Y FECHAS
+    // ==========================
 
     private Boolean active;
 
@@ -104,6 +193,10 @@ private String loginText;
 
         if (this.active == null) {
             this.active = true;
+        }
+
+        if (this.aboutGalleryEnabled == null) {
+            this.aboutGalleryEnabled = true;
         }
     }
 
