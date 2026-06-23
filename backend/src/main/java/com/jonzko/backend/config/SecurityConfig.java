@@ -42,19 +42,19 @@ public class SecurityConfig {
                         // ==========================
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // ==========================
-                        // SETTINGS PÚBLICO
-                        // La web pública lee configuración sin login
-                        // ==========================
-                        .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
+// ==========================
+// SETTINGS PÚBLICO
+// La web pública lee configuración sin login
+// ==========================
+.requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
+.requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
 
-                        // ==========================
-                        // SETTINGS ADMIN
-                        // Solo admin puede guardar
-                        // ==========================
-                        .requestMatchers(HttpMethod.PUT, "/api/admin/settings").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/admin/settings/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+// ==========================
+// SETTINGS ADMIN
+// Solo admin puede guardar cambios
+// ==========================
+.requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+.requestMatchers(HttpMethod.PUT, "/api/settings/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
                         // Soporte por si el frontend antiguo aún llama PUT /api/settings
                         .requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ADMIN", "ROLE_ADMIN")

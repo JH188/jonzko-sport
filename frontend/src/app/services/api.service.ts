@@ -435,7 +435,7 @@ getSettings(): Observable<any> {
 
 updateSettings(data: any): Observable<any> {
   return this.http.put<any>(
-    `${this.apiUrl}/admin/settings`,
+    `${this.apiUrl}/settings`,
     data,
     this.getAdminHeaders()
   );
