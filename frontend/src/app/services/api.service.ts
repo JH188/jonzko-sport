@@ -433,14 +433,13 @@ export class ApiService {
     return this.http.get<SiteSetting>(`${this.apiUrl}/settings`);
   }
 
-  updateSettings(data: SiteSettingRequest): Observable<SiteSetting> {
-    return this.http.put<SiteSetting>(
-      `${this.apiUrl}/settings`,
-      data,
-      this.getAdminHeaders()
-    );
-  }
-
+updateSettings(data: SiteSettingRequest): Observable<SiteSetting> {
+  return this.http.put<SiteSetting>(
+    `${this.apiUrl}/admin/settings`,
+    data,
+    this.getAdminHeaders()
+  );
+}
   // ==========================
   // INICIO / HOME ADMIN
   // ==========================
