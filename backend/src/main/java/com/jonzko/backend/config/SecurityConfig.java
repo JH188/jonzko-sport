@@ -1,9 +1,10 @@
 package com.jonzko.backend.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -12,6 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.jonzko.backend.security.JwtAuthenticationFilter;
 
@@ -30,7 +34,7 @@ public class SecurityConfig {
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
@@ -42,21 +46,15 @@ public class SecurityConfig {
                         // ==========================
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-// ==========================
-// SETTINGS PÚBLICO
-// La web pública lee configuración sin login
-// ==========================
-.requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
-.requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
+                        // ==========================
+                        // SETTINGS PÚBLICO
+                        // ==========================
+                        .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
 
-// ==========================
-// SETTINGS ADMIN
-// Solo admin puede guardar cambios
-// ==========================
-.requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
-.requestMatchers(HttpMethod.PUT, "/api/settings/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
-
-                        // Soporte por si el frontend antiguo aún llama PUT /api/settings
+                        // ==========================
+                        // SETTINGS ADMIN
+                        // ==========================
                         .requestMatchers(HttpMethod.PUT, "/api/settings").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/settings/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
@@ -143,6 +141,47 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowedOrigins(List.of(
+                "https://jonzko.lat",
+                "https://www.jonzko.lat",
+                "https://jonzko-sport.vercel.app",
+                "http://localhost:4200"
+        ));
+
+        config.setAllowedMethods(List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "PATCH",
+                "OPTIONS"
+        ));
+
+        config.setAllowedHeaders(List.of(
+                "Authorization",
+                "Content-Type",
+                "Accept",
+                "Origin",
+                "X-Requested-With"
+        ));
+
+        config.setExposedHeaders(List.of(
+                "Authorization"
+        ));
+
+        config.setAllowCredentials(false);
+        config.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return source;
     }
 
     @Bean
