@@ -426,16 +426,16 @@ export class ApiService {
     );
   }
 
-    // ==========================
-  // PERSONALIZACIÓN WEB
-  // ==========================
-  getSettings(): Observable<SiteSetting> {
-    return this.http.get<SiteSetting>(`${this.apiUrl}/settings`);
-  }
+// ==========================
+// PERSONALIZACIÓN WEB
+// ==========================
+getSettings(): Observable<SiteSetting> {
+  return this.http.get<SiteSetting>(`${this.apiUrl}/settings`);
+}
 
 updateSettings(data: SiteSettingRequest): Observable<SiteSetting> {
   return this.http.put<SiteSetting>(
-    `${this.apiUrl}/admin/settings`,
+    `${this.apiUrl}/settings`,
     data,
     this.getAdminHeaders()
   );
