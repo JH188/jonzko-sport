@@ -76,6 +76,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // ==========================
+// SETTINGS WEB PÚBLICO
+// ==========================
+.requestMatchers(HttpMethod.GET, "/api/public/settings-web").permitAll()
+.requestMatchers(HttpMethod.GET, "/api/public/**").permitAll()
+                        
 
                         // LOGIN ADMIN
                         .requestMatchers(HttpMethod.POST, "/api/auth/admin-login").permitAll()
