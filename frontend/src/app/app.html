@@ -5,24 +5,21 @@
   <div class="top-marquee">
     <div class="top-marquee-track">
       <div class="top-marquee-group">
-        <span>ENVÍOS A TODO EL PERÚ</span>
-        <span>COMPRA SEGURA</span>
-        <span>CAMBIOS DISPONIBLES</span>
-        <span>JONZKO SPORT</span>
+        @for (item of topBarItems(); track item) {
+          <span>{{ item }}</span>
+        }
       </div>
 
       <div class="top-marquee-group" aria-hidden="true">
-        <span>ENVÍOS A TODO EL PERÚ</span>
-        <span>COMPRA SEGURA</span>
-        <span>CAMBIOS DISPONIBLES</span>
-        <span>JONZKO SPORT</span>
+        @for (item of topBarItems(); track item) {
+          <span>{{ item }}</span>
+        }
       </div>
 
       <div class="top-marquee-group" aria-hidden="true">
-        <span>ENVÍOS A TODO EL PERÚ</span>
-        <span>COMPRA SEGURA</span>
-        <span>CAMBIOS DISPONIBLES</span>
-        <span>JONZKO SPORT</span>
+        @for (item of topBarItems(); track item) {
+          <span>{{ item }}</span>
+        }
       </div>
     </div>
   </div>
@@ -34,11 +31,11 @@
     </div>
 
     <nav class="premium-nav">
-      <a href="/#inicio">Inicio</a>
-      <a routerLink="/tienda">Tienda</a>
-      <a href="/#producto">Exclusivo</a>
-      <a href="/#nosotros">Nosotros</a>
-      <a href="/#contacto">Contacto</a>
+      <a href="/#inicio">{{ menuInicio() }}</a>
+      <a routerLink="/tienda">{{ menuTienda() }}</a>
+      <a href="/#producto">{{ menuExclusivo() }}</a>
+      <a href="/#nosotros">{{ menuNosotros() }}</a>
+      <a href="/#contacto">{{ menuContacto() }}</a>
     </nav>
 
     <div class="nav-actions premium-actions">
@@ -124,11 +121,11 @@
         }
 
         <div class="mobile-menu-grid">
-          <a href="/#inicio" (click)="closeMobileMenu()">Inicio</a>
-          <a routerLink="/tienda" (click)="closeMobileMenu()">Tienda</a>
-          <a href="/#producto" (click)="closeMobileMenu()">Exclusivo</a>
-          <a href="/#nosotros" (click)="closeMobileMenu()">Nosotros</a>
-          <a href="/#contacto" (click)="closeMobileMenu()">Contacto</a>
+          <a href="/#inicio" (click)="closeMobileMenu()">{{ menuInicio() }}</a>
+          <a routerLink="/tienda" (click)="closeMobileMenu()">{{ menuTienda() }}</a>
+          <a href="/#producto" (click)="closeMobileMenu()">{{ menuExclusivo() }}</a>
+          <a href="/#nosotros" (click)="closeMobileMenu()">{{ menuNosotros() }}</a>
+          <a href="/#contacto" (click)="closeMobileMenu()">{{ menuContacto() }}</a>
 
           @if (currentUser()) {
             <a routerLink="/mis-pedidos" (click)="closeMobileMenu()">Mis pedidos</a>
@@ -158,14 +155,29 @@
       <!-- INICIO / HERO CARRUSEL -->
       <section id="inicio" class="hero-slider">
         <div class="hero-track">
-          @for (slide of heroSlides(); track slide.src; let i = $index) {
+          @for (slide of heroSlides(); track slide.id || slide.src; let i = $index) {
             <div class="hero-slide" [class.active]="i === activeHeroSlide()">
               @if (slide.type === 'image') {
-                <img [src]="slide.src" [alt]="slide.title" />
+                <picture>
+                  <source media="(max-width: 768px)" [srcset]="heroMobileImageFor(slide)" />
+                  <img
+                    [src]="heroImageFor(slide)"
+                    [alt]="slide.title"
+                    [style.object-position]="heroObjectPosition(slide)"
+                  />
+                </picture>
               }
 
               @if (slide.type === 'video') {
-                <video autoplay muted loop playsinline preload="auto" [muted]="true">
+                <video
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="auto"
+                  [muted]="true"
+                  [style.object-position]="heroObjectPosition(slide)"
+                >
                   <source [src]="slide.src" type="video/mp4" />
                 </video>
               }
@@ -175,7 +187,7 @@
               <div class="hero-slider-content">
                 <span>{{ slide.subtitle }}</span>
                 <h1>{{ slide.title }}</h1>
-                <a href="#producto">{{ slide.buttonText }}</a>
+                <a [href]="slide.buttonLink || '#producto'">{{ slide.buttonText }}</a>
               </div>
             </div>
           }
@@ -315,10 +327,7 @@
 
           <h2>Más que ropa,<br />es actitud.</h2>
 
-          <p>
-            JONZKO creado con la idea , de que todos podmeos vestirnos 
-            con estilo y actitud.
-          </p>
+          <p>JONZKO creado con la idea , de que todos podmeos vestirnos con estilo y actitud.</p>
 
           <div class="featured-benefits">
             <div class="featured-benefit">
@@ -663,10 +672,11 @@
       </div>
     </div>
   }
-  <!-- WhatsApp flotante JONZKO -->
+ <!-- WhatsApp flotante JONZKO -->
+@if (whatsappEnabled()) {
   <a
     class="whatsapp-float"
-    href="https://wa.me/51998989599?text=Hola%20JONZKO%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20prendas."
+    [href]="whatsappUrl()"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Escríbenos por WhatsApp"
@@ -680,4 +690,5 @@
       <img src="assets/whatsapp..png" alt="WhatsApp JONZKO" />
     </span>
   </a>
+}
 }

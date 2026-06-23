@@ -12,6 +12,42 @@ interface CartItem extends Product {
   selectedColor?: string;
 }
 
+interface PublicHomeSettings {
+  id: number;
+  storeName: string;
+  logoUrl: string;
+  topBarText: string;
+
+  menuInicio: string;
+  menuTienda: string;
+  menuExclusivo: string;
+  menuNosotros: string;
+  menuContacto: string;
+  menuMisPedidos: string;
+
+  heroTag: string;
+  heroTitle: string;
+  heroButtonText: string;
+  heroButtonLink: string;
+
+  whatsappNumber: string;
+  whatsappEnabled: boolean;
+  active: boolean;
+}
+
+interface HeroSlideView {
+  id?: number;
+  type: 'image' | 'video';
+  src: string;
+  mobileSrc?: string;
+  subtitle: string;
+  title: string;
+  buttonText: string;
+  buttonLink: string;
+  desktopPosition: string;
+  mobilePosition: string;
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -22,113 +58,79 @@ interface CartItem extends Product {
 export class App implements OnInit, OnDestroy {
   @ViewChild('productsCarousel') productsCarousel?: ElementRef<HTMLDivElement>;
 
-scrollProducts(direction: 'left' | 'right'): void {
-  const carousel = this.productsCarousel?.nativeElement;
-
-  if (!carousel) return;
-
-  const scrollAmount = carousel.clientWidth * 0.8;
-
-  carousel.scrollBy({
-    left: direction === 'right' ? scrollAmount : -scrollAmount,
-    behavior: 'smooth'
-  });
-}
-  openCustomerLogin(): void {
-  alert('Aquí irá el inicio de sesión del cliente. El administrador entra aparte por /admin-login.');
-}
   products = signal<Product[]>([]);
-cart = signal<CartItem[]>([]);
-cartOpen = signal(false);
-termsOpen = signal(false);
+  cart = signal<CartItem[]>([]);
+  cartOpen = signal(false);
+  termsOpen = signal(false);
 
-openTerms(): void {
-  this.termsOpen.set(true);
-}
+  activeHeroSlide = signal(0);
+  mobileMenuOpen = signal(false);
+  userMenuOpen = signal(false);
 
-closeTerms(): void {
-  this.termsOpen.set(false);
-}
-activeHeroSlide = signal(0);
-mobileMenuOpen = signal(false);
-userMenuOpen = signal(false);
+  currentUser = signal<AuthUser | null>(null);
+  currentRoute = signal('');
 
-toggleUserMenu(): void {
-  this.userMenuOpen.update(value => !value);
-}
-
-closeUserMenu(): void {
-  this.userMenuOpen.set(false);
-}
-private heroInterval: any;
-
-heroSlides = signal([
-  {
-    type: 'image',
-    src: 'assets/principal1.jpg',
-    subtitle: 'NUEVA COLECCIÓN',
-    title: 'OVERSIZE',
-    buttonText: 'Comprar ahora',
-  },
-  {
-    type: 'image',
-    src: 'assets/principal2.jpeg',
-    subtitle: 'JONZKO SPORT',
-    title: 'ESTILO URBANO',
-    buttonText: 'Ver productos',
-  },
-  {
-    type: 'image',
-    src: 'assets/principal3.jpeg',
-    subtitle: 'MODA PERUANA',
-    title: 'BLACK & WHITE',
-    buttonText: 'Descubrir prendas',
-  },
-]);
-toggleMobileMenu(): void {
-  this.mobileMenuOpen.update(value => !value);
-}
-
-closeMobileMenu(): void {
-  this.mobileMenuOpen.set(false);
-}
-
-startHeroAutoplay(): void {
-  this.heroInterval = setInterval(() => {
-    this.nextHeroSlide();
-  }, 4500);
-}
-
-restartHeroAutoplay(): void {
-  clearInterval(this.heroInterval);
-  this.startHeroAutoplay();
-}
-
-goHeroSlide(index: number): void {
-  this.activeHeroSlide.set(index);
-  this.restartHeroAutoplay();
-}
-
-nextHeroSlide(): void {
-  const total = this.heroSlides().length;
-  const next = (this.activeHeroSlide() + 1) % total;
-  this.activeHeroSlide.set(next);
-  this.restartHeroAutoplay();
-}
-
-prevHeroSlide(): void {
-  const total = this.heroSlides().length;
-  const prev = this.activeHeroSlide() === 0 ? total - 1 : this.activeHeroSlide() - 1;
-  this.activeHeroSlide.set(prev);
-  this.restartHeroAutoplay();
-}
-currentUser = signal<AuthUser | null>(null);
-
-currentRoute = signal('');
+  private heroInterval: any;
 
   // ==========================
-  // CONFIGURACIÓN VISUAL
+  // INICIO DINÁMICO DESDE ADMIN
   // ==========================
+
+  heroSlides = signal<HeroSlideView[]>([
+    {
+      type: 'image',
+      src: 'assets/principal1.jpg',
+      mobileSrc: 'assets/principal1.jpg',
+      subtitle: 'NUEVA COLECCIÓN',
+      title: 'OVERSIZE',
+      buttonText: 'Comprar ahora',
+      buttonLink: '#producto',
+      desktopPosition: 'center center',
+      mobilePosition: 'center center'
+    },
+    {
+      type: 'image',
+      src: 'assets/principal2.jpeg',
+      mobileSrc: 'assets/principal2.jpeg',
+      subtitle: 'JONZKO SPORT',
+      title: 'ESTILO URBANO',
+      buttonText: 'Ver productos',
+      buttonLink: '#producto',
+      desktopPosition: 'center center',
+      mobilePosition: 'center center'
+    },
+    {
+      type: 'image',
+      src: 'assets/principal3.jpeg',
+      mobileSrc: 'assets/principal3.jpeg',
+      subtitle: 'MODA PERUANA',
+      title: 'BLACK & WHITE',
+      buttonText: 'Descubrir prendas',
+      buttonLink: '#producto',
+      desktopPosition: 'center center',
+      mobilePosition: 'center center'
+    }
+  ]);
+
+  topBarItems = signal<string[]>([
+    'ENVÍOS A TODO EL PERÚ',
+    'COMPRA SEGURA',
+    'CAMBIOS DISPONIBLES',
+    'JONZKO SPORT'
+  ]);
+
+  menuInicio = signal('INICIO');
+  menuTienda = signal('TIENDA');
+  menuExclusivo = signal('EXCLUSIVO');
+  menuNosotros = signal('NOSOTROS');
+  menuContacto = signal('CONTACTO');
+  menuMisPedidos = signal('MIS PEDIDOS');
+  whatsappEnabled = signal(true);
+
+  // ==========================
+  // CONFIGURACIÓN VISUAL GENERAL
+  // ==========================
+
   storeName = signal('JONZKO');
   slogan = signal('ROPA URBANA PERUANA');
 
@@ -141,8 +143,8 @@ currentRoute = signal('');
   heroImageUrl = signal('assets/polera.jpg');
 
   collectionTag = signal('EDICIÓN LIMITADA');
-collectionTitle = signal('Exclusivo');
-collectionDescription = signal('Poleras urbanas exclusivas de JONZKO.');
+  collectionTitle = signal('Exclusivo');
+  collectionDescription = signal('Poleras urbanas exclusivas de JONZKO.');
 
   aboutTitle = signal('Sobre Nosotros');
   aboutDescription = signal(
@@ -155,74 +157,250 @@ collectionDescription = signal('Poleras urbanas exclusivas de JONZKO.');
   whatsappUrl = signal('https://wa.me/51998989599');
 
   constructor(
-  private apiService: ApiService,
-  private router: Router,
-  private authService: AuthService
-) {}
+    private apiService: ApiService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
- ngOnInit(): void {
-  this.startHeroAutoplay();
-  this.loadWebConfig();
-  this.loadProducts();
-  this.loadCart();
-  this.loadCurrentUser();
-
-  window.addEventListener('jonzko-cart-updated', () => {
-    this.loadCart();
-    this.openCart();
-  });
-  this.currentRoute.set(this.router.url);
-
-   this.router.events
-  .pipe(filter(event => event instanceof NavigationEnd))
-  .subscribe((event: any) => {
-    this.currentRoute.set(event.urlAfterRedirects);
+  ngOnInit(): void {
+    this.startHeroAutoplay();
     this.loadWebConfig();
+    this.loadHomeConfig();
+    this.loadProducts();
+    this.loadCart();
     this.loadCurrentUser();
-    this.closeCart();
-    this.closeMobileMenu();
-  });
-  }
-  // ==========================
-// USUARIO / SESIÓN
-// ==========================
-ngOnDestroy(): void {
-  clearInterval(this.heroInterval);
-}
-loadCurrentUser(): void {
-  this.currentUser.set(this.authService.getUser());
-}
 
-logout(): void {
-  this.authService.logout();
-  this.currentUser.set(null);
-  this.router.navigate(['/']);
-}
+    window.addEventListener('jonzko-cart-updated', () => {
+      this.loadCart();
+      this.openCart();
+    });
+
+    this.currentRoute.set(this.router.url);
+
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentRoute.set(event.urlAfterRedirects);
+
+        this.loadWebConfig();
+        this.loadHomeConfig();
+        this.loadCurrentUser();
+
+        this.closeCart();
+        this.closeMobileMenu();
+      });
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.heroInterval);
+  }
+
+  // ==========================
+  // INICIO / HOME DESDE ADMIN
+  // ==========================
+
+  loadHomeConfig(): void {
+    this.apiService.getHomeSettings().subscribe({
+      next: (settings: PublicHomeSettings) => {
+        this.storeName.set(settings.storeName || 'JONZKO');
+        this.logoUrl.set(settings.logoUrl || 'assets/logo.jpg');
+
+        this.menuInicio.set(settings.menuInicio || 'INICIO');
+        this.menuTienda.set(settings.menuTienda || 'TIENDA');
+        this.menuExclusivo.set(settings.menuExclusivo || 'EXCLUSIVO');
+        this.menuNosotros.set(settings.menuNosotros || 'NOSOTROS');
+        this.menuContacto.set(settings.menuContacto || 'CONTACTO');
+        this.menuMisPedidos.set(settings.menuMisPedidos || 'MIS PEDIDOS');
+
+        this.heroTitle.set(settings.heroTitle || 'BLACK & WHITE');
+        this.primaryButton.set(settings.heroButtonText || 'DESCUBRIR PRENDAS');
+
+        this.whatsappEnabled.set(settings.whatsappEnabled !== false);
+
+        const topText =
+          settings.topBarText ||
+          'ENVÍOS A TODO EL PERÚ • COMPRA SEGURA • CAMBIOS DISPONIBLES • JONZKO SPORT';
+
+        this.topBarItems.set(
+          topText
+            .split('•')
+            .map(item => item.trim())
+            .filter(item => item.length > 0)
+        );
+
+        const phone = settings.whatsappNumber || '51998989599';
+        const message = 'Hola, quiero información sobre JONZKO.';
+
+        this.whatsappUrl.set(
+          `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
+        );
+      },
+      error: (error) => {
+        console.error('Error cargando configuración de inicio:', error);
+      }
+    });
+
+    this.apiService.getHomeSlides().subscribe({
+      next: (slides: any[]) => {
+        const activeSlides = (slides || [])
+          .filter(slide => slide.active !== false)
+          .sort((a, b) => Number(a.displayOrder || 0) - Number(b.displayOrder || 0))
+          .map(slide => {
+            const hasVideo = !!slide.videoUrl;
+
+            return {
+              id: slide.id,
+              type: hasVideo ? 'video' : 'image',
+              src: hasVideo ? slide.videoUrl : slide.desktopImageUrl,
+              mobileSrc: slide.mobileImageUrl || slide.desktopImageUrl,
+              subtitle: slide.tagText || this.heroTitle(),
+              title: slide.title || this.heroTitle(),
+              buttonText: slide.buttonText || this.primaryButton(),
+              buttonLink: slide.buttonLink || '#producto',
+              desktopPosition: slide.desktopPosition || 'center center',
+              mobilePosition: slide.mobilePosition || 'center center'
+            } as HeroSlideView;
+          })
+          .filter(slide => !!slide.src);
+
+        if (activeSlides.length > 0) {
+          this.heroSlides.set(activeSlides);
+          this.activeHeroSlide.set(0);
+          this.restartHeroAutoplay();
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando slides de inicio:', error);
+      }
+    });
+  }
+
+  heroImageFor(slide: HeroSlideView): string {
+    return slide.src;
+  }
+
+  heroMobileImageFor(slide: HeroSlideView): string {
+    return slide.mobileSrc || slide.src;
+  }
+
+  heroObjectPosition(slide: HeroSlideView): string {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      return slide.mobilePosition || 'center center';
+    }
+
+    return slide.desktopPosition || 'center center';
+  }
+
+  // ==========================
+  // HERO CARRUSEL
+  // ==========================
+
+  startHeroAutoplay(): void {
+    clearInterval(this.heroInterval);
+
+    this.heroInterval = setInterval(() => {
+      this.nextHeroSlide();
+    }, 4500);
+  }
+
+  restartHeroAutoplay(): void {
+    clearInterval(this.heroInterval);
+    this.startHeroAutoplay();
+  }
+
+  goHeroSlide(index: number): void {
+    this.activeHeroSlide.set(index);
+    this.restartHeroAutoplay();
+  }
+
+  nextHeroSlide(): void {
+    const total = this.heroSlides().length;
+
+    if (total === 0) {
+      return;
+    }
+
+    const next = (this.activeHeroSlide() + 1) % total;
+    this.activeHeroSlide.set(next);
+  }
+
+  prevHeroSlide(): void {
+    const total = this.heroSlides().length;
+
+    if (total === 0) {
+      return;
+    }
+
+    const prev = this.activeHeroSlide() === 0 ? total - 1 : this.activeHeroSlide() - 1;
+    this.activeHeroSlide.set(prev);
+    this.restartHeroAutoplay();
+  }
+
+  // ==========================
+  // MENÚS
+  // ==========================
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen.update(value => !value);
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen.set(false);
+  }
+
+  toggleUserMenu(): void {
+    this.userMenuOpen.update(value => !value);
+  }
+
+  closeUserMenu(): void {
+    this.userMenuOpen.set(false);
+  }
+
+  openCustomerLogin(): void {
+    alert('Aquí irá el inicio de sesión del cliente. El administrador entra aparte por /admin-login.');
+  }
+
+  // ==========================
+  // USUARIO / SESIÓN
+  // ==========================
+
+  loadCurrentUser(): void {
+    this.currentUser.set(this.authService.getUser());
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.currentUser.set(null);
+    this.router.navigate(['/']);
+  }
 
   // ==========================
   // RUTAS
   // ==========================
+
   isAdminRoute(): boolean {
     return this.currentRoute().startsWith('/admin');
   }
-  isProductDetailRoute(): boolean {
-  return this.currentRoute().startsWith('/producto');
-}
-isStandalonePageRoute(): boolean {
-  return (
-    this.currentRoute().startsWith('/producto') ||
-    this.currentRoute().startsWith('/login') ||
-    this.currentRoute().startsWith('/registro') ||
-    this.currentRoute().startsWith('/reset-password') ||
-    this.currentRoute().startsWith('/checkout') ||
-    this.currentRoute().startsWith('/mis-pedidos') ||
-    this.currentRoute().startsWith('/tienda')
-  );
-}
 
-goToProductDetail(productId: number): void {
-  this.router.navigate(['/producto', productId]);
-}
+  isProductDetailRoute(): boolean {
+    return this.currentRoute().startsWith('/producto');
+  }
+
+  isStandalonePageRoute(): boolean {
+    return (
+      this.currentRoute().startsWith('/producto') ||
+      this.currentRoute().startsWith('/login') ||
+      this.currentRoute().startsWith('/registro') ||
+      this.currentRoute().startsWith('/reset-password') ||
+      this.currentRoute().startsWith('/checkout') ||
+      this.currentRoute().startsWith('/mis-pedidos') ||
+      this.currentRoute().startsWith('/tienda')
+    );
+  }
+
+  goToProductDetail(productId: number): void {
+    this.router.navigate(['/producto', productId]);
+  }
 
   goToAdminLogin(): void {
     this.router.navigate(['/admin-login']);
@@ -231,6 +409,7 @@ goToProductDetail(productId: number): void {
   // ==========================
   // PRODUCTOS
   // ==========================
+
   loadProducts(): void {
     this.apiService.getProducts().subscribe({
       next: (products) => {
@@ -241,124 +420,145 @@ goToProductDetail(productId: number): void {
       }
     });
   }
-cleanProductName(name: string): string {
-  return name
-    .replace(/JONZKO/gi, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-  // ==========================
-  // CONFIGURACIÓN WEB
-  // ==========================
-loadWebConfig(): void {
-  this.apiService.getSettings().subscribe({
-    next: (config: any) => {
-      this.storeName.set(config.storeName || 'JONZKO');
-      this.slogan.set(config.slogan || 'ROPA URBANA PERUANA');
 
-      this.heroTitle.set(config.heroTitle || 'JONZKO');
-      this.heroDescription.set(
-        config.heroDescription || 'Ropa urbana peruana con presencia, estilo propio y actitud.'
-      );
+  scrollProducts(direction: 'left' | 'right'): void {
+    const carousel = this.productsCarousel?.nativeElement;
 
-      this.primaryButton.set(config.primaryButtonText || 'Comprar ahora');
-      this.secondaryButton.set(config.secondaryButtonText || 'Ver colección');
-
-      this.logoUrl.set('assets/logo.png');
-      this.heroImageUrl.set(config.heroImageUrl || 'assets/polera.jpg');
-
-      this.collectionTag.set(config.collectionTag || 'EDICIÓN LIMITADA');
-
-      const savedCollectionTitle = String(config.collectionTitle || '').trim();
-      const fixedCollectionTitle =
-        !savedCollectionTitle ||
-        savedCollectionTitle.toLowerCase() === 'producto' ||
-        savedCollectionTitle.toLowerCase() === 'productos'
-          ? 'Exclusivo'
-          : savedCollectionTitle;
-
-      this.collectionTitle.set(fixedCollectionTitle);
-      this.collectionDescription.set(
-        config.collectionDescription || 'Poleras urbanas exclusivas de JONZKO.'
-      );
-
-      this.aboutTitle.set('Sobre Nosotros');
-      this.aboutDescription.set(
-        config.contactDescription ||
-          'Marca urbana peruana creada con estilo propio, presencia moderna y esencia urbana.'
-      );
-
-      this.instagramUrl.set(config.instagramUrl || 'https://www.instagram.com/jonzko.o/');
-      this.facebookUrl.set(
-        config.facebookUrl || 'https://www.facebook.com/profile.php?id=61563952841904'
-      );
-      this.tiktokUrl.set(config.tiktokUrl || 'https://www.tiktok.com/@jonzko1');
-
-      const phone = config.whatsappNumber || '51998989599';
-      const message = config.whatsappMessage || 'Hola, quiero información sobre JONZKO.';
-
-      this.whatsappUrl.set(
-        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
-      );
-    },
-    error: (error) => {
-      console.error('Error cargando configuración web desde MySQL:', error);
-      this.whatsappUrl.set('https://wa.me/51998989599');
+    if (!carousel) {
+      return;
     }
-  });
-}
-hoverImageFor(product: Product): string {
-  const name = (product.name || '').toLowerCase();
 
-  if (name.includes('blanca')) {
-    return 'assets/polera-blanca-2.jpeg';
+    const scrollAmount = carousel.clientWidth * 0.8;
+
+    carousel.scrollBy({
+      left: direction === 'right' ? scrollAmount : -scrollAmount,
+      behavior: 'smooth'
+    });
   }
 
-  if (name.includes('morada')) {
-    return 'assets/polera-morada-2.jpeg';
+  cleanProductName(name: string): string {
+    return name
+      .replace(/JONZKO/gi, '')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 
-  if (name.includes('plomo') || name.includes('oscuro')) {
-    return 'assets/polera-plomo-2.jpeg';
+  hoverImageFor(product: Product): string {
+    const name = (product.name || '').toLowerCase();
+
+    if (name.includes('blanca')) {
+      return 'assets/polera-blanca-2.jpeg';
+    }
+
+    if (name.includes('morada')) {
+      return 'assets/polera-morada-2.jpeg';
+    }
+
+    if (name.includes('plomo') || name.includes('oscuro')) {
+      return 'assets/polera-plomo-2.jpeg';
+    }
+
+    if (name.includes('negra') && name.includes('polera')) {
+      return 'assets/polera-negra-2.jpg';
+    }
+
+    if (name.includes('verde')) {
+      return 'assets/polera-verde-2.jpeg';
+    }
+
+    if (
+      name.includes('polo') &&
+      name.includes('manga') &&
+      name.includes('larga') &&
+      name.includes('negro')
+    ) {
+      return 'assets/polo-manga-larga-negro-2.jpg';
+    }
+
+    return product.imageUrl;
   }
 
-  if (name.includes('negra') && name.includes('polera')) {
-    return 'assets/polera-negra-2.jpg';
+  discountPercent(product: Product): number {
+    const oldPrice = Number(product.oldPrice || 0);
+    const price = Number(product.price || 0);
+
+    if (!oldPrice || !price || oldPrice <= price) {
+      return 0;
+    }
+
+    return Math.round(((oldPrice - price) / oldPrice) * 100);
   }
 
-  if (name.includes('verde')) {
-    return 'assets/polera-verde-2.jpeg';
+  // ==========================
+  // CONFIGURACIÓN WEB GENERAL
+  // ==========================
+
+  loadWebConfig(): void {
+    this.apiService.getSettings().subscribe({
+      next: (config: any) => {
+        this.slogan.set(config.slogan || 'ROPA URBANA PERUANA');
+
+        this.heroDescription.set(
+          config.heroDescription || 'Ropa urbana peruana con presencia, estilo propio y actitud.'
+        );
+
+        this.secondaryButton.set(config.secondaryButtonText || 'Ver colección');
+
+        this.heroImageUrl.set(config.heroImageUrl || 'assets/polera.jpg');
+
+        this.collectionTag.set(config.collectionTag || 'EDICIÓN LIMITADA');
+
+        const savedCollectionTitle = String(config.collectionTitle || '').trim();
+        const fixedCollectionTitle =
+          !savedCollectionTitle ||
+          savedCollectionTitle.toLowerCase() === 'producto' ||
+          savedCollectionTitle.toLowerCase() === 'productos'
+            ? 'Exclusivo'
+            : savedCollectionTitle;
+
+        this.collectionTitle.set(fixedCollectionTitle);
+        this.collectionDescription.set(
+          config.collectionDescription || 'Poleras urbanas exclusivas de JONZKO.'
+        );
+
+        this.aboutTitle.set('Sobre Nosotros');
+        this.aboutDescription.set(
+          config.contactDescription ||
+            'Marca urbana peruana creada con estilo propio, presencia moderna y esencia urbana.'
+        );
+
+        this.instagramUrl.set(config.instagramUrl || 'https://www.instagram.com/jonzko.o/');
+        this.facebookUrl.set(
+          config.facebookUrl || 'https://www.facebook.com/profile.php?id=61563952841904'
+        );
+        this.tiktokUrl.set(config.tiktokUrl || 'https://www.tiktok.com/@jonzko1');
+      },
+      error: (error) => {
+        console.error('Error cargando configuración web desde MySQL:', error);
+      }
+    });
   }
 
-  if (
-    name.includes('polo') &&
-    name.includes('manga') &&
-    name.includes('larga') &&
-    name.includes('negro')
-  ) {
-    return 'assets/polo-manga-larga-negro-2.jpg';
+  // ==========================
+  // TÉRMINOS
+  // ==========================
+
+  openTerms(): void {
+    this.termsOpen.set(true);
   }
 
-  return product.imageUrl;
-}
-
-discountPercent(product: Product): number {
-  const oldPrice = Number(product.oldPrice || 0);
-  const price = Number(product.price || 0);
-
-  if (!oldPrice || !price || oldPrice <= price) {
-    return 0;
+  closeTerms(): void {
+    this.termsOpen.set(false);
   }
 
-  return Math.round(((oldPrice - price) / oldPrice) * 100);
-}
   // ==========================
   // CARRITO
   // ==========================
+
   toggleCart(): void {
-  this.loadCart();
-  this.cartOpen.update(value => !value);
-}
+    this.loadCart();
+    this.cartOpen.update(value => !value);
+  }
 
   openCart(): void {
     this.cartOpen.set(true);
@@ -460,26 +660,27 @@ discountPercent(product: Product): number {
     }
   }
 
-goCheckout(): void {
-  if (this.cart().length === 0) {
-    alert('Tu carrito está vacío.');
-    return;
+  goCheckout(): void {
+    if (this.cart().length === 0) {
+      alert('Tu carrito está vacío.');
+      return;
+    }
+
+    const user = this.authService.getUser();
+
+    if (!user) {
+      this.closeCart();
+      this.cartOpen.set(false);
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.closeCart();
+    this.cartOpen.set(false);
+    this.router.navigate(['/checkout']);
   }
 
-  const user = this.authService.getUser();
-
-  if (!user) {
-  this.closeCart();
-  this.cartOpen.set(false);
-  this.router.navigate(['/login']);
-  return;
-}
-
-  this.closeCart();
-  this.cartOpen.set(false);
-  this.router.navigate(['/checkout']);
-}
   goToCheckout(): void {
-  this.goCheckout();
-}
+    this.goCheckout();
+  }
 }
