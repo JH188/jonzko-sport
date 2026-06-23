@@ -468,4 +468,27 @@ export class ApiService {
       this.getAdminHeaders()
     );
   }
+  // ==========================
+// SEGURIDAD ADMIN
+// ==========================
+requestAdminPasswordCode(currentPassword: string): Observable<any> {
+  return this.http.post<any>(
+    `${this.apiUrl}/admin/security/password/request-code`,
+    { currentPassword },
+    this.getAdminHeaders()
+  );
+}
+
+changeAdminPassword(data: {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+  code: string;
+}): Observable<any> {
+  return this.http.post<any>(
+    `${this.apiUrl}/admin/security/password/change`,
+    data,
+    this.getAdminHeaders()
+  );
+}
 }

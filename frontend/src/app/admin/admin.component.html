@@ -153,6 +153,14 @@
       >
         ⚙️ Más opciones
       </button>
+      <button
+        type="button"
+        class="menu-btn submenu-option"
+        [class.active]="activeSection() === 'admin-security'"
+        (click)="setSection('admin-security')"
+      >
+        🔐 Seguridad del administrador
+      </button>
     </nav>
 
     <div class="admin-sidebar-actions">
@@ -1808,7 +1816,90 @@
         </div>
       </article>
     </section>
+    <!-- SEGURIDAD DEL ADMINISTRADOR -->
+    <section class="admin-section" *ngIf="activeSection() === 'admin-security'">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Seguridad</span>
+          <h2>Seguridad del administrador</h2>
+          <p>Cambia la contraseña del panel usando un código enviado a tu correo administrador.</p>
+        </div>
+      </div>
 
+      <article class="panel-card">
+        <div class="panel-title">
+          <div>
+            <h2>Cambiar contraseña</h2>
+            <p>Primero validaremos tu contraseña actual. Luego enviaremos un código a tu correo.</p>
+          </div>
+        </div>
+
+        <form class="admin-form">
+          <label>
+            Contraseña actual
+            <input
+              type="password"
+              name="adminCurrentPassword"
+              [(ngModel)]="adminCurrentPassword"
+              placeholder="Ingresa tu contraseña actual"
+            />
+          </label>
+
+          <label>
+            Nueva contraseña
+            <input
+              type="password"
+              name="adminNewPassword"
+              [(ngModel)]="adminNewPassword"
+              placeholder="Nueva contraseña"
+            />
+          </label>
+
+          <label>
+            Confirmar nueva contraseña
+            <input
+              type="password"
+              name="adminConfirmPassword"
+              [(ngModel)]="adminConfirmPassword"
+              placeholder="Repite la nueva contraseña"
+            />
+          </label>
+
+          <button
+            type="button"
+            class="primary-action"
+            (click)="requestAdminPasswordCode()"
+            [disabled]="adminPasswordLoading"
+          >
+            {{ adminPasswordLoading ? 'Enviando código...' : 'Enviar código a mi correo' }}
+          </button>
+
+          <div class="empty-state" *ngIf="adminPasswordMessage">
+            {{ adminPasswordMessage }}
+          </div>
+
+          <label>
+            Código de verificación
+            <input
+              type="text"
+              name="adminPasswordCode"
+              [(ngModel)]="adminPasswordCode"
+              placeholder="Código de 6 dígitos"
+              maxlength="6"
+            />
+          </label>
+
+          <button
+            type="button"
+            class="primary-action"
+            (click)="changeAdminPassword()"
+            [disabled]="adminPasswordLoading"
+          >
+            {{ adminPasswordLoading ? 'Guardando...' : 'Cambiar contraseña' }}
+          </button>
+        </form>
+      </article>
+    </section>
     <!-- MODAL PARA VER VOUCHER / BOLETA / FACTURA / COMPROBANTE -->
     <div class="receipt-modal-backdrop" *ngIf="receiptModalOpen">
       <div class="receipt-modal">

@@ -24,8 +24,8 @@ type AdminSection =
   | 'users'
   | 'reports'
   | 'customization'
-  | 'more';
-
+  | 'more'
+  | 'admin-security';
 interface WebConfig {
   storeName: string;
   slogan: string;
@@ -120,6 +120,12 @@ interface HomeSlide {
 })
 
 export class AdminComponent implements OnInit {
+  adminCurrentPassword = '';
+adminNewPassword = '';
+adminConfirmPassword = '';
+adminPasswordCode = '';
+adminPasswordLoading = false;
+adminPasswordMessage = '';
   customizationTab = signal<CustomizationTab>('inicio');
 editingHomeSlideId = signal<number | null>(null);
 homeSlides = signal<HomeSlide[]>([]);
@@ -1080,6 +1086,89 @@ removeHomeMedia(field: HomeMediaField): void {
   } else {
     this.homeSlideForm[field] = '';
   }
+}
+
+requestAdminPasswordCode(): void {
+  this.adminPasswordMessage = '';
+
+  const currentPassword = this.adminCurrentPassword.trim();
+
+  if (!currentPassword) {
+    alert('Ingresa tu contraseña actual.');
+    return;
+  }
+
+  this.adminPasswordLoading = true;
+
+  this.apiService.requestAdminPasswordCode(currentPassword).subscribe({
+    next: (response: any) => {
+      this.adminPasswordLoading = false;
+      this.adminPasswordMessage =
+        response?.message || 'Código enviado al correo administrador.';
+    },
+    error: (error) => {
+      this.adminPasswordLoading = false;
+      console.error('Error enviando código:', error);
+      alert(error?.error || 'No se pudo enviar el código. Revisa tu contraseña actual.');
+    }
+  });
+}
+
+changeAdminPassword(): void {
+  this.adminPasswordMessage = '';
+
+  const currentPassword = this.adminCurrentPassword.trim();
+  const newPassword = this.adminNewPassword.trim();
+  const confirmPassword = this.adminConfirmPassword.trim();
+  const code = this.adminPasswordCode.trim();
+
+  if (!currentPassword || !newPassword || !confirmPassword || !code) {
+    alert('Completa todos los campos.');
+    return;
+  }
+
+  if (newPassword.length < 6) {
+    alert('La nueva contraseña debe tener mínimo 6 caracteres.');
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    alert('Las contraseñas nuevas no coinciden.');
+    return;
+  }
+
+  this.adminPasswordLoading = true;
+
+  this.apiService.changeAdminPassword({
+    currentPassword,
+    newPassword,
+    confirmPassword,
+    code
+  }).subscribe({
+    next: (response: any) => {
+      this.adminPasswordLoading = false;
+      alert(response?.message || 'Contraseña actualizada correctamente.');
+
+      this.adminCurrentPassword = '';
+      this.adminNewPassword = '';
+      this.adminConfirmPassword = '';
+      this.adminPasswordCode = '';
+      this.adminPasswordMessage = '';
+
+      localStorage.removeItem('jonzko_admin_logged');
+      localStorage.removeItem('jonzko_admin_token');
+      localStorage.removeItem('jonzko_admin_role');
+      localStorage.removeItem('jonzko_admin_name');
+      localStorage.removeItem('jonzko_admin_email');
+
+      this.router.navigate(['/admin-login']);
+    },
+    error: (error) => {
+      this.adminPasswordLoading = false;
+      console.error('Error cambiando contraseña:', error);
+      alert(error?.error || 'No se pudo cambiar la contraseña.');
+    }
+  });
 }
 
   // ==========================
