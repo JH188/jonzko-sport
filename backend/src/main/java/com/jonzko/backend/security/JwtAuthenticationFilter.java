@@ -47,10 +47,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // RUTAS PÚBLICAS GET
         // ==========================
         if ("GET".equalsIgnoreCase(method)) {
-            if ("/api/settings".equals(path) || path.startsWith("/api/settings/")) {
-                return true;
-            }
-
+            if ("/api/settings".equals(path)
+        || path.startsWith("/api/settings/")
+        || "/api/web-config/settings".equals(path)
+        || "/api/public/settings-web".equals(path)
+        || path.startsWith("/api/public/")) {
+    return true;
+}
             if ("/api/home/settings".equals(path)
                     || "/api/home/slides".equals(path)
                     || path.startsWith("/api/home/")) {
@@ -194,6 +197,7 @@ private void rejectInvalidAdminSession(
             path != null && (
                     path.startsWith("/api/admin")
                             || path.startsWith("/api/settings")
+                            || path.startsWith("/api/web-config")
                             || path.startsWith("/api/products/admin")
                             || path.startsWith("/api/orders")
             );
