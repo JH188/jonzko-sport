@@ -19,7 +19,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.jonzko.backend.security.JwtAuthenticationFilter;
 
-import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
@@ -41,49 +40,6 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
 
-                // ==========================
-                // DEBUG TEMPORAL 403 / 401
-                // ==========================
-                .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            System.out.println("❌ DEBUG AUTH ENTRY POINT");
-                            System.out.println("➡ METHOD: " + request.getMethod());
-                            System.out.println("➡ URI: " + request.getRequestURI());
-                            System.out.println("➡ AUTH HEADER EXISTE: " + (request.getHeader("Authorization") != null));
-                            System.out.println("➡ ERROR: " + authException.getMessage());
-
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.setContentType("application/json;charset=UTF-8");
-                            response.getWriter().write(
-                                    "{"
-                                            + "\"debug\":\"NO_AUTORIZADO\","
-                                            + "\"method\":\"" + request.getMethod() + "\","
-                                            + "\"path\":\"" + request.getRequestURI() + "\","
-                                            + "\"authHeaderExists\":" + (request.getHeader("Authorization") != null) + ","
-                                            + "\"message\":\"" + authException.getMessage() + "\""
-                                            + "}"
-                            );
-                        })
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
-                            System.out.println("🚫 DEBUG ACCESS DENIED");
-                            System.out.println("➡ METHOD: " + request.getMethod());
-                            System.out.println("➡ URI: " + request.getRequestURI());
-                            System.out.println("➡ AUTH HEADER EXISTE: " + (request.getHeader("Authorization") != null));
-                            System.out.println("➡ ERROR: " + accessDeniedException.getMessage());
-
-                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                            response.setContentType("application/json;charset=UTF-8");
-                            response.getWriter().write(
-                                    "{"
-                                            + "\"debug\":\"ACCESO_DENEGADO\","
-                                            + "\"method\":\"" + request.getMethod() + "\","
-                                            + "\"path\":\"" + request.getRequestURI() + "\","
-                                            + "\"authHeaderExists\":" + (request.getHeader("Authorization") != null) + ","
-                                            + "\"message\":\"" + accessDeniedException.getMessage() + "\""
-                                            + "}"
-                            );
-                        })
-                )
 
                 .authorizeHttpRequests(auth -> auth
 
@@ -91,7 +47,7 @@ public class SecurityConfig {
                         // PREFLIGHT CORS
                         // ==========================
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/error").permitAll()
+
                         
 
                         // ==========================
