@@ -45,6 +45,20 @@ public class SecurityConfig {
                         // PREFLIGHT CORS
                         // ==========================
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+// ==========================
+// PERSONALIZACIÓN WEB - RUTA LIMPIA
+// ==========================
+.requestMatchers(HttpMethod.GET, "/api/web-config/settings").permitAll()
+.requestMatchers(HttpMethod.PUT, "/api/web-config/save").permitAll()
+
+// ==========================
+// SETTINGS WEB PÚBLICO
+// Para cargar Nosotros / Galería en la web
+// ==========================
+.requestMatchers(HttpMethod.GET, "/api/public/settings-web").permitAll()
+.requestMatchers(HttpMethod.GET, "/api/public/**").permitAll()
 
                         // ==========================
                         // SETTINGS WEB PÚBLICO
