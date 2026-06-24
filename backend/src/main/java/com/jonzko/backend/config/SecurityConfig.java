@@ -19,6 +19,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.jonzko.backend.security.JwtAuthenticationFilter;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -39,6 +41,50 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
 
+                // ==========================
+                // DEBUG TEMPORAL 403 / 401
+                // ==========================
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            System.out.println("❌ DEBUG AUTH ENTRY POINT");
+                            System.out.println("➡ METHOD: " + request.getMethod());
+                            System.out.println("➡ URI: " + request.getRequestURI());
+                            System.out.println("➡ AUTH HEADER EXISTE: " + (request.getHeader("Authorization") != null));
+                            System.out.println("➡ ERROR: " + authException.getMessage());
+
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json;charset=UTF-8");
+                            response.getWriter().write(
+                                    "{"
+                                            + "\"debug\":\"NO_AUTORIZADO\","
+                                            + "\"method\":\"" + request.getMethod() + "\","
+                                            + "\"path\":\"" + request.getRequestURI() + "\","
+                                            + "\"authHeaderExists\":" + (request.getHeader("Authorization") != null) + ","
+                                            + "\"message\":\"" + authException.getMessage() + "\""
+                                            + "}"
+                            );
+                        })
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            System.out.println("🚫 DEBUG ACCESS DENIED");
+                            System.out.println("➡ METHOD: " + request.getMethod());
+                            System.out.println("➡ URI: " + request.getRequestURI());
+                            System.out.println("➡ AUTH HEADER EXISTE: " + (request.getHeader("Authorization") != null));
+                            System.out.println("➡ ERROR: " + accessDeniedException.getMessage());
+
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                            response.setContentType("application/json;charset=UTF-8");
+                            response.getWriter().write(
+                                    "{"
+                                            + "\"debug\":\"ACCESO_DENEGADO\","
+                                            + "\"method\":\"" + request.getMethod() + "\","
+                                            + "\"path\":\"" + request.getRequestURI() + "\","
+                                            + "\"authHeaderExists\":" + (request.getHeader("Authorization") != null) + ","
+                                            + "\"message\":\"" + accessDeniedException.getMessage() + "\""
+                                            + "}"
+                            );
+                        })
+                )
+
                 .authorizeHttpRequests(auth -> auth
 
                         // ==========================
@@ -57,15 +103,22 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
 
                         // ==========================
-                        // PERSONALIZACIÓN WEB ADMIN
+                        // HOME PÚBLICO
                         // IMPORTANTE:
-                        // Estas rutas guardan Nosotros / Galería / Home / Colores / Logo
+                        // Esta familia ya comprobamos que sí funciona en Railway.
+                        // ==========================
+                        .requestMatchers(HttpMethod.GET, "/api/home/settings").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/home/slides").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/home/**").permitAll()
+
+                        // ==========================
+                        // PERSONALIZACIÓN WEB ADMIN
                         // ==========================
                         .requestMatchers(HttpMethod.PUT, "/api/web-config/save")
                         .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
                         .requestMatchers(HttpMethod.PUT, "/api/admin/home/site-settings")
-.hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                        .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
                         .requestMatchers(HttpMethod.PUT, "/api/settings")
                         .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
@@ -105,13 +158,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
                         // ==========================
-                        // HOME PÚBLICO
-                        // ==========================
-                        .requestMatchers(HttpMethod.GET, "/api/home/settings").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/home/slides").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/home/**").permitAll()
-
-                        // ==========================
                         // CREAR PEDIDO PÚBLICO
                         // ==========================
                         .requestMatchers(HttpMethod.POST, "/api/customer-orders").permitAll()
@@ -137,7 +183,7 @@ public class SecurityConfig {
                         .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
                         // ==========================
-                        // BLOQUEOS
+                        // BLOQUEOS DE PEDIDOS
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/orders").denyAll()
                         .requestMatchers(HttpMethod.GET, "/api/orders/**").denyAll()
