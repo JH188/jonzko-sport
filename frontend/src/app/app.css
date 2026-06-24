@@ -1543,3 +1543,821 @@ main {
     grid-template-columns: 1fr;
   }
 }
+/* =========================================================
+   JONZKO FIX URGENTE V4
+   PEGAR AL FINAL DE: frontend/src/app/app.css
+   Corrige: usuario PC, carrito, WhatsApp, botones, miniaturas móvil
+   ========================================================= */
+
+/* =========================
+   1. REGLA GENERAL: NADA SE SALE
+========================= */
+
+:host {
+  overflow-x: hidden !important;
+}
+
+main,
+section,
+footer,
+header,
+.navbar,
+.premium-navbar {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+body {
+  background: #ffffff !important;
+}
+
+/* =========================
+   2. NAVBAR PC - USUARIO NO SE ROMPE
+========================= */
+
+.user-menu-wrapper {
+  position: relative !important;
+}
+
+.user-dropdown {
+  position: absolute !important;
+  top: 58px !important;
+  right: 0 !important;
+  width: 270px !important;
+  min-width: 270px !important;
+  max-width: 270px !important;
+  background: #ffffff !important;
+  color: #050505 !important;
+  border: 1px solid #dedede !important;
+  border-radius: 18px !important;
+  padding: 14px !important;
+  z-index: 99999 !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2) !important;
+  overflow: visible !important;
+}
+
+.user-dropdown-name {
+  width: 100% !important;
+  margin: 0 0 12px !important;
+  color: #050505 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  line-height: 1.3 !important;
+  word-break: normal !important;
+  overflow-wrap: anywhere !important;
+  white-space: normal !important;
+}
+
+.user-dropdown a,
+.user-dropdown button {
+  width: 100% !important;
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.user-logout-btn {
+  background: #050505 !important;
+  color: #ffffff !important;
+  border: 1px solid #050505 !important;
+}
+
+/* =========================
+   3. BOTONES NEGROS CON TEXTO VISIBLE
+========================= */
+
+.product-button,
+.contact-whatsapp-btn,
+.store-preview-text a,
+.hero-slider-content a,
+.featured-btn,
+.checkout-btn,
+.cart-premium-checkout {
+  color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.5px !important;
+  text-indent: 0 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-align: center !important;
+}
+
+.hero-slider-content a {
+  color: #050505 !important;
+  background: #ffffff !important;
+}
+
+.product-button,
+.contact-whatsapp-btn,
+.store-preview-text a,
+.cart-premium-checkout {
+  background: #050505 !important;
+  color: #ffffff !important;
+}
+
+.product-button::before,
+.product-button::after,
+.contact-whatsapp-btn::before,
+.contact-whatsapp-btn::after {
+  display: none !important;
+}
+
+/* =========================
+   4. WHATSAPP FLOTANTE BIEN
+   OJO: usamos whatsapp..png porque tu archivo está así
+========================= */
+
+.whatsapp-float {
+  position: fixed !important;
+  right: 18px !important;
+  bottom: 18px !important;
+  z-index: 9999 !important;
+  width: auto !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  text-decoration: none !important;
+  overflow: visible !important;
+}
+
+.whatsapp-bubble {
+  display: none !important;
+}
+
+.whatsapp-icon {
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+  min-height: 58px !important;
+  border-radius: 50% !important;
+  background: #25d366 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 14px 34px rgba(37, 211, 102, 0.35) !important;
+  overflow: hidden !important;
+}
+
+.whatsapp-icon img {
+  width: 31px !important;
+  height: 31px !important;
+  object-fit: contain !important;
+}
+
+/* =========================
+   5. CARRITO PREMIUM ORDENADO
+========================= */
+
+.cart-premium-overlay,
+.cart-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.56) !important;
+  z-index: 9000 !important;
+}
+
+.cart-premium-panel,
+.cart-panel {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: min(430px, 100vw) !important;
+  height: 100vh !important;
+  background: #ffffff !important;
+  color: #050505 !important;
+  z-index: 9001 !important;
+  padding: 24px !important;
+  overflow-y: auto !important;
+  box-shadow: -24px 0 80px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 28px 0 0 28px !important;
+}
+
+.cart-premium-close,
+.close-cart {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  background: #050505 !important;
+  color: #ffffff !important;
+  border: none !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 18px !important;
+  margin-bottom: 18px !important;
+}
+
+.cart-premium-brand {
+  color: #050505 !important;
+  font-size: 13px !important;
+  font-weight: 950 !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 18px !important;
+}
+
+.cart-premium-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding-bottom: 18px !important;
+  margin-bottom: 18px !important;
+  border-bottom: 1px solid #eeeeee !important;
+}
+
+.cart-premium-header h2 {
+  margin: 0 0 6px !important;
+  color: #050505 !important;
+  font-size: 30px !important;
+  line-height: 1 !important;
+}
+
+.cart-premium-header p {
+  margin: 0 !important;
+  color: #555555 !important;
+  font-size: 14px !important;
+}
+
+.cart-premium-icon {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 16px !important;
+  background: #050505 !important;
+  color: #ffffff !important;
+  display: grid !important;
+  place-items: center !important;
+  position: relative !important;
+}
+
+.cart-premium-icon span {
+  position: absolute !important;
+  top: -7px !important;
+  right: -7px !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  color: #050505 !important;
+  border: 1px solid #dedede !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+}
+
+.cart-premium-empty {
+  border: 1px dashed #d6d6d6 !important;
+  background: #fafafa !important;
+  border-radius: 20px !important;
+  padding: 26px 18px !important;
+  text-align: center !important;
+}
+
+.cart-premium-empty h3 {
+  margin: 0 0 10px !important;
+  color: #050505 !important;
+  font-size: 22px !important;
+}
+
+.cart-premium-empty p {
+  margin: 0 !important;
+  color: #555555 !important;
+}
+
+.cart-premium-items {
+  display: grid !important;
+  gap: 14px !important;
+}
+
+.cart-premium-item,
+.cart-item {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 90px minmax(0, 1fr) !important;
+  gap: 14px !important;
+  padding: 14px !important;
+  border: 1px solid #eeeeee !important;
+  border-radius: 18px !important;
+  background: #ffffff !important;
+}
+
+.cart-premium-item img,
+.cart-item img {
+  width: 90px !important;
+  height: 112px !important;
+  border-radius: 14px !important;
+  object-fit: cover !important;
+  background: #eeeeee !important;
+}
+
+.cart-item-x {
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  background: #050505 !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.cart-product-top {
+  display: grid !important;
+  gap: 6px !important;
+  padding-right: 30px !important;
+}
+
+.cart-product-top h3 {
+  margin: 0 !important;
+  color: #050505 !important;
+  font-size: 15px !important;
+  line-height: 1.15 !important;
+}
+
+.cart-product-top p,
+.cart-product-meta span {
+  margin: 0 !important;
+  color: #666666 !important;
+  font-size: 12px !important;
+}
+
+.cart-product-top strong {
+  color: #050505 !important;
+  font-size: 15px !important;
+}
+
+.cart-premium-qty {
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  margin-top: 10px !important;
+}
+
+.cart-premium-qty button {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50% !important;
+  border: 1px solid #dedede !important;
+  background: #ffffff !important;
+  color: #050505 !important;
+  font-weight: 900 !important;
+}
+
+.cart-premium-total {
+  margin-top: 22px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid #eeeeee !important;
+  display: grid !important;
+  gap: 12px !important;
+}
+
+.cart-premium-total > div {
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  color: #050505 !important;
+}
+
+.cart-premium-total span,
+.cart-premium-total small {
+  color: #555555 !important;
+}
+
+.cart-total-main {
+  font-size: 20px !important;
+  font-weight: 950 !important;
+}
+
+.cart-premium-checkout {
+  width: 100% !important;
+  min-height: 54px !important;
+  border-radius: 999px !important;
+  border: none !important;
+  margin-top: 18px !important;
+}
+
+/* =========================
+   6. HERO MÓVIL MÁS LIMPIO / MINIATURA
+========================= */
+
+@media (max-width: 700px) {
+  .hero-slider {
+    height: 560px !important;
+    min-height: 560px !important;
+  }
+
+  .hero-slider-content {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 76px !important;
+    width: auto !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 9px !important;
+    letter-spacing: 5px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 44px !important;
+    line-height: 0.88 !important;
+    letter-spacing: -1px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .hero-slider-content a {
+    min-width: 168px !important;
+    min-height: 46px !important;
+    padding: 0 18px !important;
+    font-size: 11px !important;
+  }
+
+  .hero-arrow {
+    width: 38px !important;
+    height: 38px !important;
+    bottom: 86px !important;
+    top: auto !important;
+  }
+
+  .hero-dots {
+    bottom: 28px !important;
+  }
+}
+
+/* =========================
+   7. TIENDA / EXCLUSIVO MINIATURA MÓVIL
+========================= */
+
+@media (max-width: 700px) {
+  .store-preview-section,
+  .collection-section,
+  .featured-urban-section,
+  .jonzko-gallery-section,
+  .contact-premium-section {
+    padding: 42px 12px !important;
+  }
+
+  .store-preview-card,
+  .contact-premium-card {
+    padding: 22px !important;
+    border-radius: 24px !important;
+  }
+
+  .store-preview-text h2,
+  .contact-premium-left h2 {
+    font-size: 31px !important;
+    line-height: 1 !important;
+    letter-spacing: -1px !important;
+  }
+
+  .store-preview-text p,
+  .contact-premium-left p,
+  .contact-premium-right p {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+  }
+
+  .store-preview-gallery {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .store-preview-gallery img {
+    height: 170px !important;
+    border-radius: 16px !important;
+  }
+
+  .store-preview-gallery img:nth-child(3) {
+    height: 190px !important;
+  }
+
+  .collection-header h1 {
+    font-size: 42px !important;
+    line-height: 0.95 !important;
+  }
+
+  .collection-header p {
+    font-size: 15px !important;
+  }
+
+  .product-card {
+    flex: 0 0 calc(100vw - 36px) !important;
+    max-width: calc(100vw - 36px) !important;
+    border-radius: 22px !important;
+  }
+
+  .product-image-box {
+    height: 330px !important;
+  }
+
+  .product-info {
+    padding: 18px !important;
+  }
+
+  .product-info h2 {
+    font-size: 25px !important;
+  }
+
+  .current-price {
+    font-size: 22px !important;
+  }
+
+  .product-button {
+    min-height: 50px !important;
+  }
+}
+
+/* =========================
+   8. NOSOTROS / GALERÍA MÓVIL ORDENADO
+========================= */
+
+@media (max-width: 700px) {
+  .featured-urban-section {
+    background: #050505 !important;
+    color: #ffffff !important;
+  }
+
+  .featured-urban-content h2,
+  .jonzko-gallery-header h2 {
+    font-size: 38px !important;
+    line-height: 0.95 !important;
+  }
+
+  .featured-benefits {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .featured-benefit {
+    padding: 12px !important;
+  }
+
+  .featured-benefit strong {
+    font-size: 10px !important;
+  }
+
+  .featured-urban-gallery {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .featured-img img {
+    height: 165px !important;
+  }
+
+  .featured-img-large img {
+    height: 260px !important;
+  }
+
+  .jonzko-gallery-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .gallery-card {
+    height: 190px !important;
+    min-height: 190px !important;
+  }
+
+  .gallery-video-card,
+  .gallery-wide {
+    grid-column: 1 / -1 !important;
+    height: 250px !important;
+  }
+
+  .gallery-card img,
+  .gallery-card video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+}
+
+/* =========================
+   9. CONTACTO Y FOOTER MÓVIL
+========================= */
+
+@media (max-width: 700px) {
+  .contact-premium-links {
+    grid-template-columns: 1fr !important;
+  }
+
+  .contact-premium-links a {
+    min-height: 48px !important;
+    font-size: 13px !important;
+  }
+
+  .footer-premium {
+    background: #050505 !important;
+    padding: 44px 14px 28px !important;
+  }
+
+  .footer-premium-container {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .footer-premium-logo h3 {
+    font-size: 25px !important;
+    letter-spacing: 5px !important;
+  }
+
+  .footer-premium p,
+  .footer-premium a,
+  .footer-premium button,
+  .footer-premium strong {
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+  }
+
+  .footer-premium h4 {
+    font-size: 11px !important;
+    letter-spacing: 5px !important;
+    white-space: normal !important;
+  }
+
+  .footer-premium-column,
+  .footer-premium-payments,
+  .footer-premium-review {
+    padding-top: 20px !important;
+    border-top: 1px solid #252525 !important;
+  }
+
+  .payment-icons span {
+    width: 72px !important;
+    height: 42px !important;
+  }
+
+  .review-slider {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: 12px !important;
+  }
+
+  .review-card {
+    min-width: 260px !important;
+    max-width: 260px !important;
+    padding: 14px !important;
+  }
+
+  .review-user {
+    display: flex !important;
+    gap: 10px !important;
+  }
+
+  .review-photo {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  .footer-premium-bottom {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+}
+
+/* =========================
+   10. CELULAR PEQUEÑO
+========================= */
+
+@media (max-width: 390px) {
+  .hero-slider {
+    height: 535px !important;
+    min-height: 535px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 39px !important;
+  }
+
+  .product-image-box {
+    height: 300px !important;
+  }
+
+  .store-preview-text h2,
+  .contact-premium-left h2 {
+    font-size: 28px !important;
+  }
+
+  .cart-premium-panel,
+  .cart-panel {
+    border-radius: 0 !important;
+    padding: 18px !important;
+  }
+}
+/* =========================================================
+   FIX WHATSAPP JONZKO - RUTA PUBLIC/ASSETS Y POSICIÓN
+   ========================================================= */
+
+.whatsapp-float {
+  position: fixed !important;
+  right: 18px !important;
+  bottom: 18px !important;
+  z-index: 99999 !important;
+  width: 58px !important;
+  height: 58px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  overflow: visible !important;
+}
+
+.whatsapp-bubble {
+  display: none !important;
+}
+
+.whatsapp-icon {
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+  min-height: 58px !important;
+  border-radius: 50% !important;
+  background: #25d366 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.35) !important;
+}
+
+.whatsapp-icon img {
+  width: 31px !important;
+  height: 31px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* PC: un poco más separado */
+@media (min-width: 900px) {
+  .whatsapp-float {
+    right: 28px !important;
+    bottom: 28px !important;
+    width: 62px !important;
+    height: 62px !important;
+  }
+
+  .whatsapp-icon {
+    width: 62px !important;
+    height: 62px !important;
+  }
+}
+
+/* Móvil: no tapa tanto */
+@media (max-width: 700px) {
+  .whatsapp-float {
+    right: 14px !important;
+    bottom: 14px !important;
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  .whatsapp-icon {
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  .whatsapp-icon img {
+    width: 29px !important;
+    height: 29px !important;
+  }
+}
+
+/* =========================================================
+   FIX COLOR GENERAL - NO TAN NEGRO
+   Mantiene negro/blanco, pero más limpio
+   ========================================================= */
+
+main {
+  background: #ffffff !important;
+}
+
+.store-preview-section,
+.collection-section,
+.jonzko-gallery-section,
+.contact-premium-section {
+  background: #ffffff !important;
+}
+
+.store-preview-card,
+.product-card,
+.contact-premium-card {
+  background: #ffffff !important;
+  border-color: #dedede !important;
+}
+
+.featured-urban-section {
+  background: #080808 !important;
+}
+
+.footer-premium {
+  background: #050505 !important;
+}

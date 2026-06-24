@@ -1190,3 +1190,80 @@ td p {
     max-height: 60vh;
   }
 }
+/* =========================================================
+   FIX ADMIN - MENOS NEGRO, MÁS LIMPIO
+   ========================================================= */
+
+.admin-page {
+  background: #f5f5f5 !important;
+}
+
+.admin-main {
+  background: #f5f5f5 !important;
+}
+
+.admin-sidebar {
+  background: #050505 !important;
+}
+
+.admin-header,
+.dashboard-hero,
+.section-heading,
+.panel-card,
+.stat-card,
+.order-card,
+.featured-product,
+.option-row,
+.setting-row {
+  background: #ffffff !important;
+  color: #050505 !important;
+  border: 1px solid #dedede !important;
+}
+
+.admin-header h1,
+.dashboard-hero h2,
+.section-heading h2,
+.panel-card h2,
+.panel-card h3,
+.stat-card h2,
+.stat-card p {
+  color: #050505 !important;
+}
+
+.admin-header p,
+.dashboard-hero p,
+.section-heading p,
+.panel-card p,
+.stat-card span {
+  color: #555555 !important;
+}
+
+.primary-action,
+.edit-btn {
+  background: #050505 !important;
+  color: #ffffff !important;
+}
+
+.secondary-action {
+  background: #ffffff !important;
+  color: #050505 !important;
+  border: 1px solid #d8d8d8 !important;
+}
+
+@media (max-width: 760px) {
+  .admin-sidebar {
+    max-height: 52vh !important;
+  }
+
+  .admin-main {
+    padding: 12px !important;
+  }
+
+  .admin-header,
+  .dashboard-hero,
+  .section-heading,
+  .panel-card,
+  .stat-card {
+    border-radius: 20px !important;
+  }
+}
