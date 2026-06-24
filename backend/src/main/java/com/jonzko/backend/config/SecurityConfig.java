@@ -91,6 +91,8 @@ public class SecurityConfig {
                         // PREFLIGHT CORS
                         // ==========================
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/error").permitAll()
+                        
 
                         // ==========================
                         // PERSONALIZACIÓN WEB PÚBLICA
