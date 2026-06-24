@@ -1293,13 +1293,26 @@ uploadAboutMedia(event: Event, field: AboutMediaField): void {
 }
 
 removeAboutMedia(field: AboutMediaField): void {
-  const confirmRemove = confirm('¿Deseas quitar este archivo?');
+  const confirmRemove = confirm(
+    '¿Deseas eliminar este archivo de Nosotros / Galería? Luego debes guardar para que se quite de la web.'
+  );
 
   if (!confirmRemove) {
     return;
   }
 
   this.aboutSettings[field] = '';
+}
+hasAboutMedia(field: AboutMediaField): boolean {
+  const value = this.aboutSettings[field];
+
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+aboutMediaUrl(field: AboutMediaField): string {
+  const value = this.aboutSettings[field];
+
+  return typeof value === 'string' ? value.trim() : '';
 }
 requestAdminPasswordCode(): void {
   this.adminPasswordMessage = '';
