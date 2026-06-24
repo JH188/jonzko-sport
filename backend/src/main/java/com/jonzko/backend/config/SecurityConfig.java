@@ -47,19 +47,30 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // ==========================
-                        // PERSONALIZACIÓN WEB
+                        // PERSONALIZACIÓN WEB PÚBLICA
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/web-config/settings").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/web-config/save")
-                        .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
-
-                        // ==========================
-                        // SETTINGS PÚBLICO ANTIGUO
-                        // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/public/settings-web").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/public/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/settings/**").permitAll()
+
+                        // ==========================
+                        // PERSONALIZACIÓN WEB ADMIN
+                        // IMPORTANTE:
+                        // Estas rutas guardan Nosotros / Galería / Home / Colores / Logo
+                        // ==========================
+                        .requestMatchers(HttpMethod.PUT, "/api/web-config/save")
+                        .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+
+                        .requestMatchers(HttpMethod.PUT, "/api/settings")
+                        .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+
+                        .requestMatchers(HttpMethod.PUT, "/api/settings/**")
+                        .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+
+                        .requestMatchers(HttpMethod.PUT, "/api/admin/settings")
+                        .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
                         // ==========================
                         // LOGIN ADMIN
@@ -170,7 +181,9 @@ public class SecurityConfig {
                 "Content-Type",
                 "Accept",
                 "Origin",
-                "X-Requested-With"
+                "X-Requested-With",
+                "Cache-Control",
+                "Pragma"
         ));
 
         config.setExposedHeaders(List.of("Authorization"));
