@@ -239,18 +239,31 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  private getUserHeaders(): { headers: HttpHeaders } {
-    const token =
-      localStorage.getItem('jonzko_user_token') ||
-      localStorage.getItem('token') ||
-      '';
+ private getUserHeaders(): { headers: HttpHeaders } {
+  let token =
+    localStorage.getItem('jonzko_user_token') ||
+    localStorage.getItem('token') ||
+    '';
 
-    return {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      })
-    };
+  if (!token) {
+    const userRaw = localStorage.getItem('jonzko_user');
+
+    if (userRaw) {
+      try {
+        const user = JSON.parse(userRaw);
+        token = user?.token || '';
+      } catch (e) {
+        token = '';
+      }
+    }
   }
+
+  return {
+    headers: new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+  };
+}
 
   private getAdminHeaders(): { headers: HttpHeaders } {
     const token = localStorage.getItem('jonzko_admin_token') || '';
