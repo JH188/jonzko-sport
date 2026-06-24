@@ -50,6 +50,7 @@ public class SecurityConfig {
                         // PERSONALIZACIÓN WEB PÚBLICA
                         // ==========================
                         .requestMatchers(HttpMethod.GET, "/api/web-config/settings").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/home/site-settings").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/public/settings-web").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/public/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
@@ -62,6 +63,9 @@ public class SecurityConfig {
                         // ==========================
                         .requestMatchers(HttpMethod.PUT, "/api/web-config/save")
                         .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+
+                        .requestMatchers(HttpMethod.PUT, "/api/admin/home/site-settings")
+.hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
                         .requestMatchers(HttpMethod.PUT, "/api/settings")
                         .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
