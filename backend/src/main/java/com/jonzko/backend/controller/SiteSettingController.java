@@ -5,16 +5,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jonzko.backend.dto.SiteSettingRequest;
 import com.jonzko.backend.entity.SiteSetting;
 import com.jonzko.backend.repository.SiteSettingRepository;
-import com.jonzko.backend.security.JwtService;
-
-import io.jsonwebtoken.Claims;
 
 @RestController
 @RequestMapping("/api")
@@ -27,14 +23,9 @@ import io.jsonwebtoken.Claims;
 public class SiteSettingController {
 
     private final SiteSettingRepository siteSettingRepository;
-    private final JwtService jwtService;
 
-    public SiteSettingController(
-            SiteSettingRepository siteSettingRepository,
-            JwtService jwtService
-    ) {
+    public SiteSettingController(SiteSettingRepository siteSettingRepository) {
         this.siteSettingRepository = siteSettingRepository;
-        this.jwtService = jwtService;
     }
 
     // ==========================
@@ -56,7 +47,6 @@ public class SiteSettingController {
 
     // ==========================
     // ADMIN: GUARDA CONFIGURACIÓN ANTIGUA
-    // La seguridad normal la maneja SecurityConfig con /api/admin/**
     // ==========================
     @PutMapping({"/admin/settings", "/settings"})
     public ResponseEntity<SiteSetting> updateSettings(@RequestBody SiteSettingRequest request) {
@@ -154,51 +144,12 @@ public class SiteSettingController {
 
     // ==========================
     // ADMIN: GUARDA CONFIGURACIÓN POR RUTA LIMPIA
-    // Esta ruta no usa /api/admin ni /api/settings
-    // Valida el token admin manualmente.
+    // La seguridad la maneja SecurityConfig:
+    // PUT /api/web-config/save = ADMIN
     // ==========================
     @PutMapping("/web-config/save")
-    public ResponseEntity<?> updateSettingsClean(
-            @RequestHeader(value = "Authorization", required = false) String authHeader,
-            @RequestBody SiteSettingRequest request
-    ) {
-        if (!isValidAdminToken(authHeader)) {
-            return ResponseEntity.status(403).body("No autorizado");
-        }
-
+    public ResponseEntity<SiteSetting> updateSettingsClean(@RequestBody SiteSettingRequest request) {
         return updateSettings(request);
-    }
-
-    private boolean isValidAdminToken(String authHeader) {
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return false;
-        }
-
-        String token = authHeader.substring(7);
-
-        try {
-            if (!jwtService.isTokenValid(token)) {
-                return false;
-            }
-
-            Claims claims = jwtService.extractClaims(token);
-            String role = claims.get("role", String.class);
-
-            if (role == null || role.isBlank()) {
-                return false;
-            }
-
-            role = role.trim().toUpperCase();
-
-            if (role.startsWith("ROLE_")) {
-                role = role.replace("ROLE_", "");
-            }
-
-            return "ADMIN".equals(role);
-
-        } catch (Exception e) {
-            return false;
-        }
     }
 
     private SiteSetting createDefaultSettings() {
