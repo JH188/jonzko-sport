@@ -32,11 +32,12 @@ public class SiteSettingController {
     // PÚBLICO: LA WEB LEE CONFIGURACIÓN
     // ==========================
     @GetMapping({
-            "/settings",
-            "/products/settings-web",
-            "/public/settings-web",
-            "/web-config/settings"
-    })
+        "/settings",
+        "/products/settings-web",
+        "/public/settings-web",
+        "/web-config/settings",
+        "/home/site-settings"
+})
     public ResponseEntity<SiteSetting> getSettings() {
         SiteSetting settings = siteSettingRepository
                 .findFirstByActiveTrueOrderByIdAsc()
@@ -48,7 +49,7 @@ public class SiteSettingController {
     // ==========================
     // ADMIN: GUARDA CONFIGURACIÓN ANTIGUA
     // ==========================
-    @PutMapping({"/admin/settings", "/settings"})
+    @PutMapping({"/admin/settings", "/settings", "/admin/home/site-settings"})
     public ResponseEntity<SiteSetting> updateSettings(@RequestBody SiteSettingRequest request) {
         SiteSetting settings = siteSettingRepository
                 .findFirstByActiveTrueOrderByIdAsc()
