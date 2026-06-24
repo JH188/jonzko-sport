@@ -4,13 +4,16 @@
 
     <div class="brand-area">
       <img src="assets/logo.jpg" alt="Logo JONZKO" />
-      <span>JONZKO</span>
+      <div>
+        <span>JONZKO</span>
+        <small>Panel administrador</small>
+      </div>
     </div>
 
-    <p class="panel-label">Panel administrativo</p>
-
     @if (!codeStep) {
-      <h1>Acceso administrador</h1>
+      <p class="panel-label">Acceso seguro</p>
+
+      <h1>Administrador</h1>
 
       <p class="subtitle">
         Ingresa tus credenciales. Si son correctas, enviaremos un código de seguridad a tu correo.
@@ -23,7 +26,7 @@
             type="email"
             name="email"
             [(ngModel)]="email"
-            placeholder="Correo administrador"
+            placeholder="admin@jonzko.com"
             autocomplete="email"
           />
         </div>
@@ -52,7 +55,9 @@
         </button>
       </form>
     } @else {
-      <h1>Verificación de seguridad</h1>
+      <p class="panel-label">Verificación</p>
+
+      <h1>Código de seguridad</h1>
 
       <p class="subtitle">
         Enviamos un código de 6 dígitos al correo:
@@ -74,7 +79,7 @@
             type="text"
             name="code"
             [(ngModel)]="code"
-            placeholder="Ejemplo: 123456"
+            placeholder="123456"
             inputmode="numeric"
             maxlength="6"
             autocomplete="one-time-code"
