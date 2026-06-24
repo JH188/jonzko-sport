@@ -3507,3 +3507,910 @@ td p {
     height: 220px;
   }
 }
+/* =========================================================
+   JONZKO ADMIN MOBILE PREMIUM V1
+   PEGAR AL FINAL DE: frontend/src/app/admin/admin.component.css
+   Objetivo: admin bonito en móvil, tablet y PC
+   ========================================================= */
+
+:host {
+  --admin-black: #070707;
+  --admin-black-2: #101010;
+  --admin-panel: #171717;
+  --admin-card: #ffffff;
+  --admin-bg: #f4f1eb;
+  --admin-gold: #bd9854;
+  --admin-gold-2: #d6b56e;
+  --admin-border: #e4ddd2;
+  --admin-text: #080808;
+  --admin-muted: #6c665f;
+  --admin-green: #d8f8e2;
+  --admin-blue: #e7f0ff;
+  --admin-red: #ffe2e2;
+
+  display: block;
+  min-height: 100svh;
+  background: var(--admin-black);
+  color: var(--admin-text);
+}
+
+:host,
+:host * {
+  box-sizing: border-box;
+}
+
+:host img,
+:host video {
+  max-width: 100%;
+  display: block;
+}
+
+:host button,
+:host a,
+:host input,
+:host select,
+:host textarea {
+  font-family: inherit;
+}
+
+:host button {
+  cursor: pointer;
+}
+
+/* =========================
+   LAYOUT GENERAL
+========================= */
+
+:host .admin-layout,
+:host .admin-page,
+:host .admin-shell,
+:host .dashboard-layout,
+:host .dashboard-shell {
+  width: 100%;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  background: var(--admin-bg);
+  overflow-x: hidden;
+}
+
+/* =========================
+   SIDEBAR / MENÚ IZQUIERDO
+========================= */
+
+:host aside,
+:host .sidebar,
+:host .admin-sidebar,
+:host .side-menu,
+:host .admin-menu {
+  background:
+    radial-gradient(circle at top left, rgba(189, 152, 84, 0.16), transparent 32%),
+    linear-gradient(180deg, #080808 0%, #050505 100%) !important;
+  color: #ffffff !important;
+  min-height: 100svh;
+  padding: 24px 16px;
+  border-right: 1px solid rgba(189, 152, 84, 0.18);
+  overflow-y: auto;
+}
+
+:host aside::-webkit-scrollbar,
+:host .sidebar::-webkit-scrollbar,
+:host .admin-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+:host aside::-webkit-scrollbar-thumb,
+:host .sidebar::-webkit-scrollbar-thumb,
+:host .admin-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(189, 152, 84, 0.55);
+  border-radius: 999px;
+}
+
+/* Logo / marca */
+:host .admin-logo,
+:host .sidebar-logo,
+:host .brand,
+:host .admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 34px;
+}
+
+:host .admin-logo img,
+:host .sidebar-logo img,
+:host .brand img,
+:host .admin-brand img {
+  width: 54px !important;
+  height: 54px !important;
+  object-fit: contain !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  padding: 6px !important;
+}
+
+:host .admin-logo h1,
+:host .sidebar-logo h1,
+:host .brand h1,
+:host .admin-brand h1,
+:host .admin-logo h2,
+:host .sidebar-logo h2,
+:host .brand h2,
+:host .admin-brand h2 {
+  margin: 0;
+  color: #ffffff !important;
+  font-size: 23px !important;
+  line-height: 1 !important;
+  letter-spacing: 5px !important;
+  font-weight: 950 !important;
+}
+
+:host .admin-logo span,
+:host .sidebar-logo span,
+:host .brand span,
+:host .admin-brand span {
+  display: block;
+  margin-top: 4px;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  letter-spacing: 1.2px !important;
+}
+
+/* Títulos GENERAL / OTROS */
+:host aside h3,
+:host aside h4,
+:host .sidebar h3,
+:host .sidebar h4,
+:host .admin-sidebar h3,
+:host .admin-sidebar h4 {
+  color: var(--admin-gold-2) !important;
+  font-size: 11px !important;
+  letter-spacing: 6px !important;
+  text-transform: uppercase !important;
+  margin: 22px 4px 12px !important;
+}
+
+/* Botones del menú */
+:host aside a,
+:host aside button,
+:host .sidebar a,
+:host .sidebar button,
+:host .admin-sidebar a,
+:host .admin-sidebar button,
+:host .admin-menu a,
+:host .admin-menu button {
+  width: 100%;
+  min-height: 50px;
+  margin-bottom: 10px;
+  padding: 0 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 900;
+  text-decoration: none;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+:host aside a:hover,
+:host aside button:hover,
+:host .sidebar a:hover,
+:host .sidebar button:hover,
+:host .admin-sidebar a:hover,
+:host .admin-sidebar button:hover {
+  transform: translateY(-1px);
+  background: rgba(189, 152, 84, 0.24);
+  border-color: rgba(189, 152, 84, 0.42);
+}
+
+/* Botón activo */
+:host aside .active,
+:host aside a.active,
+:host aside button.active,
+:host .sidebar .active,
+:host .admin-sidebar .active,
+:host .menu-active {
+  background: linear-gradient(135deg, var(--admin-gold), #d8b76f) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 14px 32px rgba(189, 152, 84, 0.28);
+}
+
+/* Cerrar sesión */
+:host .logout,
+:host .logout-btn,
+:host .admin-logout,
+:host button[class*='logout'] {
+  margin-top: 28px;
+  min-height: 52px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  justify-content: center !important;
+}
+
+/* =========================
+   CONTENIDO PRINCIPAL
+========================= */
+
+:host main,
+:host .admin-main,
+:host .admin-content,
+:host .dashboard-main,
+:host .dashboard-content,
+:host .content {
+  min-width: 0;
+  background: var(--admin-bg);
+  padding: 28px;
+  overflow-x: hidden;
+}
+
+/* Header superior del contenido */
+:host .admin-header,
+:host .dashboard-header,
+:host .panel-header,
+:host .content-header {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--admin-border);
+  border-radius: 26px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 18px 45px rgba(31, 23, 12, 0.06);
+}
+
+:host .admin-header span,
+:host .dashboard-header span,
+:host .panel-header span,
+:host .content-header span,
+:host .section-tag,
+:host .tag {
+  color: var(--admin-gold);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+
+:host .admin-header h1,
+:host .dashboard-header h1,
+:host .panel-header h1,
+:host .content-header h1,
+:host h1 {
+  margin: 10px 0 10px;
+  color: #050505;
+  font-size: clamp(30px, 4vw, 54px);
+  line-height: 0.96;
+  letter-spacing: -1.4px;
+}
+
+:host .admin-header p,
+:host .dashboard-header p,
+:host .panel-header p,
+:host .content-header p {
+  margin: 0;
+  color: #312b24;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* =========================
+   CARDS / RESUMEN
+========================= */
+
+:host .stats-grid,
+:host .summary-grid,
+:host .dashboard-grid,
+:host .cards-grid,
+:host .metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+:host .stat-card,
+:host .summary-card,
+:host .metric-card,
+:host .admin-card,
+:host .dashboard-card,
+:host .panel-card,
+:host .card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--admin-border);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 14px 36px rgba(31, 23, 12, 0.055);
+  overflow: hidden;
+}
+
+:host .stat-card h3,
+:host .summary-card h3,
+:host .metric-card h3,
+:host .admin-card h3,
+:host .dashboard-card h3,
+:host .panel-card h3,
+:host .card h3 {
+  margin: 0 0 14px;
+  color: #050505;
+  font-size: 17px;
+  line-height: 1.15;
+}
+
+:host .stat-card strong,
+:host .summary-card strong,
+:host .metric-card strong,
+:host .admin-card strong,
+:host .dashboard-card strong,
+:host .panel-card strong,
+:host .card strong {
+  color: #050505;
+  font-size: 32px;
+  line-height: 1;
+}
+
+:host .stat-card p,
+:host .summary-card p,
+:host .metric-card p,
+:host .admin-card p,
+:host .dashboard-card p,
+:host .panel-card p,
+:host .card p {
+  color: var(--admin-muted);
+  line-height: 1.55;
+}
+
+/* =========================
+   BOTONES
+========================= */
+
+:host main button,
+:host main a.button,
+:host main .btn,
+:host main .admin-btn,
+:host main .primary-btn,
+:host main .action-btn {
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid #d8d1c5;
+  background: #ffffff;
+  color: #070707;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 950;
+  text-decoration: none;
+}
+
+:host main .primary-btn,
+:host main .btn-primary,
+:host main .save-btn,
+:host main .update-btn,
+:host main button[class*='actualizar'],
+:host main button[class*='guardar'] {
+  background: #050505 !important;
+  color: #ffffff !important;
+  border-color: #050505 !important;
+}
+
+:host main .danger,
+:host main .delete,
+:host main .btn-danger {
+  background: #fff0f0 !important;
+  color: #b00000 !important;
+  border-color: #ffd0d0 !important;
+}
+
+/* =========================
+   ÚLTIMOS PEDIDOS / LISTAS
+========================= */
+
+:host .orders-list,
+:host .recent-orders,
+:host .order-list,
+:host .clients-list,
+:host .quick-actions {
+  display: grid;
+  gap: 12px;
+}
+
+:host .order-item,
+:host .client-item,
+:host .quick-action,
+:host .list-item,
+:host li {
+  border: 1px solid #e6ded2;
+  border-radius: 18px;
+  background: #ffffff;
+  padding: 16px;
+}
+
+:host .badge,
+:host .status,
+:host .status-badge,
+:host span[class*='confirm'],
+:host span[class*='enviado'],
+:host span[class*='cancel'] {
+  min-height: 30px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 950;
+}
+
+:host span[class*='confirm'],
+:host .confirmed,
+:host .confirmado {
+  background: var(--admin-green) !important;
+  color: #058331 !important;
+}
+
+:host span[class*='enviado'],
+:host .sent,
+:host .enviado {
+  background: var(--admin-blue) !important;
+  color: #1d65d8 !important;
+}
+
+:host span[class*='cancel'],
+:host .cancelled,
+:host .cancelado {
+  background: var(--admin-red) !important;
+  color: #c80000 !important;
+}
+
+/* =========================
+   CATÁLOGO / PRODUCTOS
+========================= */
+
+:host .products-grid,
+:host .catalog-grid,
+:host .product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+:host .product-card,
+:host .catalog-card {
+  background: #ffffff;
+  border: 1px solid var(--admin-border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(31, 23, 12, 0.055);
+}
+
+:host .product-card img,
+:host .catalog-card img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  background: #eeeeee;
+}
+
+:host .product-card .product-info,
+:host .catalog-card .product-info,
+:host .product-card-content {
+  padding: 16px;
+}
+
+:host .product-card h3,
+:host .catalog-card h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+/* =========================
+   FORMULARIOS
+========================= */
+
+:host input,
+:host select,
+:host textarea {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 14px;
+  border: 1px solid #dcd4c8;
+  background: #ffffff;
+  color: #080808;
+  padding: 0 14px;
+  outline: none;
+}
+
+:host textarea {
+  min-height: 120px;
+  padding: 14px;
+  resize: vertical;
+}
+
+:host input:focus,
+:host select:focus,
+:host textarea:focus {
+  border-color: var(--admin-gold);
+  box-shadow: 0 0 0 4px rgba(189, 152, 84, 0.16);
+}
+
+:host label {
+  display: block;
+  margin-bottom: 8px;
+  color: #191919;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+/* =========================
+   TABLAS RESPONSIVE
+========================= */
+
+:host table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+:host th,
+:host td {
+  padding: 14px;
+  border-bottom: 1px solid #eee7dc;
+  text-align: left;
+  font-size: 13px;
+}
+
+:host th {
+  background: #faf7f0;
+  font-weight: 950;
+  color: #111111;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1100px) {
+  :host .admin-layout,
+  :host .admin-page,
+  :host .admin-shell,
+  :host .dashboard-layout,
+  :host .dashboard-shell {
+    grid-template-columns: 260px minmax(0, 1fr);
+  }
+
+  :host main,
+  :host .admin-main,
+  :host .admin-content,
+  :host .dashboard-main,
+  :host .dashboard-content,
+  :host .content {
+    padding: 20px;
+  }
+
+  :host .stats-grid,
+  :host .summary-grid,
+  :host .dashboard-grid,
+  :host .cards-grid,
+  :host .metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  :host .products-grid,
+  :host .catalog-grid,
+  :host .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================
+   MÓVIL - APP ADMIN
+========================= */
+
+@media (max-width: 760px) {
+  :host {
+    background: #080808;
+  }
+
+  :host .admin-layout,
+  :host .admin-page,
+  :host .admin-shell,
+  :host .dashboard-layout,
+  :host .dashboard-shell {
+    display: block !important;
+    min-height: 100svh;
+    background: var(--admin-bg);
+  }
+
+  :host aside,
+  :host .sidebar,
+  :host .admin-sidebar,
+  :host .side-menu,
+  :host .admin-menu {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100% !important;
+    min-height: auto !important;
+    max-height: 54svh;
+    padding: 18px 14px;
+    border-right: none;
+    border-bottom: 1px solid rgba(189, 152, 84, 0.28);
+    border-radius: 0 0 26px 26px;
+    overflow-y: auto;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  }
+
+  :host .admin-logo,
+  :host .sidebar-logo,
+  :host .brand,
+  :host .admin-brand {
+    margin-bottom: 18px;
+  }
+
+  :host .admin-logo img,
+  :host .sidebar-logo img,
+  :host .brand img,
+  :host .admin-brand img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  :host .admin-logo h1,
+  :host .sidebar-logo h1,
+  :host .brand h1,
+  :host .admin-brand h1,
+  :host .admin-logo h2,
+  :host .sidebar-logo h2,
+  :host .brand h2,
+  :host .admin-brand h2 {
+    font-size: 20px !important;
+    letter-spacing: 4px !important;
+  }
+
+  :host aside h3,
+  :host aside h4,
+  :host .sidebar h3,
+  :host .sidebar h4,
+  :host .admin-sidebar h3,
+  :host .admin-sidebar h4 {
+    margin: 16px 4px 10px !important;
+    font-size: 10px !important;
+    letter-spacing: 5px !important;
+  }
+
+  :host aside a,
+  :host aside button,
+  :host .sidebar a,
+  :host .sidebar button,
+  :host .admin-sidebar a,
+  :host .admin-sidebar button,
+  :host .admin-menu a,
+  :host .admin-menu button {
+    min-height: 48px;
+    border-radius: 15px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  :host .logout,
+  :host .logout-btn,
+  :host .admin-logout,
+  :host button[class*='logout'] {
+    margin-top: 18px;
+  }
+
+  :host main,
+  :host .admin-main,
+  :host .admin-content,
+  :host .dashboard-main,
+  :host .dashboard-content,
+  :host .content {
+    padding: 14px;
+    padding-bottom: 24px;
+    background: var(--admin-bg);
+  }
+
+  :host .admin-header,
+  :host .dashboard-header,
+  :host .panel-header,
+  :host .content-header {
+    padding: 22px 20px;
+    border-radius: 24px;
+    margin-bottom: 22px;
+  }
+
+  :host .admin-header h1,
+  :host .dashboard-header h1,
+  :host .panel-header h1,
+  :host .content-header h1,
+  :host h1 {
+    font-size: 31px;
+    line-height: 0.98;
+  }
+
+  :host .stats-grid,
+  :host .summary-grid,
+  :host .dashboard-grid,
+  :host .cards-grid,
+  :host .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  :host .stat-card,
+  :host .summary-card,
+  :host .metric-card,
+  :host .admin-card,
+  :host .dashboard-card,
+  :host .panel-card,
+  :host .card {
+    border-radius: 20px;
+    padding: 18px;
+  }
+
+  :host .stat-card h3,
+  :host .summary-card h3,
+  :host .metric-card h3,
+  :host .admin-card h3,
+  :host .dashboard-card h3,
+  :host .panel-card h3,
+  :host .card h3 {
+    font-size: 15px;
+  }
+
+  :host .stat-card strong,
+  :host .summary-card strong,
+  :host .metric-card strong,
+  :host .admin-card strong,
+  :host .dashboard-card strong,
+  :host .panel-card strong,
+  :host .card strong {
+    font-size: 28px;
+  }
+
+  :host main button,
+  :host main a.button,
+  :host main .btn,
+  :host main .admin-btn,
+  :host main .primary-btn,
+  :host main .action-btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  :host .products-grid,
+  :host .catalog-grid,
+  :host .product-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  :host .product-card,
+  :host .catalog-card {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    border-radius: 18px;
+  }
+
+  :host .product-card img,
+  :host .catalog-card img {
+    width: 128px;
+    height: 160px;
+    object-fit: cover;
+  }
+
+  :host .product-card .product-info,
+  :host .catalog-card .product-info,
+  :host .product-card-content {
+    padding: 14px;
+  }
+
+  :host .product-card h3,
+  :host .catalog-card h3 {
+    font-size: 15px;
+  }
+
+  :host table {
+    display: block;
+    overflow-x: auto;
+    border-radius: 18px;
+  }
+
+  :host th,
+  :host td {
+    min-width: 130px;
+    font-size: 12px;
+    padding: 12px;
+  }
+
+  :host input,
+  :host select,
+  :host textarea {
+    min-height: 46px;
+    font-size: 14px;
+  }
+}
+
+/* =========================
+   CELULARES PEQUEÑOS
+========================= */
+
+@media (max-width: 430px) {
+  :host main,
+  :host .admin-main,
+  :host .admin-content,
+  :host .dashboard-main,
+  :host .dashboard-content,
+  :host .content {
+    padding: 10px;
+  }
+
+  :host .admin-header,
+  :host .dashboard-header,
+  :host .panel-header,
+  :host .content-header {
+    padding: 20px 18px;
+  }
+
+  :host .admin-header h1,
+  :host .dashboard-header h1,
+  :host .panel-header h1,
+  :host .content-header h1,
+  :host h1 {
+    font-size: 28px;
+  }
+
+  :host .stats-grid,
+  :host .summary-grid,
+  :host .dashboard-grid,
+  :host .cards-grid,
+  :host .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  :host .product-card,
+  :host .catalog-card {
+    grid-template-columns: 112px 1fr;
+  }
+
+  :host .product-card img,
+  :host .catalog-card img {
+    width: 112px;
+    height: 150px;
+  }
+
+  :host aside,
+  :host .sidebar,
+  :host .admin-sidebar,
+  :host .side-menu,
+  :host .admin-menu {
+    max-height: 56svh;
+  }
+}
+
+/* =========================
+   CELULAR EN HORIZONTAL
+========================= */
+
+@media (max-height: 520px) and (max-width: 900px) {
+  :host aside,
+  :host .sidebar,
+  :host .admin-sidebar,
+  :host .side-menu,
+  :host .admin-menu {
+    max-height: 72svh;
+  }
+}
