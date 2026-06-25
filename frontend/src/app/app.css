@@ -13044,3 +13044,208 @@ header .brand img {
     object-position: 92% center !important;
   }
 }
+/* =========================================================
+   JONZKO EXCLUSIVO - MINI CARDS MOBILE APP
+   Solo afecta la sección Exclusivo en celular
+   ========================================================= */
+
+@media (max-width: 768px) {
+  #producto.collection-section,
+  .collection-section#producto {
+    padding: 34px 14px 28px !important;
+    background: #fffdf9 !important;
+  }
+
+  #producto .collection-header {
+    margin-bottom: 16px !important;
+  }
+
+  #producto .collection-header .tag {
+    padding: 8px 16px !important;
+    border-radius: 999px !important;
+    font-size: 10px !important;
+    letter-spacing: 0.32em !important;
+  }
+
+  #producto .collection-header h1 {
+    margin: 14px 0 6px !important;
+    font-size: 38px !important;
+    line-height: 0.95 !important;
+  }
+
+  #producto .collection-header p {
+    margin: 0 !important;
+    font-size: 14px !important;
+  }
+
+  #producto .products-carousel-shell {
+    width: 100% !important;
+    margin: 0 !important;
+    position: relative !important;
+  }
+
+  #producto .products-grid,
+  #producto .products-carousel {
+    display: flex !important;
+    gap: 12px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    padding: 0 0 8px !important;
+    scrollbar-width: none !important;
+  }
+
+  #producto .products-grid::-webkit-scrollbar,
+  #producto .products-carousel::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  #producto .product-card {
+    flex: 0 0 calc(100vw - 34px) !important;
+    max-width: calc(100vw - 34px) !important;
+    min-height: 0 !important;
+    height: 178px !important;
+    display: grid !important;
+    grid-template-columns: 138px minmax(0, 1fr) !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    border: 1px solid #e3cfad !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08) !important;
+    scroll-snap-align: start !important;
+  }
+
+  #producto .product-image-box {
+    width: 138px !important;
+    height: 178px !important;
+    border-radius: 0 !important;
+    background: #050505 !important;
+    overflow: hidden !important;
+  }
+
+  #producto .product-image,
+  #producto .product-main-image,
+  #producto .product-hover-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 8px !important;
+    background: #050505 !important;
+  }
+
+  #producto .discount-badge {
+    top: 8px !important;
+    left: 8px !important;
+    padding: 5px 8px !important;
+    font-size: 8px !important;
+  }
+
+  #producto .new-badge {
+    display: none !important;
+  }
+
+  #producto .product-info {
+    min-width: 0 !important;
+    padding: 14px 14px 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  #producto .product-category {
+    margin: 0 0 6px !important;
+    font-size: 9px !important;
+    letter-spacing: 0.25em !important;
+    color: #9b7437 !important;
+  }
+
+  #producto .product-info h2 {
+    margin: 0 0 8px !important;
+    font-size: 20px !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.4px !important;
+
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  #producto .product-description,
+  #producto .product-description-hidden {
+    display: none !important;
+  }
+
+  #producto .product-price {
+    margin: auto 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  #producto .old-price {
+    font-size: 11px !important;
+    color: #777777 !important;
+  }
+
+  #producto .current-price {
+    font-size: 18px !important;
+    font-weight: 950 !important;
+  }
+
+  #producto .product-button {
+    width: 100% !important;
+    min-height: 38px !important;
+    border-radius: 999px !important;
+    background: #050505 !important;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 950 !important;
+  }
+
+  #producto .products-arrow {
+    width: 34px !important;
+    height: 34px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    border-radius: 999px !important;
+    background: rgba(0, 0, 0, 0.65) !important;
+    color: #ffffff !important;
+    font-size: 22px !important;
+    display: grid !important;
+  }
+
+  #producto .products-arrow-left {
+    left: 6px !important;
+  }
+
+  #producto .products-arrow-right {
+    right: 6px !important;
+  }
+
+  #producto::after {
+    display: none !important;
+    content: none !important;
+  }
+}
+
+@media (max-width: 390px) {
+  #producto .product-card {
+    height: 166px !important;
+    grid-template-columns: 126px minmax(0, 1fr) !important;
+  }
+
+  #producto .product-image-box {
+    width: 126px !important;
+    height: 166px !important;
+  }
+
+  #producto .product-info h2 {
+    font-size: 18px !important;
+  }
+
+  #producto .product-button {
+    min-height: 36px !important;
+    font-size: 10px !important;
+  }
+}
