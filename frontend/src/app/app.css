@@ -12703,3 +12703,344 @@ header .brand img {
     white-space: pre-line !important;
   }
 }
+/* =========================================================
+   JONZKO HERO / INICIO - PRUEBA MOBILE-FIRST PREMIUM
+   Solo portada principal
+   ========================================================= */
+
+.hero-slider {
+  width: 100% !important;
+  height: calc(100vh - 116px) !important;
+  min-height: 680px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: #050505 !important;
+}
+
+.hero-track,
+.hero-slide {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hero-slide {
+  position: absolute !important;
+  inset: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.45s ease !important;
+  background: #050505 !important;
+}
+
+.hero-slide.active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  z-index: 1 !important;
+}
+
+.hero-slide picture,
+.hero-slide img,
+.hero-slide video {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+
+.hero-slide img,
+.hero-slide video {
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.hero-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.24) 52%, rgba(0, 0, 0, 0.52) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.76) 100%) !important;
+}
+
+.hero-slider-content {
+  position: absolute !important;
+  left: 6.5% !important;
+  bottom: 112px !important;
+  z-index: 4 !important;
+  width: min(720px, 88%) !important;
+  color: #ffffff !important;
+}
+
+.hero-slider-content span {
+  display: block !important;
+  margin-bottom: 16px !important;
+  color: #d8b871 !important;
+  font-size: 12px !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.55em !important;
+  text-transform: uppercase !important;
+}
+
+.hero-slider-content h1 {
+  margin: 0 0 26px !important;
+  color: #ffffff !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(62px, 8vw, 122px) !important;
+  line-height: 0.82 !important;
+  letter-spacing: -0.05em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 20px 58px rgba(0, 0, 0, 0.48) !important;
+}
+
+.hero-slider-content a {
+  width: fit-content !important;
+  min-width: 220px !important;
+  min-height: 56px !important;
+  padding: 0 32px !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  color: #050505 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.26) !important;
+}
+
+.hero-arrow {
+  position: absolute !important;
+  top: 50% !important;
+  z-index: 5 !important;
+  width: 54px !important;
+  height: 54px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.76) !important;
+  background: rgba(0, 0, 0, 0.34) !important;
+  color: #ffffff !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 34px !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.hero-arrow-left {
+  left: 28px !important;
+}
+
+.hero-arrow-right {
+  right: 28px !important;
+}
+
+.hero-dots {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 30px !important;
+  z-index: 5 !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 9px !important;
+}
+
+.hero-dots button {
+  width: 28px !important;
+  height: 7px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  border: 1px solid #ffffff !important;
+  background: transparent !important;
+}
+
+.hero-dots button.active {
+  width: 44px !important;
+  background: #d8b871 !important;
+  border-color: #d8b871 !important;
+}
+
+/* =========================================================
+   HERO MÓVIL TIPO APP
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .hero-slider {
+    width: calc(100% - 24px) !important;
+    height: 560px !important;
+    min-height: 560px !important;
+    margin: 12px auto 0 !important;
+    border-radius: 30px !important;
+    overflow: hidden !important;
+    background: #050505 !important;
+    box-shadow: 0 24px 65px rgba(0, 0, 0, 0.18) !important;
+  }
+
+  .hero-slide {
+    border-radius: 30px !important;
+    overflow: hidden !important;
+  }
+
+  .hero-slide img,
+  .hero-slide video {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .hero-overlay {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.28) 45%, rgba(0, 0, 0, 0.84) 100%) !important;
+  }
+
+  .hero-slider-content {
+    left: 18px !important;
+    right: 18px !important;
+    bottom: 74px !important;
+    width: auto !important;
+  }
+
+  .hero-slider-content span {
+    margin-bottom: 10px !important;
+    font-size: 9px !important;
+    letter-spacing: 0.45em !important;
+  }
+
+  .hero-slider-content h1 {
+    max-width: 92% !important;
+    margin-bottom: 16px !important;
+    font-size: clamp(40px, 13vw, 60px) !important;
+    line-height: 0.88 !important;
+    letter-spacing: -0.04em !important;
+  }
+
+  .hero-slider-content a {
+    min-width: 190px !important;
+    min-height: 50px !important;
+    padding: 0 22px !important;
+    font-size: 11px !important;
+  }
+
+  .hero-arrow {
+    top: auto !important;
+    bottom: 74px !important;
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 28px !important;
+    background: rgba(0, 0, 0, 0.42) !important;
+  }
+
+  .hero-arrow-left {
+    left: 12px !important;
+  }
+
+  .hero-arrow-right {
+    right: 12px !important;
+  }
+
+  .hero-dots {
+    bottom: 22px !important;
+  }
+
+  .hero-dots button {
+    width: 24px !important;
+    height: 6px !important;
+  }
+
+  .hero-dots button.active {
+    width: 38px !important;
+  }
+}
+
+/* Celular pequeño */
+@media (max-width: 430px) {
+  .hero-slider {
+    width: calc(100% - 18px) !important;
+    height: 535px !important;
+    min-height: 535px !important;
+    border-radius: 26px !important;
+  }
+
+  .hero-slide {
+    border-radius: 26px !important;
+  }
+
+  .hero-slider-content {
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 70px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 42px !important;
+  }
+
+  .hero-slider-content a {
+    min-width: 176px !important;
+    min-height: 48px !important;
+  }
+}
+/* =========================================================
+   AJUSTE HERO - MENOS OSCURO EN PC Y MÓVIL
+   Mantiene el diseño tipo app, pero deja ver mejor la foto
+   ========================================================= */
+
+.hero-overlay {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.08) 52%,
+      rgba(0, 0, 0, 0.28) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.03) 0%,
+      rgba(0, 0, 0, 0.46) 100%
+    ) !important;
+}
+
+/* En móvil dejamos un poco más de sombra abajo para que el texto se lea */
+@media (max-width: 768px) {
+  .hero-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.02) 0%,
+        rgba(0, 0, 0, 0.16) 45%,
+        rgba(0, 0, 0, 0.60) 100%
+      ) !important;
+  }
+}
+/* =========================================================
+   HERO - RESPETAR POSICIÓN DE IMAGEN DESDE ADMIN
+   Para que cada foto pueda acomodarse distinto en móvil
+   ========================================================= */
+
+.hero-slide img,
+.hero-slide video {
+  object-position: var(--hero-position, center) !important;
+}
+
+/* Ajuste móvil general: muestra un poco más hacia la derecha */
+@media (max-width: 768px) {
+  .hero-slide img,
+  .hero-slide video {
+    object-position: 62% center !important;
+  }
+}
+/* =========================================================
+   HERO MÓVIL - MOSTRAR PARTE DERECHA DE LA FOTO
+   PC se queda igual, solo mueve la imagen en celular
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .hero-slide img,
+  .hero-slide video {
+    object-position: right center !important;
+  }
+}
+@media (max-width: 768px) {
+  .hero-slide img,
+  .hero-slide video {
+    object-position: 92% center !important;
+  }
+}
