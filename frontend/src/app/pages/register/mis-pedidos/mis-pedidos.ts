@@ -16,7 +16,7 @@ import { CustomerOrderService } from '../../../services/customer-order.service';
 export class MisPedidosComponent implements OnInit {
   user = signal<AuthUser | null>(null);
 
-  searchText = '';
+  selectedDate = '';
   selectedFilter = 'todos';
 
   pedidos: any[] = [];
@@ -36,11 +36,29 @@ export class MisPedidosComponent implements OnInit {
 
     console.log('USUARIO ACTUAL MIS PEDIDOS:', currentUser);
 
-    const userId = Number(
+    const userId = this.getCurrentUserId();
+
+    if (!userId) {
+      this.error = 'No se encontró el usuario. Cierra sesión e inicia sesión nuevamente.';
+      return;
+    }
+
+    this.loadPedidos(userId);
+  }
+
+  getCurrentUserId(): number {
+    const currentUser: any = this.user() || this.authService.getUser();
+
+    return Number(
       currentUser?.id ||
-      currentUser?.userId ||
-      currentUser?.user_id
+        currentUser?.userId ||
+        currentUser?.user_id ||
+        0
     );
+  }
+
+  refreshPedidos(): void {
+    const userId = this.getCurrentUserId();
 
     if (!userId) {
       this.error = 'No se encontró el usuario. Cierra sesión e inicia sesión nuevamente.';
@@ -158,6 +176,55 @@ export class MisPedidosComponent implements OnInit {
     };
   }
 
+  filteredPedidos(): any[] {
+    let pedidos = [...this.pedidos];
+
+    if (this.selectedDate) {
+      pedidos = pedidos.filter((pedido) => {
+        return this.toInputDate(pedido.createdAt) === this.selectedDate;
+      });
+    }
+
+    if (this.selectedFilter !== 'todos') {
+      pedidos = pedidos.filter((pedido) => {
+        const estadoTexto = this.getStatusText(pedido).toLowerCase();
+        const estadoRaw = String(pedido.paymentStatus || pedido.orderStatus || '').toLowerCase();
+
+        if (this.selectedFilter === 'Confirmado') {
+          return (
+            estadoTexto === 'confirmado' ||
+            estadoTexto === 'pagado' ||
+            estadoRaw === 'confirmado' ||
+            estadoRaw === 'pagado' ||
+            estadoRaw === 'pago aprobado'
+          );
+        }
+
+        if (this.selectedFilter === 'Pendiente') {
+          return estadoTexto === 'pendiente' || estadoRaw === 'pendiente';
+        }
+
+        return true;
+      });
+    }
+
+    return pedidos;
+  }
+
+  toInputDate(value: any): string {
+    if (!value) return '';
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) return '';
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
   openDetalle(pedido: any): void {
     this.selectedPedido = pedido;
   }
@@ -166,41 +233,14 @@ export class MisPedidosComponent implements OnInit {
     this.selectedPedido = null;
   }
 
-  filteredPedidos(): any[] {
-    return this.pedidos.filter((pedido) => {
-      const texto = this.searchText.toLowerCase().trim();
-
-      const codigo = String(pedido.id || '').toLowerCase();
-      const estado = String(pedido.paymentStatus || pedido.orderStatus || '').toLowerCase();
-      const fecha = String(pedido.createdAt || '').toLowerCase();
-      const metodo = String(pedido.paymentMethod || '').toLowerCase();
-
-      const matchText =
-        !texto ||
-        codigo.includes(texto) ||
-        estado.includes(texto) ||
-        fecha.includes(texto) ||
-        metodo.includes(texto);
-
-      if (this.selectedFilter === 'todos') {
-        return matchText;
-      }
-
-      const estadoPedido = String(pedido.paymentStatus || pedido.orderStatus || '').toLowerCase();
-      const filtro = String(this.selectedFilter || '').toLowerCase();
-
-      return estadoPedido === filtro && matchText;
-    });
-  }
-
   getStatusClass(status: string): string {
     const estado = String(status || '').toLowerCase();
 
     if (estado === 'pagado') return 'status-confirmed';
     if (estado === 'pago aprobado') return 'status-confirmed';
     if (estado === 'confirmado') return 'status-confirmed';
-    if (estado === 'entregado') return 'status-delivered';
-    if (estado === 'enviado') return 'status-sent';
+    if (estado === 'entregado') return 'status-confirmed';
+    if (estado === 'enviado') return 'status-confirmed';
     if (estado === 'pendiente') return 'status-pending';
     if (estado === 'cancelado') return 'status-cancelled';
     if (estado === 'rechazado') return 'status-cancelled';
@@ -212,12 +252,12 @@ export class MisPedidosComponent implements OnInit {
     const estado = pedido.paymentStatus || pedido.orderStatus || 'Pendiente';
     const estadoLower = String(estado).toLowerCase();
 
-    if (estadoLower === 'pagado') return 'Pagado';
-    if (estadoLower === 'pago aprobado') return 'Pagado';
+    if (estadoLower === 'pagado') return 'Confirmado';
+    if (estadoLower === 'pago aprobado') return 'Confirmado';
     if (estadoLower === 'confirmado') return 'Confirmado';
+    if (estadoLower === 'enviado') return 'Confirmado';
+    if (estadoLower === 'entregado') return 'Confirmado';
     if (estadoLower === 'pendiente') return 'Pendiente';
-    if (estadoLower === 'enviado') return 'Enviado';
-    if (estadoLower === 'entregado') return 'Entregado';
     if (estadoLower === 'cancelado') return 'Cancelado';
     if (estadoLower === 'rechazado') return 'Rechazado';
 

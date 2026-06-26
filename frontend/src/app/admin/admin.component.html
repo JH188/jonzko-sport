@@ -185,8 +185,7 @@
           <span class="eyebrow">Resumen general</span>
           <h2>Panel</h2>
           <p>
-            Control en tiempo real de productos, clientes registrados, pedidos, pagos pendientes y
-            ventas confirmadas de la tienda online.
+            JONZKO - tienda Online --
           </p>
         </div>
 
@@ -408,8 +407,7 @@
           <span class="eyebrow">Gestión de exclusivos</span>
           <h2>Exclusivos de la tienda</h2>
           <p>
-            Desde aquí agregas, editas, activas, desactivas o eliminas prendas exclusivas. Los
-            cambios se guardan en MySQL y se reflejan para todos los usuarios.
+            JONZKO
           </p>
         </div>
       </div>
@@ -1241,10 +1239,9 @@
       <div class="section-heading">
         <div>
           <span class="eyebrow">Control total de la página</span>
-          <h2>🎨 Personalización web ▾</h2>
+          <h2>🎨 Personalización web </h2>
           <p>
-            Cambia textos, imágenes, videos, menú, inicio, carrito, pagos, contacto y demás partes
-            visibles de JONZKO desde el administrador.
+            Todo en un solo lugar
           </p>
         </div>
 
@@ -1271,80 +1268,6 @@
             Guardar Nosotros
           </button>
         </div>
-      </div>
-
-      <div class="custom-tabs">
-        <button
-          type="button"
-          [class.active]="customizationTab() === 'inicio'"
-          (click)="setCustomizationTab('inicio')"
-        >
-          🏠 Inicio
-        </button>
-
-        <button
-          type="button"
-          [class.active]="customizationTab() === 'tienda'"
-          (click)="setCustomizationTab('tienda')"
-        >
-          🛍️ Tienda
-        </button>
-
-        <button
-          type="button"
-          [class.active]="customizationTab() === 'nosotros'"
-          (click)="setCustomizationTab('nosotros')"
-        >
-          🖼️ Nosotros / Galería
-        </button>
-
-        <button
-          type="button"
-          [class.active]="customizationTab() === 'carrito'"
-          (click)="setCustomizationTab('carrito')"
-        >
-          🛒 Carrito
-        </button>
-
-        <button
-          type="button"
-          [class.active]="customizationTab() === 'pagos'"
-          (click)="setCustomizationTab('pagos')"
-        >
-          💳 Pagos
-        </button>
-
-        <button
-          type="button"
-          [class.active]="customizationTab() === 'contacto'"
-          (click)="setCustomizationTab('contacto')"
-        >
-          📞 Contacto
-        </button>
-
-        <button
-          type="button"
-          [class.active]="customizationTab() === 'footer'"
-          (click)="setCustomizationTab('footer')"
-        >
-          🧾 Footer
-        </button>
-
-        <button
-          type="button"
-          [class.active]="customizationTab() === 'soporte'"
-          (click)="setCustomizationTab('soporte')"
-        >
-          🆘 Soporte
-        </button>
-
-        <button
-          type="button"
-          [class.active]="customizationTab() === 'avisos'"
-          (click)="setCustomizationTab('avisos')"
-        >
-          🔥 Avisos recientes
-        </button>
       </div>
 
       <!-- INICIO -->
@@ -2469,9 +2392,7 @@
         </div>
 
         <div class="empty-state">
-          Este reporte descarga información completa para administración y contabilidad: pedidos,
-          clientes, productos vendidos, catálogo, métodos de pago, DNI/RUC, estados, fechas, horas,
-          subtotal, IGV y total.
+          Si vez esto , dame ideas que agregar aqui
         </div>
       </article>
     </section>
@@ -2560,8 +2481,8 @@
       </article>
     </section>
     <!-- MODAL PARA VER VOUCHER / BOLETA / FACTURA / COMPROBANTE -->
-    <div class="receipt-modal-backdrop" *ngIf="receiptModalOpen">
-      <div class="receipt-modal">
+    <div class="receipt-modal-backdrop" *ngIf="receiptModalOpen" (click)="closeReceiptModal()">
+      <div class="receipt-modal" (click)="$event.stopPropagation()">
         <div class="receipt-modal-header">
           <div>
             <span class="modal-kicker">Documento generado</span>
@@ -2578,6 +2499,15 @@
         <div class="receipt-modal-footer">
           <button type="button" class="secondary-action" (click)="closeReceiptModal()">
             Cerrar
+          </button>
+
+          <button
+            type="button"
+            class="primary-action"
+            *ngIf="currentReceiptOrder"
+            (click)="downloadOrderPdf(currentReceiptOrder, currentReceiptType)"
+          >
+            Descargar PDF
           </button>
         </div>
       </div>

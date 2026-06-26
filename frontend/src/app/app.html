@@ -375,7 +375,7 @@
           <div class="jonzko-gallery-grid">
             @if (galleryVideoUrl()) {
               <div class="gallery-card gallery-video-card">
-                <video autoplay muted loop playsinline preload="metadata">
+                <video autoplay muted loop playsinline preload="auto" [muted]="true">
                   <source [src]="galleryVideoUrl()" type="video/mp4" />
                 </video>
               </div>
@@ -399,6 +399,42 @@
           </div>
         </section>
       }
+      <!-- RESEÑAS / CLIENTES JONZKO -->
+      <section class="jonzko-reviews-section">
+        <div class="jonzko-reviews-shell">
+          <div class="jonzko-reviews-header">
+            <span>RESEÑAS</span>
+            <h2>Lo que dicen nuestros clientes.</h2>
+            <p>Opiniones reales de personas que ya vistieron JONZKO.</p>
+          </div>
+
+          <div class="review-slider">
+            <div class="review-card">
+              <div class="review-user">
+                <img class="review-photo" src="assets/cliente-jmv.jpeg" alt="Cliente J.M.V" />
+
+                <div>
+                  <strong>★★★★★</strong>
+                  <p>Buena calidad, la polera tiene buen acabado y el diseño se ve elegante.</p>
+                  <small>— J.M.V · Cliente satisfecho</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-user">
+                <img class="review-photo" src="assets/cliente-kp.jpeg" alt="Cliente K.P" />
+
+                <div>
+                  <strong>★★★★★</strong>
+                  <p>La polera está bonita, cómoda y el diseño se ve muy bien.</p>
+                  <small>— K.P · Cliente satisfecho</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- CONTACTO PREMIUM -->
       <section id="contacto" class="contact-premium-section">
@@ -470,69 +506,70 @@
           <strong>RUC: 10708448601</strong>
         </div>
 
-        <div class="footer-premium-column">
-          <h4>JONZKO</h4>
-          <a href="/#inicio">Inicio</a>
-          <a routerLink="/tienda">Tienda</a>
-          <a href="/#producto">Exclusivo</a>
-          <a href="/#nosotros">Nosotros</a>
-          <a href="/#contacto">Contacto</a>
+        <div class="footer-premium-column footer-accordion">
+          <button
+            type="button"
+            class="footer-accordion-btn"
+            (click)="toggleFooterSection('jonzko')"
+          >
+            <span>JONZKO</span>
+            <span class="footer-chevron" [class.open]="footerJonzkoOpen()">⌄</span>
+          </button>
+
+          @if (!isMobileFooter() || footerJonzkoOpen()) {
+            <div class="footer-accordion-content">
+              <a href="/#inicio">Inicio</a>
+              <a routerLink="/tienda">Tienda</a>
+              <a href="/#producto">Exclusivo</a>
+              <a href="/#nosotros">Nosotros</a>
+              <a href="/#contacto">Contacto</a>
+            </div>
+          }
         </div>
 
-        <div class="footer-premium-column">
-          <h4>ATENCIÓN</h4>
-          <a href="/#contacto">Cambios y devoluciones</a>
-          <a href="/#contacto">Métodos de pago</a>
-          <a href="/#contacto">Envíos</a>
-          <button type="button" (click)="openTerms()">Términos y condiciones</button>
+        <div class="footer-premium-column footer-accordion">
+          <button
+            type="button"
+            class="footer-accordion-btn"
+            (click)="toggleFooterSection('atencion')"
+          >
+            <span>ATENCIÓN</span>
+            <span class="footer-chevron" [class.open]="footerAtencionOpen()">⌄</span>
+          </button>
+
+          @if (!isMobileFooter() || footerAtencionOpen()) {
+            <div class="footer-accordion-content">
+              <a href="/#contacto">Cambios y devoluciones</a>
+              <a href="/#contacto">Métodos de pago</a>
+              <a href="/#contacto">Envíos</a>
+              <button type="button" (click)="openTerms()">Términos y condiciones</button>
+            </div>
+          }
         </div>
 
-        <div class="footer-premium-payments">
-          <h4>MÉTODOS DE PAGO</h4>
+        <div class="footer-premium-payments footer-accordion">
+          <button type="button" class="footer-accordion-btn" (click)="toggleFooterSection('pagos')">
+            <span>MÉTODOS DE PAGO</span>
+            <span class="footer-chevron" [class.open]="footerPagosOpen()">⌄</span>
+          </button>
 
-          <div class="payment-icons payment-images">
-            <span>
-              <img src="assets/yape.png" alt="Yape" />
-            </span>
+          @if (!isMobileFooter() || footerPagosOpen()) {
+            <div class="footer-accordion-content">
+              <div class="payment-icons payment-images">
+                <span>
+                  <img src="assets/yape.png" alt="Yape" />
+                </span>
 
-            <span>
-              <img src="assets/plin..png" alt="Plin" />
-            </span>
+                <span>
+                  <img src="assets/plin..png" alt="Plin" />
+                </span>
 
-            <span>
-              <img src="assets/bcp.png" alt="BCP" />
-            </span>
-          </div>
-        </div>
-
-        <div class="footer-premium-review">
-          <h4>LO QUE DICEN NUESTROS CLIENTES</h4>
-
-          <div class="review-slider">
-            <div class="review-card">
-              <div class="review-user">
-                <img class="review-photo" src="assets/cliente-jmv.jpeg" alt="Cliente J.M.V" />
-
-                <div>
-                  <strong>★★★★★</strong>
-                  <p>Buena calidad, la polera tiene buen acabado y el diseño se ve elegante.</p>
-                  <small>— J.M.V · Cliente Satisfechos</small>
-                </div>
+                <span>
+                  <img src="assets/bcp.png" alt="BCP" />
+                </span>
               </div>
             </div>
-
-            <div class="review-card">
-              <div class="review-user">
-                <img class="review-photo" src="assets/cliente-kp.jpeg" alt="Cliente K.P" />
-
-                <div>
-                  <strong>★★★★★</strong>
-                  <p>La polera está bonita, cómoda y el diseño se ve muy bien.</p>
-                  <small>— K.P · Cliente Satisfechos</small>
-                </div>
-              </div>
-            </div>
-          </div>
+          }
         </div>
       </div>
 

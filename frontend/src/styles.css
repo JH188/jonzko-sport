@@ -1,10 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
 /* =========================================================
-   JONZKO RESPONSIVE GLOBAL - PC / TABLET / MÓVIL
-   Pegar al FINAL de frontend/src/styles.css
+   JONZKO GLOBAL RESPONSIVE - PC / TABLET / MÓVIL
+   Archivo: frontend/src/styles.css
    ========================================================= */
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -12,33 +13,77 @@ html,
 body {
   width: 100%;
   max-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
+  background: #f7f6f2;
+  color: #0b0b0b;
 }
 
-/* Imágenes nunca deben romper el ancho */
-img {
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+img,
+video,
+picture,
+svg,
+canvas {
   max-width: 100%;
 }
 
-/* Contenedores principales */
+img,
+video {
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   BLOQUEO DE DESBORDE HORIZONTAL
+   ========================================================= */
+
+app-root,
+main,
+section,
+header,
+footer {
+  width: 100%;
+  max-width: 100%;
+}
+
 .detail-page,
 .checkout-page,
 .orders-page,
 .mis-pedidos-page,
-.admin-page {
+.admin-page,
+.product-detail-page {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
 }
 
-/* =========================
-   HEADER / NAVBAR
-   ========================= */
+/* =========================================================
+   HEADER / NAVBAR - GLOBAL SUAVE
+   No toca diseño principal del Inicio, solo evita desbordes
+   ========================================================= */
 
 header,
 .navbar,
 .main-header,
-.topbar {
+.topbar,
+.premium-navbar {
   width: 100%;
   max-width: 100%;
 }
@@ -47,10 +92,9 @@ header,
   header,
   .navbar,
   .main-header,
-  .topbar {
-    padding: 12px 16px !important;
-    gap: 10px !important;
-    flex-wrap: wrap !important;
+  .topbar,
+  .premium-navbar {
+    max-width: 100% !important;
   }
 
   .logo,
@@ -60,11 +104,9 @@ header,
   }
 
   nav,
-  .nav-links {
-    width: 100% !important;
-    justify-content: center !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
+  .nav-links,
+  .premium-nav {
+    max-width: 100% !important;
   }
 
   nav a,
@@ -72,15 +114,13 @@ header,
   .nav-button,
   .header-actions button,
   .header-actions a {
-    font-size: 11px !important;
-    padding: 9px 12px !important;
     white-space: nowrap !important;
   }
 }
 
-/* =========================
+/* =========================================================
    DETALLE DE PRODUCTO
-   ========================= */
+   ========================================================= */
 
 .product-detail-page,
 .detail-page {
@@ -161,9 +201,9 @@ header,
   }
 }
 
-/* =========================
+/* =========================================================
    CARRITO LATERAL
-   ========================= */
+   ========================================================= */
 
 .cart-panel,
 .cart-sidebar,
@@ -224,9 +264,9 @@ header,
   }
 }
 
-/* =========================
+/* =========================================================
    CHECKOUT
-   ========================= */
+   ========================================================= */
 
 .checkout-page {
   padding: 36px 22px !important;
@@ -301,9 +341,9 @@ header,
   }
 }
 
-/* =========================
+/* =========================================================
    MIS PEDIDOS
-   ========================= */
+   ========================================================= */
 
 .orders-container,
 .mis-pedidos-container,
@@ -339,45 +379,22 @@ header,
     font-size: 22px !important;
   }
 }
+
 /* =========================================================
-   BLOQUEO DE DESBORDE HORIZONTAL GLOBAL
+   MÓVIL GLOBAL
    ========================================================= */
-
-html,
-body {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-img,
-video {
-  max-width: 100%;
-}
-/* =========================================================
-   GLOBAL FIX - SIN ESPACIO BLANCO LATERAL EN MÓVIL
-   ========================================================= */
-
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-* {
-  box-sizing: border-box;
-}
 
 @media (max-width: 768px) {
   html,
   body {
+    width: 100% !important;
+    max-width: 100% !important;
     overflow-x: hidden !important;
-    background: #000 !important;
+    background: #f7f6f2 !important;
+  }
+
+  app-root,
+  main {
+    background: #f7f6f2 !important;
   }
 }

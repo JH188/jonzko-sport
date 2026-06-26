@@ -3384,7 +3384,7 @@ main {
 .hero-slider-content span {
   display: block;
   font-size: clamp(22px, 3vw, 46px);
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   letter-spacing: 2px;
   margin-bottom: 10px;
 }
@@ -3393,7 +3393,7 @@ main {
   margin: 0;
   font-size: clamp(58px, 8vw, 130px);
   line-height: 0.9;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-weight: 900;
   letter-spacing: 4px;
 }
@@ -3573,7 +3573,7 @@ main {
 .hero-slider-content span {
   display: block;
   font-size: clamp(24px, 3vw, 46px);
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   letter-spacing: 3px;
   margin-bottom: 10px;
 }
@@ -3582,7 +3582,7 @@ main {
   margin: 0;
   font-size: clamp(58px, 8vw, 128px);
   line-height: 0.9;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-weight: 900;
   letter-spacing: 4px;
 }
@@ -3801,267 +3801,7 @@ main {
     gap: 8px !important;
   }
 }
-/* =========================================================
-   BARRA SUPERIOR ANIMADA - JONZKO
-   ========================================================= */
 
-.top-marquee {
-  width: 100%;
-  height: 34px;
-  background: #000000;
-  color: #ffffff;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  position: relative;
-  z-index: 1100;
-}
-
-.top-marquee-track {
-  display: flex;
-  align-items: center;
-  gap: 42px;
-  width: max-content;
-  white-space: nowrap;
-  animation: jonzkoMarquee 22s linear infinite;
-}
-
-.top-marquee-track span {
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-
-.top-marquee-track span::after {
-  content: "•";
-  margin-left: 42px;
-  opacity: 0.75;
-}
-
-@keyframes jonzkoMarquee {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* Celular */
-@media (max-width: 600px) {
-  .top-marquee {
-    height: 30px;
-  }
-
-  .top-marquee-track {
-    gap: 30px;
-    animation-duration: 18s;
-  }
-
-  .top-marquee-track span {
-    font-size: 10px;
-    letter-spacing: 2px;
-  }
-
-  .top-marquee-track span::after {
-    margin-left: 30px;
-  }
-}
-/* =========================================================
-   BARRA SUPERIOR ANIMADA - INFINITA SIN ESPACIOS
-   ========================================================= */
-
-html,
-body {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.top-marquee {
-  width: 100%;
-  height: 32px;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: #000000;
-  color: #ffffff;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  border-top: none !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  position: relative;
-  z-index: 1200;
-}
-
-.top-marquee-track {
-  display: flex;
-  width: max-content;
-  animation: jonzkoMarqueeInfinite 28s linear infinite;
-}
-
-.top-marquee-group {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-.top-marquee-group span {
-  display: inline-flex;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  padding: 0 34px;
-}
-
-.top-marquee-group span::after {
-  content: "•";
-  margin-left: 34px;
-  opacity: 0.75;
-}
-
-@keyframes jonzkoMarqueeInfinite {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-33.333%);
-  }
-}
-
-@media (max-width: 600px) {
-  .top-marquee {
-    height: 30px;
-  }
-
-  .top-marquee-track {
-    animation-duration: 20s;
-  }
-
-  .top-marquee-group span {
-    font-size: 10px;
-    letter-spacing: 2px;
-    padding: 0 24px;
-  }
-
-  .top-marquee-group span::after {
-    margin-left: 24px;
-  }
-}
-/* =========================================================
-   CORRECCIÓN FINAL: SIN ESPACIOS + BARRA BLANCA ANIMADA
-   ========================================================= */
-
-:host {
-  display: block;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-/* Barra superior blanca */
-.top-marquee {
-  width: 100vw !important;
-  height: 32px !important;
-  margin: 0 !important;
-  margin-left: calc(50% - 50vw) !important;
-  padding: 0 !important;
-  background: #ffffff !important;
-  color: #000000 !important;
-  overflow: hidden !important;
-  display: flex !important;
-  align-items: center !important;
-  border-top: none !important;
-  border-bottom: 1px solid #e5e5e5 !important;
-  position: relative !important;
-  z-index: 1200 !important;
-}
-
-/* Movimiento continuo */
-.top-marquee-track {
-  display: flex !important;
-  width: max-content !important;
-  animation: jonzkoMarqueeInfinite 26s linear infinite !important;
-}
-
-.top-marquee-group {
-  display: flex !important;
-  align-items: center !important;
-  flex-shrink: 0 !important;
-  white-space: nowrap !important;
-}
-
-.top-marquee-group span {
-  display: inline-flex !important;
-  align-items: center !important;
-  font-size: 12px !important;
-  font-weight: 900 !important;
-  letter-spacing: 3px !important;
-  text-transform: uppercase !important;
-  padding: 0 38px !important;
-  color: #000000 !important;
-}
-
-.top-marquee-group span::after {
-  content: "•";
-  margin-left: 38px;
-  color: #000000;
-  opacity: 0.65;
-}
-
-@keyframes jonzkoMarqueeInfinite {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-33.333%);
-  }
-}
-
-/* Navbar sin espacios laterales */
-.navbar {
-  width: 100vw !important;
-  margin-left: calc(50% - 50vw) !important;
-}
-
-/* Hero sin espacios laterales */
-.hero-slider {
-  width: 100vw !important;
-  margin-left: calc(50% - 50vw) !important;
-}
-
-/* Celular */
-@media (max-width: 600px) {
-  .top-marquee {
-    height: 30px !important;
-  }
-
-  .top-marquee-track {
-    animation-duration: 20s !important;
-  }
-
-  .top-marquee-group span {
-    font-size: 10px !important;
-    letter-spacing: 2px !important;
-    padding: 0 26px !important;
-  }
-
-  .top-marquee-group span::after {
-    margin-left: 26px;
-  }
-}
 /* =========================================================
    HERO PREMIUM - LETRAS 10/10 JONZKO
    ========================================================= */
@@ -4076,7 +3816,7 @@ body {
 .hero-slider-content span {
   display: block !important;
   margin-bottom: 14px !important;
-  font-family: Georgia, 'Times New Roman', serif !important;
+  font-family: Georgia, "Times New Roman", serif !important;
   font-size: clamp(18px, 2.2vw, 38px) !important;
   font-weight: 700 !important;
   letter-spacing: 8px !important;
@@ -4085,7 +3825,7 @@ body {
 
 .hero-slider-content h1 {
   margin: 0 !important;
-  font-family: Georgia, 'Times New Roman', serif !important;
+  font-family: Georgia, "Times New Roman", serif !important;
   font-size: clamp(58px, 8vw, 126px) !important;
   line-height: 0.86 !important;
   font-weight: 900 !important;
@@ -4128,19 +3868,9 @@ body {
 }
 
 /* Barra superior más fina */
-.top-marquee {
-  height: 31px !important;
-  background: #ffffff !important;
-  color: #000000 !important;
-  border-bottom: 1px solid #e7e7e7 !important;
-}
 
-.top-marquee-group span {
-  font-size: 11px !important;
-  font-weight: 900 !important;
-  letter-spacing: 4px !important;
-  color: #000000 !important;
-}
+
+
 
 /* Celular */
 @media (max-width: 600px) {
@@ -4167,67 +3897,24 @@ body {
    BARRA SUPERIOR PREMIUM - JONZKO
    ========================================================= */
 
-.top-marquee {
-  height: 26px !important;
-  background: #0a0a0a !important;
-  color: #ffffff !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-  display: flex !important;
-  align-items: center !important;
-  overflow: hidden !important;
-}
 
-.top-marquee-track {
-  display: flex !important;
-  width: max-content !important;
-  animation: jonzkoMarqueeInfinite 32s linear infinite !important;
-}
 
-.top-marquee-group {
-  display: flex !important;
-  align-items: center !important;
-  flex-shrink: 0 !important;
-  white-space: nowrap !important;
-}
 
-.top-marquee-group span {
-  display: inline-flex !important;
-  align-items: center !important;
-  font-family: Arial, Helvetica, sans-serif !important;
-  font-size: 10px !important;
-  font-weight: 800 !important;
-  letter-spacing: 2.5px !important;
-  text-transform: uppercase !important;
-  color: #ffffff !important;
-  padding: 0 28px !important;
-}
 
-.top-marquee-group span::after {
-  content: "•";
-  margin-left: 28px !important;
-  font-size: 9px !important;
-  opacity: 0.55 !important;
-  color: #ffffff !important;
-}
+
+
+
+
+
 
 @media (max-width: 600px) {
-  .top-marquee {
-    height: 24px !important;
-  }
+  
 
-  .top-marquee-track {
-    animation-duration: 24s !important;
-  }
+  
 
-  .top-marquee-group span {
-    font-size: 9px !important;
-    letter-spacing: 1.8px !important;
-    padding: 0 20px !important;
-  }
+  
 
-  .top-marquee-group span::after {
-    margin-left: 20px !important;
-  }
+  
 }
 /* =========================================================
    AJUSTE HERO CELULAR - TEXTO MÁS LIMPIO
@@ -4423,9 +4110,7 @@ body {
     border: none !important;
   }
 
-  .top-marquee {
-    height: 28px !important;
-  }
+  
 
   .hero-slider {
     height: calc(100vh - 110px) !important;
@@ -5488,9 +5173,7 @@ body {
 }
 
 @media (max-width: 520px) {
-  .top-marquee {
-    font-size: 10px;
-  }
+  
 
   .premium-navbar {
     height: 68px;
@@ -10358,10 +10041,7 @@ video {
   }
 
   /* Navbar móvil */
-  .premium-navbar,
-  .navbar,
-  .mobile-navbar,
-  .top-marquee {
+  .premium-navbar, .navbar, .mobile-navbar {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
@@ -11638,25 +11318,11 @@ video {
    ===================================================== */
 
 @media (max-width: 768px) {
-  .top-marquee {
-    height: 32px;
-    overflow: hidden;
-    white-space: nowrap;
-  }
+  
 
-  .top-marquee-track,
-  .top-marquee-group {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    white-space: nowrap;
-  }
+  
 
-  .top-marquee span {
-    font-size: 10px;
-    letter-spacing: 3px;
-    flex: 0 0 auto;
-  }
+  
 }
 /* =========================================================
    JONZKO HERO - CORRECCIÓN SOLO MÓVIL
@@ -12400,10 +12066,7 @@ header .brand img {
    ========================================================= */
 
 @media (max-width: 768px) {
-  .top-marquee {
-    height: 30px !important;
-    overflow: hidden !important;
-  }
+  
 
   .premium-navbar {
     height: 82px !important;
@@ -12605,12 +12268,7 @@ header .brand img {
     overflow-x: hidden !important;
   }
 
-  .top-marquee,
-  .premium-navbar,
-  main,
-  .hero-slider,
-  .hero-track,
-  .hero-slide {
+  .premium-navbar, main, .hero-slider, .hero-track, .hero-slide {
     width: 100% !important;
     max-width: 100% !important;
     margin-left: 0 !important;
@@ -13289,5 +12947,3792 @@ header .brand img {
 
   #producto .product-hover-image {
     display: none !important;
+  }
+}
+/* =========================================================
+   JONZKO INICIO - MOBILE FIRST PREMIUM
+   Mejora secciones de inicio / nosotros / galería visible
+   ========================================================= */
+
+/* Fondo general más limpio */
+.store-preview-section,
+.about-section,
+.about-premium-section,
+.gallery-section,
+.jonzko-gallery-section,
+.contact-premium-section {
+  background: #fbfaf7 !important;
+}
+
+/* =========================
+   BLOQUE "Ropa urbana..."
+========================= */
+
+.store-preview-section {
+  width: 100% !important;
+  padding: 64px 5% !important;
+  overflow: hidden !important;
+}
+
+.store-preview-section > div,
+.store-preview-card,
+.store-preview-content {
+  border-radius: 32px !important;
+  border: 1px solid #e7ddcf !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.08) !important;
+}
+
+.store-preview-section h2,
+.store-preview-section h1 {
+  font-family: Georgia, "Times New Roman", serif !important;
+  color: #050505 !important;
+  font-size: clamp(42px, 6vw, 82px) !important;
+  line-height: 0.95 !important;
+  letter-spacing: -1.5px !important;
+}
+
+.store-preview-section p {
+  color: #555 !important;
+  font-size: 17px !important;
+  line-height: 1.75 !important;
+}
+
+/* =========================
+   GALERÍA / NOSOTROS EN INICIO
+========================= */
+
+.jonzko-gallery-grid,
+.gallery-grid,
+.about-media-grid {
+  width: min(1180px, 100%) !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: 1.2fr 0.8fr !important;
+  grid-auto-rows: 320px !important;
+  gap: 16px !important;
+}
+
+.gallery-card,
+.gallery-video-card,
+.about-media-card,
+.image-preview-box {
+  position: relative !important;
+  border-radius: 26px !important;
+  overflow: hidden !important;
+  background: #111 !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.12) !important;
+}
+
+.gallery-wide,
+.gallery-card:first-child,
+.about-media-card:first-child {
+  grid-row: span 2 !important;
+}
+
+.gallery-card img,
+.gallery-card video,
+.gallery-video-card img,
+.gallery-video-card video,
+.about-media-card img,
+.about-media-card video,
+.image-preview-box img,
+.image-preview-box video {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* Video que se vea como tarjeta grande */
+.gallery-video-card video,
+.about-media-card video {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+/* =========================
+   BLOQUE "Diseños que hablan..."
+========================= */
+
+.featured-section,
+.style-section,
+.design-section,
+.estilo-jonzko-section {
+  width: 100% !important;
+  padding: 72px 5% !important;
+  background: #fbfaf7 !important;
+  overflow: hidden !important;
+}
+
+.featured-section h2,
+.style-section h2,
+.design-section h2,
+.estilo-jonzko-section h2 {
+  font-family: Georgia, "Times New Roman", serif !important;
+  color: #050505 !important;
+  font-size: clamp(44px, 7vw, 96px) !important;
+  line-height: 0.92 !important;
+  letter-spacing: -2px !important;
+  margin-bottom: 18px !important;
+}
+
+.featured-section p,
+.style-section p,
+.design-section p,
+.estilo-jonzko-section p {
+  max-width: 760px !important;
+  color: #555 !important;
+  font-size: 18px !important;
+  line-height: 1.75 !important;
+}
+
+/* =========================
+   MÓVIL - TODO GRANDE Y TAPADO
+========================= */
+
+@media (max-width: 768px) {
+  .store-preview-section {
+    padding: 34px 14px !important;
+  }
+
+  .store-preview-section > div,
+  .store-preview-card,
+  .store-preview-content {
+    padding: 28px 18px !important;
+    border-radius: 26px !important;
+  }
+
+  .store-preview-section h2,
+  .store-preview-section h1 {
+    font-size: 38px !important;
+    line-height: 0.95 !important;
+  }
+
+  .store-preview-section p {
+    font-size: 14px !important;
+    line-height: 1.65 !important;
+  }
+
+  .jonzko-gallery-grid,
+  .gallery-grid,
+  .about-media-grid {
+    width: 100% !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-auto-rows: 190px !important;
+    gap: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .gallery-card,
+  .gallery-video-card,
+  .about-media-card,
+  .image-preview-box {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .gallery-wide,
+  .gallery-card:first-child,
+  .about-media-card:first-child {
+    grid-column: 1 / -1 !important;
+    grid-row: span 2 !important;
+  }
+
+  .gallery-card img,
+  .gallery-card video,
+  .gallery-video-card img,
+  .gallery-video-card video,
+  .about-media-card img,
+  .about-media-card video,
+  .image-preview-box img,
+  .image-preview-box video {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .featured-section,
+  .style-section,
+  .design-section,
+  .estilo-jonzko-section {
+    padding: 54px 14px !important;
+  }
+
+  .featured-section h2,
+  .style-section h2,
+  .design-section h2,
+  .estilo-jonzko-section h2 {
+    font-size: 42px !important;
+    line-height: 0.95 !important;
+    letter-spacing: -1px !important;
+  }
+
+  .featured-section p,
+  .style-section p,
+  .design-section p,
+  .estilo-jonzko-section p {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+  }
+}
+
+/* Celular pequeño */
+@media (max-width: 430px) {
+  .jonzko-gallery-grid,
+  .gallery-grid,
+  .about-media-grid {
+    grid-auto-rows: 175px !important;
+  }
+
+  .gallery-wide,
+  .gallery-card:first-child,
+  .about-media-card:first-child {
+    grid-row: span 2 !important;
+  }
+}
+/* =========================================================
+   JONZKO INICIO - HERO MOBILE FULL COVER TIPO TIENDA REAL
+   Referencia: portada grande estilo ecommerce premium
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* Fondo general */
+  body {
+    background: #ffffff !important;
+  }
+
+  /* El hero deja de parecer tarjeta y pasa a portada grande */
+  .hero-slider {
+    width: 100% !important;
+    height: calc(100svh - 96px) !important;
+    min-height: 640px !important;
+    max-height: 760px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: #000 !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  .hero-track {
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    border-radius: 0 !important;
+    background: #000 !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .hero-slide picture,
+  .hero-slide picture img,
+  .hero-slide img,
+  .hero-slide video {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    display: block !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Oscurecido suave, no mata la foto */
+  .hero-slide::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.22) 0%,
+        rgba(0, 0, 0, 0.16) 35%,
+        rgba(0, 0, 0, 0.62) 100%
+      ) !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+  }
+
+  /* Texto encima, estilo portada */
+  .hero-slider-content,
+  .hero-content,
+  .hero-slide-content {
+    position: absolute !important;
+    left: 22px !important;
+    right: 22px !important;
+    top: auto !important;
+    bottom: 92px !important;
+    width: auto !important;
+    max-width: 330px !important;
+    z-index: 5 !important;
+    transform: none !important;
+    text-align: left !important;
+  }
+
+  .hero-slider-content span,
+  .hero-content span,
+  .hero-slide-content span {
+    display: block !important;
+    margin-bottom: 12px !important;
+    color: #c49a52 !important;
+    font-size: 10px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.42em !important;
+    text-transform: uppercase !important;
+  }
+
+  .hero-slider-content h1,
+  .hero-content h1,
+  .hero-slide-content h1 {
+    margin: 0 0 28px !important;
+    color: #ffffff !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(46px, 15vw, 68px) !important;
+    line-height: 0.86 !important;
+    letter-spacing: -1px !important;
+    text-shadow: 0 4px 0 rgba(0, 40, 90, 0.65) !important;
+  }
+
+  .hero-slider-content a,
+  .hero-content a,
+  .hero-slide-content a {
+    width: fit-content !important;
+    min-width: 190px !important;
+    min-height: 58px !important;
+    padding: 0 28px !important;
+    border-radius: 999px !important;
+    background: #ffffff !important;
+    color: #050505 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 14px !important;
+    font-size: 12px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.03em !important;
+    text-decoration: none !important;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28) !important;
+  }
+
+  /* Flechas como tienda real */
+  .hero-arrow,
+  .hero-slider-arrow,
+  .hero-prev,
+  .hero-next {
+    z-index: 6 !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 999px !important;
+    background: rgba(0, 0, 0, 0.38) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    color: #ffffff !important;
+    backdrop-filter: blur(8px) !important;
+  }
+
+  .hero-left,
+  .hero-prev {
+    left: 18px !important;
+  }
+
+  .hero-right,
+  .hero-next {
+    right: 18px !important;
+  }
+
+  /* Dots abajo */
+  .hero-dots,
+  .hero-slider-dots {
+    z-index: 7 !important;
+    bottom: 24px !important;
+  }
+
+  .hero-dots button,
+  .hero-slider-dots button {
+    background: rgba(255, 255, 255, 0.75) !important;
+  }
+
+  .hero-dots button.active,
+  .hero-slider-dots button.active {
+    background: #c49a52 !important;
+  }
+
+  /* Quitar el efecto tarjeta del hero anterior */
+  main .hero-slider,
+  .home-page .hero-slider {
+    border-radius: 0 !important;
+  }
+}
+
+/* Celular angosto */
+@media (max-width: 430px) {
+  .hero-slider {
+    height: calc(100svh - 94px) !important;
+    min-height: 620px !important;
+  }
+
+  .hero-slider-content,
+  .hero-content,
+  .hero-slide-content {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 86px !important;
+  }
+
+  .hero-slider-content h1,
+  .hero-content h1,
+  .hero-slide-content h1 {
+    font-size: 50px !important;
+  }
+}
+/* =========================================================
+   FIX FINAL INICIO MÓVIL - HEADER MÁS CHICO + HERO SIN NEGRO
+   Pegar al FINAL de app.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* Barra negra superior más delgada */
+  
+
+  
+
+  
+
+  /* Navbar más pequeño, menos blanco */
+  .premium-navbar,
+  header.navbar {
+    height: 64px !important;
+    min-height: 64px !important;
+    padding: 0 10px !important;
+    grid-template-columns: 42px 1fr auto !important;
+    gap: 8px !important;
+    background: #ffffff !important;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .mobile-menu-btn {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 27px !important;
+    padding: 0 !important;
+  }
+
+  .premium-navbar .brand,
+  .navbar .brand,
+  header .brand {
+    width: 54px !important;
+    min-width: 54px !important;
+    height: 54px !important;
+    justify-self: center !important;
+    background: transparent !important;
+  }
+
+  .premium-navbar .brand img,
+  .navbar .brand img,
+  header .brand img {
+    width: 48px !important;
+    height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+    object-fit: contain !important;
+    background: transparent !important;
+  }
+
+  .premium-actions {
+    gap: 6px !important;
+  }
+
+  .user-icon-btn {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 40px !important;
+  }
+
+  .cart-icon-btn {
+    height: 40px !important;
+    min-width: 58px !important;
+    padding: 0 9px !important;
+  }
+
+  .cart-icon-btn span {
+    font-size: 10px !important;
+  }
+
+  .premium-orders-btn {
+    display: none !important;
+  }
+
+  /* Hero más bajo y sin espacio negro exagerado */
+  .hero-slider {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: calc(100svh - 86px) !important;
+    min-height: 540px !important;
+    max-height: 650px !important;
+    margin: 0 !important;
+    margin-left: calc(50% - 50vw) !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: #111111 !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  .hero-track {
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
+    background: transparent !important;
+  }
+
+  .hero-slide {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+  }
+
+  .hero-slide.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    z-index: 2 !important;
+  }
+
+  .hero-slide picture {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent !important;
+  }
+
+  .hero-slide picture img,
+  .hero-slide img,
+  .hero-slide video {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    background: transparent !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Oscuro suave encima, no pantalla negra */
+  .hero-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.10) 38%,
+      rgba(0, 0, 0, 0.45) 100%
+    ) !important;
+    z-index: 3 !important;
+    pointer-events: none !important;
+  }
+
+  /* Texto más compacto */
+  .hero-slider-content {
+    position: absolute !important;
+    left: 22px !important;
+    right: 22px !important;
+    top: auto !important;
+    bottom: 76px !important;
+    width: auto !important;
+    max-width: 320px !important;
+    z-index: 5 !important;
+    transform: none !important;
+    text-align: left !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 9px !important;
+    letter-spacing: 4px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 46px !important;
+    line-height: 0.9 !important;
+    letter-spacing: 1px !important;
+    margin: 0 0 22px !important;
+  }
+
+  .hero-slider-content a {
+    min-width: 172px !important;
+    height: 52px !important;
+    padding: 0 24px !important;
+    font-size: 11px !important;
+  }
+
+  /* Flechas y puntos */
+  .hero-arrow {
+    width: 42px !important;
+    height: 42px !important;
+    z-index: 8 !important;
+  }
+
+  .hero-arrow-left {
+    left: 12px !important;
+  }
+
+  .hero-arrow-right {
+    right: 12px !important;
+  }
+
+  .hero-dots {
+    bottom: 16px !important;
+    z-index: 9 !important;
+  }
+}
+
+/* Celular más pequeño */
+@media (max-width: 430px) {
+  .hero-slider {
+    height: calc(100svh - 86px) !important;
+    min-height: 520px !important;
+    max-height: 620px !important;
+  }
+
+  .hero-slider-content {
+    bottom: 72px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 42px !important;
+  }
+}
+/* =========================================================
+   FIX INICIO MÓVIL - SIN FRANJA NEGRA + FLECHAS MÁS ARRIBA
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* Quitar franja negra superior */
+  
+
+  /* Navbar blanco más compacto */
+  .premium-navbar,
+  header.navbar {
+    height: 58px !important;
+    min-height: 58px !important;
+    padding: 0 10px !important;
+    grid-template-columns: 40px 1fr auto !important;
+    gap: 6px !important;
+  }
+
+  .mobile-menu-btn {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 25px !important;
+  }
+
+  .premium-navbar .brand,
+  .navbar .brand,
+  header .brand {
+    width: 48px !important;
+    min-width: 48px !important;
+    height: 48px !important;
+  }
+
+  .premium-navbar .brand img,
+  .navbar .brand img,
+  header .brand img {
+    width: 42px !important;
+    height: 42px !important;
+    max-width: 42px !important;
+    max-height: 42px !important;
+    object-fit: contain !important;
+  }
+
+  .user-icon-btn {
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+  }
+
+  .cart-icon-btn {
+    height: 38px !important;
+    min-width: 54px !important;
+    padding: 0 8px !important;
+  }
+
+  .cart-icon-btn span {
+    font-size: 10px !important;
+  }
+
+  /* Hero ajustado porque ya no hay franja negra arriba */
+  .hero-slider {
+    height: calc(100svh - 58px) !important;
+    min-height: 540px !important;
+    max-height: 640px !important;
+  }
+
+  /* Quitar los 3 puntos/barritas de abajo */
+  .hero-dots,
+  .hero-slider-dots {
+    display: none !important;
+  }
+
+  /* Flechas más arriba y sin chocar con el botón */
+  .hero-arrow {
+    top: 62% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+    width: 42px !important;
+    height: 42px !important;
+    z-index: 10 !important;
+  }
+
+  .hero-arrow-left {
+    left: 14px !important;
+  }
+
+  .hero-arrow-right {
+    right: 14px !important;
+  }
+
+  /* Botón un poco más limpio */
+  .hero-slider-content a {
+    min-width: 176px !important;
+    height: 52px !important;
+    padding: 0 22px !important;
+  }
+
+  .hero-slider-content {
+    bottom: 54px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-slider {
+    height: calc(100svh - 58px) !important;
+    min-height: 530px !important;
+    max-height: 620px !important;
+  }
+
+  .hero-arrow {
+    top: 61% !important;
+  }
+
+  .hero-slider-content {
+    bottom: 48px !important;
+  }
+}
+
+/* =========================================================
+   FIX FINAL HERO INICIO - PC + MÓVIL LIMPIO
+   Quita puntos, líneas raras, sobrantes y sombra fea del texto
+   ========================================================= */
+
+/* Evitar sobrantes a la derecha y línea horizontal */
+html,
+body {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+app-root {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* Quitar puntos/barritas del carrusel en PC y móvil */
+.hero-dots,
+.hero-slider-dots,
+.hero-pagination,
+.carousel-dots {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Quitar línea/sombra rara debajo de letras */
+.hero-slider-content h1,
+.hero-content h1,
+.hero-slide-content h1 {
+  text-decoration: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* =========================
+   PC - ajustar hero sin sobrante derecho
+   ========================= */
+@media (min-width: 769px) {
+  .hero-slider {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    overflow: hidden !important;
+    border-bottom: none !important;
+  }
+
+  .hero-track,
+  .hero-slide {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .hero-slide picture,
+  .hero-slide picture img,
+  .hero-slide img,
+  .hero-slide video {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+  }
+
+  /* Flechas PC centradas y limpias */
+  .hero-arrow {
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+    z-index: 20 !important;
+  }
+
+  .hero-arrow-left {
+    left: 22px !important;
+  }
+
+  .hero-arrow-right {
+    right: 22px !important;
+  }
+}
+
+/* =========================
+   MÓVIL - barra superior + navbar limpio
+   ========================= */
+@media (max-width: 768px) {
+  /* Franja negra superior delgada con texto */
+  
+
+  
+
+  
+
+  /* Navbar más compacto, sin espacio blanco extra */
+  .premium-navbar,
+  header.navbar {
+    height: 58px !important;
+    min-height: 58px !important;
+    max-height: 58px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border: none !important;
+    border-bottom: none !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .mobile-menu-btn {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 25px !important;
+  }
+
+  .premium-navbar .brand,
+  .navbar .brand,
+  header .brand {
+    width: 48px !important;
+    min-width: 48px !important;
+    height: 48px !important;
+  }
+
+  .premium-navbar .brand img,
+  .navbar .brand img,
+  header .brand img {
+    width: 42px !important;
+    height: 42px !important;
+    max-width: 42px !important;
+    max-height: 42px !important;
+    object-fit: contain !important;
+  }
+
+  .user-icon-btn {
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+  }
+
+  .cart-icon-btn {
+    height: 38px !important;
+    min-width: 54px !important;
+  }
+
+  /* Hero ajustado */
+  .hero-slider {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    height: calc(100svh - 77px) !important;
+    min-height: 520px !important;
+    max-height: 610px !important;
+    border: none !important;
+    border-bottom: none !important;
+    overflow: hidden !important;
+  }
+
+  .hero-track,
+  .hero-slide {
+    width: 100% !important;
+    max-width: 100% !important;
+    border: none !important;
+    overflow: hidden !important;
+  }
+
+  /* Flechas más arriba */
+  .hero-arrow {
+    top: 57% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+    width: 42px !important;
+    height: 42px !important;
+    z-index: 30 !important;
+  }
+
+  .hero-arrow-left {
+    left: 12px !important;
+  }
+
+  .hero-arrow-right {
+    right: 12px !important;
+  }
+
+  /* Texto sin línea negra debajo */
+  .hero-slider-content h1 {
+    text-shadow: none !important;
+    border-bottom: none !important;
+    text-decoration: none !important;
+  }
+
+  .hero-slider-content {
+    bottom: 52px !important;
+  }
+}
+
+/* =========================================================
+   JONZKO - BARRA SUPERIOR LIMPIA ÚNICA
+   ========================================================= */
+
+.top-marquee {
+  width: 100%;
+  height: 18px;
+  min-height: 18px;
+  max-height: 18px;
+  margin: 0;
+  padding: 0;
+  background: #050505;
+  color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border: none;
+  box-shadow: none;
+  position: relative;
+  z-index: 1200;
+}
+
+.top-marquee-track {
+  height: 18px;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  white-space: nowrap;
+  animation: jonzkoMarqueeClean 26s linear infinite;
+}
+
+.top-marquee-group {
+  height: 18px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.top-marquee-group span {
+  height: 18px;
+  line-height: 18px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 26px;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.top-marquee-group span::after {
+  content: "•";
+  margin-left: 26px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 8px;
+}
+
+@keyframes jonzkoMarqueeClean {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+  .top-marquee {
+    height: 12px !important;
+    min-height: 12px !important;
+    max-height: 12px !important;
+  }
+
+  .top-marquee-track,
+  .top-marquee-group {
+    height: 12px !important;
+    min-height: 12px !important;
+    max-height: 12px !important;
+  }
+
+  .top-marquee-group span {
+    height: 12px !important;
+    line-height: 12px !important;
+    padding: 0 14px !important;
+    font-size: 6.2px !important;
+    letter-spacing: 1.2px !important;
+  }
+
+  .top-marquee-group span::after {
+    margin-left: 14px !important;
+    font-size: 5.5px !important;
+  }
+
+  .top-marquee-track {
+    animation-duration: 22s !important;
+  }
+}
+/* =========================================================
+   AJUSTE HERO MÓVIL - QUITAR NEGRO DE ABAJO Y CUADRAR TEXTO
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .hero-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.12) 0%,
+      rgba(0, 0, 0, 0.08) 42%,
+      rgba(0, 0, 0, 0.28) 100%
+    ) !important;
+  }
+
+  .hero-slider-content {
+    bottom: 38px !important;
+    max-width: 340px !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 9.5px !important;
+    letter-spacing: 4.4px !important;
+    margin-bottom: 9px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 48px !important;
+    line-height: 0.88 !important;
+    margin-bottom: 24px !important;
+  }
+
+  .hero-slider-content a {
+    min-width: 180px !important;
+    height: 54px !important;
+    font-size: 11.5px !important;
+  }
+
+  .hero-slide picture img,
+  .hero-slide img,
+  .hero-slide video {
+    object-position: center center !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-slider-content {
+    bottom: 34px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 46px !important;
+  }
+}
+/* =========================================================
+   FIX FINAL MÓVIL - TOP BAR SIN ESPACIO NEGRO + LETRAS GRANDES
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .top-marquee {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 16px !important;
+    min-height: 16px !important;
+    max-height: 16px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #050505 !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .top-marquee-track,
+  .top-marquee-group {
+    height: 16px !important;
+    min-height: 16px !important;
+    max-height: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 16px !important;
+  }
+
+  .top-marquee-group span,
+  .top-marquee-track span,
+  .top-marquee span {
+    height: 16px !important;
+    min-height: 16px !important;
+    max-height: 16px !important;
+    line-height: 16px !important;
+    padding: 0 18px !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    color: #ffffff !important;
+    font-size: 7.8px !important;
+    font-weight: 950 !important;
+    letter-spacing: 1.7px !important;
+    text-transform: uppercase !important;
+    transform: none !important;
+  }
+
+  .top-marquee-group span::after {
+    content: "•" !important;
+    margin-left: 18px !important;
+    color: rgba(255, 255, 255, 0.55) !important;
+    font-size: 7px !important;
+    line-height: 16px !important;
+    transform: none !important;
+  }
+
+  .premium-navbar,
+  header.navbar {
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .hero-slider {
+    height: calc(100svh - 72px) !important;
+    min-height: 520px !important;
+    max-height: 610px !important;
+  }
+
+  .hero-slider-content {
+    bottom: 46px !important;
+    max-width: 360px !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 10px !important;
+    letter-spacing: 4.6px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 54px !important;
+    line-height: 0.86 !important;
+    margin-bottom: 24px !important;
+  }
+
+  .hero-slider-content a {
+    min-width: 190px !important;
+    height: 56px !important;
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-slider-content h1 {
+    font-size: 52px !important;
+  }
+
+  .hero-slider-content {
+    bottom: 42px !important;
+  }
+}
+/* =========================================================
+   FIX FINAL - QUITAR NEGRO SOBRANTE ABAJO DEL HERO MÓVIL
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* Hero menos largo: elimina el negro sobrante de abajo */
+  .hero-slider {
+    height: 570px !important;
+    min-height: 570px !important;
+    max-height: 570px !important;
+    overflow: hidden !important;
+    background: #000 !important;
+  }
+
+  /* La imagen sigue tapando todo */
+  .hero-slide picture,
+  .hero-slide picture img,
+  .hero-slide img,
+  .hero-slide video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+
+  /* Quita el negro fuerte de abajo */
+  .hero-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.08) 0%,
+      rgba(0, 0, 0, 0.08) 45%,
+      rgba(0, 0, 0, 0.22) 100%
+    ) !important;
+  }
+
+  /* Texto queda arriba del corte, sin dejar vacío abajo */
+  .hero-slider-content {
+    bottom: 38px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 52px !important;
+    line-height: 0.86 !important;
+    margin-bottom: 22px !important;
+  }
+
+  .hero-slider-content a {
+    height: 54px !important;
+    min-width: 190px !important;
+  }
+
+  .hero-arrow {
+    top: 56% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-slider {
+    height: 585px !important;
+    min-height: 585px !important;
+    max-height: 585px !important;
+  }
+
+  .hero-slider-content {
+    bottom: 34px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 50px !important;
+  }
+}
+
+
+/* =========================================================
+   JONZKO FIX DEFINITIVO - QUITAR NEGRO SOBRANTE ABAJO HERO MÓVIL
+   Pegar al final. No toca HTML ni TS.
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /*
+    Este era el problema principal:
+    un bloque viejo tenía .hero-slide::after con negro 0.62 abajo.
+    Eso oscurecía demasiado la parte baja del hero.
+  */
+  .hero-slide::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.04) 0%,
+      rgba(0, 0, 0, 0.04) 55%,
+      rgba(0, 0, 0, 0.14) 100%
+    ) !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+  }
+
+  .hero-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.03) 0%,
+      rgba(0, 0, 0, 0.03) 55%,
+      rgba(0, 0, 0, 0.12) 100%
+    ) !important;
+  }
+
+  /* Recorta el hero para que no deje zona negra vacía abajo */
+  .hero-slider {
+    height: 550px !important;
+    min-height: 550px !important;
+    max-height: 550px !important;
+    overflow: hidden !important;
+    background: #000 !important;
+    border-bottom: 0 !important;
+  }
+
+  .hero-track,
+  .hero-slide {
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .hero-slide picture,
+  .hero-slide picture img,
+  .hero-slide img,
+  .hero-slide video {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    display: block !important;
+  }
+
+  /* Baja el texto y el botón para ocupar esa parte negra */
+  .hero-slider-content {
+    bottom: 14px !important;
+    max-width: 360px !important;
+    z-index: 5 !important;
+  }
+
+  .hero-slider-content span {
+    font-size: 10px !important;
+    letter-spacing: 4.5px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 54px !important;
+    line-height: 0.86 !important;
+    margin: 0 0 18px !important;
+    text-shadow: none !important;
+    border: 0 !important;
+    text-decoration: none !important;
+  }
+
+  .hero-slider-content a {
+    height: 54px !important;
+    min-width: 190px !important;
+    font-size: 12px !important;
+  }
+
+  .hero-arrow {
+    top: 55% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-slider {
+    height: 545px !important;
+    min-height: 545px !important;
+    max-height: 545px !important;
+  }
+
+  .hero-slider-content {
+    bottom: 12px !important;
+  }
+
+  .hero-slider-content h1 {
+    font-size: 52px !important;
+  }
+}
+/* =========================================================
+   JONZKO FIX FINAL - NOSOTROS / GALERÍA / RESEÑAS / CONTACTO / FOOTER
+   No toca Inicio / Hero
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+/* Evita que esta zona atrape el scroll en celular */
+.featured-urban-section,
+.featured-urban-gallery,
+.jonzko-gallery-section,
+.jonzko-gallery-grid,
+.jonzko-reviews-section,
+.contact-premium-section,
+.footer-premium {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  touch-action: pan-y !important;
+}
+
+.featured-urban-gallery img,
+.jonzko-gallery-grid img,
+.jonzko-gallery-grid video {
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+/* =========================================================
+   NOSOTROS
+   ========================================================= */
+
+.featured-urban-section {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #f6f1e8 !important;
+  display: grid !important;
+  grid-template-columns: 0.95fr 1.05fr !important;
+  border-top: 1px solid #e4d6c1 !important;
+  border-bottom: 1px solid #e4d6c1 !important;
+}
+
+.featured-urban-content {
+  padding: 74px clamp(28px, 5vw, 76px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.featured-tag {
+  color: #b89455 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 18px !important;
+}
+
+.featured-urban-content h2 {
+  margin: 0 0 18px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(38px, 5vw, 68px) !important;
+  line-height: 0.98 !important;
+  color: #080808 !important;
+  white-space: pre-line !important;
+}
+
+.featured-urban-content p {
+  margin: 0 !important;
+  max-width: 520px !important;
+  color: #4a4a4a !important;
+  font-size: 16px !important;
+  line-height: 1.7 !important;
+}
+
+.featured-benefits {
+  margin-top: 34px !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+.featured-benefit span {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  border: 1px solid #d7c4a5 !important;
+  color: #9b783d !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 20px !important;
+}
+
+.featured-benefit strong {
+  color: #101010 !important;
+  font-size: 10px !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0.4px !important;
+  font-weight: 900 !important;
+}
+
+.featured-btn {
+  margin-top: 32px !important;
+  width: fit-content !important;
+  min-height: 48px !important;
+  padding: 0 26px !important;
+  background: #b89455 !important;
+  color: #ffffff !important;
+  border-radius: 2px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+.featured-urban-gallery {
+  display: grid !important;
+  grid-template-columns: 1.2fr 0.8fr !important;
+  grid-template-rows: 320px 320px !important;
+  gap: 2px !important;
+  min-height: 640px !important;
+  background: #111 !important;
+}
+
+.featured-img {
+  position: relative !important;
+  overflow: hidden !important;
+  background: #ddd4c7 !important;
+  border-radius: 0 !important;
+}
+
+.featured-img-large {
+  grid-row: 1 / 3 !important;
+}
+
+.featured-img img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* =========================================================
+   GALERÍA ESTILO JONZKO
+   ========================================================= */
+
+.jonzko-gallery-section {
+  margin: 0 !important;
+  padding: 78px 0 0 !important;
+  background: #fbfaf7 !important;
+}
+
+.jonzko-gallery-header {
+  width: min(1320px, 100%) !important;
+  margin: 0 auto 34px !important;
+  padding: 0 clamp(16px, 5vw, 48px) !important;
+}
+
+.jonzko-gallery-header span {
+  color: #b89455 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 5px !important;
+  text-transform: uppercase !important;
+}
+
+.jonzko-gallery-header h2 {
+  margin: 14px 0 12px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(42px, 6vw, 82px) !important;
+  line-height: 0.92 !important;
+  color: #050505 !important;
+}
+
+.jonzko-gallery-header p {
+  margin: 0 !important;
+  color: #3f3f3f !important;
+  font-size: 16px !important;
+  line-height: 1.65 !important;
+}
+
+.jonzko-gallery-grid {
+  width: min(1480px, 100%) !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: 1.15fr 0.925fr 0.925fr !important;
+  grid-template-rows: 340px 340px !important;
+  gap: 3px !important;
+  background: #111111 !important;
+}
+
+.gallery-card,
+.gallery-video-card,
+.gallery-wide {
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  background: #111111 !important;
+  box-shadow: none !important;
+  min-width: 0 !important;
+}
+
+.jonzko-gallery-grid .gallery-video-card,
+.jonzko-gallery-grid .gallery-card:first-child {
+  grid-row: 1 / 3 !important;
+  grid-column: auto !important;
+}
+
+.jonzko-gallery-grid .gallery-wide {
+  grid-column: 2 / 4 !important;
+  grid-row: auto !important;
+}
+
+.gallery-card img,
+.gallery-card video,
+.gallery-video-card video,
+.gallery-wide img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  border-radius: 0 !important;
+  transform: none !important;
+}
+
+.gallery-card:hover img,
+.gallery-card:hover video {
+  transform: none !important;
+}
+
+/* =========================================================
+   RESEÑAS ARRIBA DE CONTACTO
+   ========================================================= */
+
+.jonzko-reviews-section {
+  margin: 0 !important;
+  padding: 70px clamp(16px, 5vw, 56px) !important;
+  background: #fbfaf7 !important;
+}
+
+.jonzko-reviews-shell {
+  width: min(1320px, 100%) !important;
+  margin: 0 auto !important;
+}
+
+.jonzko-reviews-header {
+  margin-bottom: 26px !important;
+}
+
+.jonzko-reviews-header span {
+  color: #b89455 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 5px !important;
+  text-transform: uppercase !important;
+}
+
+.jonzko-reviews-header h2 {
+  margin: 12px 0 10px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(34px, 4vw, 58px) !important;
+  line-height: 0.98 !important;
+  color: #050505 !important;
+}
+
+.jonzko-reviews-header p {
+  margin: 0 !important;
+  color: #555 !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+.jonzko-reviews-section .review-slider {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  scroll-snap-type: none !important;
+}
+
+.jonzko-reviews-section .review-card {
+  min-width: 0 !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  border: 1px solid #e4d6c1 !important;
+  border-radius: 18px !important;
+  padding: 22px !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.05) !important;
+}
+
+.jonzko-reviews-section .review-user {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+.jonzko-reviews-section .review-photo {
+  width: 66px !important;
+  height: 66px !important;
+  min-width: 66px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+
+.jonzko-reviews-section .review-card strong {
+  display: block !important;
+  color: #b89455 !important;
+  font-size: 16px !important;
+  margin-bottom: 8px !important;
+}
+
+.jonzko-reviews-section .review-card p {
+  margin: 0 0 10px !important;
+  color: #222 !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+.jonzko-reviews-section .review-card small {
+  color: #111 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+/* Si se quedó la reseña antigua en footer, la ocultamos */
+.footer-premium .footer-premium-review {
+  display: none !important;
+}
+
+/* =========================================================
+   CONTACTO
+   ========================================================= */
+
+.contact-premium-section {
+  margin: 0 !important;
+  padding: 0 clamp(16px, 5vw, 56px) 70px !important;
+  background: #fbfaf7 !important;
+}
+
+.contact-premium-card {
+  width: min(1320px, 100%) !important;
+  margin: 0 auto !important;
+  background: #f6f1e8 !important;
+  border: 1px solid #e3d4bd !important;
+  border-radius: 24px !important;
+  padding: 46px clamp(22px, 5vw, 58px) !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1px 1.25fr !important;
+  gap: 44px !important;
+  align-items: center !important;
+  box-shadow: 0 22px 58px rgba(0, 0, 0, 0.06) !important;
+}
+
+.contact-premium-left span,
+.contact-premium-right span {
+  color: #b89455 !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+}
+
+.contact-premium-left h2 {
+  margin: 12px 0 14px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(34px, 4vw, 54px) !important;
+  line-height: 0.98 !important;
+  color: #050505 !important;
+}
+
+.contact-premium-left p,
+.contact-premium-right p {
+  margin: 0 0 22px !important;
+  color: #555 !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+.contact-whatsapp-btn {
+  width: fit-content !important;
+  min-height: 48px !important;
+  padding: 0 26px !important;
+  background: #b89455 !important;
+  color: #ffffff !important;
+  border-radius: 2px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+.contact-premium-divider {
+  width: 1px !important;
+  height: 100% !important;
+  min-height: 150px !important;
+  background: #d3bea0 !important;
+}
+
+.contact-premium-links {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 180px)) !important;
+  gap: 12px !important;
+}
+
+.contact-premium-links a {
+  min-height: 46px !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  border: 1px solid #e3d4bd !important;
+  color: #111 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.contact-premium-links img {
+  width: 19px !important;
+  height: 19px !important;
+  object-fit: contain !important;
+}
+
+/* =========================================================
+   FOOTER OSCURO TIPO MARCA GRANDE
+   ========================================================= */
+
+.footer-premium {
+  margin: 0 !important;
+  background: #1f1f21 !important;
+  color: #f5f5f5 !important;
+  padding: 54px clamp(18px, 5vw, 56px) 28px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.footer-premium-container {
+  width: min(1320px, 100%) !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: 1.25fr 0.75fr 1fr 1fr !important;
+  gap: 34px !important;
+  align-items: flex-start !important;
+}
+
+.footer-premium-logo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.footer-premium-logo img {
+  width: 54px !important;
+  height: 54px !important;
+  object-fit: contain !important;
+}
+
+.footer-premium-logo h3 {
+  margin: 0 !important;
+  color: #ffffff !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  font-weight: 950 !important;
+}
+
+.footer-premium-logo span {
+  color: #bfbfbf !important;
+  font-size: 9px !important;
+  letter-spacing: 5px !important;
+}
+
+.footer-premium-brand p,
+.footer-premium-brand strong,
+.footer-premium-column a,
+.footer-premium-column button {
+  color: #d7d7d7 !important;
+}
+
+.footer-premium-brand p {
+  max-width: 300px !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+
+.footer-premium-column h4,
+.footer-premium-payments h4 {
+  margin: 0 0 18px !important;
+  color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.footer-premium-column a,
+.footer-premium-column button {
+  display: block !important;
+  margin-bottom: 13px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  text-align: left !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+.footer-premium-column a:hover,
+.footer-premium-column button:hover {
+  color: #ffffff !important;
+}
+
+.footer-premium .payment-icons {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+}
+
+.footer-premium .payment-icons span {
+  width: 72px !important;
+  height: 42px !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 0 !important;
+}
+
+.footer-premium .payment-icons img {
+  max-width: 42px !important;
+  max-height: 26px !important;
+  object-fit: contain !important;
+}
+
+.footer-premium-bottom {
+  width: min(1320px, 100%) !important;
+  margin: 34px auto 0 !important;
+  padding-top: 24px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  color: #cfcfcf !important;
+  font-size: 13px !important;
+}
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .featured-urban-section {
+    display: block !important;
+  }
+
+  .featured-urban-content {
+    padding: 48px 16px 34px !important;
+  }
+
+  .featured-urban-content h2 {
+    font-size: clamp(38px, 12vw, 54px) !important;
+  }
+
+  .featured-urban-content p {
+    font-size: 15px !important;
+  }
+
+  .featured-benefits {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 22px 14px !important;
+  }
+
+  .featured-btn {
+    width: 100% !important;
+  }
+
+  .featured-urban-gallery {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 420px 220px !important;
+    min-height: auto !important;
+    gap: 2px !important;
+  }
+
+  .featured-img-large {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  .jonzko-gallery-section {
+    padding: 52px 0 0 !important;
+  }
+
+  .jonzko-gallery-header {
+    padding: 0 16px !important;
+    margin-bottom: 26px !important;
+  }
+
+  .jonzko-gallery-header span {
+    font-size: 11px !important;
+    letter-spacing: 5px !important;
+  }
+
+  .jonzko-gallery-header h2 {
+    font-size: clamp(40px, 12vw, 58px) !important;
+    line-height: 0.94 !important;
+  }
+
+  .jonzko-gallery-header p {
+    font-size: 15px !important;
+  }
+
+  .jonzko-gallery-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 430px 210px 310px !important;
+    gap: 2px !important;
+    margin: 0 !important;
+  }
+
+  .jonzko-gallery-grid .gallery-video-card,
+  .jonzko-gallery-grid .gallery-card:first-child {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  .jonzko-gallery-grid .gallery-wide {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  .gallery-card,
+  .gallery-video-card,
+  .gallery-wide {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .gallery-card img,
+  .gallery-card video {
+    pointer-events: none !important;
+  }
+
+  .jonzko-reviews-section {
+    padding: 48px 16px 46px !important;
+  }
+
+  .jonzko-reviews-header h2 {
+    font-size: 38px !important;
+  }
+
+  .jonzko-reviews-section .review-slider {
+    display: flex !important;
+    gap: 14px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    padding-bottom: 10px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .jonzko-reviews-section .review-card {
+    flex: 0 0 88% !important;
+    scroll-snap-align: start !important;
+  }
+
+  .contact-premium-section {
+    padding: 0 16px 48px !important;
+  }
+
+  .contact-premium-card {
+    display: block !important;
+    padding: 30px 22px !important;
+    border-radius: 22px !important;
+  }
+
+  .contact-premium-left h2 {
+    font-size: 36px !important;
+  }
+
+  .contact-whatsapp-btn {
+    width: 100% !important;
+  }
+
+  .contact-premium-divider {
+    width: 100% !important;
+    height: 1px !important;
+    min-height: 1px !important;
+    margin: 28px 0 !important;
+  }
+
+  .contact-premium-links {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .contact-premium-links a {
+    min-width: 0 !important;
+  }
+
+  .footer-premium {
+    padding: 10px 16px 28px !important;
+  }
+
+  .footer-premium-container {
+    display: block !important;
+  }
+
+  .footer-premium-brand,
+  .footer-premium-column,
+  .footer-premium-payments {
+    padding: 24px 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+  }
+
+  .footer-premium-column h4,
+  .footer-premium-payments h4 {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin: 0 0 18px !important;
+    font-size: 15px !important;
+  }
+
+  .footer-premium-column h4::after,
+  .footer-premium-payments h4::after {
+    content: "⌄" !important;
+    font-size: 20px !important;
+    color: #ffffff !important;
+  }
+
+  .footer-premium-column a,
+  .footer-premium-column button {
+    font-size: 14px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .footer-premium-bottom {
+    display: block !important;
+    margin-top: 24px !important;
+    padding-top: 22px !important;
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .featured-urban-gallery {
+    grid-template-rows: 380px 190px !important;
+  }
+
+  .jonzko-gallery-grid {
+    grid-template-rows: 390px 190px 280px !important;
+  }
+
+  .contact-premium-links {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* =========================================================
+   FIX NEGRO NOSOTROS / GALERÍA - JONZKO
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+.featured-urban-section,
+.jonzko-gallery-section,
+.jonzko-reviews-section,
+.contact-premium-section {
+  background: #f7f6f2 !important;
+}
+
+/* Quita el negro de la galería de Nosotros */
+.featured-urban-gallery {
+  background: #f7f6f2 !important;
+  gap: 0 !important;
+}
+
+/* Quita el negro de las tarjetas internas */
+.featured-img,
+.featured-img-large {
+  background: #f7f6f2 !important;
+}
+
+/* Quita el negro de Estilo JONZKO */
+.jonzko-gallery-grid {
+  background: #f7f6f2 !important;
+  gap: 0 !important;
+}
+
+/* Quita el negro de cada card */
+.gallery-card,
+.gallery-video-card,
+.gallery-wide {
+  background: #f7f6f2 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Imágenes y video pegados, sin bordes negros */
+.featured-img img,
+.jonzko-gallery-grid img,
+.jonzko-gallery-grid video,
+.gallery-card img,
+.gallery-card video,
+.gallery-video-card video,
+.gallery-wide img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  background: #f7f6f2 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+/* Video más alto tipo portada real */
+.jonzko-gallery-grid {
+  grid-template-columns: 1.05fr 1fr 1fr !important;
+  grid-template-rows: 410px 410px !important;
+}
+
+.jonzko-gallery-grid .gallery-video-card {
+  grid-row: 1 / 3 !important;
+  min-height: 820px !important;
+}
+
+.jonzko-gallery-grid .gallery-video-card video {
+  height: 820px !important;
+  min-height: 820px !important;
+}
+
+/* Móvil */
+@media (max-width: 768px) {
+  .featured-urban-section,
+  .jonzko-gallery-section,
+  .jonzko-reviews-section,
+  .contact-premium-section {
+    background: #f7f6f2 !important;
+  }
+
+  .featured-urban-gallery {
+    background: #f7f6f2 !important;
+    gap: 0 !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 420px 220px !important;
+  }
+
+  .featured-img-large {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  .jonzko-gallery-section {
+    padding-top: 38px !important;
+  }
+
+  .jonzko-gallery-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    background: #f7f6f2 !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 560px 210px 300px !important;
+    gap: 0 !important;
+  }
+
+  .jonzko-gallery-grid .gallery-video-card {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 / 2 !important;
+    min-height: 560px !important;
+  }
+
+  .jonzko-gallery-grid .gallery-video-card video {
+    width: 100% !important;
+    height: 560px !important;
+    min-height: 560px !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+
+  .jonzko-gallery-grid .gallery-wide {
+    grid-column: 1 / -1 !important;
+  }
+
+  .gallery-card,
+  .gallery-video-card,
+  .gallery-wide {
+    background: #f7f6f2 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .featured-urban-gallery {
+    grid-template-rows: 390px 195px !important;
+  }
+
+  .jonzko-gallery-grid {
+    grid-template-rows: 540px 190px 280px !important;
+  }
+
+  .jonzko-gallery-grid .gallery-video-card,
+  .jonzko-gallery-grid .gallery-video-card video {
+    min-height: 540px !important;
+    height: 540px !important;
+  }
+}
+/* =========================================================
+   FOOTER JONZKO - ACORDEÓN FUNCIONAL + BLANCO/NEGRO SERIO
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+.footer-premium {
+  background: #f4f4f4 !important;
+  color: #111111 !important;
+  padding: 44px 16px 24px !important;
+  border-top: 1px solid #d8d8d8 !important;
+}
+
+.footer-premium-container {
+  width: min(1320px, 100%) !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: 1.25fr 0.85fr 1fr 1fr !important;
+  gap: 28px !important;
+  align-items: flex-start !important;
+}
+
+.footer-premium-brand,
+.footer-premium-column,
+.footer-premium-payments {
+  color: #111111 !important;
+}
+
+.footer-premium-logo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.footer-premium-logo img {
+  width: 54px !important;
+  height: 54px !important;
+  object-fit: contain !important;
+  filter: none !important;
+}
+
+.footer-premium-logo h3 {
+  margin: 0 !important;
+  color: #111111 !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  font-weight: 950 !important;
+  letter-spacing: 1px !important;
+}
+
+.footer-premium-logo span {
+  color: #333333 !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  letter-spacing: 5px !important;
+}
+
+.footer-premium-brand p {
+  margin: 0 0 16px !important;
+  max-width: 320px !important;
+  color: #333333 !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+
+.footer-premium-brand strong {
+  color: #111111 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.footer-accordion {
+  border-bottom: 1px solid #d8d8d8 !important;
+  padding-bottom: 18px !important;
+}
+
+/* Botón principal del acordeón */
+.footer-accordion-btn {
+  width: 100% !important;
+  min-height: 44px !important;
+  padding: 0 !important;
+  margin: 0 0 12px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #111111 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+  font-size: 15px !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.4px !important;
+  cursor: pointer !important;
+}
+
+/* Evita flechas duplicadas antiguas */
+.footer-premium-column h4::after,
+.footer-premium-payments h4::after {
+  content: none !important;
+  display: none !important;
+}
+
+.footer-chevron {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  border-radius: 50% !important;
+  border: 1px solid #111111 !important;
+  color: #111111 !important;
+  background: #ffffff !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 17px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease !important;
+}
+
+.footer-chevron.open {
+  transform: rotate(180deg) !important;
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.footer-accordion-content {
+  display: block !important;
+  padding-top: 4px !important;
+}
+
+.footer-accordion-content a,
+.footer-accordion-content button {
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 0 13px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  color: #222222 !important;
+  font-size: 14px !important;
+  font-weight: 750 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+
+.footer-accordion-content a:hover,
+.footer-accordion-content button:hover {
+  color: #000000 !important;
+  text-decoration: underline !important;
+}
+
+/* Métodos de pago */
+.footer-premium .payment-icons,
+.footer-premium .payment-images {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+}
+
+.footer-premium .payment-icons span,
+.footer-premium .payment-images span {
+  width: 72px !important;
+  height: 42px !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  border: 1px solid #d8d8d8 !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.footer-premium .payment-icons img,
+.footer-premium .payment-images img {
+  max-width: 42px !important;
+  max-height: 26px !important;
+  object-fit: contain !important;
+}
+
+/* Parte inferior */
+.footer-premium-bottom {
+  width: min(1320px, 100%) !important;
+  margin: 28px auto 0 !important;
+  padding-top: 20px !important;
+  border-top: 1px solid #d8d8d8 !important;
+  color: #444444 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  font-size: 12px !important;
+}
+
+.footer-premium-bottom p {
+  margin: 0 !important;
+}
+
+/* Móvil */
+@media (max-width: 768px) {
+  .footer-premium {
+    background: #f4f4f4 !important;
+    color: #111111 !important;
+    padding: 32px 16px 22px !important;
+  }
+
+  .footer-premium-container {
+    display: block !important;
+  }
+
+  .footer-premium-brand {
+    padding-bottom: 22px !important;
+    margin-bottom: 4px !important;
+    border-bottom: 1px solid #d8d8d8 !important;
+  }
+
+  .footer-premium-column,
+  .footer-premium-payments {
+    padding: 14px 0 !important;
+    border-bottom: 1px solid #d8d8d8 !important;
+  }
+
+  .footer-accordion-btn {
+    min-height: 42px !important;
+    margin-bottom: 8px !important;
+    font-size: 15px !important;
+  }
+
+  .footer-accordion-content a,
+  .footer-accordion-content button {
+    margin-bottom: 13px !important;
+    font-size: 14px !important;
+  }
+
+  .footer-premium-bottom {
+    display: block !important;
+    margin-top: 22px !important;
+    padding-top: 18px !important;
+    font-size: 12px !important;
+  }
+
+  .footer-premium-bottom p {
+    margin-bottom: 8px !important;
+  }
+}
+/* =========================================================
+   FOOTER JONZKO - GRIS PREMIUM / BLANCO Y NEGRO SERIO
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+.footer-premium {
+  background: #e7e7e7 !important;
+  color: #101010 !important;
+  padding: 42px 16px 24px !important;
+  border-top: 1px solid #cfcfcf !important;
+}
+
+.footer-premium-container {
+  width: min(1320px, 100%) !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: 1.25fr 0.85fr 1fr 1fr !important;
+  gap: 22px !important;
+  align-items: flex-start !important;
+}
+
+/* BLOQUE DE MARCA */
+.footer-premium-brand {
+  background: #f5f5f5 !important;
+  border: 1px solid #d2d2d2 !important;
+  border-radius: 18px !important;
+  padding: 22px !important;
+  color: #111111 !important;
+}
+
+.footer-premium-logo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.footer-premium-logo img {
+  width: 54px !important;
+  height: 54px !important;
+  object-fit: contain !important;
+}
+
+.footer-premium-logo h3 {
+  margin: 0 !important;
+  color: #111111 !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  font-weight: 950 !important;
+  letter-spacing: 1px !important;
+}
+
+.footer-premium-logo span {
+  color: #222222 !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  letter-spacing: 5px !important;
+}
+
+.footer-premium-brand p {
+  margin: 0 0 16px !important;
+  max-width: 320px !important;
+  color: #2b2b2b !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+
+.footer-premium-brand strong {
+  color: #000000 !important;
+  font-size: 13px !important;
+  font-weight: 950 !important;
+}
+
+/* ACORDEONES */
+.footer-premium-column,
+.footer-premium-payments,
+.footer-accordion {
+  background: #f5f5f5 !important;
+  border: 1px solid #d2d2d2 !important;
+  border-radius: 18px !important;
+  padding: 18px !important;
+  color: #111111 !important;
+}
+
+/* Botón principal: JONZKO / ATENCIÓN / MÉTODOS */
+.footer-accordion-btn {
+  width: 100% !important;
+  min-height: 42px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  color: #111111 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+
+/* Texto de los títulos */
+.footer-accordion-btn span:first-child {
+  color: #111111 !important;
+  opacity: 1 !important;
+  font-size: 15px !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Quitar flechas antiguas si quedaron */
+.footer-premium-column h4::after,
+.footer-premium-payments h4::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Flecha redonda */
+.footer-chevron {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  border-radius: 50% !important;
+  border: 1px solid #111111 !important;
+  color: #111111 !important;
+  background: #ffffff !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 17px !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease !important;
+}
+
+.footer-chevron.open {
+  transform: rotate(180deg) !important;
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+/* Contenido desplegado */
+.footer-accordion-content {
+  display: block !important;
+  margin-top: 14px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid #d7d7d7 !important;
+}
+
+.footer-accordion-content a,
+.footer-accordion-content button {
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 0 13px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  color: #222222 !important;
+  opacity: 1 !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+
+.footer-accordion-content a:hover,
+.footer-accordion-content button:hover {
+  color: #000000 !important;
+  text-decoration: underline !important;
+}
+
+/* Pagos */
+.footer-premium .payment-icons,
+.footer-premium .payment-images {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+}
+
+.footer-premium .payment-icons span,
+.footer-premium .payment-images span {
+  width: 72px !important;
+  height: 42px !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  border: 1px solid #cfcfcf !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.footer-premium .payment-icons img,
+.footer-premium .payment-images img {
+  max-width: 42px !important;
+  max-height: 26px !important;
+  object-fit: contain !important;
+}
+
+/* Parte inferior */
+.footer-premium-bottom {
+  width: min(1320px, 100%) !important;
+  margin: 22px auto 0 !important;
+  padding-top: 18px !important;
+  border-top: 1px solid #cfcfcf !important;
+  color: #333333 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  font-size: 12px !important;
+}
+
+.footer-premium-bottom p {
+  margin: 0 !important;
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+  .footer-premium {
+    background: #e7e7e7 !important;
+    color: #111111 !important;
+    padding: 26px 12px 22px !important;
+  }
+
+  .footer-premium-container {
+    display: block !important;
+  }
+
+  .footer-premium-brand {
+    margin-bottom: 12px !important;
+    padding: 20px 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .footer-premium-column,
+  .footer-premium-payments,
+  .footer-accordion {
+    margin-bottom: 12px !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .footer-accordion-btn {
+    min-height: 38px !important;
+  }
+
+  .footer-accordion-btn span:first-child {
+    color: #111111 !important;
+    font-size: 15px !important;
+    font-weight: 950 !important;
+  }
+
+  .footer-accordion-content a,
+  .footer-accordion-content button {
+    margin-bottom: 13px !important;
+    font-size: 14px !important;
+    color: #222222 !important;
+  }
+
+  .footer-premium-bottom {
+    display: block !important;
+    margin-top: 16px !important;
+    padding: 16px !important;
+    background: #f5f5f5 !important;
+    border: 1px solid #d2d2d2 !important;
+    border-radius: 16px !important;
+    font-size: 12px !important;
+  }
+
+  .footer-premium-bottom p {
+    margin-bottom: 8px !important;
+  }
+}
+/* =========================================================
+   FOOTER FINAL JONZKO
+   PC NORMAL / MÓVIL ACORDEÓN
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+/* =========================
+   PC - FOOTER NORMAL
+   ========================= */
+
+.footer-premium {
+  background: #262626 !important;
+  color: #f5f5f5 !important;
+  padding: 56px clamp(34px, 5vw, 80px) 26px !important;
+  border-top: 1px solid #3a3a3a !important;
+}
+
+.footer-premium-container {
+  width: min(1320px, 100%) !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: 1.25fr 0.8fr 1fr 1fr !important;
+  gap: 42px !important;
+  align-items: flex-start !important;
+}
+
+/* Quitar tarjetas en PC */
+.footer-premium-brand,
+.footer-premium-column,
+.footer-premium-payments,
+.footer-accordion {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #f5f5f5 !important;
+}
+
+/* Logo / marca */
+.footer-premium-logo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.footer-premium-logo img {
+  width: 54px !important;
+  height: 54px !important;
+  object-fit: contain !important;
+}
+
+.footer-premium-logo h3 {
+  margin: 0 !important;
+  color: #ffffff !important;
+  font-size: 30px !important;
+  line-height: 1 !important;
+  font-weight: 950 !important;
+  letter-spacing: 1px !important;
+}
+
+.footer-premium-logo span {
+  color: #d7d7d7 !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  letter-spacing: 5px !important;
+}
+
+.footer-premium-brand p {
+  margin: 0 0 16px !important;
+  max-width: 320px !important;
+  color: #dedede !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+
+.footer-premium-brand strong {
+  color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 950 !important;
+}
+
+/* En PC el botón se ve como título normal */
+.footer-accordion-btn {
+  width: 100% !important;
+  min-height: auto !important;
+  padding: 0 !important;
+  margin: 0 0 18px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #ffffff !important;
+  display: block !important;
+  text-align: left !important;
+  pointer-events: none !important;
+}
+
+.footer-accordion-btn span:first-child {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  font-size: 14px !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.8px !important;
+}
+
+/* Ocultar flechas en PC */
+.footer-chevron {
+  display: none !important;
+}
+
+/* Contenido visible normal en PC */
+.footer-accordion-content {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.footer-accordion-content a,
+.footer-accordion-content button {
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 0 13px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  color: #dddddd !important;
+  opacity: 1 !important;
+  font-size: 14px !important;
+  font-weight: 750 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+
+.footer-accordion-content a:hover,
+.footer-accordion-content button:hover {
+  color: #ffffff !important;
+  text-decoration: underline !important;
+}
+
+/* Pagos PC */
+.footer-premium .payment-icons,
+.footer-premium .payment-images {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+}
+
+.footer-premium .payment-icons span,
+.footer-premium .payment-images span {
+  width: 72px !important;
+  height: 42px !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  border: 1px solid #4b4b4b !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.footer-premium .payment-icons img,
+.footer-premium .payment-images img {
+  max-width: 42px !important;
+  max-height: 26px !important;
+  object-fit: contain !important;
+}
+
+/* Bottom PC */
+.footer-premium-bottom {
+  width: min(1320px, 100%) !important;
+  margin: 36px auto 0 !important;
+  padding-top: 22px !important;
+  border-top: 1px solid #444444 !important;
+  color: #cfcfcf !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  font-size: 12px !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.footer-premium-bottom p {
+  margin: 0 !important;
+}
+
+/* =========================
+   MÓVIL - ACORDEÓN PREMIUM
+   ========================= */
+
+@media (max-width: 768px) {
+  .footer-premium {
+    background: #d9d9d9 !important;
+    color: #111111 !important;
+    padding: 26px 12px 22px !important;
+    border-top: 1px solid #bdbdbd !important;
+  }
+
+  .footer-premium-container {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .footer-premium-brand,
+  .footer-premium-column,
+  .footer-premium-payments,
+  .footer-accordion {
+    background: #f3f3f3 !important;
+    border: 1px solid #c7c7c7 !important;
+    border-radius: 16px !important;
+    padding: 18px 16px !important;
+    margin: 0 0 12px !important;
+    color: #111111 !important;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .footer-premium-logo h3 {
+    color: #111111 !important;
+    font-size: 28px !important;
+  }
+
+  .footer-premium-logo span {
+    color: #222222 !important;
+  }
+
+  .footer-premium-brand p {
+    color: #2b2b2b !important;
+    font-size: 14px !important;
+  }
+
+  .footer-premium-brand strong {
+    color: #000000 !important;
+  }
+
+  /* Botón móvil sí funciona */
+  .footer-accordion-btn {
+    min-height: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    color: #111111 !important;
+  }
+
+  .footer-accordion-btn span:first-child {
+    color: #111111 !important;
+    font-size: 15px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.4px !important;
+  }
+
+  .footer-chevron {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    border-radius: 50% !important;
+    border: 1px solid #111111 !important;
+    color: #111111 !important;
+    background: #ffffff !important;
+    display: grid !important;
+    place-items: center !important;
+    font-size: 17px !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease !important;
+  }
+
+  .footer-chevron.open {
+    transform: rotate(180deg) !important;
+    background: #111111 !important;
+    color: #ffffff !important;
+  }
+
+  .footer-accordion-content {
+    display: block !important;
+    margin-top: 14px !important;
+    padding-top: 14px !important;
+    border-top: 1px solid #d0d0d0 !important;
+  }
+
+  .footer-accordion-content a,
+  .footer-accordion-content button {
+    display: block !important;
+    width: fit-content !important;
+    margin: 0 0 13px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: #181818 !important;
+    opacity: 1 !important;
+    font-size: 14px !important;
+    font-weight: 850 !important;
+    text-align: left !important;
+  }
+
+  .footer-premium .payment-icons span,
+  .footer-premium .payment-images span {
+    width: 72px !important;
+    height: 42px !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+    border: 1px solid #c7c7c7 !important;
+  }
+
+  .footer-premium-bottom {
+    display: block !important;
+    margin-top: 12px !important;
+    padding: 16px !important;
+    background: #f3f3f3 !important;
+    border: 1px solid #c7c7c7 !important;
+    border-radius: 16px !important;
+    color: #222222 !important;
+    font-size: 12px !important;
+  }
+
+  .footer-premium-bottom p {
+    margin-bottom: 8px !important;
+  }
+}
+/* =========================================================
+   FOOTER JONZKO - SOLO MÓVIL OSCURO PREMIUM
+   PC NO SE TOCA
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .footer-premium {
+    background: #242424 !important;
+    color: #ffffff !important;
+    padding: 26px 12px 22px !important;
+    border-top: 1px solid #3a3a3a !important;
+  }
+
+  .footer-premium-container {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .footer-premium-brand,
+  .footer-premium-column,
+  .footer-premium-payments,
+  .footer-accordion {
+    background: #303030 !important;
+    border: 1px solid #444444 !important;
+    border-radius: 16px !important;
+    padding: 18px 16px !important;
+    margin: 0 0 12px !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14) !important;
+  }
+
+  .footer-premium-logo h3 {
+    color: #ffffff !important;
+    font-size: 28px !important;
+  }
+
+  .footer-premium-logo span {
+    color: #dcdcdc !important;
+  }
+
+  .footer-premium-brand p {
+    color: #e5e5e5 !important;
+    font-size: 14px !important;
+  }
+
+  .footer-premium-brand strong {
+    color: #ffffff !important;
+  }
+
+  .footer-accordion-btn {
+    min-height: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  .footer-accordion-btn span:first-child {
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .footer-chevron {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    border-radius: 50% !important;
+    border: 1px solid #ffffff !important;
+    color: #111111 !important;
+    background: #ffffff !important;
+    display: grid !important;
+    place-items: center !important;
+    font-size: 17px !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease !important;
+  }
+
+  .footer-chevron.open {
+    transform: rotate(180deg) !important;
+    background: #111111 !important;
+    color: #ffffff !important;
+    border-color: #111111 !important;
+  }
+
+  .footer-accordion-content {
+    display: block !important;
+    margin-top: 14px !important;
+    padding-top: 14px !important;
+    border-top: 1px solid #4a4a4a !important;
+  }
+
+  .footer-accordion-content a,
+  .footer-accordion-content button {
+    display: block !important;
+    width: fit-content !important;
+    margin: 0 0 13px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: #f1f1f1 !important;
+    opacity: 1 !important;
+    font-size: 14px !important;
+    font-weight: 850 !important;
+    text-align: left !important;
+  }
+
+  .footer-accordion-content a:hover,
+  .footer-accordion-content button:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+  }
+
+  .footer-premium .payment-icons,
+  .footer-premium .payment-images {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+  .footer-premium .payment-icons span,
+  .footer-premium .payment-images span {
+    width: 72px !important;
+    height: 42px !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+    border: 1px solid #555555 !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .footer-premium .payment-icons img,
+  .footer-premium .payment-images img {
+    max-width: 42px !important;
+    max-height: 26px !important;
+    object-fit: contain !important;
+  }
+
+  .footer-premium-bottom {
+    display: block !important;
+    margin-top: 12px !important;
+    padding: 16px 78px 16px 16px !important;
+    background: #303030 !important;
+    border: 1px solid #444444 !important;
+    border-radius: 16px !important;
+    color: #e9e9e9 !important;
+    font-size: 12px !important;
+  }
+
+  .footer-premium-bottom p {
+    margin: 0 0 8px !important;
+    color: #e9e9e9 !important;
+  }
+
+  .footer-premium-bottom p:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .whatsapp-float {
+    right: 16px !important;
+    bottom: 18px !important;
+    z-index: 9999 !important;
+  }
+}
+/* =========================================================
+   FIX PC FOOTER - SIEMPRE VISIBLE / SIN ACORDEÓN EN PC
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+@media (min-width: 769px) {
+  .footer-premium {
+    background: #262626 !important;
+    color: #f5f5f5 !important;
+    padding: 56px clamp(34px, 5vw, 80px) 26px !important;
+    border-top: 1px solid #3a3a3a !important;
+  }
+
+  .footer-premium-container {
+    width: min(1320px, 100%) !important;
+    margin: 0 auto !important;
+    display: grid !important;
+    grid-template-columns: 1.25fr 0.8fr 1fr 1fr !important;
+    gap: 42px !important;
+    align-items: flex-start !important;
+  }
+
+  .footer-premium-brand,
+  .footer-premium-column,
+  .footer-premium-payments,
+  .footer-accordion {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+  }
+
+  .footer-accordion-btn {
+    display: block !important;
+    pointer-events: none !important;
+    margin: 0 0 18px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    color: #ffffff !important;
+  }
+
+  .footer-accordion-btn span:first-child {
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.8px !important;
+  }
+
+  .footer-chevron {
+    display: none !important;
+  }
+
+  .footer-accordion-content {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .footer-accordion-content a,
+  .footer-accordion-content button {
+    display: block !important;
+    margin: 0 0 13px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: #dddddd !important;
+    font-size: 14px !important;
+    font-weight: 750 !important;
+    text-align: left !important;
+  }
+
+  .footer-accordion-content a:hover,
+  .footer-accordion-content button:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+  }
+
+  .footer-premium-logo h3,
+  .footer-premium-brand strong {
+    color: #ffffff !important;
+  }
+
+  .footer-premium-brand p {
+    color: #dedede !important;
+  }
+
+  .footer-premium-bottom {
+    background: transparent !important;
+    border-radius: 0 !important;
+    border-top: 1px solid #444444 !important;
+    color: #cfcfcf !important;
+  }
+}
+/* =========================================================
+   RESEÑAS JONZKO - FIX PC / TABLET / MÓVIL
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+.jonzko-reviews-section {
+  background: #fbfaf7 !important;
+  padding: 76px clamp(18px, 5vw, 72px) 70px !important;
+  overflow: hidden !important;
+}
+
+.jonzko-reviews-shell {
+  width: min(1180px, 100%) !important;
+  margin: 0 auto !important;
+}
+
+.jonzko-reviews-header {
+  max-width: 860px !important;
+  margin: 0 0 34px !important;
+}
+
+.jonzko-reviews-header span {
+  display: inline-block !important;
+  color: #b89455 !important;
+  font-size: 12px !important;
+  font-weight: 950 !important;
+  letter-spacing: 6px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 14px !important;
+}
+
+.jonzko-reviews-header h2 {
+  margin: 0 0 14px !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(42px, 5vw, 72px) !important;
+  line-height: 0.95 !important;
+  color: #050505 !important;
+  letter-spacing: -1.8px !important;
+}
+
+.jonzko-reviews-header p {
+  margin: 0 !important;
+  color: #444444 !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+/* PC: tarjetas grandes */
+.jonzko-reviews-section .review-slider {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  scroll-snap-type: none !important;
+}
+
+.jonzko-reviews-section .review-card {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 190px !important;
+  background: #ffffff !important;
+  border: 1px solid #e4d6c1 !important;
+  border-radius: 22px !important;
+  padding: 26px !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.055) !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.jonzko-reviews-section .review-user {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: 76px 1fr !important;
+  gap: 18px !important;
+  align-items: center !important;
+}
+
+.jonzko-reviews-section .review-photo {
+  width: 76px !important;
+  height: 76px !important;
+  min-width: 76px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: 2px solid #111111 !important;
+}
+
+.jonzko-reviews-section .review-card strong {
+  display: block !important;
+  color: #b89455 !important;
+  font-size: 18px !important;
+  letter-spacing: 2px !important;
+  margin-bottom: 10px !important;
+}
+
+.jonzko-reviews-section .review-card p {
+  margin: 0 0 12px !important;
+  color: #1b1b1b !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  max-width: 420px !important;
+}
+
+.jonzko-reviews-section .review-card small {
+  display: block !important;
+  color: #000000 !important;
+  font-size: 13px !important;
+  font-weight: 950 !important;
+  line-height: 1.35 !important;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .jonzko-reviews-section {
+    padding: 58px 18px 54px !important;
+  }
+
+  .jonzko-reviews-section .review-slider {
+    grid-template-columns: 1fr !important;
+  }
+
+  .jonzko-reviews-section .review-card {
+    min-height: auto !important;
+  }
+}
+
+/* Móvil: carrusel bonito */
+@media (max-width: 768px) {
+  .jonzko-reviews-section {
+    padding: 50px 16px 46px !important;
+  }
+
+  .jonzko-reviews-header {
+    margin-bottom: 24px !important;
+  }
+
+  .jonzko-reviews-header h2 {
+    font-size: clamp(36px, 11vw, 52px) !important;
+    line-height: 0.98 !important;
+  }
+
+  .jonzko-reviews-header p {
+    font-size: 15px !important;
+  }
+
+  .jonzko-reviews-section .review-slider {
+    display: flex !important;
+    gap: 14px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    padding: 0 0 12px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .jonzko-reviews-section .review-card {
+    flex: 0 0 86% !important;
+    min-width: 86% !important;
+    min-height: 190px !important;
+    scroll-snap-align: start !important;
+    padding: 22px !important;
+  }
+
+  .jonzko-reviews-section .review-user {
+    grid-template-columns: 66px 1fr !important;
+    gap: 14px !important;
+  }
+
+  .jonzko-reviews-section .review-photo {
+    width: 66px !important;
+    height: 66px !important;
+    min-width: 66px !important;
+  }
+
+  .jonzko-reviews-section .review-card p {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .jonzko-reviews-section .review-card {
+    flex-basis: 90% !important;
+    min-width: 90% !important;
+  }
+}
+/* =========================================================
+   RESEÑAS JONZKO - SOLO PC / LAPTOP
+   NO TOCA MÓVIL
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+@media (min-width: 769px) {
+  .jonzko-reviews-section {
+    background: #fbfaf7 !important;
+    padding: 80px 0 74px !important;
+    overflow: hidden !important;
+  }
+
+  .jonzko-reviews-shell {
+    width: min(1180px, calc(100% - 80px)) !important;
+    margin: 0 auto !important;
+  }
+
+  .jonzko-reviews-header {
+    max-width: 900px !important;
+    margin: 0 0 34px !important;
+  }
+
+  .jonzko-reviews-header span {
+    display: inline-block !important;
+    color: #b89455 !important;
+    font-size: 12px !important;
+    font-weight: 950 !important;
+    letter-spacing: 6px !important;
+    text-transform: uppercase !important;
+    margin-bottom: 14px !important;
+  }
+
+  .jonzko-reviews-header h2 {
+    margin: 0 0 14px !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(48px, 4.6vw, 76px) !important;
+    line-height: 0.95 !important;
+    color: #050505 !important;
+    letter-spacing: -1.8px !important;
+    max-width: 860px !important;
+  }
+
+  .jonzko-reviews-header p {
+    margin: 0 !important;
+    color: #333333 !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Contenedor de cards en PC */
+  .jonzko-reviews-section .review-slider {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(420px, 1fr)) !important;
+    gap: 24px !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    scroll-snap-type: none !important;
+  }
+
+  /* Card larga, no angosta */
+  .jonzko-reviews-section .review-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 210px !important;
+    background: #ffffff !important;
+    border: 1px solid #e1d3bd !important;
+    border-radius: 24px !important;
+    padding: 28px 30px !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.055) !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .jonzko-reviews-section .review-user {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 86px 1fr !important;
+    gap: 22px !important;
+    align-items: center !important;
+  }
+
+  .jonzko-reviews-section .review-user > div {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .jonzko-reviews-section .review-photo {
+    width: 86px !important;
+    height: 86px !important;
+    min-width: 86px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 2px solid #111111 !important;
+  }
+
+  .jonzko-reviews-section .review-card strong {
+    display: block !important;
+    color: #b89455 !important;
+    font-size: 18px !important;
+    letter-spacing: 2px !important;
+    margin-bottom: 10px !important;
+    white-space: nowrap !important;
+  }
+
+  .jonzko-reviews-section .review-card p {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 0 12px !important;
+    color: #171717 !important;
+    font-size: 15.5px !important;
+    line-height: 1.65 !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .jonzko-reviews-section .review-card small {
+    display: block !important;
+    color: #000000 !important;
+    font-size: 13px !important;
+    font-weight: 950 !important;
+    line-height: 1.35 !important;
+  }
+}
+
+/* Laptop mediana */
+@media (min-width: 769px) and (max-width: 1050px) {
+  .jonzko-reviews-shell {
+    width: calc(100% - 44px) !important;
+  }
+
+  .jonzko-reviews-section .review-slider {
+    grid-template-columns: 1fr !important;
   }
 }

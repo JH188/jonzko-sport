@@ -695,6 +695,21 @@ removeProductMedia(field: ProductMediaField): void {
 
 openOrderDetail(order: OrderResponse): void {
   this.selectedOrder.set(order);
+
+  setTimeout(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const panel = document.querySelector('.order-detail-panel');
+
+    if (panel) {
+      panel.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  }, 80);
 }
 
 closeOrderDetail(): void {
@@ -2709,291 +2724,38 @@ async downloadOrderPdf(
       heightLeft -= pdfHeight;
     }
 
-    const fileName = `${type}_JONZKO_Pedido_${order.id}.pdf`;
+    const safeType = type.toLowerCase().replace(/\s+/g, '-');
+    const safeOrder = order.id || 'pedido';
 
-    pdf.save(fileName);
+    pdf.save(`${safeType}-jonzko-${safeOrder}.pdf`);
 
     document.body.removeChild(tempContainer);
   } catch (error) {
-    console.error('Error generando PDF bonito:', error);
+    console.error('Error generando PDF:', error);
     alert('No se pudo descargar el PDF.');
   }
 }
 
-private openPrintWindow(title: string, content: string): void {
-  const printWindow = window.open('', '_blank');
-
-  if (!printWindow) {
-    alert('No se pudo abrir la ventana del comprobante.');
-    return;
-  }
-
-  printWindow.document.write(`
-    <html>
-      <head>
-        <title>${title}</title>
-        <style>
-          * {
-            box-sizing: border-box;
-          }
-
-          body {
-            margin: 0;
-            padding: 28px;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #eef2f7;
-            color: #0f172a;
-          }
-
-          .receipt-page {
-            max-width: 980px;
-            margin: 0 auto;
-            background: #ffffff;
-            border: 1px solid #d9e1ea;
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
-          }
-
-          .receipt-top {
-            display: flex;
-            justify-content: space-between;
-            gap: 24px;
-            align-items: flex-start;
-            padding-bottom: 18px;
-            border-bottom: 1px solid #dde5ee;
-            margin-bottom: 24px;
-          }
-
-          .brand-box {
-            display: flex;
-            gap: 18px;
-            align-items: flex-start;
-            flex: 1;
-          }
-
-          .brand-logo {
-            width: 78px;
-            height: 78px;
-            object-fit: cover;
-            border-radius: 16px;
-            border: 1px solid #d9e1ea;
-          }
-
-          .brand-box h1 {
-            margin: 0 0 8px;
-            font-size: 34px;
-            line-height: 1.1;
-            color: #0b1736;
-          }
-
-          .brand-box p {
-            margin: 4px 0;
-            font-size: 14px;
-            color: #334155;
-          }
-
-          .doc-box {
-            min-width: 280px;
-            border: 2px solid #0b1736;
-            border-radius: 18px;
-            padding: 20px;
-            text-align: center;
-          }
-
-          .doc-box h2 {
-            margin: 0;
-            font-size: 22px;
-            color: #0b1736;
-          }
-
-          .doc-box h3 {
-            margin: 10px 0;
-            font-size: 18px;
-            color: #0b1736;
-          }
-
-          .doc-box p {
-            margin: 0;
-            font-size: 14px;
-          }
-
-          .section-card {
-            border: 1px solid #d9e1ea;
-            border-radius: 18px;
-            padding: 18px;
-            margin-bottom: 18px;
-          }
-
-          .section-card h3 {
-            margin: 0 0 16px;
-            font-size: 18px;
-            color: #0b1736;
-          }
-
-          .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px 24px;
-          }
-
-          .info-grid div span {
-            display: block;
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 4px;
-          }
-
-          .info-grid div strong {
-            font-size: 18px;
-            color: #0f172a;
-          }
-
-          .receipt-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 6px;
-          }
-
-          .receipt-table th,
-          .receipt-table td {
-            border: 1px solid #d9e1ea;
-            padding: 10px 12px;
-            font-size: 13px;
-            text-align: left;
-          }
-
-          .receipt-table th {
-            background: #f8fafc;
-            color: #0b1736;
-          }
-
-          .detail-lines {
-            display: grid;
-            gap: 12px;
-          }
-
-          .line-item {
-            display: flex;
-            justify-content: space-between;
-            gap: 16px;
-            align-items: center;
-            border: 1px solid #d9e1ea;
-            border-radius: 14px;
-            padding: 12px 14px;
-            background: #f8fafc;
-          }
-
-          .line-item p {
-            margin: 6px 0 0;
-            font-size: 13px;
-            color: #475569;
-          }
-
-          .summary-wrap {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 10px;
-          }
-
-          .summary-box {
-            width: 320px;
-            border-radius: 18px;
-            overflow: hidden;
-            border: 1px solid #d9e1ea;
-          }
-
-          .summary-box div {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 18px;
-            background: #ffffff;
-            border-bottom: 1px solid #d9e1ea;
-            font-size: 16px;
-          }
-
-          .summary-box div:last-child {
-            border-bottom: none;
-          }
-
-          .summary-total {
-            background: #0b1736 !important;
-            color: #ffffff;
-            font-size: 22px !important;
-            font-weight: 700;
-          }
-
-          .summary-total strong,
-          .summary-total span {
-            color: #ffffff;
-          }
-
-          .totals-box {
-            margin-top: 18px;
-            border: 1px solid #d9e1ea;
-            border-radius: 18px;
-            overflow: hidden;
-          }
-
-          .totals-box div {
-            display: flex;
-            justify-content: space-between;
-            padding: 16px 20px;
-            background: #0b1736;
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 700;
-          }
-
-          .receipt-footer {
-            text-align: center;
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 26px;
-          }
-
-          @media print {
-            body {
-              background: #ffffff;
-              padding: 0;
-            }
-
-            .receipt-page {
-              box-shadow: none;
-              border: none;
-              border-radius: 0;
-              max-width: 100%;
-              margin: 0;
-            }
-          }
-        </style>
-      </head>
-      <body>
-        ${content}
-        <script>
-          window.onload = function() {
-            setTimeout(function() {
-              window.print();
-            }, 300);
-          }
-        </script>
-      </body>
-    </html>
-  `);
-
-  printWindow.document.close();
-}
 openReceiptModal(title: string, content: string): void {
   this.receiptModalTitle = title;
   this.receiptModalContent = content;
   this.receiptModalOpen = true;
+
+  setTimeout(() => {
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('admin-modal-open');
+    }
+  }, 0);
 }
 
 closeReceiptModal(): void {
   this.receiptModalOpen = false;
   this.receiptModalTitle = '';
   this.receiptModalContent = '';
+
+  if (typeof document !== 'undefined') {
+    document.body.classList.remove('admin-modal-open');
+  }
 }
 
 getOrderCode(order: OrderResponse): string {

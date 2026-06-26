@@ -1,12 +1,12 @@
 /* =========================================================
-   JONZKO MIS PEDIDOS - COMPACTO / MOBILE APP
+   JONZKO MIS PEDIDOS - CLIENTE LIMPIO / RESPONSIVE
    Archivo: src/app/pages/register/mis-pedidos/mis-pedidos.scss
    ========================================================= */
 
 .orders-page {
   min-height: calc(100vh - 100px);
   background: #fbfaf7;
-  padding: 46px 18px 70px;
+  padding: 40px 18px 70px;
   color: #050505;
   overflow-x: hidden;
 }
@@ -16,9 +16,7 @@
   margin: 0 auto;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .orders-header {
   background: #ffffff;
@@ -26,9 +24,8 @@
   border-radius: 28px;
   padding: 30px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 96px;
-  gap: 22px;
-  align-items: center;
+  grid-template-columns: 1fr;
+  gap: 14px;
   box-shadow: 0 22px 58px rgba(0, 0, 0, 0.07);
 }
 
@@ -51,7 +48,7 @@
 h1 {
   margin: 0;
   color: #050505;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(38px, 5vw, 58px);
   line-height: 0.95;
   letter-spacing: -1px;
@@ -63,56 +60,49 @@ p {
 }
 
 .orders-header p {
-  max-width: 620px;
+  max-width: 680px;
   margin: 12px 0 0;
 }
 
-.back-logo {
-  width: 92px;
-  height: 92px;
-  border-radius: 999px;
-  background: #050505;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.18);
-}
-
-.back-logo img {
-  width: 72px;
-  height: 72px;
-  border-radius: 999px;
-  object-fit: cover;
-}
-
-/* =========================
-   FILTROS
-========================= */
+/* FILTROS */
 
 .filters-card {
-  margin-top: 20px;
+  margin-top: 18px;
   background: #ffffff;
   border: 1px solid #e7ddcf;
   border-radius: 22px;
-  padding: 16px;
+  padding: 14px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 240px;
+  grid-template-columns: minmax(0, 1fr) 190px 150px;
   gap: 12px;
+  align-items: end;
   box-shadow: 0 14px 38px rgba(0, 0, 0, 0.06);
+}
+
+.filter-field {
+  display: grid;
+  gap: 7px;
+}
+
+.filter-field span {
+  color: #9b7437;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .filters-card input,
 .filters-card select {
   width: 100%;
-  min-height: 48px;
-  padding: 0 16px;
+  min-height: 46px;
+  padding: 0 14px;
   border: 1px solid #ded2bf;
-  border-radius: 16px;
+  border-radius: 15px;
   background: #ffffff;
   color: #050505;
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 13px;
+  font-weight: 900;
   outline: none;
 }
 
@@ -121,9 +111,25 @@ p {
   border-color: #b89455;
 }
 
-/* =========================
-   VACÍO
-========================= */
+.refresh-btn {
+  width: 100%;
+  min-height: 46px;
+  border: none;
+  border-radius: 999px;
+  background: #050505;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 950;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.refresh-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* VACÍO */
 
 .empty-state {
   margin-top: 20px;
@@ -138,7 +144,7 @@ p {
 .empty-state h2 {
   margin: 0 0 10px;
   color: #050505;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: Georgia, 'Times New Roman', serif;
   font-size: 32px;
 }
 
@@ -149,7 +155,6 @@ p {
   margin-top: 20px;
 }
 
-.back-btn,
 .shop-btn,
 .empty-actions a {
   min-height: 46px;
@@ -165,12 +170,10 @@ p {
   font-weight: 950;
 }
 
-/* =========================
-   LISTA PEDIDOS
-========================= */
+/* LISTA */
 
 .orders-list {
-  margin-top: 20px;
+  margin-top: 18px;
   display: grid;
   gap: 14px;
 }
@@ -179,7 +182,7 @@ p {
   background: #ffffff;
   border: 1px solid #e7ddcf;
   border-radius: 24px;
-  padding: 18px;
+  padding: 16px;
   box-shadow: 0 16px 42px rgba(0, 0, 0, 0.07);
 }
 
@@ -203,15 +206,15 @@ p {
 .order-card h3 {
   margin: 0;
   color: #050505;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 24px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 23px;
   line-height: 1.05;
 }
 
 .status {
-  min-width: 104px;
-  height: 38px;
-  padding: 0 14px;
+  min-width: 96px;
+  height: 36px;
+  padding: 0 13px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
@@ -244,20 +247,20 @@ p {
 }
 
 .order-body {
-  margin-top: 14px;
-  padding: 14px;
+  margin-top: 12px;
+  padding: 13px;
   border: 1px solid #eee4d6;
-  border-radius: 18px;
+  border-radius: 17px;
   background: #fbfaf7;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px 16px;
+  gap: 7px 16px;
 }
 
 .order-body p {
   margin: 0;
   color: #333333;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.35;
 }
 
@@ -265,26 +268,28 @@ p {
   color: #050505;
 }
 
+/* PRODUCTOS MINI */
+
 .products-mini {
-  margin-top: 14px;
+  margin-top: 12px;
   background: #ffffff;
   border: 1px solid #eee4d6;
-  border-radius: 18px;
-  padding: 14px;
+  border-radius: 17px;
+  padding: 12px;
 }
 
 .products-mini h4 {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   color: #050505;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 950;
 }
 
 .product-mini {
   display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  gap: 12px;
-  padding: 10px 0;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 11px;
+  padding: 8px 0;
   border-bottom: 1px solid #eee4d6;
 }
 
@@ -293,9 +298,9 @@ p {
 }
 
 .product-mini img {
-  width: 64px;
-  height: 64px;
-  border-radius: 14px;
+  width: 58px;
+  height: 58px;
+  border-radius: 13px;
   object-fit: cover;
   background: #f2eee8;
 }
@@ -304,33 +309,31 @@ p {
   display: block;
   margin-bottom: 4px;
   color: #050505;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.2;
 }
 
 .product-mini p {
   margin: 2px 0;
   color: #555555;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.25;
 }
 
 .order-card > button {
   width: 100%;
-  min-height: 46px;
-  margin-top: 14px;
+  min-height: 42px;
+  margin-top: 12px;
   border: none;
   border-radius: 999px;
   background: #050505;
   color: #ffffff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 950;
   cursor: pointer;
 }
 
-/* =========================
-   MODAL DETALLE
-========================= */
+/* MODAL */
 
 .order-modal-backdrop {
   position: fixed;
@@ -340,47 +343,48 @@ p {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 28px 16px;
+  padding: 24px 14px;
   overflow-y: auto;
 }
 
 .order-modal {
-  width: min(920px, 100%);
+  width: min(860px, 100%);
   background: #ffffff;
   border: 1px solid #e7ddcf;
-  border-radius: 28px;
-  padding: 28px;
+  border-radius: 26px;
+  padding: 24px;
   position: relative;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
 }
 
 .modal-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 40px;
-  height: 40px;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
   border-radius: 999px;
   border: none;
   background: #050505;
   color: #ffffff;
-  font-size: 24px;
+  font-size: 23px;
   cursor: pointer;
 }
 
 .modal-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 18px;
+  gap: 16px;
   align-items: start;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
+  padding-right: 44px;
 }
 
 .modal-header h2 {
   margin: 8px 0 4px;
   color: #050505;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 34px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 32px;
 }
 
 .modal-header p {
@@ -390,7 +394,7 @@ p {
 .modal-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
 }
 
 .modal-grid section,
@@ -398,33 +402,33 @@ p {
 .modal-message {
   background: #fbfaf7;
   border: 1px solid #eee4d6;
-  border-radius: 18px;
-  padding: 16px;
+  border-radius: 17px;
+  padding: 14px;
 }
 
 .modal-grid h3,
 .modal-products h3 {
-  margin: 0 0 10px;
+  margin: 0 0 9px;
   color: #050505;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .modal-grid p {
-  margin: 6px 0;
+  margin: 5px 0;
   color: #333333;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.35;
 }
 
 .modal-products {
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 .modal-product {
   display: grid;
-  grid-template-columns: 84px minmax(0, 1fr);
-  gap: 14px;
-  padding: 14px 0;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
   border-bottom: 1px solid #e4d7c3;
 }
 
@@ -433,36 +437,36 @@ p {
 }
 
 .modal-product img {
-  width: 84px;
-  height: 84px;
-  border-radius: 15px;
+  width: 74px;
+  height: 74px;
+  border-radius: 14px;
   object-fit: cover;
   background: #ffffff;
 }
 
 .modal-product h4 {
-  margin: 0 0 7px;
+  margin: 0 0 6px;
   color: #050505;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .modal-product p {
   margin: 3px 0;
   color: #444444;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .modal-message {
-  margin-top: 14px;
+  margin-top: 12px;
   color: #222222;
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .modal-ok {
   width: 100%;
-  min-height: 48px;
-  margin-top: 16px;
+  min-height: 44px;
+  margin-top: 14px;
   border: none;
   border-radius: 999px;
   background: #050505;
@@ -471,231 +475,259 @@ p {
   cursor: pointer;
 }
 
-/* =========================
-   MÓVIL COMPACTO
-========================= */
+/* MÓVIL */
 
 @media (max-width: 700px) {
   .orders-page {
-    padding: 18px 10px 42px;
+    padding: 12px 8px 38px;
   }
 
   .orders-header {
-    padding: 18px;
-    border-radius: 24px;
-    grid-template-columns: minmax(0, 1fr) 64px;
-    gap: 12px;
+    padding: 14px;
+    border-radius: 20px;
   }
 
   .tag {
-    padding: 7px 13px;
-    font-size: 9px;
-    letter-spacing: 0.24em;
-    margin-bottom: 10px;
+    padding: 6px 11px;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
   }
 
   h1 {
-    font-size: 32px;
+    font-size: 28px;
+    line-height: 0.95;
   }
 
   .orders-header p {
-    margin-top: 8px;
-    font-size: 13px;
-    line-height: 1.4;
-  }
-
-  .back-logo {
-    width: 58px;
-    height: 58px;
-  }
-
-  .back-logo img {
-    width: 48px;
-    height: 48px;
+    margin-top: 7px;
+    font-size: 11.5px;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .filters-card {
-    margin-top: 12px;
-    padding: 12px;
-    border-radius: 20px;
-    grid-template-columns: 1fr;
-    gap: 9px;
+    margin-top: 10px;
+    padding: 9px;
+    border-radius: 16px;
+    grid-template-columns: 1fr 118px;
+    gap: 8px;
+  }
+
+  .filter-field span {
+    font-size: 8px;
+    letter-spacing: 0.14em;
   }
 
   .filters-card input,
   .filters-card select {
-    min-height: 44px;
-    padding: 0 14px;
-    border-radius: 14px;
-    font-size: 13px;
-  }
-
-  .orders-list {
-    margin-top: 12px;
-    gap: 12px;
-  }
-
-  .order-card {
-    border-radius: 22px;
-    padding: 14px;
-  }
-
-  .order-top {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-  }
-
-  .order-code {
-    font-size: 9px;
-    margin-bottom: 5px;
-  }
-
-  .order-card h3 {
-    font-size: 18px;
-  }
-
-  .status {
-    min-width: 88px;
-    height: 32px;
-    padding: 0 10px;
-    font-size: 10px;
-  }
-
-  .order-body {
-    margin-top: 10px;
-    padding: 11px;
-    border-radius: 15px;
-    grid-template-columns: 1fr 1fr;
-    gap: 7px 10px;
-  }
-
-  .order-body p {
+    min-height: 38px;
+    padding: 0 9px;
+    border-radius: 12px;
     font-size: 11px;
   }
 
-  /* Ocultamos lo largo en móvil: dirección y comprobante se ven en Ver detalle */
+  .refresh-btn {
+    grid-column: 1 / -1;
+    min-height: 36px;
+    font-size: 11px;
+  }
+
+  .orders-list {
+    margin-top: 10px;
+    gap: 10px;
+  }
+
+  .order-card {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .order-code {
+    font-size: 8px;
+    margin-bottom: 4px;
+  }
+
+  .order-card h3 {
+    font-size: 16px;
+  }
+
+  .status {
+    min-width: 76px;
+    height: 28px;
+    font-size: 9px;
+    padding: 0 9px;
+  }
+
+  .order-body {
+    margin-top: 8px;
+    padding: 9px;
+    border-radius: 13px;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 8px;
+  }
+
+  .order-body p {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  .order-body p:nth-child(3),
   .order-body p:nth-child(4),
   .order-body p:nth-child(5) {
     display: none;
   }
 
   .products-mini {
-    margin-top: 10px;
-    padding: 11px;
-    border-radius: 15px;
+    margin-top: 8px;
+    padding: 9px;
+    border-radius: 13px;
   }
 
   .products-mini h4 {
-    font-size: 12px;
-    margin-bottom: 8px;
+    font-size: 11px;
+    margin-bottom: 6px;
   }
 
   .product-mini {
-    grid-template-columns: 52px minmax(0, 1fr);
-    gap: 10px;
-    padding: 8px 0;
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: 8px;
+    padding: 6px 0;
   }
 
   .product-mini img {
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
   }
 
   .product-mini strong {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .product-mini p {
-    font-size: 10px;
+    font-size: 9px;
+    margin: 1px 0;
   }
 
   .order-card > button {
-    min-height: 40px;
-    margin-top: 10px;
-    font-size: 12px;
+    min-height: 36px;
+    margin-top: 8px;
+    font-size: 11px;
   }
 
   .empty-state {
     margin-top: 12px;
-    padding: 28px 18px;
-    border-radius: 22px;
+    padding: 26px 16px;
+    border-radius: 20px;
   }
 
   .empty-state h2 {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   .empty-actions {
     flex-direction: column;
   }
 
-  .back-btn,
   .shop-btn,
   .empty-actions a {
     width: 100%;
   }
 
   .order-modal-backdrop {
-    padding: 14px 10px;
+    padding: 10px 8px;
   }
 
   .order-modal {
-    padding: 20px;
-    border-radius: 22px;
+    padding: 16px;
+    border-radius: 20px;
+    max-height: calc(100vh - 20px);
+    overflow-y: auto;
   }
 
   .modal-close {
-    width: 36px;
-    height: 36px;
-    top: 12px;
-    right: 12px;
+    width: 34px;
+    height: 34px;
+    top: 10px;
+    right: 10px;
+    font-size: 21px;
   }
 
   .modal-header {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
+    padding-right: 38px;
+    margin-bottom: 12px;
   }
 
   .modal-header h2 {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .modal-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
   }
 
   .modal-grid section,
   .modal-products,
   .modal-message {
-    padding: 13px;
-    border-radius: 16px;
+    padding: 11px;
+    border-radius: 14px;
+  }
+
+  .modal-grid h3,
+  .modal-products h3 {
+    font-size: 12px;
+  }
+
+  .modal-grid p {
+    font-size: 10.5px;
+    margin: 4px 0;
   }
 
   .modal-product {
-    grid-template-columns: 64px minmax(0, 1fr);
-    gap: 11px;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 9px;
+    padding: 9px 0;
   }
 
   .modal-product img {
-    width: 64px;
-    height: 64px;
-    border-radius: 13px;
+    width: 52px;
+    height: 52px;
+    border-radius: 11px;
+  }
+
+  .modal-product h4 {
+    font-size: 12px;
+  }
+
+  .modal-product p {
+    font-size: 10px;
+    margin: 2px 0;
+  }
+
+  .modal-message {
+    font-size: 10.5px;
   }
 
   .modal-ok {
-    min-height: 44px;
+    min-height: 40px;
+    font-size: 12px;
   }
 }
 
 @media (max-width: 390px) {
-  .orders-header {
+  .filters-card {
     grid-template-columns: 1fr;
   }
 
-  .back-logo {
-    justify-self: center;
+  .refresh-btn {
+    grid-column: auto;
   }
 
   .order-body {

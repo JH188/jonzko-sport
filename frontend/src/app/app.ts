@@ -76,6 +76,11 @@ export class App implements OnInit, OnDestroy {
   currentUser = signal<AuthUser | null>(null);
   currentRoute = signal('');
 
+  footerJonzkoOpen = signal(true);
+  footerAtencionOpen = signal(true);
+  footerPagosOpen = signal(true);
+  isMobileFooter = signal(false);
+
   private heroInterval: any;
 
   // ==========================
@@ -208,10 +213,16 @@ export class App implements OnInit, OnDestroy {
     this.loadCart();
     this.loadCurrentUser();
 
-    window.addEventListener('jonzko-cart-updated', () => {
-      this.loadCart();
-      this.openCart();
-    });
+    this.updateFooterMode();
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', this.updateFooterMode);
+
+      window.addEventListener('jonzko-cart-updated', () => {
+        this.loadCart();
+        this.openCart();
+      });
+    }
 
     this.currentRoute.set(this.router.url);
 
@@ -231,119 +242,146 @@ export class App implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.heroInterval);
+
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', this.updateFooterMode);
+    }
+  }
+
+  // ==========================
+  // FOOTER RESPONSIVE
+  // ==========================
+
+  updateFooterMode = (): void => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    this.isMobileFooter.set(window.innerWidth <= 768);
+  };
+
+  toggleFooterSection(section: 'jonzko' | 'atencion' | 'pagos'): void {
+    if (section === 'jonzko') {
+      this.footerJonzkoOpen.update(value => !value);
+      return;
+    }
+
+    if (section === 'atencion') {
+      this.footerAtencionOpen.update(value => !value);
+      return;
+    }
+
+    if (section === 'pagos') {
+      this.footerPagosOpen.update(value => !value);
+    }
   }
 
   // ==========================
   // INICIO / HOME DESDE ADMIN
   // ==========================
 
-loadHomeConfig(): void {
-  this.apiService.getHomeSettings().subscribe({
-    next: (settings: PublicHomeSettings) => {
-      this.storeName.set(settings.storeName || 'JONZKO');
-      this.logoUrl.set(settings.logoUrl || 'assets/logo.jpg');
+  loadHomeConfig(): void {
+    this.apiService.getHomeSettings().subscribe({
+      next: (settings: PublicHomeSettings) => {
+        this.storeName.set(settings.storeName || 'JONZKO');
+        this.logoUrl.set(settings.logoUrl || 'assets/logo.jpg');
 
-      this.menuInicio.set(settings.menuInicio || 'INICIO');
-      this.menuTienda.set(settings.menuTienda || 'TIENDA');
-      this.menuExclusivo.set(settings.menuExclusivo || 'EXCLUSIVO');
-      this.menuNosotros.set(settings.menuNosotros || 'NOSOTROS');
-      this.menuContacto.set(settings.menuContacto || 'CONTACTO');
-      this.menuMisPedidos.set(settings.menuMisPedidos || 'MIS PEDIDOS');
+        this.menuInicio.set(settings.menuInicio || 'INICIO');
+        this.menuTienda.set(settings.menuTienda || 'TIENDA');
+        this.menuExclusivo.set(settings.menuExclusivo || 'EXCLUSIVO');
+        this.menuNosotros.set(settings.menuNosotros || 'NOSOTROS');
+        this.menuContacto.set(settings.menuContacto || 'CONTACTO');
+        this.menuMisPedidos.set(settings.menuMisPedidos || 'MIS PEDIDOS');
 
-      this.heroTitle.set(settings.heroTitle || 'BLACK & WHITE');
-      this.primaryButton.set(settings.heroButtonText || 'DESCUBRIR PRENDAS');
+        this.heroTitle.set(settings.heroTitle || 'BLACK & WHITE');
+        this.primaryButton.set(settings.heroButtonText || 'DESCUBRIR PRENDAS');
 
-      this.whatsappEnabled.set(settings.whatsappEnabled !== false);
+        this.whatsappEnabled.set(settings.whatsappEnabled !== false);
 
-      const topText =
-        settings.topBarText ||
-        'ENVÍOS A TODO EL PERÚ • COMPRA SEGURA • CAMBIOS DISPONIBLES • JONZKO SPORT';
+        const topText =
+          settings.topBarText ||
+          'ENVÍOS A TODO EL PERÚ • COMPRA SEGURA • CAMBIOS DISPONIBLES • JONZKO SPORT';
 
-      this.topBarItems.set(
-        topText
-          .split('•')
-          .map(item => item.trim())
-          .filter(item => item.length > 0)
-      );
+        this.topBarItems.set(
+          topText
+            .split('•')
+            .map(item => item.trim())
+            .filter(item => item.length > 0)
+        );
 
-      const phone = settings.whatsappNumber || '51998989599';
-      const message = 'Hola, quiero información sobre JONZKO.';
+        const phone = settings.whatsappNumber || '51998989599';
+        const message = 'Hola, quiero información sobre JONZKO.';
 
-      this.whatsappUrl.set(
-        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
-      );
+        this.whatsappUrl.set(
+          `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
+        );
 
-      // Cargar slides usando los textos generales del inicio
-      this.loadHomeSlidesWithSettings(settings);
-    },
-    error: (error) => {
-      console.error('Error cargando configuración de inicio:', error);
-      this.loadHomeSlidesWithSettings(null);
-    }
-  });
-}
-
-loadHomeSlidesWithSettings(settings: PublicHomeSettings | null): void {
-  this.apiService.getHomeSlides().subscribe({
-    next: (slides: any[]) => {
-      const generalTag = settings?.heroTag || 'MODA PERUANA';
-      const generalTitle = settings?.heroTitle || 'BLACK & WHITE';
-      const generalButton = settings?.heroButtonText || 'DESCUBRIR PRENDAS';
-      const generalButtonLink = settings?.heroButtonLink || '#producto';
-
-      const activeSlides = (slides || [])
-        .filter(slide => slide.active !== false)
-        .sort((a, b) => Number(a.displayOrder || 0) - Number(b.displayOrder || 0))
-        .map(slide => {
-          const hasVideo = !!slide.videoUrl;
-
-          return {
-            id: slide.id,
-            type: hasVideo ? 'video' : 'image',
-            src: hasVideo ? slide.videoUrl : slide.desktopImageUrl,
-            mobileSrc: slide.mobileImageUrl || slide.desktopImageUrl,
-
-            // AHORA MANDA LO DEL ADMIN GENERAL
-           subtitle: slide.tagText || generalTag,
-title: slide.title || generalTitle,
-buttonText: slide.buttonText || generalButton,
-buttonLink: slide.buttonLink || generalButtonLink,
-
-            desktopPosition: slide.desktopPosition || 'center center',
-            mobilePosition: slide.mobilePosition || 'center center'
-          } as HeroSlideView;
-        })
-        .filter(slide => !!slide.src);
-
-      if (activeSlides.length > 0) {
-        this.heroSlides.set(activeSlides);
-        this.activeHeroSlide.set(0);
-        this.restartHeroAutoplay();
-      } else {
-        // Si no hay slides creados, igual usa los textos del admin con imágenes antiguas
-        this.heroSlides.set([
-          {
-            type: 'image',
-            src: 'assets/principal1.jpg',
-            mobileSrc: 'assets/principal1.jpg',
-            subtitle: generalTag,
-            title: generalTitle,
-            buttonText: generalButton,
-            buttonLink: generalButtonLink,
-            desktopPosition: 'center center',
-            mobilePosition: 'center center'
-          }
-        ]);
-
-        this.activeHeroSlide.set(0);
-        this.restartHeroAutoplay();
+        this.loadHomeSlidesWithSettings(settings);
+      },
+      error: (error) => {
+        console.error('Error cargando configuración de inicio:', error);
+        this.loadHomeSlidesWithSettings(null);
       }
-    },
-    error: (error) => {
-      console.error('Error cargando slides de inicio:', error);
-    }
-  });
-}
+    });
+  }
+
+  loadHomeSlidesWithSettings(settings: PublicHomeSettings | null): void {
+    this.apiService.getHomeSlides().subscribe({
+      next: (slides: any[]) => {
+        const generalTag = settings?.heroTag || 'MODA PERUANA';
+        const generalTitle = settings?.heroTitle || 'BLACK & WHITE';
+        const generalButton = settings?.heroButtonText || 'DESCUBRIR PRENDAS';
+        const generalButtonLink = settings?.heroButtonLink || '#producto';
+
+        const activeSlides = (slides || [])
+          .filter(slide => slide.active !== false)
+          .sort((a, b) => Number(a.displayOrder || 0) - Number(b.displayOrder || 0))
+          .map(slide => {
+            const hasVideo = !!slide.videoUrl;
+
+            return {
+              id: slide.id,
+              type: hasVideo ? 'video' : 'image',
+              src: hasVideo ? slide.videoUrl : slide.desktopImageUrl,
+              mobileSrc: slide.mobileImageUrl || slide.desktopImageUrl,
+              subtitle: slide.tagText || generalTag,
+              title: slide.title || generalTitle,
+              buttonText: slide.buttonText || generalButton,
+              buttonLink: slide.buttonLink || generalButtonLink,
+              desktopPosition: slide.desktopPosition || 'center center',
+              mobilePosition: slide.mobilePosition || 'center center'
+            } as HeroSlideView;
+          })
+          .filter(slide => !!slide.src);
+
+        if (activeSlides.length > 0) {
+          this.heroSlides.set(activeSlides);
+          this.activeHeroSlide.set(0);
+          this.restartHeroAutoplay();
+        } else {
+          this.heroSlides.set([
+            {
+              type: 'image',
+              src: 'assets/principal1.jpg',
+              mobileSrc: 'assets/principal1.jpg',
+              subtitle: generalTag,
+              title: generalTitle,
+              buttonText: generalButton,
+              buttonLink: generalButtonLink,
+              desktopPosition: 'center center',
+              mobilePosition: 'center center'
+            }
+          ]);
+
+          this.activeHeroSlide.set(0);
+          this.restartHeroAutoplay();
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando slides de inicio:', error);
+      }
+    });
+  }
 
   heroImageFor(slide: HeroSlideView): string {
     return slide.src;
@@ -590,7 +628,6 @@ buttonLink: slide.buttonLink || generalButtonLink,
           config.collectionDescription || 'Poleras urbanas exclusivas de JONZKO.'
         );
 
-        // Nosotros / Galería público conectado al admin
         this.aboutGalleryEnabled.set(config.aboutGalleryEnabled !== false);
 
         this.aboutTag.set(config.aboutTag || 'SOBRE NOSOTROS');
