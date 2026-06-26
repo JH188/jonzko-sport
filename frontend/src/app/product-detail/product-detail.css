@@ -2482,3 +2482,157 @@
     margin-top: 22px !important;
   }
 }
+/* =========================================================
+   PRODUCT DETAIL - QUITAR FRANJAS NEGRAS EN RECOMENDADOS
+   Pegar al FINAL de product-detail.css
+   ========================================================= */
+
+.related-products,
+.related-products-section,
+.recommended-products,
+.suggested-products,
+.similar-products {
+  background: #f7f6f2 !important;
+}
+
+.related-product-card,
+.recommended-product-card,
+.suggested-product-card,
+.similar-product-card,
+.related-products .product-card,
+.recommended-products .product-card,
+.suggested-products .product-card,
+.similar-products .product-card {
+  background: #ffffff !important;
+  border: 1px solid #e5d8c6 !important;
+  overflow: hidden !important;
+}
+
+.related-product-card img,
+.recommended-product-card img,
+.suggested-product-card img,
+.similar-product-card img,
+.related-products .product-card img,
+.recommended-products .product-card img,
+.suggested-products .product-card img,
+.similar-products .product-card img {
+  background: #ffffff !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* Si la imagen tiene una caja interna, también se vuelve blanca */
+.related-product-card .product-image,
+.recommended-product-card .product-image,
+.suggested-product-card .product-image,
+.similar-product-card .product-image,
+.related-products .product-image,
+.recommended-products .product-image,
+.suggested-products .product-image,
+.similar-products .product-image,
+.related-products .product-image-box,
+.recommended-products .product-image-box,
+.suggested-products .product-image-box,
+.similar-products .product-image-box {
+  background: #ffffff !important;
+  overflow: hidden !important;
+}
+/* =========================================================
+   FIX FINAL - PRODUCTOS RECOMENDADOS SIN FRANJAS NEGRAS
+   Pegar al FINAL de product-detail.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* Caja general de recomendados */
+  .related-products,
+  .related-section,
+  .recommended-products,
+  .suggested-products,
+  .similar-products,
+  .recommendations-section {
+    background: #f7f6f2 !important;
+  }
+
+  /* Tarjeta recomendada */
+  .related-products .product-card,
+  .recommended-products .product-card,
+  .suggested-products .product-card,
+  .similar-products .product-card,
+  .recommendations-section .product-card,
+  .related-product-card,
+  .recommended-product-card,
+  .suggested-product-card,
+  .similar-product-card {
+    background: #ffffff !important;
+    border: 1px solid #e5d8c6 !important;
+    overflow: hidden !important;
+  }
+
+  /* Contenedor de la imagen: fuerza blanco */
+  .related-products .product-image,
+  .related-products .product-image-box,
+  .related-products .image-box,
+  .recommended-products .product-image,
+  .recommended-products .product-image-box,
+  .recommended-products .image-box,
+  .suggested-products .product-image,
+  .suggested-products .product-image-box,
+  .suggested-products .image-box,
+  .similar-products .product-image,
+  .similar-products .product-image-box,
+  .similar-products .image-box,
+  .recommendations-section .product-image,
+  .recommendations-section .product-image-box,
+  .recommendations-section .image-box,
+  .related-product-card .product-image,
+  .related-product-card .product-image-box,
+  .related-product-card .image-box {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  /* Capa blanca detrás para tapar cualquier fondo negro */
+  .related-products .product-image::before,
+  .related-products .product-image-box::before,
+  .recommended-products .product-image::before,
+  .recommended-products .product-image-box::before,
+  .suggested-products .product-image::before,
+  .suggested-products .product-image-box::before,
+  .similar-products .product-image::before,
+  .similar-products .product-image-box::before,
+  .recommendations-section .product-image::before,
+  .recommendations-section .product-image-box::before,
+  .related-product-card .product-image::before,
+  .related-product-card .product-image-box::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: #ffffff !important;
+    z-index: 0 !important;
+  }
+
+  /* Imagen encima, más grande para cubrir bordes negros */
+  .related-products img,
+  .recommended-products img,
+  .suggested-products img,
+  .similar-products img,
+  .recommendations-section img,
+  .related-product-card img,
+  .recommended-product-card img,
+  .suggested-product-card img,
+  .similar-product-card img {
+    position: relative !important;
+    z-index: 1 !important;
+    display: block !important;
+    width: 112% !important;
+    max-width: 112% !important;
+    height: 150px !important;
+    margin-left: -6% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+}

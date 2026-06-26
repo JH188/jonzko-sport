@@ -16736,3 +16736,377 @@ app-root {
     grid-template-columns: 1fr !important;
   }
 }
+/* =========================================================
+   FIX FINAL MÓVIL - QUITAR JALÓN INTERNO EN NOSOTROS/GALERÍA
+   Solo corrige el arrastre dentro de las imágenes
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* El bloque NO debe tener scroll interno */
+  .featured-urban-section,
+  .featured-urban-gallery,
+  .featured-img,
+  .featured-img-large,
+  .jonzko-gallery-section,
+  .jonzko-gallery-grid,
+  .gallery-card,
+  .gallery-wide,
+  .gallery-video-card {
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: none !important;
+    scroll-snap-type: none !important;
+    -webkit-overflow-scrolling: auto !important;
+  }
+
+  /* Las imágenes no deben agarrarse ni moverse al jalar */
+  .featured-img img,
+  .featured-img-large img,
+  .featured-urban-gallery img,
+  .jonzko-gallery-grid img,
+  .gallery-card img,
+  .gallery-wide img {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+    touch-action: pan-y !important;
+    pointer-events: none !important;
+    transform: translateZ(0) !important;
+  }
+
+  /* El video sí puede tocarse, pero sin crear scroll interno */
+  .gallery-video-card video {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+    touch-action: pan-y !important;
+    overscroll-behavior: none !important;
+  }
+
+  /* Evita rebote visual dentro del grid */
+  .featured-urban-gallery,
+  .jonzko-gallery-grid {
+    position: relative !important;
+    height: auto !important;
+    max-height: none !important;
+    touch-action: pan-y !important;
+  }
+}
+/* =========================================================
+   FIX REAL MÓVIL - PERMITIR SCROLL NORMAL Y QUITAR JALÓN
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* La página y secciones SÍ deben poder scrollear normal */
+  .featured-urban-section,
+  .jonzko-gallery-section,
+  .jonzko-reviews-section,
+  .contact-premium-section,
+  .featured-urban-gallery,
+  .jonzko-gallery-grid {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    touch-action: auto !important;
+    overscroll-behavior: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Solo las CAJAS de imagen recortan su contenido */
+  .featured-img,
+  .featured-img-large,
+  .gallery-card,
+  .gallery-wide,
+  .gallery-video-card {
+    overflow: hidden !important;
+    touch-action: pan-y !important;
+    overscroll-behavior: contain !important;
+  }
+
+  /* Las imágenes no se arrastran, pero NO bloquean el scroll */
+  .featured-img img,
+  .featured-img-large img,
+  .featured-urban-gallery img,
+  .jonzko-gallery-grid img,
+  .gallery-card img,
+  .gallery-wide img {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+    touch-action: pan-y !important;
+    pointer-events: auto !important;
+  }
+
+  .gallery-video-card video {
+    touch-action: pan-y !important;
+    pointer-events: auto !important;
+  }
+}
+/* =========================================================
+   FIX FINAL - IMÁGENES NO RECIBEN CLICK EN MÓVIL
+   Pero la página sigue bajando normal
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .featured-urban-gallery,
+  .jonzko-gallery-grid {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    touch-action: pan-y !important;
+  }
+
+  .featured-img,
+  .featured-img-large,
+  .gallery-card,
+  .gallery-wide {
+    overflow: hidden !important;
+    touch-action: pan-y !important;
+    pointer-events: auto !important;
+  }
+
+  .featured-img img,
+  .featured-img-large img,
+  .featured-urban-gallery img,
+  .jonzko-gallery-grid img,
+  .gallery-card img,
+  .gallery-wide img {
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+    -webkit-touch-callout: none !important;
+    touch-action: pan-y !important;
+  }
+
+  .gallery-video-card,
+  .gallery-video-card video {
+    pointer-events: auto !important;
+    touch-action: pan-y !important;
+  }
+}
+/* =========================================================
+   JONZKO FIX DEFINITIVO - GALERÍA MÓVIL SIN PEGARSE
+   La página baja normal, pero fotos/video no capturan el toque
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* Las secciones siguen bajando normal */
+  .featured-urban-section,
+  .jonzko-gallery-section,
+  .jonzko-reviews-section,
+  .contact-premium-section {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    touch-action: pan-y !important;
+    overscroll-behavior-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Los grids no deben crear scroll interno */
+  .featured-urban-gallery,
+  .jonzko-gallery-grid {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    touch-action: pan-y !important;
+    overscroll-behavior-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    pointer-events: auto !important;
+  }
+
+  /* Las cajas recortan imagen, pero NO capturan toque */
+  .featured-img,
+  .featured-img-large,
+  .gallery-card,
+  .gallery-wide,
+  .gallery-video-card {
+    overflow: hidden !important;
+    touch-action: pan-y !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-touch-callout: none !important;
+  }
+
+  /* Fotos y video no reciben click/tap */
+  .featured-img img,
+  .featured-img-large img,
+  .featured-urban-gallery img,
+  .jonzko-gallery-grid img,
+  .gallery-card img,
+  .gallery-wide img,
+  .gallery-video-card video {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+    -webkit-touch-callout: none !important;
+    touch-action: pan-y !important;
+  }
+
+  /* Textos, botones y WhatsApp sí deben poder tocarse */
+  .jonzko-gallery-header,
+  .featured-urban-content,
+  .contact-premium-section a,
+  .contact-premium-section button,
+  .whatsapp-float {
+    pointer-events: auto !important;
+  }
+}
+/* =========================================================
+   FIX FINAL INICIO MÓVIL - HERO NO ATRAPA EL SCROLL
+   La portada baja normal, pero botones/flechas siguen funcionando
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .hero-slider,
+  .hero-track,
+  .hero-slide,
+  .hero-slide.active {
+    touch-action: pan-y !important;
+    overscroll-behavior-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* La imagen/video del hero NO debe capturar el dedo */
+  .hero-slide picture,
+  .hero-slide picture img,
+  .hero-slide img,
+  .hero-slide video,
+  .hero-bg,
+  .hero-media,
+  .hero-background {
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+    -webkit-touch-callout: none !important;
+    touch-action: pan-y !important;
+  }
+
+  /* Capas oscuras tampoco deben bloquear el scroll */
+  .hero-slide::before,
+  .hero-slide::after,
+  .hero-overlay {
+    pointer-events: none !important;
+  }
+
+  /* Solo estos sí deben poder tocarse */
+  .hero-slider-content,
+  .hero-slider-content a,
+  .hero-slider-content button,
+  .hero-arrow,
+  .hero-dots,
+  .hero-dot {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+}
+/* =========================================================
+   JONZKO FIX DEFINITIVO - INICIO / NOSOTROS / GALERÍA MÓVIL
+   Baja normal y las imágenes/videos no se quedan pegados
+   Pegar al FINAL de frontend/src/app/app.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* La página baja normal */
+  .hero-slider,
+  .hero-track,
+  .hero-slide,
+  .hero-slide.active,
+  .featured-urban-section,
+  .featured-urban-gallery,
+  .jonzko-gallery-section,
+  .jonzko-gallery-grid,
+  .jonzko-reviews-section,
+  .contact-premium-section {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    height: auto;
+    max-height: none !important;
+    touch-action: pan-y !important;
+    overscroll-behavior-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Mantiene el alto real del hero móvil */
+  .hero-slider {
+    height: calc(100vh - 110px) !important;
+    min-height: 620px !important;
+  }
+
+  /* Cajas de imagen/video: recortan, pero no crean scroll interno */
+  .hero-slide,
+  .featured-img,
+  .featured-img-large,
+  .gallery-card,
+  .gallery-wide,
+  .gallery-video-card {
+    overflow: hidden !important;
+    touch-action: pan-y !important;
+    overscroll-behavior: auto !important;
+  }
+
+  /* Fotos y videos NO capturan click/tap */
+  .hero-slide picture,
+  .hero-slide picture img,
+  .hero-slide img,
+  .hero-slide video,
+  .hero-bg,
+  .hero-media,
+  .hero-background,
+  .featured-img img,
+  .featured-img-large img,
+  .featured-urban-gallery img,
+  .jonzko-gallery-grid img,
+  .gallery-card img,
+  .gallery-wide img,
+  .gallery-video-card video {
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+    -webkit-touch-callout: none !important;
+    touch-action: pan-y !important;
+  }
+
+  /* Capas encima no bloquean */
+  .hero-slide::before,
+  .hero-slide::after,
+  .hero-overlay {
+    pointer-events: none !important;
+  }
+
+  /* Solo botones/enlaces sí se pueden tocar */
+  .hero-slider-content,
+  .hero-slider-content a,
+  .hero-slider-content button,
+  .hero-arrow,
+  .hero-dots,
+  .hero-dot,
+  .contact-premium-section a,
+  .contact-premium-section button,
+  .whatsapp-float {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+}

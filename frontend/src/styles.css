@@ -398,3 +398,124 @@ header,
     background: #f7f6f2 !important;
   }
 }
+
+/* =========================================================
+   FIX GLOBAL MÓVIL - IMÁGENES SIN ARRASTRE NATIVO
+   ========================================================= */
+
+@media (max-width: 768px) {
+  img {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+  }
+
+  body {
+    overscroll-behavior-x: none !important;
+  }
+}
+/* =========================================================
+   FIX GLOBAL - SCROLL MÓVIL NORMAL
+   Pegar al FINAL de frontend/src/styles.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+  html,
+  body,
+  app-root {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100% !important;
+    touch-action: auto !important;
+    overscroll-behavior-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  img {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+  }
+}
+/* =========================================================
+   GLOBAL - IMÁGENES SIN CLICK / SIN ARRASTRE EN MÓVIL
+   ========================================================= */
+
+@media (max-width: 768px) {
+  img {
+    -webkit-user-drag: none !important;
+    -webkit-touch-callout: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+  }
+}
+/* =========================================================
+   JONZKO GLOBAL MÓVIL - SCROLL NORMAL
+   Pegar al FINAL de frontend/src/styles.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+  html,
+  body,
+  app-root {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100% !important;
+    touch-action: pan-y !important;
+    overscroll-behavior-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  img,
+  video {
+    -webkit-user-drag: none !important;
+    -webkit-touch-callout: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+  }
+}
+/* =========================================================
+   JONZKO GLOBAL MÓVIL LIMPIO - SCROLL NORMAL
+   Pegar al FINAL de frontend/src/styles.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+  html,
+  body,
+  app-root {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    background: #f7f6f2 !important;
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-x: none !important;
+    overscroll-behavior-y: auto !important;
+  }
+
+  app-root,
+  main,
+  section,
+  footer {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  img,
+  video {
+    max-width: 100% !important;
+    -webkit-user-drag: none !important;
+    -webkit-touch-callout: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+  }
+}

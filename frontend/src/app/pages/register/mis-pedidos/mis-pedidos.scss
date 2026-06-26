@@ -734,3 +734,31 @@ p {
     grid-template-columns: 1fr;
   }
 }
+/* =========================================================
+   MIS PEDIDOS - FIX SCROLL VACÍO MÓVIL
+   Pegar al FINAL de mis-pedidos.scss
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .mis-pedidos-page,
+  .orders-page,
+  .mis-pedidos-container,
+  .orders-container {
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    padding-bottom: 18px !important;
+  }
+
+  .order-card,
+  .pedido-card {
+    margin-bottom: 18px !important;
+  }
+
+  .order-card:last-child,
+  .pedido-card:last-child {
+    margin-bottom: 0 !important;
+  }
+}
