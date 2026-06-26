@@ -13249,3 +13249,45 @@ header .brand img {
     font-size: 10px !important;
   }
 }
+/* =========================================================
+   FIX FINAL - QUITAR FRANJA NEGRA EN EXCLUSIVO MÓVIL
+   Fondo claro para productos con imagen limpia
+   ========================================================= */
+
+@media (max-width: 768px) {
+  #producto .product-image-box,
+  #producto.collection-section .product-image-box,
+  .collection-section#producto .product-image-box {
+    background: #f7f7f4 !important;
+  }
+
+  #producto .product-image,
+  #producto .product-main-image,
+  #producto .product-hover-image,
+  #producto.collection-section .product-image,
+  #producto.collection-section .product-main-image,
+  #producto.collection-section .product-hover-image,
+  .collection-section#producto .product-image,
+  .collection-section#producto .product-main-image,
+  .collection-section#producto .product-hover-image {
+    background: #f7f7f4 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 4px !important;
+  }
+}
+
+/* Más fuerte para celular pequeño */
+@media (max-width: 600px) {
+  #producto .product-image-box {
+    background: #f7f7f4 !important;
+  }
+
+  #producto .product-main-image {
+    background: #f7f7f4 !important;
+  }
+
+  #producto .product-hover-image {
+    display: none !important;
+  }
+}
