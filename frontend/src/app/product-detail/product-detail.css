@@ -1313,3 +1313,1172 @@
     grid-template-columns: 1fr !important;
   }
 }
+/* =========================================================
+   PRODUCT DETAIL - LIMPIEZA FINAL MÓVIL
+   Oculta pagos repetidos y compacta información
+   ========================================================= */
+
+@media (max-width: 620px) {
+  /* Miniaturas más pegadas y limpias */
+  .gallery-thumbnails {
+    margin-top: 6px !important;
+    gap: 6px !important;
+  }
+
+  .gallery-thumbnails button {
+    height: 50px !important;
+    border-radius: 9px !important;
+  }
+
+  /* Caja de información más cerca y menos pesada */
+  .info-box {
+    margin-top: 8px !important;
+    padding: 17px 15px !important;
+  }
+
+  .brand {
+    font-size: 8px !important;
+    letter-spacing: 0.32em !important;
+  }
+
+  .info-box h1 {
+    font-size: 26px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Color / tipo más pequeño */
+  .product-data {
+    margin-bottom: 12px !important;
+    padding: 10px 12px !important;
+    border-radius: 13px !important;
+  }
+
+  .product-data p {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Ocultar métodos de pago repetidos en detalle */
+  .detail-payment-icons {
+    display: none !important;
+  }
+
+  /* Beneficios más limpios */
+  .purchase-benefits,
+  .premium-benefits {
+    padding: 9px 10px !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .benefit-item {
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .benefit-icon {
+    display: none !important;
+  }
+
+  .benefit-item strong {
+    font-size: 8px !important;
+    line-height: 1.15 !important;
+  }
+
+  .benefit-item small {
+    display: none !important;
+  }
+
+  /* Botones principales más cerca */
+  .actions {
+    margin: 12px 0 11px !important;
+  }
+
+  .back-link {
+    margin-top: 10px !important;
+  }
+
+  /* WhatsApp flotante un poco más abajo para que no tape tanto */
+  .whatsapp-float {
+    bottom: 16px !important;
+    right: 14px !important;
+  }
+}
+/* =========================================================
+   PRODUCT DETAIL - GALERÍA ADAPTADA A TODAS LAS PANTALLAS
+   Foto completa, miniaturas limpias y sin verse aplastado
+   ========================================================= */
+
+/* PC / laptop */
+.product-gallery,
+.image-box {
+  background: #050505 !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.product-gallery img,
+.product-gallery video,
+.product-video-player {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: #050505 !important;
+  padding: 10px !important;
+}
+
+/* Miniaturas PC */
+.gallery-thumbnails button {
+  background: #050505 !important;
+  border: 2px solid #ffffff !important;
+}
+
+.gallery-thumbnails button.active {
+  border-color: #b89455 !important;
+}
+
+.gallery-thumbnails img {
+  object-fit: contain !important;
+  background: #050505 !important;
+  padding: 4px !important;
+}
+
+/* Tablet */
+@media (max-width: 1050px) {
+  .product-gallery,
+  .image-box {
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    min-height: unset !important;
+  }
+
+  .product-gallery img,
+  .product-gallery video,
+  .product-video-player {
+    padding: 8px !important;
+  }
+
+  .gallery-thumbnails {
+    margin-top: 10px !important;
+  }
+
+  .gallery-thumbnails button {
+    height: 76px !important;
+  }
+}
+
+/* Móvil */
+@media (max-width: 620px) {
+  .product-breadcrumb {
+    margin-bottom: 10px !important;
+  }
+
+  .product-gallery,
+  .image-box {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 0.88 !important;
+    min-height: unset !important;
+    border-radius: 18px !important;
+    background: #050505 !important;
+  }
+
+  .product-gallery img,
+  .product-gallery video,
+  .product-video-player {
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 8px !important;
+    background: #050505 !important;
+  }
+
+  .gallery-thumbnails {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 7px !important;
+    margin-top: 9px !important;
+    margin-bottom: 12px !important;
+    overflow: visible !important;
+  }
+
+  .gallery-thumbnails button {
+    width: 100% !important;
+    height: 58px !important;
+    border-radius: 10px !important;
+    background: #050505 !important;
+    border: 2px solid #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  .gallery-thumbnails button.active {
+    border-color: #b89455 !important;
+  }
+
+  .gallery-thumbnails img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 3px !important;
+    background: #050505 !important;
+  }
+
+  .gallery-thumbnails span {
+    font-size: 11px !important;
+    border-radius: 8px !important;
+  }
+
+  .info-box {
+    margin-top: 4px !important;
+  }
+}
+
+/* Celular pequeño */
+@media (max-width: 390px) {
+  .product-gallery,
+  .image-box {
+    aspect-ratio: 1 / 0.92 !important;
+  }
+
+  .gallery-thumbnails button {
+    height: 54px !important;
+  }
+}
+/* =========================================================
+   PRODUCT DETAIL MOBILE - ESTILO TIENDA PRO / IMAGEN GRANDE
+   Solo móvil. PC queda igual.
+   ========================================================= */
+
+@media (max-width: 620px) {
+  .detail-page {
+    padding: 0 0 42px !important;
+    background: #ffffff !important;
+  }
+
+  .product-breadcrumb {
+    width: 100% !important;
+    padding: 14px 14px 8px !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    font-size: 10px !important;
+  }
+
+  .detail-container {
+    width: 100% !important;
+    display: block !important;
+    gap: 0 !important;
+  }
+
+  .gallery-wrapper,
+  .gallery-wrapper.with-thumbs {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  /* Imagen protagonista grande */
+  .product-gallery,
+  .image-box {
+    width: 100% !important;
+    height: 68vh !important;
+    min-height: 470px !important;
+    max-height: 650px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: #050505 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  .product-gallery img,
+  .product-gallery video,
+  .product-video-player {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: #050505 !important;
+    padding: 0 !important;
+  }
+
+  /* Quitamos miniaturas en móvil: se ve más limpio como tienda pro */
+  .gallery-thumbnails {
+    display: none !important;
+  }
+
+  /* Flechas sobre la imagen */
+  .gallery-arrow {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 999px !important;
+    background: rgba(0, 0, 0, 0.42) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    font-size: 28px !important;
+    backdrop-filter: blur(8px) !important;
+  }
+
+  .gallery-left {
+    left: 14px !important;
+  }
+
+  .gallery-right {
+    right: 14px !important;
+  }
+
+  .gallery-dots {
+    bottom: 16px !important;
+    gap: 7px !important;
+  }
+
+  .gallery-dots button {
+    width: 8px !important;
+    height: 8px !important;
+    border: 1px solid #ffffff !important;
+    background: transparent !important;
+  }
+
+  .gallery-dots button.active {
+    width: 28px !important;
+    background: #b89455 !important;
+    border-color: #b89455 !important;
+  }
+
+  /* Info limpia tipo ecommerce */
+  .info-box {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 26px 18px 22px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  .brand {
+    margin-bottom: 10px !important;
+    color: #b89455 !important;
+    font-size: 9px !important;
+    letter-spacing: 0.38em !important;
+  }
+
+  .info-box h1 {
+    margin: 0 0 12px !important;
+    font-size: 34px !important;
+    line-height: 0.95 !important;
+    letter-spacing: -0.8px !important;
+  }
+
+  .prices {
+    margin-bottom: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .old-price {
+    font-size: 13px !important;
+  }
+
+  .current-price {
+    font-size: 26px !important;
+    font-weight: 950 !important;
+  }
+
+  .unit-price-label {
+    font-size: 10px !important;
+  }
+
+  .stock-badge {
+    margin-bottom: 14px !important;
+    padding: 6px 12px !important;
+    font-size: 10px !important;
+  }
+
+  .description {
+    display: none !important;
+  }
+
+  /* Color / Tipo como caja pequeña */
+  .product-data {
+    margin: 0 0 18px !important;
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+    background: #fbfaf7 !important;
+    border: 1px solid #e7ddcf !important;
+  }
+
+  .product-data p {
+    margin: 3px 0 !important;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+  }
+
+  .sizes h3,
+  .quantity h3 {
+    margin-bottom: 10px !important;
+    font-size: 13px !important;
+  }
+
+  .size-list {
+    gap: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .size-list button {
+    width: 48px !important;
+    height: 42px !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+  }
+
+  .size-guide-btn {
+    font-size: 13px !important;
+  }
+
+  .quantity {
+    margin-top: 18px !important;
+  }
+
+  .qty-row {
+    grid-template-columns: 1fr 120px !important;
+    gap: 10px !important;
+  }
+
+  .qty-control button {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .subtotal-detail {
+    padding: 10px 12px !important;
+    border-radius: 13px !important;
+  }
+
+  .actions {
+    margin: 18px 0 14px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .cart-btn,
+  .whatsapp-detail-btn {
+    min-height: 48px !important;
+    border-radius: 999px !important;
+    font-size: 13px !important;
+  }
+
+  /* Sacamos cosas que estorban en producto */
+  .purchase-benefits,
+  .premium-benefits {
+    display: none !important;
+  }
+
+  .detail-payment-icons {
+    display: none !important;
+  }
+
+  .back-link {
+    margin-top: 10px !important;
+    font-size: 13px !important;
+  }
+
+  /* Relacionados como productos pequeños */
+  .related-section {
+    width: 100% !important;
+    margin: 28px 0 0 !important;
+    padding: 0 14px !important;
+  }
+
+  .related-section h2 {
+    margin-bottom: 14px !important;
+    font-size: 28px !important;
+    line-height: 0.95 !important;
+  }
+
+  .related-grid {
+    display: flex !important;
+    gap: 12px !important;
+    overflow-x: auto !important;
+    padding-bottom: 10px !important;
+    scroll-snap-type: x mandatory !important;
+  }
+
+  .related-card {
+    flex: 0 0 150px !important;
+    border-radius: 14px !important;
+    scroll-snap-align: start !important;
+  }
+
+  .related-image-box {
+    height: 150px !important;
+    background: #050505 !important;
+  }
+
+  .related-image-box img {
+    object-fit: contain !important;
+    background: #050505 !important;
+  }
+
+  .related-card h3 {
+    font-size: 12px !important;
+  }
+
+  .related-card p {
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .product-gallery,
+  .image-box {
+    height: 64vh !important;
+    min-height: 430px !important;
+  }
+
+  .info-box h1 {
+    font-size: 31px !important;
+  }
+}
+/* =========================================================
+   PRODUCT DETAIL - TIENDA REAL LIMPIA
+   Fondo claro, sin franjas negras, PC y móvil más profesional
+   ========================================================= */
+
+/* PC / GENERAL */
+.detail-page {
+  background: #fbfaf7 !important;
+  padding-top: 38px !important;
+}
+
+.product-breadcrumb {
+  margin-bottom: 18px !important;
+}
+
+.detail-container {
+  width: min(1180px, 100%) !important;
+  gap: 42px !important;
+  align-items: start !important;
+}
+
+/* Galería clara, ya no negra */
+.product-gallery,
+.image-box {
+  background: #f7f7f4 !important;
+  border: 1px solid #e7ddcf !important;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.07) !important;
+}
+
+.product-gallery img,
+.product-gallery video,
+.product-video-player {
+  background: #f7f7f4 !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  padding: 14px !important;
+}
+
+/* Quitamos franjas negras de miniaturas */
+.gallery-thumbnails button {
+  background: #f7f7f4 !important;
+  border: 2px solid #ffffff !important;
+}
+
+.gallery-thumbnails button.active {
+  border-color: #b89455 !important;
+}
+
+.gallery-thumbnails img {
+  background: #f7f7f4 !important;
+  object-fit: contain !important;
+  padding: 4px !important;
+}
+
+/* Flechas más finas */
+.gallery-arrow {
+  background: rgba(0, 0, 0, 0.42) !important;
+}
+
+/* Info más limpia */
+.info-box {
+  background: #ffffff !important;
+  border: 1px solid #e7ddcf !important;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.07) !important;
+}
+
+/* En PC, la foto no debe irse demasiado abajo */
+@media (min-width: 1051px) {
+  .product-gallery,
+  .image-box {
+    height: 560px !important;
+    max-height: 560px !important;
+  }
+
+  .related-section {
+    margin-top: 44px !important;
+  }
+}
+
+/* =========================================================
+   MÓVIL - PRODUCTO TIPO TIENDA REAL
+   ========================================================= */
+
+@media (max-width: 620px) {
+  .detail-page {
+    padding: 0 0 36px !important;
+    background: #fbfaf7 !important;
+  }
+
+  /* La ruta estorba en móvil */
+  .product-breadcrumb {
+    display: none !important;
+  }
+
+  .detail-container {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  .gallery-wrapper,
+  .gallery-wrapper.with-thumbs {
+    width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  /* Imagen grande, pero NO pantalla completa */
+  .product-gallery,
+  .image-box {
+    width: calc(100% - 18px) !important;
+    height: auto !important;
+    min-height: unset !important;
+    max-height: none !important;
+    aspect-ratio: 4 / 5 !important;
+    margin: 10px auto 0 !important;
+    border-radius: 22px !important;
+    background: #f7f7f4 !important;
+    border: 1px solid #e7ddcf !important;
+    overflow: hidden !important;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .product-gallery img,
+  .product-gallery video,
+  .product-video-player {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: #f7f7f4 !important;
+    padding: 8px !important;
+  }
+
+  /* Miniaturas visibles, limpias, sin negro */
+  .gallery-thumbnails {
+    width: calc(100% - 18px) !important;
+    margin: 8px auto 10px !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 7px !important;
+  }
+
+  .gallery-thumbnails button {
+    width: 100% !important;
+    height: 58px !important;
+    border-radius: 11px !important;
+    background: #f7f7f4 !important;
+    border: 2px solid #ffffff !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+  }
+
+  .gallery-thumbnails button.active {
+    border-color: #b89455 !important;
+  }
+
+  .gallery-thumbnails img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    background: #f7f7f4 !important;
+    padding: 3px !important;
+  }
+
+  .gallery-thumbnails span {
+    background: #050505 !important;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 950 !important;
+  }
+
+  .gallery-arrow {
+    width: 38px !important;
+    height: 38px !important;
+    background: rgba(0, 0, 0, 0.42) !important;
+    color: #ffffff !important;
+  }
+
+  .gallery-left {
+    left: 14px !important;
+  }
+
+  .gallery-right {
+    right: 14px !important;
+  }
+
+  .gallery-dots {
+    bottom: 12px !important;
+  }
+
+  /* Caja de datos pegada y limpia */
+  .info-box {
+    width: calc(100% - 18px) !important;
+    margin: 0 auto !important;
+    padding: 20px 16px !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    border: 1px solid #e7ddcf !important;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.07) !important;
+  }
+
+  .info-box h1 {
+    font-size: 30px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .current-price {
+    font-size: 24px !important;
+  }
+
+  .product-data {
+    background: #fbfaf7 !important;
+  }
+
+  /* Pagos y beneficios no deben estorbar en producto */
+  .purchase-benefits,
+  .premium-benefits,
+  .detail-payment-icons {
+    display: none !important;
+  }
+
+  .actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cart-btn,
+  .whatsapp-detail-btn {
+    min-height: 46px !important;
+  }
+
+  .related-section {
+    width: 100% !important;
+    padding: 0 10px !important;
+    margin-top: 28px !important;
+  }
+}
+/* =========================================================
+   PRODUCT DETAIL - MOBILE STORE FINAL
+   Sin franjas negras, sin miniaturas, solo deslizar
+   ========================================================= */
+
+/* Fondo claro general de la galería */
+.product-gallery,
+.image-box {
+  background: #f7f7f4 !important;
+}
+
+.product-gallery img {
+  background: #f7f7f4 !important;
+  object-position: center center !important;
+}
+
+.product-gallery video,
+.product-video-player {
+  background: #050505 !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+/* Miniaturas en PC limpias */
+.gallery-thumbnails button {
+  background: #f7f7f4 !important;
+}
+
+.gallery-thumbnails img {
+  background: #f7f7f4 !important;
+  object-fit: cover !important;
+  padding: 0 !important;
+}
+
+/* =========================
+   MÓVIL FINAL
+========================= */
+
+@media (max-width: 620px) {
+  .detail-page {
+    padding: 0 0 38px !important;
+    background: #fbfaf7 !important;
+  }
+
+  /* Ocultamos breadcrumb para que la imagen suba */
+  .product-breadcrumb {
+    display: none !important;
+  }
+
+  .detail-container {
+    width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  .gallery-wrapper,
+  .gallery-wrapper.with-thumbs {
+    width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fbfaf7 !important;
+  }
+
+  /* Imagen principal tipo tienda real */
+  .product-gallery,
+  .image-box {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 5 !important;
+    min-height: unset !important;
+    max-height: none !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: #f7f7f4 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  /* Esto elimina las franjas negras */
+  .product-gallery img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    padding: 0 !important;
+    background: #f7f7f4 !important;
+  }
+
+  /* Video sí puede ocupar todo */
+  .product-gallery video,
+  .product-video-player {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    padding: 0 !important;
+    background: #050505 !important;
+  }
+
+  /* Quitamos miniaturas en móvil */
+  .gallery-thumbnails {
+    display: none !important;
+  }
+
+  /* Flechas limpias sobre la imagen */
+  .gallery-arrow {
+    width: 40px !important;
+    height: 40px !important;
+    background: rgba(0, 0, 0, 0.42) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.72) !important;
+    border-radius: 999px !important;
+    font-size: 28px !important;
+    backdrop-filter: blur(8px) !important;
+  }
+
+  .gallery-left {
+    left: 14px !important;
+  }
+
+  .gallery-right {
+    right: 14px !important;
+  }
+
+  /* Puntitos abajo */
+  .gallery-dots {
+    bottom: 15px !important;
+    gap: 7px !important;
+  }
+
+  .gallery-dots button {
+    width: 8px !important;
+    height: 8px !important;
+    border: 1px solid rgba(0, 0, 0, 0.35) !important;
+    background: rgba(255, 255, 255, 0.75) !important;
+  }
+
+  .gallery-dots button.active {
+    width: 28px !important;
+    background: #b89455 !important;
+    border-color: #b89455 !important;
+  }
+
+  /* Indicador para que el usuario entienda */
+  .gallery-wrapper::after {
+    content: "DESLIZA PARA VER MÁS FOTOS";
+    width: fit-content;
+    max-width: calc(100% - 28px);
+    margin: 10px auto 12px;
+    padding: 8px 14px;
+    border: 1px solid #e1cfae;
+    border-radius: 999px;
+    background: #fff8ed;
+    color: #050505;
+    display: flex;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 950;
+    letter-spacing: 0.18em;
+    text-align: center;
+  }
+
+  /* Info del producto debajo */
+  .info-box {
+    width: calc(100% - 18px) !important;
+    margin: 0 auto !important;
+    padding: 20px 16px !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    border: 1px solid #e7ddcf !important;
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.07) !important;
+  }
+
+  .purchase-benefits,
+  .premium-benefits,
+  .detail-payment-icons {
+    display: none !important;
+  }
+}
+/* =========================================================
+   PRODUCT DETAIL - FIX PC VIDEO Y GALERÍA
+   Quita bloqueo del video, muestra flechas y reduce franjas negras
+   ========================================================= */
+
+/* Permitir moverse aunque el slide activo sea video */
+.product-gallery.video-active .gallery-arrow,
+.product-gallery.video-active .gallery-dots {
+  display: flex !important;
+}
+
+.product-gallery.video-active .gallery-arrow {
+  display: grid !important;
+}
+
+/* PC / Laptop: galería clara y video mejor adaptado */
+@media (min-width: 621px) {
+  .product-gallery,
+  .image-box {
+    background: #f7f7f4 !important;
+    border: 1px solid #e7ddcf !important;
+  }
+
+  .product-gallery img {
+    background: #f7f7f4 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 12px !important;
+  }
+
+  /* Video en PC: que llene mejor y no se quede con franja negra fea */
+  .product-gallery video,
+  .product-video-player {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    background: #050505 !important;
+    padding: 0 !important;
+  }
+
+  .gallery-thumbnails button {
+    background: #f7f7f4 !important;
+    border: 2px solid #ffffff !important;
+  }
+
+  .gallery-thumbnails button.active {
+    border-color: #b89455 !important;
+  }
+
+  .gallery-thumbnails img {
+    background: #f7f7f4 !important;
+    object-fit: contain !important;
+    padding: 4px !important;
+  }
+
+  .gallery-thumbnails span {
+    background: #050505 !important;
+    color: #ffffff !important;
+  }
+
+  .gallery-arrow {
+    display: grid !important;
+    z-index: 20 !important;
+  }
+
+  .gallery-dots {
+    display: flex !important;
+    z-index: 21 !important;
+  }
+}
+/* =========================================================
+   PRODUCT DETAIL - FIX FINAL PC + VIDEO
+   Reduce espacio vacío, limpia pagos y acomoda video
+   ========================================================= */
+
+/* Quitar cosas que alargan demasiado el detalle en PC y móvil */
+.purchase-benefits,
+.premium-benefits,
+.detail-payment-icons {
+  display: none !important;
+}
+
+/* Permitir moverse aunque el slide activo sea video */
+.product-gallery.video-active .gallery-arrow,
+.product-gallery.video-active .gallery-dots {
+  display: flex !important;
+}
+
+.product-gallery.video-active .gallery-arrow {
+  display: grid !important;
+}
+
+/* =========================
+   PC / LAPTOP
+========================= */
+
+@media (min-width: 1051px) {
+  .detail-page {
+    padding-top: 34px !important;
+    padding-bottom: 42px !important;
+  }
+
+  .detail-container {
+    width: min(1120px, 100%) !important;
+    grid-template-columns: minmax(0, 0.98fr) minmax(360px, 0.82fr) !important;
+    gap: 34px !important;
+    align-items: start !important;
+  }
+
+  .product-gallery,
+  .image-box {
+    height: 520px !important;
+    max-height: 520px !important;
+    background: #f7f7f4 !important;
+    border-radius: 22px !important;
+  }
+
+  .product-gallery img {
+    background: #f7f7f4 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 10px !important;
+  }
+
+  .product-gallery video,
+  .product-video-player {
+    width: 100% !important;
+    height: 100% !important;
+    background: #f7f7f4 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 0 !important;
+  }
+
+  .info-box {
+    position: sticky !important;
+    top: 110px !important;
+    padding: 30px !important;
+    border-radius: 22px !important;
+  }
+
+  .info-box h1 {
+    font-size: 46px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .prices {
+    margin-bottom: 10px !important;
+  }
+
+  .product-data {
+    margin-bottom: 18px !important;
+    padding: 14px 16px !important;
+  }
+
+  .quantity {
+    margin-top: 18px !important;
+  }
+
+  .actions {
+    margin: 18px 0 12px !important;
+  }
+
+  .back-link {
+    margin-top: 12px !important;
+  }
+
+  .related-section {
+    width: min(1120px, 100%) !important;
+    margin-top: 28px !important;
+  }
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1050px) and (min-width: 621px) {
+  .product-gallery,
+  .image-box {
+    background: #f7f7f4 !important;
+  }
+
+  .product-gallery img,
+  .product-gallery video,
+  .product-video-player {
+    background: #f7f7f4 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+}
+
+/* =========================
+   MÓVIL MÁS LIMPIO
+========================= */
+
+@media (max-width: 620px) {
+  .product-gallery,
+  .image-box {
+    background: #f7f7f4 !important;
+  }
+
+  .product-gallery img {
+    background: #f7f7f4 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .product-gallery video,
+  .product-video-player {
+    background: #f7f7f4 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .info-box {
+    margin-top: 0 !important;
+  }
+
+  .related-section {
+    margin-top: 22px !important;
+  }
+}
