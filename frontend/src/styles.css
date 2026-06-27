@@ -519,3 +519,238 @@ header,
     -webkit-user-select: none !important;
   }
 }
+/* =========================================================
+   FIX MÓVIL JONZKO - ADMIN / MIS PEDIDOS / CARRITO
+   Pegar al FINAL de styles.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* =========================
+     ADMIN PERSONALIZACIÓN WEB
+     Evita que el menú inferior tape el contenido
+     ========================= */
+
+  body:has(.admin-page),
+  body:has(.admin-layout),
+  body:has(.admin-container) {
+    padding-bottom: 115px !important;
+  }
+
+  .admin-page,
+  .admin-layout,
+  .admin-container,
+  .admin-content,
+  .admin-main,
+  .personalizacion-web,
+  .admin-settings-page {
+    padding-bottom: 125px !important;
+    min-height: 100vh !important;
+    overflow: visible !important;
+  }
+
+  .admin-page textarea,
+  .admin-layout textarea,
+  .admin-container textarea {
+    min-height: 64px !important;
+    max-height: 90px !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Menú inferior admin más pequeño y sin tapar tanto */
+  .admin-bottom-nav,
+  .admin-mobile-nav,
+  .admin-tabs-mobile,
+  .admin-footer-nav {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 9999 !important;
+
+    height: 72px !important;
+    max-height: 72px !important;
+    padding: 6px 6px 8px !important;
+
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+
+    background: #08080b !important;
+    border-top: 1px solid rgba(255,255,255,.12) !important;
+  }
+
+  .admin-bottom-nav button,
+  .admin-mobile-nav button,
+  .admin-tabs-mobile button,
+  .admin-footer-nav button,
+  .admin-bottom-nav a,
+  .admin-mobile-nav a,
+  .admin-tabs-mobile a,
+  .admin-footer-nav a {
+    min-width: 72px !important;
+    height: 54px !important;
+    padding: 5px 6px !important;
+    border-radius: 16px !important;
+    font-size: 9px !important;
+    line-height: 1.05 !important;
+    flex: 0 0 auto !important;
+  }
+
+  .admin-bottom-nav .active,
+  .admin-mobile-nav .active,
+  .admin-tabs-mobile .active,
+  .admin-footer-nav .active {
+    transform: none !important;
+  }
+
+  /* =========================
+     MIS PEDIDOS - VER DETALLE MÓVIL
+     Achicar todo para que baje bien
+     ========================= */
+
+  .order-detail-page,
+  .pedido-detail-page,
+  .mis-pedidos-detail,
+  .order-detail,
+  .pedido-detalle {
+    padding: 92px 14px 95px !important;
+    overflow-x: hidden !important;
+  }
+
+  .order-detail-page h1,
+  .pedido-detail-page h1,
+  .mis-pedidos-detail h1,
+  .order-detail h1,
+  .pedido-detalle h1 {
+    font-size: 28px !important;
+    line-height: 1.05 !important;
+    margin: 8px 0 8px !important;
+  }
+
+  .order-detail-page h2,
+  .pedido-detail-page h2,
+  .mis-pedidos-detail h2,
+  .order-detail h2,
+  .pedido-detalle h2 {
+    font-size: 20px !important;
+    line-height: 1.15 !important;
+  }
+
+  .order-card,
+  .pedido-card,
+  .detail-card,
+  .order-section,
+  .pedido-section,
+  .info-card {
+    padding: 18px 16px !important;
+    margin: 12px 0 !important;
+    border-radius: 18px !important;
+  }
+
+  .order-card p,
+  .pedido-card p,
+  .detail-card p,
+  .order-section p,
+  .pedido-section p,
+  .info-card p {
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+    margin: 5px 0 !important;
+    word-break: break-word !important;
+  }
+
+  .order-status,
+  .pedido-status,
+  .status-pill,
+  .estado-pedido {
+    height: 46px !important;
+    min-height: 46px !important;
+    font-size: 14px !important;
+    border-radius: 999px !important;
+  }
+
+  .order-product,
+  .pedido-producto,
+  .product-row,
+  .cart-product-row {
+    gap: 12px !important;
+    align-items: center !important;
+  }
+
+  .order-product img,
+  .pedido-producto img,
+  .product-row img {
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 14px !important;
+    object-fit: cover !important;
+  }
+
+  /* Botón WhatsApp más chico en detalle pedido */
+  .whatsapp-float,
+  .whatsapp-floating,
+  .btn-whatsapp-floating {
+    width: 62px !important;
+    height: 62px !important;
+    right: 18px !important;
+    bottom: 78px !important;
+  }
+
+  /* =========================
+     CARRITO MÓVIL
+     Achicar texto y ocultar descripción
+     ========================= */
+
+  .cart-drawer,
+  .cart-panel,
+  .side-cart {
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+
+  .cart-item,
+  .cart-product {
+    padding: 12px 10px !important;
+    gap: 10px !important;
+  }
+
+  .cart-item img,
+  .cart-product img {
+    width: 78px !important;
+    height: 78px !important;
+    object-fit: cover !important;
+    border-radius: 13px !important;
+  }
+
+  .cart-item h3,
+  .cart-product h3,
+  .cart-item-title {
+    font-size: 14px !important;
+    line-height: 1.05 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .cart-item-description,
+  .cart-product-description,
+  .cart-description,
+  .product-description-cart,
+  .cart-item small,
+  .cart-product small {
+    display: none !important;
+  }
+
+  .cart-item-price,
+  .cart-price {
+    font-size: 17px !important;
+    white-space: nowrap !important;
+  }
+
+  .cart-total-price,
+  .cart-total strong {
+    font-size: 32px !important;
+  }
+}
