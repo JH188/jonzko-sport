@@ -7143,13 +7143,17 @@ main {
 }
 
 .payment-images span {
-  width: 74px !important;
-  height: 42px !important;
-  padding: 7px !important;
-  border-radius: 10px !important;
-  background: #ffffff !important;
-  border: 1px solid #e3d8c7 !important;
-  display: flex !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
 }
@@ -15970,13 +15974,19 @@ app-root {
 
 .footer-premium .payment-icons span,
 .footer-premium .payment-images span {
-  width: 72px !important;
-  height: 42px !important;
-  border-radius: 10px !important;
-  background: #ffffff !important;
-  border: 1px solid #4b4b4b !important;
-  display: grid !important;
-  place-items: center !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .footer-premium .payment-icons img,
@@ -17109,4 +17119,110 @@ app-root {
     pointer-events: auto !important;
     touch-action: manipulation !important;
   }
+}
+/* =========================================================
+   FOOTER - MÉTODOS DE PAGO SOLO IMÁGENES
+   Quita las cajitas blancas de Yape / Plin / BCP
+   ========================================================= */
+
+.payment-icons.payment-images {
+  display: flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+  flex-wrap: wrap !important;
+}
+
+/* Quitar caja blanca */
+.payment-icons.payment-images span {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Mostrar solo imagen */
+.payment-icons.payment-images img {
+  display: block !important;
+  width: 44px !important;
+  height: 44px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* Móvil */
+@media (max-width: 768px) {
+  .payment-icons.payment-images {
+    gap: 16px !important;
+  }
+
+  .payment-icons.payment-images img {
+    width: 42px !important;
+    height: 42px !important;
+  }
+}
+/* =========================================================
+   FIX FINAL - MÉTODOS DE PAGO SIN CAJAS BLANCAS
+   ========================================================= */
+
+.footer-premium .payment-icons.payment-images {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  flex-wrap: wrap !important;
+}
+
+.footer-premium .payment-icons.payment-images span,
+.footer-premium .payment-icons.payment-images span *,
+.payment-icons.payment-images span,
+.payment-images span {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.footer-premium .payment-icons.payment-images span,
+.payment-icons.payment-images span,
+.payment-images span {
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.footer-premium .payment-icons.payment-images img,
+.payment-icons.payment-images img,
+.payment-images img {
+  width: 36px !important;
+  height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  object-fit: contain !important;
+  display: block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
