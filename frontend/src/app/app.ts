@@ -181,7 +181,7 @@ export class App implements OnInit, OnDestroy {
   aboutImage3Url = signal('assets/derecha-abajo.png');
 
   galleryTag = signal('ESTILO JONZKO');
-  galleryTitle = signal('Diseños que hablan por ti.');
+  galleryTitle = signal('Diseños .');
   galleryText = signal('Mira más detalles de nuestras prendas, estilo urbano y contenido de la marca.');
 
   galleryVideoUrl = signal('assets/jonzko-video-1.mp4');
@@ -669,7 +669,7 @@ export class App implements OnInit, OnDestroy {
         this.aboutImage3Url.set(config.aboutImage3Url || 'assets/derecha-abajo.png');
 
         this.galleryTag.set(config.galleryTag || 'ESTILO JONZKO');
-        this.galleryTitle.set(config.galleryTitle || 'Diseños que hablan por ti.');
+        this.galleryTitle.set(config.galleryTitle || 'Diseños que halan por ti.');
         this.galleryText.set(
           config.galleryText ||
             'Mira más detalles de nuestras prendas, estilo urbano y contenido de la marca.'

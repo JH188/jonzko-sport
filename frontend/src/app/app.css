@@ -17226,3 +17226,11 @@ app-root {
   box-shadow: none !important;
   border-radius: 0 !important;
 }
+.store-home-preview img,
+.store-preview img,
+.tienda-preview img,
+.home-store-card img {
+  background: #ffffff;
+  object-fit: contain !important;
+  padding: 10px;
+}

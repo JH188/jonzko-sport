@@ -1,71 +1,164 @@
-<section class="store-page-empty">
-  <div class="store-shell">
-    <div class="store-hero-card">
-      <div class="store-visual">
-        <div class="store-image-main">
-          <img src="assets/principal1.jpg" alt="JONZKO tienda urbana" />
-          <div class="store-image-overlay">
-            <span>JONZKO</span>
-            <strong>Urban Store</strong>
+<section class="shop-page">
+  <div class="shop-shell">
+    <section class="shop-hero">
+      <div class="shop-hero-text">
+        <span>Tienda</span>
+        <h1>Polos listos para elegir.</h1>
+      </div>
+    </section>
+
+    <section class="shop-filters">
+      <label class="search-box">
+        <span>Buscar</span>
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar polo..." />
+      </label>
+
+      <label>
+        <span>Tipo</span>
+        <select [(ngModel)]="selectedCategory">
+          <option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+      </label>
+
+      <label>
+        <span>Talla</span>
+        <select [(ngModel)]="selectedSize">
+          <option *ngFor="let size of sizes" [value]="size">
+            {{ size }}
+          </option>
+        </select>
+      </label>
+
+      <label>
+        <span>Precio</span>
+        <select [(ngModel)]="selectedPrice">
+          <option value="todos">Todos</option>
+          <option value="menos-50">Menos de S/ 50</option>
+          <option value="50-80">S/ 50 - S/ 80</option>
+          <option value="80-120">S/ 80 - S/ 120</option>
+          <option value="120-mas">S/ 120 a más</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Orden</span>
+        <select [(ngModel)]="selectedOrder">
+          <option value="recientes">Recientes</option>
+          <option value="menor-precio">Menor precio</option>
+          <option value="mayor-precio">Mayor precio</option>
+          <option value="descuento">Mayor descuento</option>
+        </select>
+      </label>
+
+      <button type="button" class="clear-btn" (click)="clearFilters()">Limpiar</button>
+    </section>
+
+    <div class="quick-categories">
+      <button
+        type="button"
+        *ngFor="let category of categories"
+        [class.active]="selectedCategory === category"
+        (click)="selectedCategory = category"
+      >
+        {{ category }}
+      </button>
+    </div>
+
+    <section class="shop-strip">
+      <article>
+        <span>Compra segura</span>
+        <strong>Yape, Plin, BCP y tarjeta</strong>
+      </article>
+
+      <article>
+        <span>Tallas</span>
+        <strong>S, M, L y XL</strong>
+      </article>
+
+      <article>
+        <span>Stock</span>
+        <strong>Visible en cada producto</strong>
+      </article>
+    </section>
+
+    <div class="result-row">
+      <div>
+        <strong>{{ filteredProducts.length }}</strong>
+        <span>
+          {{ filteredProducts.length === 1 ? 'producto encontrado' : 'productos encontrados' }}
+        </span>
+      </div>
+    </div>
+
+    <section class="loading-grid" *ngIf="loading">
+      <article *ngFor="let item of skeletonItems"></article>
+    </section>
+
+    <section class="empty-shop" *ngIf="!loading && filteredProducts.length === 0">
+      <h2>No hay productos con esos filtros.</h2>
+      <p>Cambia la búsqueda o limpia los filtros.</p>
+      <button type="button" (click)="clearFilters()">Quitar filtros</button>
+    </section>
+
+    <section class="products-grid" *ngIf="!loading && filteredProducts.length > 0">
+      <article
+        class="product-card"
+        *ngFor="let product of filteredProducts; trackBy: trackByProductId"
+      >
+        <a class="image-box" [routerLink]="getProductRoute(product)">
+          <ng-container *ngIf="getImage(product); else mockupImage">
+            <img [src]="getImage(product)" [alt]="getName(product)" loading="lazy" />
+          </ng-container>
+
+          <ng-template #mockupImage>
+            <div class="mockup-box" [class.oversize]="isOversize(product)">
+              <div class="mockup-shirt-shape"></div>
+              <span class="mockup-type">
+                {{ isOversize(product) ? 'OVERSIZE' : 'BÁSICO' }}
+              </span>
+            </div>
+          </ng-template>
+
+          <span class="badge discount" *ngIf="hasDiscount(product)">
+            -{{ getDiscountPercent(product) }}%
+          </span>
+
+          <span class="badge stock" [class.empty]="getTotalStock(product) === 0">
+            {{ getStockText(product) }}
+          </span>
+        </a>
+
+        <div class="product-info">
+          <span class="category">{{ getCategory(product) }}</span>
+
+          <h2>
+            <a [routerLink]="getProductRoute(product)">
+              {{ getName(product) }}
+            </a>
+          </h2>
+
+          <p>{{ getDescription(product) }}</p>
+
+          <div class="sizes" *ngIf="getProductSizes(product).length > 0">
+            <span *ngFor="let size of getProductSizes(product)">
+              {{ size }}
+            </span>
+          </div>
+
+          <div class="price-row">
+            <div>
+              <strong>S/ {{ getPrice(product) | number: '1.2-2' }}</strong>
+              <small *ngIf="hasDiscount(product)">
+                S/ {{ getOldPrice(product) | number: '1.2-2' }}
+              </small>
+            </div>
+
+            <a class="view-btn" [routerLink]="getProductRoute(product)"> Ver </a>
           </div>
         </div>
-
-        <div class="store-floating-card store-floating-top">
-          <span>NUEVO</span>
-          <strong>Poleras oversize</strong>
-        </div>
-
-        <div class="store-floating-card store-floating-bottom">
-          <span>PRÓXIMAMENTE</span>
-          <strong>Drop urbano</strong>
-        </div>
-      </div>
-
-      <div class="store-content">
-        <span class="store-eyebrow">JONZKO STORE</span>
-
-        <h1>Tienda urbana en camino.</h1>
-
-        <p>
-          Próximamente aquí encontrarás la tienda general de JONZKO: polos, poleras, joggers, shorts
-          y nuevas prendas urbanas con estilo premium.
-        </p>
-
-        <div class="store-tags">
-          <span>Oversize</span>
-          <span>Minimal</span>
-          <span>Streetwear</span>
-        </div>
-
-        <div class="store-actions">
-          <a routerLink="/" class="store-primary-btn">Volver al inicio</a>
-          <a href="/#producto" class="store-secondary-btn">Ver exclusivos</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="store-preview-grid">
-      <article>
-        <img src="assets/principal2.jpeg" alt="Prenda JONZKO" />
-        <div>
-          <span>DROP 01</span>
-          <strong>Prendas urbanas</strong>
-        </div>
       </article>
-
-      <article>
-        <img src="assets/principal3.jpeg" alt="Colección JONZKO" />
-        <div>
-          <span>JONZKO</span>
-          <strong>Estilo premium</strong>
-        </div>
-      </article>
-
-      <article class="store-preview-text-card">
-        <span>COMPRA SEGURA</span>
-        <strong>Yape, Plin, BCP y tarjeta</strong>
-        <p>La tienda se conectará con productos, carrito y pagos cuando activemos esta sección.</p>
-      </article>
-    </div>
+    </section>
   </div>
 </section>

@@ -216,7 +216,7 @@ public class SiteSettingController {
                 .aboutImage3Url("")
 
                 .galleryTag("ESTILO JONZKO")
-                .galleryTitle("Diseños que hablan por ti.")
+                .galleryTitle("Diseños que halan por ti.")
                 .galleryText("Mira más detalles de nuestras prendas, estilo urbano y contenido de la marca.")
 
                 .galleryImage1Url("")
