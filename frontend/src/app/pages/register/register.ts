@@ -13,9 +13,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './register.scss'
 })
 export class RegisterComponent implements OnDestroy {
-
-  step: 'register' | 'verify' = 'register';
-
   fullName = '';
   email = '';
   phone = '';
@@ -26,6 +23,7 @@ export class RegisterComponent implements OnDestroy {
   error = '';
   success = '';
 
+  codeSent = false;
   resendSeconds = 0;
   private resendInterval: any;
 
@@ -34,7 +32,7 @@ export class RegisterComponent implements OnDestroy {
     private router: Router
   ) {}
 
-  register(): void {
+  sendVerificationCode(): void {
     this.error = '';
     this.success = '';
 
@@ -43,7 +41,12 @@ export class RegisterComponent implements OnDestroy {
     const phoneNormalizado = this.phone.trim();
 
     if (!fullNameNormalizado || !emailNormalizado || !phoneNormalizado || !this.password) {
-      this.error = 'Completa todos los campos.';
+      this.error = 'Completa todos los campos antes de verificar tu correo.';
+      return;
+    }
+
+    if (!this.isValidEmail(emailNormalizado)) {
+      this.error = 'Ingresa un correo válido.';
       return;
     }
 
@@ -71,41 +74,39 @@ export class RegisterComponent implements OnDestroy {
         this.loading = false;
 
         this.email = emailNormalizado;
-        this.step = 'verify';
+        this.codeSent = true;
+        this.code = '';
 
         this.success =
-          resp?.message || 'Te enviamos un código a tu correo para activar tu cuenta.';
+          resp?.message || 'Te enviamos un código a tu correo. Escríbelo para terminar tu registro.';
 
         this.startResendCountdown();
       },
       error: (err) => {
         this.loading = false;
-
-        if (err.error?.message) {
-          this.error = err.error.message;
-        } else if (err.error) {
-          const errores = Object.values(err.error);
-          this.error = errores.join(' - ');
-        } else {
-          this.error = 'No se pudo crear la cuenta.';
-        }
+        this.error = this.getErrorMessage(err, 'No se pudo enviar el código.');
       }
     });
   }
 
-  verifyEmail(): void {
+  completeRegister(): void {
     this.error = '';
     this.success = '';
 
     const emailNormalizado = this.email.trim().toLowerCase();
     const codeNormalizado = this.code.trim();
 
-    if (!emailNormalizado || !codeNormalizado) {
+    if (!this.codeSent) {
+      this.error = 'Primero verifica tu correo.';
+      return;
+    }
+
+    if (!codeNormalizado) {
       this.error = 'Ingresa el código enviado a tu correo.';
       return;
     }
 
-    if (codeNormalizado.length !== 6) {
+    if (!/^\d{6}$/.test(codeNormalizado)) {
       this.error = 'El código debe tener 6 dígitos.';
       return;
     }
@@ -124,16 +125,14 @@ export class RegisterComponent implements OnDestroy {
 
         setTimeout(() => {
           this.router.navigate(['/']);
-        }, 1200);
+        }, 900);
       },
       error: (err) => {
         this.loading = false;
-
-        if (err.error?.message) {
-          this.error = err.error.message;
-        } else {
-  this.error = 'No se pudo verificar el correo. Intenta reenviar el código.';
-}
+        this.error = this.getErrorMessage(
+          err,
+          'Código incorrecto o expirado. Revisa tu correo e intenta nuevamente.'
+        );
       }
     });
   }
@@ -165,14 +164,18 @@ export class RegisterComponent implements OnDestroy {
       },
       error: (err) => {
         this.loading = false;
-
-        if (err.error?.message) {
-          this.error = err.error.message;
-        } else {
-          this.error = 'No se pudo reenviar el código.';
-        }
+        this.error = this.getErrorMessage(err, 'No se pudo reenviar el código.');
       }
     });
+  }
+
+  changeData(): void {
+    this.codeSent = false;
+    this.code = '';
+    this.error = '';
+    this.success = '';
+    this.resendSeconds = 0;
+    clearInterval(this.resendInterval);
   }
 
   startResendCountdown(): void {
@@ -190,13 +193,21 @@ export class RegisterComponent implements OnDestroy {
     }, 1000);
   }
 
-  backToRegister(): void {
-    this.step = 'register';
-    this.code = '';
-    this.error = '';
-    this.success = '';
-    clearInterval(this.resendInterval);
-    this.resendSeconds = 0;
+  private isValidEmail(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  private getErrorMessage(err: any, defaultMessage: string): string {
+    if (err?.error?.message) {
+      return err.error.message;
+    }
+
+    if (err?.error && typeof err.error === 'object') {
+      const errores = Object.values(err.error);
+      return errores.join(' - ');
+    }
+
+    return defaultMessage;
   }
 
   ngOnDestroy(): void {

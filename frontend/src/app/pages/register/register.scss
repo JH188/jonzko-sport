@@ -306,3 +306,89 @@ input[readonly] {
   font-weight: 900;
   cursor: pointer;
 }
+/* =========================================================
+   REGISTRO - VERIFICACIÓN DE CORREO INLINE
+   ========================================================= */
+
+.email-verify-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 112px;
+  gap: 10px;
+  align-items: center;
+}
+
+.email-verify-row input {
+  width: 100%;
+}
+
+.verify-email-btn {
+  margin-top: 0;
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: #111;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.code-area {
+  padding: 12px;
+  border: 1px solid #e5dbc9;
+  border-radius: 16px;
+  background: #fbfaf7;
+}
+
+.verify-help {
+  margin: 10px 0 0;
+  display: grid;
+  gap: 8px;
+  text-align: center;
+}
+
+.resend-count {
+  margin: 0;
+  font-size: 12px;
+  color: #166534;
+  font-weight: 800;
+}
+
+.resend-inline-btn {
+  margin-top: 0;
+  background: #16a34a !important;
+  color: #fff !important;
+  border: 1px solid #16a34a !important;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.change-data-btn {
+  margin-top: 0;
+  background: transparent !important;
+  color: #111 !important;
+  border: 1px solid #111 !important;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+input[readonly] {
+  background: #f3f4f6;
+  color: #555;
+}
+
+@media (max-width: 480px) {
+  .email-verify-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .verify-email-btn {
+    width: 100%;
+  }
+}

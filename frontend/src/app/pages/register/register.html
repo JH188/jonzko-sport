@@ -1,24 +1,79 @@
 <section class="auth-page">
   <div class="auth-card">
-    <h1 *ngIf="step === 'register'">Crear cuenta</h1>
-    <h1 *ngIf="step === 'verify'">Verificar correo</h1>
+    <h1>Crear cuenta</h1>
 
-    <p class="subtitle" *ngIf="step === 'register'">Regístrate para comprar en JONZKO SPORT</p>
+    <p class="subtitle">Regístrate para comprar en JONZKO SPORT</p>
 
-    <p class="subtitle" *ngIf="step === 'verify'">Ingresa el código que enviamos a tu correo.</p>
-
-    <form *ngIf="step === 'register'" (ngSubmit)="register()">
+    <form (ngSubmit)="completeRegister()">
       <label>Nombre completo</label>
-      <input type="text" name="fullName" [(ngModel)]="fullName" placeholder="Nombre completo" />
+      <input
+        type="text"
+        name="fullName"
+        [(ngModel)]="fullName"
+        [readonly]="codeSent"
+        placeholder="Nombre completo"
+      />
 
       <label>Correo electrónico</label>
-      <input type="email" name="email" [(ngModel)]="email" placeholder="correo@gmail.com" />
+
+      <div class="email-verify-row">
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          [readonly]="codeSent"
+          placeholder="correo@gmail.com"
+        />
+
+        <button
+          type="button"
+          class="verify-email-btn"
+          (click)="sendVerificationCode()"
+          [disabled]="loading || codeSent"
+        >
+          {{ codeSent ? 'Enviado' : 'Verificar' }}
+        </button>
+      </div>
+
+      <div class="code-area" *ngIf="codeSent">
+        <label>Código de verificación</label>
+
+        <input
+          type="text"
+          name="code"
+          [(ngModel)]="code"
+          maxlength="6"
+          inputmode="numeric"
+          placeholder="Código de 6 dígitos"
+        />
+
+        <div class="verify-help">
+          <p *ngIf="resendSeconds > 0" class="resend-count">
+            Podrás reenviar código en {{ resendSeconds }}s
+          </p>
+
+          <button
+            *ngIf="resendSeconds === 0"
+            type="button"
+            class="resend-inline-btn"
+            (click)="resendCode()"
+            [disabled]="loading"
+          >
+            Reenviar código
+          </button>
+
+          <button type="button" class="change-data-btn" (click)="changeData()" [disabled]="loading">
+            Cambiar correo o datos
+          </button>
+        </div>
+      </div>
 
       <label>Celular</label>
       <input
         type="tel"
         name="phone"
         [(ngModel)]="phone"
+        [readonly]="codeSent"
         maxlength="9"
         placeholder="Celular de 9 dígitos"
       />
@@ -28,56 +83,15 @@
         type="password"
         name="password"
         [(ngModel)]="password"
+        [readonly]="codeSent"
         placeholder="Mínimo 6 caracteres"
       />
 
       <div class="error" *ngIf="error">{{ error }}</div>
       <div class="success" *ngIf="success">{{ success }}</div>
 
-      <button type="submit" [disabled]="loading">
-        {{ loading ? 'Creando cuenta...' : 'Registrarme' }}
-      </button>
-    </form>
-
-    <form *ngIf="step === 'verify'" (ngSubmit)="verifyEmail()">
-      <label>Correo electrónico</label>
-      <input type="email" name="email" [(ngModel)]="email" readonly />
-
-      <label>Código de verificación</label>
-      <input
-        type="text"
-        name="code"
-        [(ngModel)]="code"
-        maxlength="6"
-        placeholder="Código de 6 dígitos"
-      />
-
-      <div class="error" *ngIf="error">{{ error }}</div>
-      <div class="success" *ngIf="success">
-        <p>{{ success }}</p>
-      </div>
-
-      <div class="verify-help">
-        <p *ngIf="resendSeconds > 0" class="resend-count">
-          Podrás reenviar código en {{ resendSeconds }}s
-        </p>
-
-        <button
-          *ngIf="resendSeconds === 0"
-          type="button"
-          class="resend-inline-btn"
-          (click)="resendCode()"
-          [disabled]="loading"
-        >
-          Reenviar código
-        </button>
-      </div>
-
-      <button type="submit" [disabled]="loading">
-        {{ loading ? 'Verificando...' : 'Verificar cuenta' }}
-      </button>
-      <button type="button" class="secondary-btn" (click)="backToRegister()" [disabled]="loading">
-        Cambiar datos
+      <button type="submit" [disabled]="loading || !codeSent">
+        {{ loading ? 'Validando...' : 'Registrarme' }}
       </button>
     </form>
 
