@@ -1226,6 +1226,79 @@
     <!-- PERSONALIZACIÓN WEB -->
     <section class="admin-section" *ngIf="activeSection() === 'customization'">
       <div class="section-heading">
+        <div class="custom-tabs custom-tabs-mobile">
+          <button
+            type="button"
+            [class.active]="customizationTab() === 'inicio'"
+            (click)="setCustomizationTab('inicio')"
+          >
+            🏠 Inicio
+          </button>
+
+          <button
+            type="button"
+            [class.active]="customizationTab() === 'tienda'"
+            (click)="setCustomizationTab('tienda')"
+          >
+            🛍️ Tienda
+          </button>
+
+          <button
+            type="button"
+            [class.active]="customizationTab() === 'nosotros'"
+            (click)="setCustomizationTab('nosotros')"
+          >
+            🖼️ Nosotros / Galería
+          </button>
+
+          <button
+            type="button"
+            [class.active]="customizationTab() === 'carrito'"
+            (click)="setCustomizationTab('carrito')"
+          >
+            🛒 Carrito
+          </button>
+
+          <button
+            type="button"
+            [class.active]="customizationTab() === 'pagos'"
+            (click)="setCustomizationTab('pagos')"
+          >
+            💳 Pagos
+          </button>
+
+          <button
+            type="button"
+            [class.active]="customizationTab() === 'contacto'"
+            (click)="setCustomizationTab('contacto')"
+          >
+            📞 Contacto
+          </button>
+
+          <button
+            type="button"
+            [class.active]="customizationTab() === 'footer'"
+            (click)="setCustomizationTab('footer')"
+          >
+            🧾 Footer
+          </button>
+
+          <button
+            type="button"
+            [class.active]="customizationTab() === 'soporte'"
+            (click)="setCustomizationTab('soporte')"
+          >
+            🆘 Soporte
+          </button>
+
+          <button
+            type="button"
+            [class.active]="customizationTab() === 'avisos'"
+            (click)="setCustomizationTab('avisos')"
+          >
+            🔥 Avisos
+          </button>
+        </div>
         <div>
           <span class="eyebrow">Control total de la página</span>
           <h2>🎨 Personalización web</h2>
