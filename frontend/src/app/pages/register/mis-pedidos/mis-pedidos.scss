@@ -762,3 +762,256 @@ p {
     margin-bottom: 0 !important;
   }
 }
+/* =========================================================
+   FIX REAL MIS PEDIDOS MÓVIL - USUARIO COMPACTO
+   Archivo: src/app/pages/register/mis-pedidos/mis-pedidos.scss
+   PEGAR AL FINAL
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .orders-page {
+    padding: 8px 7px 24px !important;
+    min-height: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .orders-container {
+    width: 100% !important;
+  }
+
+  .orders-header {
+    padding: 12px !important;
+    border-radius: 18px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .tag {
+    padding: 5px 9px !important;
+    font-size: 7.5px !important;
+    letter-spacing: 0.16em !important;
+    margin-bottom: 6px !important;
+  }
+
+  .orders-page h1 {
+    font-size: 24px !important;
+    line-height: 0.95 !important;
+  }
+
+  .orders-header p {
+    font-size: 10.5px !important;
+    line-height: 1.25 !important;
+    margin-top: 6px !important;
+  }
+
+  .filters-card {
+    margin-top: 8px !important;
+    padding: 8px !important;
+    border-radius: 15px !important;
+    grid-template-columns: 1fr 105px !important;
+    gap: 7px !important;
+  }
+
+  .filters-card input,
+  .filters-card select {
+    min-height: 34px !important;
+    font-size: 10px !important;
+    border-radius: 11px !important;
+    padding: 0 8px !important;
+  }
+
+  .refresh-btn {
+    min-height: 34px !important;
+    font-size: 10px !important;
+  }
+
+  .orders-list {
+    gap: 8px !important;
+    margin-top: 8px !important;
+  }
+
+  .order-card {
+    padding: 10px !important;
+    border-radius: 16px !important;
+  }
+
+  .order-top {
+    gap: 8px !important;
+  }
+
+  .order-code {
+    font-size: 7.5px !important;
+    letter-spacing: 0.16em !important;
+    margin-bottom: 3px !important;
+  }
+
+  .order-card h3 {
+    font-size: 14px !important;
+    line-height: 1.05 !important;
+  }
+
+  .status {
+    min-width: 68px !important;
+    height: 25px !important;
+    padding: 0 8px !important;
+    font-size: 8px !important;
+  }
+
+  .order-body {
+    margin-top: 8px !important;
+    padding: 8px !important;
+    border-radius: 12px !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px 7px !important;
+  }
+
+  .order-body p {
+    font-size: 9.5px !important;
+    line-height: 1.2 !important;
+  }
+
+  .products-mini {
+    margin-top: 8px !important;
+    padding: 8px !important;
+    border-radius: 12px !important;
+  }
+
+  .products-mini h4 {
+    font-size: 10.5px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .product-mini {
+    grid-template-columns: 42px minmax(0, 1fr) !important;
+    gap: 7px !important;
+    padding: 5px 0 !important;
+  }
+
+  .product-mini img {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 9px !important;
+  }
+
+  .product-mini strong {
+    font-size: 10.5px !important;
+  }
+
+  .product-mini p {
+    font-size: 8.8px !important;
+    margin: 1px 0 !important;
+  }
+
+  .order-card > button {
+    min-height: 34px !important;
+    margin-top: 8px !important;
+    font-size: 10.5px !important;
+  }
+
+  /* MODAL VER DETALLE - más chico y encima de todo */
+  .order-modal-backdrop {
+    z-index: 2147483000 !important;
+    padding: 7px !important;
+    align-items: flex-start !important;
+    overflow-y: auto !important;
+  }
+
+  .order-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: calc(100dvh - 14px) !important;
+    overflow-y: auto !important;
+    padding: 12px !important;
+    border-radius: 17px !important;
+  }
+
+  .modal-close {
+    width: 30px !important;
+    height: 30px !important;
+    top: 8px !important;
+    right: 8px !important;
+    font-size: 19px !important;
+  }
+
+  .modal-header {
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+    padding-right: 34px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .modal-header h2 {
+    font-size: 20px !important;
+    line-height: 0.95 !important;
+    margin: 5px 0 2px !important;
+  }
+
+  .modal-header p {
+    font-size: 11px !important;
+    margin: 0 !important;
+  }
+
+  .modal-grid {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+
+  .modal-grid section,
+  .modal-products,
+  .modal-message {
+    padding: 8px !important;
+    border-radius: 12px !important;
+  }
+
+  .modal-grid h3,
+  .modal-products h3 {
+    font-size: 11px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .modal-grid p {
+    font-size: 9.5px !important;
+    line-height: 1.2 !important;
+    margin: 3px 0 !important;
+    word-break: break-word !important;
+  }
+
+  .modal-products {
+    margin-top: 7px !important;
+  }
+
+  .modal-product {
+    grid-template-columns: 46px minmax(0, 1fr) !important;
+    gap: 7px !important;
+    padding: 7px 0 !important;
+  }
+
+  .modal-product img {
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 9px !important;
+  }
+
+  .modal-product h4 {
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 3px !important;
+  }
+
+  .modal-product p {
+    font-size: 8.8px !important;
+    line-height: 1.15 !important;
+    margin: 1px 0 !important;
+  }
+
+  .modal-message {
+    margin-top: 7px !important;
+    font-size: 9.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  .modal-ok {
+    min-height: 36px !important;
+    margin-top: 8px !important;
+    font-size: 10.5px !important;
+  }
+}
