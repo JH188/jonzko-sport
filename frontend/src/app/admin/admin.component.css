@@ -3857,3 +3857,67 @@ td {
     display: none !important;
   }
 }
+/* =========================================================
+   FIX FINAL - MOSTRAR SUBMENÚ BLANCO PERSONALIZACIÓN EN MÓVIL
+   PEGAR AL FINAL DE admin.component.css
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .submenu-web {
+    display: flex !important;
+    position: fixed !important;
+
+    left: 0 !important;
+    right: 0 !important;
+    bottom: calc(78px + env(safe-area-inset-bottom)) !important;
+
+    z-index: 999998 !important;
+
+    gap: 8px !important;
+    padding: 8px 10px !important;
+
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+
+    background: rgba(239, 242, 249, 0.98) !important;
+    border-top: 1px solid #d7dee9 !important;
+    border-bottom: 1px solid #d7dee9 !important;
+    border-radius: 0 !important;
+
+    backdrop-filter: blur(14px) !important;
+  }
+
+  .submenu-web::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .submenu-web button {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: max-content !important;
+
+    height: 34px !important;
+    min-height: 34px !important;
+
+    padding: 0 13px !important;
+    border-radius: 999px !important;
+
+    background: #ffffff !important;
+    color: #111318 !important;
+    border: 1px solid #d2d9e5 !important;
+
+    font-size: 9.5px !important;
+    font-weight: 950 !important;
+    white-space: nowrap !important;
+  }
+
+  .submenu-web button.active {
+    background: linear-gradient(135deg, #08080a, #25252c) !important;
+    color: #ffffff !important;
+    border-color: #111318 !important;
+  }
+
+  .admin-main {
+    padding-bottom: calc(132px + env(safe-area-inset-bottom)) !important;
+  }
+}
