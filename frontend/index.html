@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0b0b" />
+  <meta name="description" content="JONZKO SPORT - Catálogo de moda urbana peruana. Consulta prendas, tallas y realiza tu pedido por WhatsApp." />
+  <title>JONZKO SPORT | Catálogo</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="styles.css?v=1" />
+</head>
+<body>
+  <div class="topbar" aria-label="Información de la tienda">
+    <div class="topbar-track">
+      <span>ENVÍOS A TODO EL PERÚ</span><b>•</b>
+      <span>COMPRA SEGURA</span><b>•</b>
+      <span>CAMBIOS DISPONIBLES</span><b>•</b>
+      <span>JONZKO SPORT</span><b>•</b>
+      <span aria-hidden="true">ENVÍOS A TODO EL PERÚ</span><b aria-hidden="true">•</b>
+      <span aria-hidden="true">COMPRA SEGURA</span><b aria-hidden="true">•</b>
+      <span aria-hidden="true">CAMBIOS DISPONIBLES</span><b aria-hidden="true">•</b>
+      <span aria-hidden="true">JONZKO SPORT</span>
+    </div>
+  </div>
+
+  <header class="navbar" id="inicio">
+    <a class="brand" href="#inicio" aria-label="JONZKO SPORT inicio">
+      <img src="assets/logo.png" alt="Logo JONZKO" />
+    </a>
+
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#inicio">INICIO</a>
+      <a href="#tienda">TIENDA</a>
+      <a href="#nosotros">NOSOTROS</a>
+      <a href="#contacto">CONTACTO</a>
+    </nav>
+
+    <a class="nav-whatsapp" data-general-whatsapp href="#" target="_blank" rel="noopener">WHATSAPP</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Presentación JONZKO">
+      <div class="hero-slide active" data-index="0" style="--bg: url('assets/principal3.jpeg')">
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <span>MODA PERUANA</span>
+          <h1>BLACK &<br />WHITE</h1>
+          <a href="#tienda">DESCUBRIR PRENDAS <span>→</span></a>
+        </div>
+      </div>
+
+      <div class="hero-slide" data-index="1" style="--bg: url('assets/principal1.jpg')">
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <span>NUEVA COLECCIÓN</span>
+          <h1>OVERSIZE</h1>
+          <a href="#tienda">VER CATÁLOGO <span>→</span></a>
+        </div>
+      </div>
+
+      <div class="hero-slide" data-index="2" style="--bg: url('assets/principal2.jpeg')">
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <span>JONZKO SPORT</span>
+          <h1>ESTILO<br />URBANO</h1>
+          <a href="#tienda">VER PRODUCTOS <span>→</span></a>
+        </div>
+      </div>
+
+      <button class="hero-arrow left" id="heroPrev" type="button" aria-label="Imagen anterior">‹</button>
+      <button class="hero-arrow right" id="heroNext" type="button" aria-label="Imagen siguiente">›</button>
+      <div class="hero-dots" id="heroDots" aria-label="Selector del carrusel"></div>
+    </section>
+
+    <section class="catalog section" id="tienda">
+      <div class="section-heading">
+        <span>CATÁLOGO JONZKO</span>
+        <h2>Elige tu estilo.</h2>
+        <p>Selecciona una prenda y realiza tu pedido directamente por WhatsApp.</p>
+      </div>
+
+      <div class="catalog-tools">
+        <div class="filter-buttons" id="categoryFilters" aria-label="Filtrar productos">
+          <button class="filter active" data-category="Todos" type="button">Todos</button>
+          <button class="filter" data-category="Polos" type="button">Polos</button>
+          <button class="filter" data-category="Oversize" type="button">Oversize</button>
+          <button class="filter" data-category="Poleras" type="button">Poleras</button>
+        </div>
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="productSearch" type="search" placeholder="Buscar producto..." autocomplete="off" />
+        </label>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+      <p class="empty-state" id="emptyState" hidden>No encontramos productos con ese filtro.</p>
+    </section>
+
+    <section class="how section-dark">
+      <div class="section-heading light">
+        <span>COMPRA SIMPLE</span>
+        <h2>Todo se coordina por WhatsApp.</h2>
+      </div>
+      <div class="steps">
+        <article><strong>01</strong><h3>Elige</h3><p>Revisa el catálogo y encuentra la prenda que te gusta.</p></article>
+        <article><strong>02</strong><h3>Selecciona</h3><p>Indica talla y cantidad desde la ficha del producto.</p></article>
+        <article><strong>03</strong><h3>Escríbenos</h3><p>WhatsApp abrirá con tu pedido preparado para coordinar pago y entrega.</p></article>
+      </div>
+    </section>
+
+    <section class="about section" id="nosotros">
+      <div class="about-copy">
+        <span>SOBRE NOSOTROS</span>
+        <h2>Más que ropa,<br />es actitud.</h2>
+        <p>JONZKO es una marca de moda urbana peruana creada para vestir con estilo propio, comodidad y presencia.</p>
+        <a class="dark-button" data-general-whatsapp href="#" target="_blank" rel="noopener">HABLAR POR WHATSAPP</a>
+      </div>
+      <div class="about-image">
+        <img src="assets/principal1.jpg" alt="Estilo urbano JONZKO" loading="lazy" />
+      </div>
+    </section>
+
+    <section class="contact section" id="contacto">
+      <div>
+        <span>CONTACTO</span>
+        <h2>¿Tienes una consulta?</h2>
+        <p>Pregúntanos por tallas, stock, entregas o cualquier producto del catálogo.</p>
+      </div>
+      <a class="whatsapp-big" data-general-whatsapp href="#" target="_blank" rel="noopener">ESCRIBIR POR WHATSAPP →</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="JONZKO" />
+      <div><strong>JONZKO SPORT</strong><span>Moda urbana peruana.</span></div>
+    </div>
+    <div class="socials">
+      <a href="https://www.instagram.com/jonzko.o/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=61563952841904" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.tiktok.com/@jonzko1" target="_blank" rel="noopener">TikTok</a>
+    </div>
+    <small>© <span id="year"></span> JONZKO SPORT. Todos los derechos reservados.</small>
+  </footer>
+
+  <a class="floating-whatsapp" data-general-whatsapp href="#" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">WA</a>
+
+  <div class="modal" id="productModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalProductName">
+      <button class="modal-close" type="button" data-close-modal aria-label="Cerrar">×</button>
+      <div class="modal-image-wrap"><img id="modalProductImage" src="" alt="" /></div>
+      <div class="modal-info">
+        <span class="modal-category" id="modalProductCategory"></span>
+        <h2 id="modalProductName"></h2>
+        <p class="modal-description" id="modalProductDescription"></p>
+        <div class="modal-price"><span id="modalOldPrice"></span><strong id="modalProductPrice"></strong></div>
+
+        <div class="option-group">
+          <label for="sizeSelect">Talla</label>
+          <select id="sizeSelect"></select>
+        </div>
+
+        <div class="option-group">
+          <label for="quantityInput">Cantidad</label>
+          <div class="quantity-control">
+            <button type="button" id="qtyMinus">−</button>
+            <input id="quantityInput" type="number" min="1" max="20" value="1" inputmode="numeric" />
+            <button type="button" id="qtyPlus">+</button>
+          </div>
+        </div>
+
+        <button class="buy-whatsapp" id="buyWhatsapp" type="button">PEDIR POR WHATSAPP</button>
+        <small class="modal-note">No se realiza ningún cobro en esta página. El pedido se coordina directamente por WhatsApp.</small>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js?v=1"></script>
+</body>
+</html>
