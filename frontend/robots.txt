@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.jonzko.lat/sitemap.xml
+Sitemap: https://jonzko.lat/sitemap.xml
