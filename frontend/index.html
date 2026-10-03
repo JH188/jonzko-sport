@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -8,6 +9,7 @@
     <meta name="theme-color" content="#0b0b0b" />
 
     <!-- SEO PRINCIPAL -->
+
     <title>JONZKO</title>
 
     <meta
@@ -22,7 +24,9 @@
     <link rel="icon" href="favicon.ico" />
 
     <!-- OPEN GRAPH: FACEBOOK, WHATSAPP Y REDES -->
+
     <meta property="og:type" content="website" />
+
     <meta property="og:site_name" content="JONZKO" />
 
     <meta
@@ -45,6 +49,7 @@
     <meta property="og:locale" content="es_PE" />
 
     <!-- X / TWITTER -->
+
     <meta name="twitter:card" content="summary_large_image" />
 
     <meta
@@ -62,55 +67,76 @@
       content="https://jonzko.lat/assets/principal3.jpeg"
     />
 
-    <link rel="stylesheet" href="styles.css?v=1" />
+    <link rel="stylesheet" href="styles.css?v=2" />
 
     <!-- DATOS DE JONZKO PARA GOOGLE -->
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
+
         "@type": "OnlineStore",
+
         "name": "JONZKO",
+
         "alternateName": "JONZKO SPORT",
+
         "url": "https://jonzko.lat/",
+
         "logo": "https://jonzko.lat/assets/logo.png",
+
         "image": "https://jonzko.lat/assets/principal3.jpeg",
+
         "description": "JONZKO es una tienda online de ropa y moda en Perú. Encuentra polos, poleras, shorts, conjuntos y más prendas.",
+
         "areaServed": {
           "@type": "Country",
+
           "name": "Perú"
         },
+
         "sameAs": [
           "https://www.instagram.com/jonzko.o/",
+
           "https://www.facebook.com/profile.php?id=61563952841904",
+
           "https://www.tiktok.com/@jonzko1"
         ]
       }
     </script>
   </head>
 
-  <body>
+  <body id="inicio">
     <!-- BARRA SUPERIOR -->
+
     <div class="topbar" aria-label="Información de la tienda">
       <div class="topbar-track">
         <span>ENVÍOS A TODO EL PERÚ</span>
+
         <b>•</b>
 
         <span>COMPRA SEGURA</span>
+
         <b>•</b>
 
         <span>CAMBIOS DISPONIBLES</span>
+
         <b>•</b>
 
         <span>JONZKO</span>
+
         <b>•</b>
 
         <span aria-hidden="true">ENVÍOS A TODO EL PERÚ</span>
+
         <b aria-hidden="true">•</b>
 
         <span aria-hidden="true">COMPRA SEGURA</span>
+
         <b aria-hidden="true">•</b>
 
         <span aria-hidden="true">CAMBIOS DISPONIBLES</span>
+
         <b aria-hidden="true">•</b>
 
         <span aria-hidden="true">JONZKO</span>
@@ -118,7 +144,8 @@
     </div>
 
     <!-- NAVEGACIÓN -->
-    <header class="navbar" id="inicio">
+
+    <header class="navbar">
       <a class="brand" href="#inicio" aria-label="JONZKO inicio">
         <img src="assets/logo.png" alt="Logo de JONZKO tienda online de ropa" />
       </a>
@@ -156,8 +183,10 @@
 
     <main>
       <!-- HERO / PORTADA -->
+
       <section class="hero" aria-label="JONZKO tienda online de ropa en Perú">
         <!-- SLIDE 1 -->
+
         <div
           class="hero-slide active"
           data-index="0"
@@ -172,12 +201,14 @@
 
             <a href="#tienda">
               DESCUBRIR PRENDAS
+
               <span>→</span>
             </a>
           </div>
         </div>
 
         <!-- SLIDE 2 -->
+
         <div
           class="hero-slide"
           data-index="1"
@@ -186,18 +217,20 @@
           <div class="hero-shade"></div>
 
           <div class="hero-content">
-            <span> TODO A MENOR PRECIO  </span>
+            <span> TODO A MENOR PRECIO </span>
 
             <div class="hero-title">AQUI ESTA</div>
 
             <a href="#tienda">
               VER CATÁLOGO
+
               <span>→</span>
             </a>
           </div>
         </div>
 
         <!-- SLIDE 3 -->
+
         <div
           class="hero-slide"
           data-index="2"
@@ -210,17 +243,20 @@
 
             <div class="hero-title">
               PRECIOS<br />
+
               MAYORISTA
             </div>
 
             <a href="#tienda">
               VER PRODUCTOS
+
               <span>→</span>
             </a>
           </div>
         </div>
 
         <!-- FLECHAS -->
+
         <button
           class="hero-arrow left"
           id="heroPrev"
@@ -247,6 +283,7 @@
       </section>
 
       <!-- CATÁLOGO -->
+
       <section class="catalog section" id="tienda">
         <div class="section-heading">
           <span> CATÁLOGO </span>
@@ -284,28 +321,55 @@
             </button>
           </div>
 
-          <!-- BUSCADOR -->
-          <label class="search-box">
-            <span aria-hidden="true"> ⌕ </span>
+          <div class="catalog-right-tools">
+            <!-- FILTRO POR PRESUPUESTO -->
+            <label class="price-filter">
+              <span>S/</span>
 
-            <input
-              id="productSearch"
-              type="search"
-              placeholder="Buscar producto..."
-              autocomplete="off"
-            />
-          </label>
+              <select
+                id="priceFilter"
+                aria-label="Filtrar productos por presupuesto"
+              >
+                <option value="all">Todos los precios</option>
+                <option value="15-30">S/ 15 - S/ 30</option>
+                <option value="31-50">S/ 31 - S/ 50</option>
+                <option value="51-80">S/ 51 - S/ 80</option>
+                <option value="81-100">S/ 81 - S/ 100</option>
+                <option value="100+">S/ 100 a más</option>
+              </select>
+            </label>
+
+            <!-- BUSCADOR -->
+            <label class="search-box">
+              <span aria-hidden="true">⌕</span>
+
+              <input
+                id="productSearch"
+                type="search"
+                placeholder="Buscar producto..."
+                autocomplete="off"
+              />
+            </label>
+          </div>
         </div>
 
         <!-- PRODUCTOS CREADOS DESDE SCRIPT.JS -->
         <div class="product-grid" id="productGrid"></div>
 
+        <!-- PAGINACIÓN -->
+        <nav
+          class="pagination"
+          id="pagination"
+          aria-label="Páginas del catálogo"
+        ></nav>
+
         <p class="empty-state" id="emptyState" hidden>
-          No encontramos productos con ese filtro.
+          No encontramos productos con esos filtros.
         </p>
       </section>
 
       <!-- CÓMO COMPRAR -->
+
       <section class="how section-dark">
         <div class="section-heading light">
           <span> COMPRA SIMPLE </span>
@@ -344,6 +408,7 @@
       </section>
 
       <!-- NOSOTROS -->
+
       <section class="about section" id="nosotros">
         <div class="about-copy">
           <span> SOBRE NOSOTROS </span>
@@ -351,7 +416,10 @@
           <h2>JONZKO</h2>
 
           <p>
-            buscamos ofrecer a nuestros clientes una experiencia de compra única y satisfactoria. Nos esforzamos por brindar un servicio excepcional, productos de calidad y atención personalizada para garantizar la satisfacción de cada cliente.
+            buscamos ofrecer a nuestros clientes una experiencia de compra única
+            y satisfactoria. Nos esforzamos por brindar un servicio excepcional,
+            productos de calidad y atención personalizada para garantizar la
+            satisfacción de cada cliente.
           </p>
 
           <a
@@ -375,6 +443,7 @@
       </section>
 
       <!-- CONTACTO -->
+
       <section class="contact section" id="contacto">
         <div>
           <span> CONTACTO </span>
@@ -383,7 +452,7 @@
 
           <p>
             Pregúntanos por tallas, stock, precios, delivery o cualquier
-            producto disponible en nuestro catálogo. 
+            producto disponible en nuestro catálogo.
           </p>
         </div>
 
@@ -400,6 +469,7 @@
     </main>
 
     <!-- FOOTER -->
+
     <footer>
       <div class="footer-brand">
         <img src="assets/logo.png" alt="JONZKO" />
@@ -439,11 +509,13 @@
 
       <small>
         © <span id="year"></span>
+
         JONZKO. Todos los derechos reservados.
       </small>
     </footer>
 
     <!-- BOTÓN FLOTANTE WHATSAPP -->
+
     <a
       class="floating-whatsapp"
       data-general-whatsapp
@@ -452,10 +524,15 @@
       rel="noopener"
       aria-label="Contactar con JONZKO por WhatsApp"
     >
-      WA
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.009-.371-.011-.57-.011-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.875 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.693.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.892-9.884 2.641 0 5.124 1.03 6.99 2.898a9.825 9.825 0 012.9 6.994c-.003 5.45-4.437 9.884-9.898 9.884m8.413-18.297A11.815 11.815 0 0012.055 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.69 1.448h.005c6.559 0 11.894-5.335 11.896-11.893a11.821 11.821 0 00-3.489-8.413Z"
+        />
+      </svg>
     </a>
 
     <!-- MODAL DE PRODUCTO -->
+
     <div class="modal" id="productModal" aria-hidden="true">
       <div class="modal-backdrop" data-close-modal></div>
 
@@ -466,6 +543,7 @@
         aria-labelledby="modalProductName"
       >
         <!-- CERRAR MODAL -->
+
         <button
           class="modal-close"
           type="button"
@@ -476,11 +554,13 @@
         </button>
 
         <!-- IMAGEN -->
+
         <div class="modal-image-wrap">
           <img id="modalProductImage" src="" alt="" />
         </div>
 
         <!-- INFORMACIÓN -->
+
         <div class="modal-info">
           <span class="modal-category" id="modalProductCategory"></span>
 
@@ -489,6 +569,7 @@
           <p class="modal-description" id="modalProductDescription"></p>
 
           <!-- PRECIO -->
+
           <div class="modal-price">
             <span id="modalOldPrice"></span>
 
@@ -496,6 +577,7 @@
           </div>
 
           <!-- TALLA -->
+
           <div class="option-group">
             <label for="sizeSelect"> Talla </label>
 
@@ -503,6 +585,7 @@
           </div>
 
           <!-- CANTIDAD -->
+
           <div class="option-group">
             <label for="quantityInput"> Cantidad </label>
 
@@ -523,6 +606,7 @@
           </div>
 
           <!-- WHATSAPP -->
+
           <button class="buy-whatsapp" id="buyWhatsapp" type="button">
             PEDIR POR WHATSAPP
           </button>
@@ -536,6 +620,6 @@
       </div>
     </div>
 
-    <script src="script.js?v=1"></script>
+    <script src="script.js?v=2"></script>
   </body>
 </html>
